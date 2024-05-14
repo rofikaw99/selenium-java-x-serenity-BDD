@@ -5,11 +5,6 @@ Feature: Payment Overview
   Scenario Outline: create request payment upcoming
     Given user get SSO token
     And user create upcoming payment request
-#    Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
-#    When user find the payment that already created with "<keyword>"
-#    Then verify paid status color code is correct
 
 
     Examples:
