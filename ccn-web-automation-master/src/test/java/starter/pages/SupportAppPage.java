@@ -1,0 +1,221 @@
+package starter.pages;
+
+import net.thucydides.core.pages.PageObject;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
+import starter.utlis.Constants;
+
+public class SupportAppPage extends PageObject {
+    private int waitResponse =15000;
+    //supportAppDiscount
+    private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
+    private By createDiscountSubMenu = By.xpath("//span[text()='Create Discount']");
+    private By couponName = By.xpath("//input[@placeholder='Coupon Name']");
+    private By amountOfCoupon = By.xpath("//input[@placeholder='1000']");
+    private By currencyCoupon = By.xpath("(//input[@placeholder='USD'])[1]");
+    private By USDdropdownCoupon = By.xpath("//div[@id='Currency-dropdown-item' and text()='USD']");
+    private By amountOfPCN = By.xpath("(//input[@placeholder='10000'])[1]");
+    private By currencyPCN = By.xpath("(//input[@placeholder='USD'])[2]");
+    private By USDdropdownPCN = By.xpath("//div[@id='pcn-currency-dropdown-item' and text()='USD']");
+    private By promoCode = By.xpath("//input[@placeholder='UATSUBSPCN7']");
+    private By companyPromo = By.xpath("//input[@placeholder='system.company@exchange.com']");
+    private By customerPromo = By.xpath("//input[@placeholder='Customers']");
+    private By productTypePromo = By.xpath("//div[@id='product-type-dropdown']//input[@placeholder='None']");
+    private By CompanydropdownProductTypePromo = By.xpath("//div[@id='product-type-dropdown-item' and text()='Company']");
+    private By priceIDfield = By.xpath("//input[@placeholder='Price Id']");
+    private By countryPromo = By.xpath("//input[@placeholder='Country']");
+    private By cityPromo = By.xpath("//input[@placeholder='City']");
+    private By ADCountry = By.xpath("(//*[@id='country-dropdown-0-item'])[1]");
+    private By dropdownCountry = By.id("country-dropdown-0-item");
+    private By AAECity = By.xpath("//*[@id='city-dropdown-0-item']");
+    private By dropdownCity = By.id("city-dropdown-0-item");
+    private By checkBoxFirstTime = By.xpath("//span[contains(@class, 'cube-checkmark-checkbox') and contains(@class, 'check')]");
+    private By minimumAmountRestriction = By.xpath("(//input[@placeholder='10000'])[2]");
+    private By minimumAmountCurrencyRestriction = By.xpath("(//input[@placeholder='USD'])[3]");
+    private By USDdropdownCurrencyRestriction = By.xpath("//div[@id='minimum-amount-currency-item' and text()='USD']");
+    private By expiredAt = By.xpath("(//div[contains(@class, 'react-datepicker-wrapper')]//input[@type='text'])[1]");
+    private By validityStartDate = By.xpath("(//div[contains(@class, 'react-datepicker-wrapper')]//input[@type='text'])[2]");
+    private By validityEndDate = By.xpath("(//div[contains(@class, 'react-datepicker-wrapper')]//input[@type='text'])[3]");
+    private By expiredAtPick = By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='28']");
+    private By startDatePick = By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='8']");
+    private By validityEndDatePick = By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='8']");
+    private By submitDiscount = By.xpath("(//button[@type='submit'])[2]");
+    private By createDiscountSuccessMessage = By.xpath("//p[@class='cube-tracking cube-message']");
+
+    //supportAppPlan
+    private By subscribtionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']/span[@class='ps-menu-label css-12w9als'])[27]");
+    private By productSubMenu = By.xpath("//span[text()='Product']");
+    private By createPlan = By.xpath("//button[text()='Create Plan']");
+    private By namePlan = By.xpath("//input[@placeholder='Name']");
+    private By productPlanNameField = By.xpath("//input[@placeholder='Product Name']");
+    private By serviceIDplan = By.xpath("//input[@placeholder='Service Id']");
+    private By FWBdropdown = By.xpath("(//div[@id='-item' and @tabindex='0'])[5]");
+    private By submitPlan = By.xpath("(//button[@type='button'])[3]");
+    private By descriptionPlanNameField = By.xpath("//input[@placeholder='Description']");
+
+    //addNewPrice
+    private By newPlanCreated = By.xpath("(//td[@class='row-label']/div)[1]");
+    private By addNewPrice = By.xpath("//button[text()='Add new Price']");
+    private By typeOfPrice = By.xpath("//input[@placeholder='Type']");
+    private By freeDropDownOptionPrice = By.xpath("(//div[@id='-item' and text()='Free'])[2]");
+    private By nickNameInput = By.xpath("//input[@placeholder='Nickname']");
+    private By unitAmountInput = By.xpath("//input[@placeholder='Unit Amount']");
+    private By memberLimitInput = By.xpath("//input[@placeholder='Member Limit']");
+    private By submitPrice = By.xpath("(//button[@type='button'])[4]");
+
+
+    public void addNewPrice(){
+        $(newPlanCreated).isDisplayed();
+        $(newPlanCreated).click();
+        $(addNewPrice).isDisplayed();
+        $(addNewPrice).click();
+    }
+
+    public void pressSubscribtionMenu(){
+        $(subscribtionMenu).isDisplayed();
+        $(subscribtionMenu).click();
+    }
+
+    public void pressProductSubMenu(){
+        $(productSubMenu).isDisplayed();
+        $(productSubMenu).click();
+    }
+
+    public void pressCreatePlan(){
+        $(createPlan).isDisplayed();
+        $(createPlan).click();
+    }
+
+    public void addNewPriceInput(String nickName, String unitAmount, String memberLimit){
+        $(typeOfPrice).isDisplayed();
+        $(typeOfPrice).click();
+        $(freeDropDownOptionPrice).isDisplayed();
+        $(freeDropDownOptionPrice).click();
+        $(nickNameInput).isDisplayed();
+        $(nickNameInput).sendKeys(nickName+ Constants.FOUR_DIGIT);
+        System.out.println(nickName+Constants.FOUR_DIGIT);
+        $(unitAmountInput).isDisplayed();
+        $(unitAmountInput).sendKeys(unitAmount);
+        $(memberLimitInput).isDisplayed();
+        $(memberLimitInput).sendKeys(memberLimit);
+        $(submitPrice).isDisplayed();
+        $(submitPrice).click();
+        WebElement element = $(By.xpath("//p[@class='cube-tracking cube-message']"));
+        String text = element.getText();
+        System.out.println("test status: "+text);
+
+    }
+
+    public void createPlanInput(String name, String productPlanName, String description){
+        $(namePlan).isDisplayed();
+        $(namePlan).sendKeys(name+Constants.FOUR_DIGIT);
+        System.out.println(name+Constants.FOUR_DIGIT);
+        $(productPlanNameField).isDisplayed();
+        $(productPlanNameField).sendKeys(productPlanName+Constants.FOUR_DIGIT);
+        System.out.println(productPlanName+Constants.FOUR_DIGIT);
+        $(serviceIDplan).isDisplayed();
+        $(serviceIDplan).click();
+        $(descriptionPlanNameField).isDisplayed();
+        $(descriptionPlanNameField).sendKeys(description+Constants.FOUR_DIGIT);
+        System.out.println(description+Constants.FOUR_DIGIT);
+        $(FWBdropdown).isDisplayed();
+        $(FWBdropdown).click();
+        $(submitPlan).isDisplayed();
+        $(submitPlan).click();
+        $(createDiscountSuccessMessage).isDisplayed();
+        WebElement element = $(createDiscountSuccessMessage);
+        String text = element.getText();
+        System.out.println("test status: "+text);
+
+    }
+
+
+    public void pressDiscountMenu(){
+        $(discountMenu).isDisplayed();
+        $(discountMenu).click();
+    }
+
+    public void createDiscountSubMenu(){
+        $(createDiscountSubMenu).isDisplayed();
+        $(createDiscountSubMenu).click();
+    }
+
+    public void createDiscount(String couponNameFill, String amount,
+                               String promoCodeFill, String companyPromoFill, String customer, String priceID,
+                               String country, String city){
+        $(couponName).isDisplayed();
+        $(couponName).sendKeys(couponNameFill+Constants.FOUR_DIGIT);
+        System.out.println(couponNameFill+Constants.FOUR_DIGIT);
+        $(amountOfCoupon).isDisplayed();
+        $(amountOfCoupon).sendKeys(amount+Constants.FOUR_DIGIT);
+        System.out.println(amount+Constants.FOUR_DIGIT);
+        $(currencyCoupon).isDisplayed();
+        $(currencyCoupon).click();
+        $(USDdropdownCoupon).isDisplayed();
+        $(USDdropdownCoupon).click();
+        $(amountOfPCN).isDisplayed();
+        $(amountOfPCN).sendKeys(amount);
+        $(currencyPCN).isDisplayed();
+        $(currencyPCN).click();
+        $(USDdropdownPCN).isDisplayed();
+        $(USDdropdownPCN).click();
+        $(promoCode).isDisplayed();
+        $(promoCode).sendKeys(promoCodeFill+Constants.FOUR_DIGIT);
+        System.out.println(promoCodeFill+Constants.FOUR_DIGIT);
+        $(companyPromo).isDisplayed();
+        $(companyPromo).sendKeys(companyPromoFill);
+        $(companyPromo).sendKeys(Keys.ENTER);
+        $(productTypePromo).isDisplayed();
+        $(productTypePromo).click();
+        $(CompanydropdownProductTypePromo).isDisplayed();
+        $(CompanydropdownProductTypePromo).click();
+        $(customerPromo).isDisplayed();
+        $(customerPromo).sendKeys(customer+Constants.FOUR_DIGIT+"@yopmail.com");
+        System.out.println(customer+Constants.FOUR_DIGIT+"@yopmail.com");
+        $(priceIDfield).isDisplayed();
+        $(priceIDfield).sendKeys(priceID);
+        $(priceIDfield).sendKeys(Keys.ENTER);
+        $(countryPromo).isDisplayed();
+        $(countryPromo).click();
+        $(ADCountry).isDisplayed();
+        $(ADCountry).click();
+//        Select selectCountry = new Select($(dropdownCountry));
+//        selectCountry.selectByVisibleText(country);
+        $(cityPromo).isDisplayed();
+        $(cityPromo).click();
+        $(AAECity).isDisplayed();
+        $(AAECity).click();
+//        Select selectCity = new Select($(dropdownCity));
+//        selectCity.selectByVisibleText(city);
+        $(checkBoxFirstTime).isDisplayed();
+        $(checkBoxFirstTime).click();
+        $(minimumAmountRestriction).isDisplayed();
+        $(minimumAmountRestriction).sendKeys(amount);
+        $(minimumAmountCurrencyRestriction).isDisplayed();
+        $(minimumAmountCurrencyRestriction).click();
+        $(USDdropdownCurrencyRestriction).isDisplayed();
+        $(USDdropdownCurrencyRestriction).click();
+        $(expiredAt).isDisplayed();
+        $(expiredAt).click();
+        $(expiredAtPick).isDisplayed();
+        $(expiredAtPick).click();
+        $(validityStartDate).isDisplayed();
+        $(validityStartDate).click();
+        $(startDatePick).isDisplayed();
+        $(startDatePick).click();
+        $(validityStartDate).isDisplayed();
+        $(validityStartDate).click();
+        $(validityEndDate).isDisplayed();
+        $(validityEndDate).click();
+        $(validityEndDatePick).isDisplayed();
+        $(validityEndDatePick).click();
+        $(submitDiscount).isDisplayed();
+        $(submitDiscount).click();
+        $(createDiscountSuccessMessage).isDisplayed();
+        WebElement element = $(By.xpath("//p[@class='cube-tracking cube-message']"));
+        String text = element.getText();
+        System.out.println(text);
+    }
+
+}
