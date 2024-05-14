@@ -37,9 +37,44 @@ public class PaymentMethodStep {
     private int emailLength = 0;
 
     @When("{string} setup commercial card")
-    public void setupCommercialCard(String userType) throws InterruptedException {
+    public void setupCommercialCard(String userType) throws Exception {
         //type of user is not affect this step, so being ignored
         paymentMethodPage.goToPayment();
+        if (userType.equals("User")) {
+            if (paymentMethodPage.btnEyesCardDisplayed()) {
+                paymentMethodPage.clickDeleteCardBtn();
+                paymentMethodPage.clickConfirmRemoveCardBtn();
+                Thread.sleep(3000);
+                Assert.assertTrue(paymentMethodPage.setupCardHeaderDisplayed());
+            }
+        } else if (userType.equals("Card Owner")) {
+            if (paymentMethodPage.setupCardHeaderDisplayed()) {
+                paymentMethodPage.inputCardNumber(Constants.CARD_TO_BE_DELETED);
+                paymentMethodPage.inputExpDate(Constants.CARD_EXP_DATE);
+                paymentMethodPage.inputCvc(Constants.CARD_CVC);
+                paymentMethodPage.clickSaveBtn();
+                Assert.assertTrue(paymentMethodPage.btnEyesCardDisplayed());
+            }
+        } else if (userType.equals("Authorized User")) {
+            if (paymentMethodPage.setupCardHeaderDisplayed()) {
+                companyPage.myMenuAccount("Sign Out");
+
+                Thread.sleep(3000);
+                loginPage.login(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
+                paymentMethodPage.goToPayment();
+                paymentMethodPage.clickAddUserBtn();
+                email = paymentMethodPage.chooseEmailUser();
+                System.out.println("Selected email " + email);
+                paymentMethodPage.clickConfirmUserBtn();
+                Thread.sleep(3000);
+
+                companyPage.myMenuAccount("Sign Out");
+                Thread.sleep(3000);
+                loginPage.login(email);
+                paymentMethodPage.goToPayment();
+                Assert.assertTrue(paymentMethodPage.btnEyesCardDisplayed());
+            }
+        }
     }
 
     @Then("user able to setup commercial card")

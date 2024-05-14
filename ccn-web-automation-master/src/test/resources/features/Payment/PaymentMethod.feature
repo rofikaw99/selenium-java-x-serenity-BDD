@@ -112,17 +112,6 @@ Feature: Payment Method
       And Card Owner can only authorise user within their same company
       Then succeed add authorized user
 
-    @PPM_TC_57 @PPM_TC_59 @add-authorized-user @done @PaymentModule
-    Scenario Outline: Card Owner add email account outside the company
-      Given "Card Owner" login to the web
-      When "Card Owner" want add authorized user
-      And add user "<condition>"
-      Then information to invite the user to company appears
-      Examples:
-      |condition|
-      | from another company |
-      | that has not yet joined the company |
-
     @PPM_TC_58 @add-authorized-user @done @PaymentModule
     Scenario: User who doesn't have company can't add authorized user
       Given "User doesn't have company" login to the web
@@ -130,35 +119,6 @@ Feature: Payment Method
       Then button setup company appears since "User" have to create company first
       When click button setup company
       Then Card Owner will be redirected to My Company page
-
-    @PPM_TC_60 @PPM_TC_61 @add-authorized-user @done @PaymentModule
-    Scenario Outline: Card Owner invite several authorized user that has not yet join company
-      Given "Card Owner" login to the web
-      And "Card Owner" go the payment methods page
-      And card owner added "<amount>" authorized user that has not yet join company
-      When invite "<amount>" of the user
-      Then create account email sent to "<condition>" the email user
-      Examples:
-      | amount | condition |
-      | 1      |           |
-      | 2      | all of    |
-
-    @PPM_TC_62 @remove-authorized-user @done @PaymentModule
-    Scenario: Card Owner want to remove added user without a company that has not invited yet
-      Given "Card Owner" login to the web
-      When "Card Owner" go the payment methods page
-      And card owner has not yet invite the authorized user
-      When remove that invited authorized user
-      Then succeed remove authorized user without company
-
-    @PPM_TC_63 @remove-authorized-user @done @PaymentModule
-    Scenario: Card Owner want to remove added user without a company that has been invited
-      Given "Card Owner" login to the web
-      When "Card Owner" go the payment methods page
-      And card owner invite the authorized user without company
-      When remove that invited authorized user
-      Then succeed remove authorized user without company
-      #verify that he can't see standing instruction after join
 
     @PPM_TC_90 @remove-authorized-user @done @PaymentModule
     Scenario Outline: Authorized User and User can't remove the list of authorized user
@@ -297,3 +257,45 @@ Feature: Payment Method
       And confirm remove "with" transferring the standing instruction
       Then succeed remove authorized user who has standing instruction
       And standing instruction will be managed by the selected user
+
+
+#   THE FEATURE IS HIDDEN
+#    @PPM_TC_57 @PPM_TC_59 @add-authorized-user @done @PaymentModule
+#    Scenario Outline: Card Owner add email account outside the company
+#      Given "Card Owner" login to the web
+#      When "Card Owner" want add authorized user
+#      And add user "<condition>"
+#      Then information to invite the user to company appears
+#      Examples:
+#      |condition|
+#      | from another company |
+#      | that has not yet joined the company |
+
+#    @PPM_TC_60 @PPM_TC_61 @add-authorized-user @done @PaymentModule
+#    Scenario Outline: Card Owner invite several authorized user that has not yet join company
+#      Given "Card Owner" login to the web
+#      And "Card Owner" go the payment methods page
+#      And card owner added "<amount>" authorized user that has not yet join company
+#      When invite "<amount>" of the user
+#      Then create account email sent to "<condition>" the email user
+#      Examples:
+#      | amount | condition |
+#      | 1      |           |
+#      | 2      | all of    |
+#
+#    @PPM_TC_62 @remove-authorized-user @done @PaymentModule
+#    Scenario: Card Owner want to remove added user without a company that has not invited yet
+#      Given "Card Owner" login to the web
+#      When "Card Owner" go the payment methods page
+#      And card owner has not yet invite the authorized user
+#      When remove that invited authorized user
+#      Then succeed remove authorized user without company
+
+#    @PPM_TC_63 @remove-authorized-user @done @PaymentModule
+#    Scenario: Card Owner want to remove added user without a company that has been invited
+#      Given "Card Owner" login to the web
+#      When "Card Owner" go the payment methods page
+#      And card owner invite the authorized user without company
+#      When remove that invited authorized user
+#      Then succeed remove authorized user without company
+      #verify that he can't see standing instruction after join
