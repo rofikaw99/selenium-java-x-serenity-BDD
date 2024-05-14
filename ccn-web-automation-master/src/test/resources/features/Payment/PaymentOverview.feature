@@ -5,11 +5,6 @@ Feature: Payment Overview
   Scenario Outline: create request payment upcoming
     Given user get SSO token
     And user create upcoming payment request
-#    Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
-#    When user find the payment that already created with "<keyword>"
-#    Then verify paid status color code is correct
 
 
     Examples:
@@ -23,7 +18,7 @@ Feature: Payment Overview
 
     Examples:
       | status  | paymentRequestId                     | condition            | menu                | keyword     |
-      | READY   | ed096131-8cab-4f43-9ab8-ffd2dc0f4c2f | Have Payment Request | My Payment Overview | REF-        |
+      | READY   | 52173ef3-f566-4722-8e17-b02ecb04a3a5 | Have Payment Request | My Payment Overview | REF-        |
 
   @PPM_TC_41 @PaymentOverview @PaymentModule
   Scenario Outline: update payment request to expired
@@ -32,7 +27,7 @@ Feature: Payment Overview
 
     Examples:
       | status    | paymentRequestId                     | condition            | menu                | keyword |
-      | EXPIRED   | 4d9b2428-4fd3-4d64-929f-5ac8ae73338b | Have Payment Request | My Payment Overview | REF-    |
+      | EXPIRED   | 52173ef3-f566-4722-8e17-b02ecb04a3a5 | Have Payment Request | My Payment Overview | REF-    |
 
   @PPM_TC_42 @PaymentOverview @PaymentModule
   Scenario Outline: create request payment credit term with status paid
@@ -294,7 +289,7 @@ Feature: Payment Overview
 
     Examples:
       | condition               | menu                | keyword     |
-      | Authorize User Overview | My Payment Overview | outstanding |
+      | Authorize User Overview | My Payment Overview | upcoming    |
 
 
   @PPM_TC_51_3 @PaymentOverview @PaymentModule
