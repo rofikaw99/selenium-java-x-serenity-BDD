@@ -7,19 +7,19 @@ Feature: Payment Method
 
   Only users who are not authorized to use a commercial card or have not previously set up a commercial card Can eligible to setup a commercial card.
 
-  @PPM_TC_73 @commercial-card-access @done @PaymentModule
+  @PPM_TC_73 @commercial-card-access @PaymentModule
   Scenario: User able setup commercial card
     Given "User have company" login to the web
     When "User" setup commercial card
     Then user able to setup commercial card
 
-  @PPM_TC_1 @commercial-card-access @done @PaymentModule
+  @PPM_TC_1 @commercial-card-access @PaymentModule
   Scenario: User able setup commercial card
     Given "User doesn't have company" login to the web
     When "User" setup commercial card
     Then button setup company appears since "User" have to create company first
 
-  @PPM_TC_6 @PPM_TC_7 @commercial-card-access @done @PaymentModule
+  @PPM_TC_6 @PPM_TC_7 @commercial-card-access @PaymentModule
   Scenario Outline: User who has been authorized to use a commercial card can't setup commercial card
     Given "<user type>" login to the web
     When "<user type>" setup commercial card
@@ -29,7 +29,7 @@ Feature: Payment Method
       | Card Owner |
       | Authorized User |
 
-  @PPM_TC_12 @PPM_TC_13 @view-commercial-card @done @PaymentModule
+  @PPM_TC_12 @PPM_TC_13 @view-commercial-card @PaymentModule
   Scenario Outline: Card Owner and Authorized User can view the last 4 digit visa card
     Given "<user type>" login to the web
     When "<user type>" click view icon
@@ -39,12 +39,12 @@ Feature: Payment Method
       | Card Owner |
       | Authorized User |
 
-  @PPM_TC_14 @view-commercial-card @done @PaymentModule
+  @PPM_TC_14 @view-commercial-card @PaymentModule
   Scenario: User have no option to view the visa card
     Given "User" login to the web
     Then no view icon
 
-  @PPM_TC_2 @add-commercial-card @done @PaymentModule
+  @PPM_TC_2 @add-commercial-card @PaymentModule
   Scenario Outline: User can't input non visa singapore issued when setup commercial card
     Given "User have company" login to the web
     When "User" setup commercial card
@@ -54,9 +54,9 @@ Feature: Payment Method
     Examples:
     | condition | note |
     | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
-    | duplicate | card number already in use |
+    | duplicate | This card has already been set up. Please try using a different card. |
 
-  @PPM_TC_4 @add-commercial-card @done @PaymentModule
+  @PPM_TC_4 @add-commercial-card @PaymentModule
   Scenario Outline: Input several invalid data in commercial card form
     Given "User have company" login to the web
     When "User have company" setup commercial card
@@ -69,7 +69,7 @@ Feature: Payment Method
       |           |  invalid              |             |               | Your card's expiration year is in the past.|
       |           |                       | invalid     |               | Your card's security code is incomplete. |
 
-    @PPM_TC_3 @add-commercial-card @done
+    @PPM_TC_3 @add-commercial-card
     Scenario: User able to save commercial card when input valid VISA number
       Given "User have company" login to the web
       When "user" setup commercial card
@@ -77,25 +77,7 @@ Feature: Payment Method
       And press save commercial card
       Then commercial card will be saved (tokenization)
 
-    @PPM_TC_16 @remove-commercial-card @done @PaymentModule
-    Scenario Outline: Authorized user not able and User have no option to remove commercial card
-      Given "<user type>" login to the web
-      When "<user type>" want to remove commercial card
-      Then "<user type>" "<result>" to remove commercial card
-      Examples:
-        | user type | result |
-        | Authorized User | no option |
-        | User Backup | no option |
-
-    @PPM_TC_15 @remove-commercial-card @done @PaymentModule
-    Scenario: Card owner can remove their commercial card
-      Given "Card Owner that want to remove their card" login to the web
-      And "Card Owner" has commercial card
-      When "Card Owner" want to remove commercial card
-      Then "Card Owner" "able" to remove commercial card
-      Then all standing instruction and authorized user will be removed
-
-    @PPM_TC_10 @PPM_TC_11 @add-authorized-user @done @PaymentModule
+    @PPM_TC_10 @PPM_TC_11 @add-authorized-user @PaymentModule
     Scenario Outline: Authorized User and User doesn't have function to add authorized user
       Given "<user type>" login to the web
       When "<user type>" want add authorized user
@@ -103,9 +85,9 @@ Feature: Payment Method
       Examples:
       | user type |
       | Authorized User |
-      | User Backup |
+      | User |
 
-    @PPM_TC_8 @add-authorized-user @done @PaymentModule
+    @PPM_TC_8 @add-authorized-user @PaymentModule
     Scenario: Card Owner success add authorized user
       Given "Card Owner" login to the web
       When "Card Owner" want add authorized user
@@ -120,16 +102,6 @@ Feature: Payment Method
       When click button setup company
       Then Card Owner will be redirected to My Company page
 
-    @PPM_TC_90 @remove-authorized-user @done @PaymentModule
-    Scenario Outline: Authorized User and User can't remove the list of authorized user
-      Given "<user type>" login to the web
-      When "<user type>" want remove authorized user
-      Then the manage authored user function not available for "<user type>"
-      Examples:
-      | user type |
-      | Authorized User |
-      | User            |
-
     @PPM_TC_18 @setup-si @done @PaymentModule
     Scenario: Non company user not able to setup standing instruction
       Given "User doesn't have company" login to the web
@@ -140,23 +112,23 @@ Feature: Payment Method
     Scenario: Setup standing instruction with authorized user
       Given "Authorized User" login to the web
       When "Authorized User" want to setup standing instruction
+      Then can select supplier to setup standing instruction
+      Then able to setup standing instruction
       Then "Authorized User" can see all the standing instruction created within the company. but they only able to manage their own standing instruction
-      And can select supplier to setup standing instruction
-      And able to setup standing instruction
 
     @PPM_TC_20 @setup-si @done @PaymentModule
     Scenario: Setup standing instruction with card owner
       Given "Card Owner" login to the web
       When "Card Owner" want to setup standing instruction
+      Then can select supplier to setup standing instruction
+      Then able to setup standing instruction
       Then "Card Owner" can view all standing instruction including authorize user
-      And can select supplier to setup standing instruction
-      And able to setup standing instruction
 
     @PPM_TC_21 @update-si @done @PaymentModule
     Scenario: Update standing instruction with card owner
       Given "Card Owner" login to the web
       When "Card Owner" want to update standing instruction
-      And choose one of the standing instruction
+      And "Card Owner" choose one of the standing instruction
       Then only threshold limit, end date can be updated
       And success update standing instruction
 
@@ -164,7 +136,7 @@ Feature: Payment Method
     Scenario: Update standing instruction with authorize user
       Given "Have Payment Request" login to the web
       When "Have Payment Request" want to update standing instruction
-      And choose one of the standing instruction
+      And "Authorized User" choose one of the standing instruction
       Then authorized user only can update their own standing instruction
       And only threshold limit, end date can be updated
       And success update standing instruction
@@ -179,14 +151,14 @@ Feature: Payment Method
     Scenario: Only card owner can transfer standing instruction ownership
       Given "Card Owner" login to the web
       When "Card Owner" want to transfer standing instruction ownership
-      And choose one of the standing instruction
+      And "Card Owner" choose one of the standing instruction
       Then Card Owner able to transfer instruction ownership
 
     @PPM_TC_25 @transfer-si @PaymentModule
     Scenario: Authorized User can't transfer standing instruction ownership
       Given "Authorized User" login to the web
       When "Authorized User" want to transfer standing instruction ownership
-      And choose one of the standing instruction
+      And "Authorized User" choose one of the standing instruction
       Then Authorized User can't transfer standing instruction ownership
 
     @PPM_TC_26 @transfer-si @done @PaymentModule
@@ -194,6 +166,60 @@ Feature: Payment Method
       Given "User" login to the web
       When "User" want to transfer standing instruction ownership
       Then the function not available
+
+    @PPM_TC_16 @remove-commercial-card @done @PaymentModule
+    Scenario Outline: Authorized user not able and User have no option to remove commercial card
+      Given "<user type>" login to the web
+      When "<user type>" want to remove commercial card
+      Then "<user type>" "<result>" to remove commercial card
+      Examples:
+        | user type | result |
+        | Authorized User | no option |
+        | User | no option |
+
+    @PPM_TC_15 @remove-commercial-card @done @PaymentModule
+    Scenario: Card owner can remove their commercial card
+      Given "Card Owner that want to remove their card" login to the web
+    #      And "Card Owner" has commercial card
+      When "Card Owner" want to remove commercial card
+      Then "Card Owner" "able" to remove commercial card
+      Then all standing instruction and authorized user will be removed
+
+    @PPM_TC_68 @remove-authorized-user @done @PaymentModule
+    Scenario: Card Owner remove user who doesn't have standing instruction
+      Given "Card Owner" login to the web
+      When remove authorized user that doesn't has standing instruction
+      Then there's no option to transfer the SI
+
+    @PPM_TC_65 @remove-authorized-user @done @PaymentModule
+    Scenario: Card Owner remove user without transferring the standing instruction
+      Given "Authorized User" has standing instruction
+      Given "Card Owner" login to the web
+      When "Card Owner" go the payment methods page
+      When remove authorized user that has standing instruction
+      And confirm remove "without" transferring the standing instruction
+      Then succeed remove authorized user who has standing instruction
+      And standing instruction will be removed from the list of standing instruction
+
+    @PPM_TC_64 @remove-authorized-user @done @PaymentModule
+    Scenario: Card Owner remove user with transferring the standing instruction
+      Given "Authorized User" has standing instruction
+      Given "Card Owner" login to the web
+      When "Card Owner" go the payment methods page
+      When remove authorized user that has standing instruction
+      And confirm remove "with" transferring the standing instruction
+      Then succeed remove authorized user who has standing instruction
+      And standing instruction will be managed by the selected user
+
+    @PPM_TC_90 @remove-authorized-user @done @PaymentModule
+    Scenario Outline: Authorized User and User can't remove the list of authorized user
+      Given "<user type>" login to the web
+      When "<user type>" want remove authorized user
+      Then the manage authored user function not available for "<user type>"
+      Examples:
+        | user type |
+        | Authorized User |
+        | User            |
 
     @PPM_TC_69 @remove-si @done @PaymentModule
     Scenario: Card owner able to remove all standing instruction within the card
@@ -231,33 +257,6 @@ Feature: Payment Method
       Given "Authorized User that Leave Company" login to the web
       When "Authorized User" leave the company
       Then all standing instruction will be transferred to card owner
-
-    @PPM_TC_68 @remove-authorized-user @done @PaymentModule
-    Scenario: Card Owner remove user who doesn't have standing instruction
-      Given "Card Owner" login to the web
-      When remove authorized user that doesn't has standing instruction
-      Then there's no option to transfer the SI
-
-    @PPM_TC_65 @remove-authorized-user @done @PaymentModule
-    Scenario: Card Owner remove user without transferring the standing instruction
-      Given "Authorized User" has standing instruction
-      Given "Card Owner" login to the web
-      When "Card Owner" go the payment methods page
-      When remove authorized user that has standing instruction
-      And confirm remove "without" transferring the standing instruction
-      Then succeed remove authorized user who has standing instruction
-      And standing instruction will be removed from the list of standing instruction
-
-    @PPM_TC_64 @remove-authorized-user @done @PaymentModule
-    Scenario: Card Owner remove user with transferring the standing instruction
-      Given "Authorized User" has standing instruction
-      Given "Card Owner" login to the web
-      When "Card Owner" go the payment methods page
-      When remove authorized user that has standing instruction
-      And confirm remove "with" transferring the standing instruction
-      Then succeed remove authorized user who has standing instruction
-      And standing instruction will be managed by the selected user
-
 
 #   THE FEATURE IS HIDDEN
 #    @PPM_TC_57 @PPM_TC_59 @add-authorized-user @done @PaymentModule

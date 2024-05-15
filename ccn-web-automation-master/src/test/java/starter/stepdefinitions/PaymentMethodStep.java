@@ -36,44 +36,41 @@ public class PaymentMethodStep {
     private List<Integer> indexes = new LinkedList<>();
     private int emailLength = 0;
 
+    public void createAuthorizedUser() throws Exception {
+        if (!paymentMethodPage.btnEyesCardDisplayed()) {
+            companyPage.myMenuAccount("Sign Out");
+
+            Thread.sleep(3000);
+            loginPage.login(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
+            paymentMethodPage.goToPayment();
+            paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+            paymentMethodPage.clickAddUserBtn();
+            paymentMethodPage.chooseEmailUser(Constants.EMAIL_AUTHORIZED_USER);
+            paymentMethodPage.clickConfirmAddUserBtn();
+            Thread.sleep(3000);
+
+            companyPage.myMenuAccount("Sign Out");
+            Thread.sleep(3000);
+            loginPage.login(email);
+            paymentMethodPage.goToPayment();
+            Assert.assertTrue(paymentMethodPage.btnEyesCardDisplayed());
+        }
+    }
+
     @When("{string} setup commercial card")
     public void setupCommercialCard(String userType) throws Exception {
         //type of user is not affect this step, so being ignored
         paymentMethodPage.goToPayment();
-        if (userType.equals("User")) {
-            if (paymentMethodPage.btnEyesCardDisplayed()) {
-                paymentMethodPage.clickDeleteCardBtn();
-                paymentMethodPage.clickConfirmRemoveCardBtn();
-                Thread.sleep(3000);
-                Assert.assertTrue(paymentMethodPage.setupCardHeaderDisplayed());
-            }
-        } else if (userType.equals("Card Owner")) {
-            if (paymentMethodPage.setupCardHeaderDisplayed()) {
-                paymentMethodPage.inputCardNumber(Constants.CARD_TO_BE_DELETED);
-                paymentMethodPage.inputExpDate(Constants.CARD_EXP_DATE);
-                paymentMethodPage.inputCvc(Constants.CARD_CVC);
-                paymentMethodPage.clickSaveBtn();
-                Assert.assertTrue(paymentMethodPage.btnEyesCardDisplayed());
-            }
-        } else if (userType.equals("Authorized User")) {
-            if (paymentMethodPage.setupCardHeaderDisplayed()) {
-                companyPage.myMenuAccount("Sign Out");
-
-                Thread.sleep(3000);
-                loginPage.login(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
-                paymentMethodPage.goToPayment();
-                paymentMethodPage.clickAddUserBtn();
-                email = paymentMethodPage.chooseEmailUser();
-                System.out.println("Selected email " + email);
-                paymentMethodPage.clickConfirmUserBtn();
-                Thread.sleep(3000);
-
-                companyPage.myMenuAccount("Sign Out");
-                Thread.sleep(3000);
-                loginPage.login(email);
-                paymentMethodPage.goToPayment();
-                Assert.assertTrue(paymentMethodPage.btnEyesCardDisplayed());
-            }
+        switch (userType) {
+            case "User":
+                paymentMethodPage.removeCommercialCard();
+                break;
+            case "Card Owner":
+                paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+                break;
+            case "Authorized User":
+                createAuthorizedUser();
+                break;
         }
     }
 
@@ -117,7 +114,7 @@ public class PaymentMethodStep {
         loginPage.inputPasswordLogin(Constants.PASSWORD);
         Thread.sleep(3000);
         loginPage.pressSignIn();
-        Thread.sleep(15000);
+        Thread.sleep(30000);
         loginPage.validateInMainWeb();
     }
 
@@ -128,6 +125,7 @@ public class PaymentMethodStep {
 
     @And("user input {string} commercial card")
     public void userInputCommercialCard(String condition) {
+        Assert.assertTrue(paymentMethodPage.setupCardHeaderDisplayed());
         String cardNo = "";
         if (condition.contains("non visa singapore")) cardNo = Constants.CARD_NON_VISA_SINGAPORE;
         else if (condition.contains("duplicate")) cardNo = Constants.CARD_DUPLICATE;
@@ -139,7 +137,10 @@ public class PaymentMethodStep {
     }
 
     @Then("validation note {string} appears")
-    public void validationNoteAppears(String note) {
+    public void validationNoteAppears(String note) throws InterruptedException {
+        if (!paymentMethodPage.getErrorMsgText(note)) {
+            paymentMethodPage.removeCommercialCard();
+        }
         Assert.assertTrue(paymentMethodPage.getErrorMsgText(note));
     }
 
@@ -150,9 +151,17 @@ public class PaymentMethodStep {
     }
 
     @When("{string} want to remove commercial card")
-    public void wantToRemoveCommercialCard(String userType) throws InterruptedException {
+    public void wantToRemoveCommercialCard(String userType) throws Exception {
         //type of user is not affect this step, so being ignored
         paymentMethodPage.goToPayment();
+        switch (userType) {
+            case "Authorized User":
+                createAuthorizedUser();
+                break;
+            case "Card Owner":
+                paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+                break;
+        }
     }
 
     @Then("all standing instruction and authorized user will be removed")
@@ -161,6 +170,8 @@ public class PaymentMethodStep {
         paymentMethodPage.clickConfirmRemoveCardBtn();
         Thread.sleep(3000);
         Assert.assertTrue(paymentMethodPage.setupCardHeaderDisplayed());
+        if (paymentMethodPage.setupCardHeaderDisplayed())
+            paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
     }
 
     @Then("{string} {string} to remove commercial card")
@@ -182,6 +193,12 @@ public class PaymentMethodStep {
     public void clickViewIcon(String userType) throws Exception {
         //type of user is ignored
         paymentMethodPage.goToPayment();
+        if (userType.equals("Card Owner")) {
+            if (!paymentMethodPage.btnEyesCardDisplayed())
+                paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+        } if (userType.equals("Authorized User"))
+            if (!paymentMethodPage.btnEyesCardDisplayed())
+                createAuthorizedUser();
         paymentMethodPage.clickEyesBtn();
     }
 
@@ -198,18 +215,24 @@ public class PaymentMethodStep {
     }
 
     @When("{string} want add authorized user")
-    public void wantAddAuthorizedUser(String userType) throws InterruptedException {
+    public void wantAddAuthorizedUser(String userType) throws Exception {
         //userType is ignored
         paymentMethodPage.goToPayment();
-        if (userType.equals("Card Owner")) paymentMethodPage.clickAddUserBtn();
+        switch (userType) {
+            case "Card Owner":
+                paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+                paymentMethodPage.clickAddUserBtn();
+                break;
+            case "Authorized User":
+                createAuthorizedUser();
+                break;
+        }
     }
-
 
     @Then("the manage authored user function not available for {string}")
     public void theManageAuthoredUserFunctionNotAvailableFor(String userType) {
         //userType is ignored
         Assert.assertFalse(paymentMethodPage.txtListOfUserDisplayed());
-        Assert.assertFalse(paymentMethodPage.btnInviteDisplayed());
         Assert.assertFalse(paymentMethodPage.btnRemoveDisplayed());
     }
 
@@ -258,7 +281,14 @@ public class PaymentMethodStep {
     public void wantRemoveAuthorizedUser(String userType) throws Exception {
         //userType is ignored
         paymentMethodPage.goToPayment();
-        if (userType.equals("Card Owner")) paymentMethodPage.clickRemoveBtn();
+        if (userType.equals("Card Owner")) {
+            if (paymentMethodPage.emailAuthorizedUser().size() < 1)
+                paymentMethodPage.clickAddUserBtn();
+                email = paymentMethodPage.chooseEmailUser();
+                paymentMethodPage.clickConfirmAddUserBtn();
+                Thread.sleep(2000);
+                paymentMethodPage.clickRemoveBtn();
+        }
     }
 
     @And("card owner has not yet invite the authorized user")
@@ -343,15 +373,12 @@ public class PaymentMethodStep {
     @Then("commercial card will be saved \\(tokenization)")
     public void commercialCardWillBeSavedTokenization() throws InterruptedException {
         Assert.assertTrue(paymentMethodPage.cardInfoHeaderDisplayed());
-        paymentMethodPage.clickEyesBtn();
-        Assert.assertTrue(paymentMethodPage.txtCardNoDisplayed());
+        if (paymentMethodPage.cardInfoHeaderDisplayed()){
+            paymentMethodPage.clickEyesBtn();
+            Assert.assertTrue(paymentMethodPage.txtCardNoDisplayed());
 
-        //AFTER TEST
-        //DOING REMOVE THE CARD
-        paymentMethodPage.clickDeleteCardBtn();
-        paymentMethodPage.clickConfirmRemoveCardBtn();
-        Thread.sleep(3000);
-        Assert.assertFalse(paymentMethodPage.txtCardNoDisplayed());
+            paymentMethodPage.removeCommercialCard();
+        }
     }
 
     @And("Card Owner can only authorise user within their same company")
@@ -396,21 +423,39 @@ public class PaymentMethodStep {
     }
 
     @When("remove authorized user that has standing instruction")
-    public void removeAuthorizedUserThatHasStandingInstruction() {
+    public void removeAuthorizedUserThatHasStandingInstruction() throws Exception {
         emails = paymentMethodPage.manageEmailSI();
-        email = emails.get(index);
-        for (int i = 0; i < emails.size(); i++){
-            if (emails.get(i).equals(email)) indexes.add(i);
+        if (emails.size() < 1) {
+            paymentMethodPage.createNewSI(index);
+            Assert.assertEquals(1, paymentMethodPage.manageEmailSI().size());
+
+            paymentMethodPage.chooseSINo(index);
+            //todo transfer
+
+        } else {
+            for (String e: emails){
+                if (!e.equals(Constants.EMAIL_CARD_OWNER_WITH_COMPANY)) {
+                    email = e;
+                    break;
+                }
+            }
+            index = paymentMethodPage.emailAuthorizedUser().indexOf(email);
         }
-        int indexOfAuthorized = paymentMethodPage.emailAuthorizedUser().indexOf(email);
-        System.out.println("index of authorized: " + indexOfAuthorized + " " + email);
-        paymentMethodPage.clickRemoveUserBtn(indexOfAuthorized - 1); //the button is the length of email - 1
+        paymentMethodPage.clickRemoveUserBtn(index); //the button is the length of email - 1
     }
 
     @When("{string} want to setup standing instruction")
-    public void wantToSetupStandingInstruction(String userType) throws InterruptedException {
+    public void wantToSetupStandingInstruction(String userType) throws Exception {
         //userType is ignored
         paymentMethodPage.goToPayment();
+        switch (userType) {
+            case "Card Owner":
+                paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+                break;
+            case "Authorized User":
+                createAuthorizedUser();
+                break;
+        }
     }
 
     @Then("not able to setup standing instruction")
@@ -464,30 +509,20 @@ public class PaymentMethodStep {
     public void wantToUpdateStandingInstruction(String userType) throws InterruptedException {
         //userType is ignored
         paymentMethodPage.goToPayment();
-        Thread.sleep(2000);
         emails = paymentMethodPage.manageEmailSI();
-        if (userType.equals("Card Owner")){
-            if (emails.size() < 1) {
-                paymentMethodPage.clickAddNewSIBtn();
-                paymentMethodPage.inputSupplier(index);
-                paymentMethodPage.inputStartDate(4);
-                paymentMethodPage.inputEndDate(10);
-                paymentMethodPage.inputThreshold("900");
-                paymentMethodPage.clickSaveBtn();
-                Thread.sleep(3000); //wait for UI loading
-                Assert.assertTrue(paymentMethodPage.manageEmailSI().size() > 0);
-            }
-        } else if (userType.equals("Authorized User")){
-            if (!emails.contains(Constants.EMAIL_AUTHORIZED_USER)){
-                paymentMethodPage.clickAddNewSIBtn();
-                paymentMethodPage.inputSupplier(index);
-                paymentMethodPage.inputStartDate(4);
-                paymentMethodPage.inputEndDate(10);
-                paymentMethodPage.inputThreshold("900");
-                paymentMethodPage.clickSaveBtn();
-                Thread.sleep(3000); //wait for UI loading
-                Assert.assertTrue(paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER));
-            }
+        switch (userType) {
+            case "Card Owner":
+                if (emails.size() < 1) {
+                    paymentMethodPage.createNewSI(index);
+                    Assert.assertTrue(paymentMethodPage.manageEmailSI().size() > 0);
+                }
+                break;
+            case "Authorized User":
+                if (!emails.contains(Constants.EMAIL_AUTHORIZED_USER)) {
+                    paymentMethodPage.createNewSI(index);
+                    Assert.assertTrue(paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER));
+                }
+                break;
         }
     }
 
@@ -509,9 +544,13 @@ public class PaymentMethodStep {
         }
     }
 
-    @And("choose one of the standing instruction")
-    public void chooseOneOfTheStandingInstruction() {
-        paymentMethodPage.chooseSINo();
+    @And("{string} choose one of the standing instruction")
+    public void chooseOneOfTheStandingInstruction(String userType) {
+        if (userType.equals("Card Owner")) paymentMethodPage.chooseSINo(0);
+        else if (userType.equals("Authorized User")) {
+            index = paymentMethodPage.manageEmailSI().indexOf(Constants.EMAIL_AUTHORIZED_USER);
+            paymentMethodPage.chooseSINo(index);
+        }
     }
 
     @Then("can't update standing instruction")
@@ -523,6 +562,21 @@ public class PaymentMethodStep {
     public void wantToTransferStandingInstructionOwnership(String userType) throws InterruptedException {
         //userType is ignored
         paymentMethodPage.goToPayment();
+        emails = paymentMethodPage.manageEmailSI();
+        switch (userType) {
+            case "Card Owner":
+                if (emails.size() < 1) {
+                    paymentMethodPage.createNewSI(index);
+                    Assert.assertTrue(paymentMethodPage.manageEmailSI().size() > 0);
+                }
+                break;
+            case "Authorized User":
+                if (!emails.contains(Constants.EMAIL_AUTHORIZED_USER)) {
+                    paymentMethodPage.createNewSI(index);
+                    Assert.assertTrue(paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER));
+                }
+                break;
+        }
     }
 
     @Then("Authorized User can't transfer standing instruction ownership")
@@ -646,8 +700,15 @@ public class PaymentMethodStep {
     @When("remove authorized user that doesn't has standing instruction")
     public void removeAuthorizedUserThatDoesnTHasStandingInstruction() throws InterruptedException {
         paymentMethodPage.goToPayment();
-        index = paymentMethodPage.emailAuthorizedUser().indexOf(Constants.EMAIL_AU_WITHOUT_SI);
-        paymentMethodPage.clickRemoveUserBtn(index - 1);
+        List<String> emailAuthorizedUser = paymentMethodPage.emailAuthorizedUser();
+        Set<String> emailSI = Set.copyOf(paymentMethodPage.manageEmailSI());
+        for (int i = 0; i < emailAuthorizedUser.size(); i++){
+            if (!emailSI.contains(emailAuthorizedUser.get(i))) {
+                index = i;
+                break;
+            }
+        }
+        paymentMethodPage.clickRemoveUserBtn(index);
     }
 
     @Then("there's no option to transfer the SI")
