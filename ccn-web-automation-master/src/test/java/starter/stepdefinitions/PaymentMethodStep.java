@@ -441,7 +441,7 @@ public class PaymentMethodStep {
             }
             index = paymentMethodPage.emailAuthorizedUser().indexOf(email);
         }
-        paymentMethodPage.clickRemoveUserBtn(index); //the button is the length of email - 1
+        paymentMethodPage.clickRemoveUserBtn(index);
     }
 
     @When("{string} want to setup standing instruction")
