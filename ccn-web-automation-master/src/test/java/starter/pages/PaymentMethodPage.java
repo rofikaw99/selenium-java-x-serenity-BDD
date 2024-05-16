@@ -98,7 +98,7 @@ public class PaymentMethodPage extends PageObject {
     private By fieldManageBy = By.xpath("");
     private By btnSaveSI = By.id("si-add-new");
     private By btnSaveSIUpdate = By.id("si-update");
-    private By btnOk = By.id("//button[@placeholder = 'OK']");
+    private By btnOk = By.xpath("//button[@placeholder = 'OK']");
 
     private By specEmail(String email){
         return By.xpath("//div[//*[text() = 'List of Authorized Users:']]//*[text()='"+ email+"']" );
@@ -359,7 +359,7 @@ public class PaymentMethodPage extends PageObject {
 
     public void inputSupplier(int index) throws InterruptedException {
         Thread.sleep(1000);
-        $(fieldSupplier).waitUntilVisible();
+        $(fieldSupplier).waitUntilPresent();
         evaluateJavascript("arguments[0].click();", $(fieldSupplier));
         evaluateJavascript("arguments[0].click();", $$(dropdownSupplier).get(index));
     }
