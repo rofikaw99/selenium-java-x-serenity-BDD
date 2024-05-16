@@ -443,3 +443,17 @@ Feature: Payment Overview
     Examples:
       | condition               | menu                | keyword     |
       | Authorize User Overview | My Payment Overview | outstanding |
+
+
+  #PaymentNotification
+
+  @PPM_TC_40 @PaymentOverview
+  Scenario Outline: create request payment upcoming
+    Given user get SSO token
+    When user create upcoming payment request
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email                | menu                | keyword |
+      | Have Payment Request | My Payment Overview | REF-    |
