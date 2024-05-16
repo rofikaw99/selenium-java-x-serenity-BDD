@@ -167,6 +167,18 @@ public class LoginPage extends PageObject {
         Assert.assertTrue(url.contains("portal"));
     }
 
+    public void login(String email) throws InterruptedException {
+        goToMainWeb();
+        pressBtnLoginInit();
+        changeSigninWindow();
+        inputEmailLogin(email);
+        inputPasswordLogin(Constants.PASSWORD);
+        Thread.sleep(3000);
+        pressSignIn();
+        Thread.sleep(15000);
+        validateInMainWeb();
+    }
+
 //	private SearchContext shadowDomcpsubscribe() throws Exception {
 //		JavascriptExecutor js = (JavascriptExecutor) driver;
 //		Thread.sleep(waitResponse);

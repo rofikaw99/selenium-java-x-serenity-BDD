@@ -63,11 +63,11 @@ public class Constants {
     public static String EMAIL_WITHOUT_COMPANY = "myqa-ccn-001@yopmail.com";
     public static String EMAIL_WITH_COMPANY = "co2-autoqa-ccn-001@yopmail.com";
     public static String EMAIL_DIFFERENT_COMPANY = "sg-auto-001@yopmail.com";
-    public static String EMAIL_CARD_OWNER_WITH_COMPANY = "co2-autoqa-ccn-001@yopmail.com";//co3
-    public static String EMAIL_AUTHORIZED_USER = "au7-autoqa-ccn-001@yopmail.com";//au
-    public static String EMAIL_TRANSFER_SI = "au6-autoqa-ccn-001@yopmail.com";//au
-    public static String EMAIL_AU_WITHOUT_SI = "au-without-si-autoqa@yopmail.com";
-
+//    public static String EMAIL_CARD_OWNER_WITH_COMPANY = "co2-autoqa-ccn-001@yopmail.com";//co3
+    public static String EMAIL_CARD_OWNER_WITH_COMPANY = "co-auto-001@yopmail.com";//co3
+    public static String EMAIL_AUTHORIZED_USER = "au-auto-001@yopmail.com";//au
+    public static String EMAIL_TRANSFER_SI = "au1-autoqa-ccn-001@yopmail.com";//au //todo can improve this
+    public static String EMAIL_AU_WITHOUT_SI = "au-without-si-autoqa@yopmail.com"; //todo can improve this
     public static String EMAIL_HAVE_PAYMENT_REQUEST = "sgpcn2@yopmail.com";
     public static String USER_OVERVIEW = "qa-ccn-kpxsyhyy@yopmail.com";
     public static String EMAIL_USER_BACKUP = "malaypcn@yopmail.com";
@@ -79,7 +79,7 @@ public class Constants {
     public static String CARD_NON_VISA_SINGAPORE = "4000005540000008";
     public static String CARD_DUPLICATE = "4000007020000003";
     public static String CARD_VISA_SINGAPORE = "4000002920000005"; //for this
-    public static String CARD_TO_BE_DELETED = "4000000560000004"; //DENMARK
+    public static String CARD_TO_BE_DELETED = "4000000400000008"; //AUSTRIA
     public static String CARD_CVC = "123";
     public static String CARD_EXP_DATE = Common.createExpDate(3);
 }
