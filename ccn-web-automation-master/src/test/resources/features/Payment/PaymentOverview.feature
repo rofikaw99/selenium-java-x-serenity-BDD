@@ -18,7 +18,7 @@ Feature: Payment Overview
 
     Examples:
       | status  | paymentRequestId                     | condition            | menu                | keyword     |
-      | READY   | 52173ef3-f566-4722-8e17-b02ecb04a3a5 | Have Payment Request | My Payment Overview | REF-        |
+      | READY   | 35034b8a-b66a-4128-ba42-73fd16f917e7 | Have Payment Request | My Payment Overview | REF-        |
 
   @PPM_TC_41 @PaymentOverview @PaymentModule
   Scenario Outline: update payment request to expired
