@@ -442,7 +442,7 @@ Feature: Payment Overview
 
   #PaymentNotification
 
-  @PPM_TC_40 @PaymentOverview
+  @PaymentOverview @PaymentNotification
   Scenario Outline: create request payment upcoming
     Given user get SSO token
     When user create upcoming payment request

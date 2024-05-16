@@ -142,9 +142,9 @@ public class PaymentOverviewPage extends PageObject {
     }
 
     public void payForCCCheckoutButton()throws Exception{
-        Thread.sleep(waitResponse);
-        System.out.println("cookie button is display-enable : "+$(cookie).isDisplayed()+" - "+$(cookie).isEnabled());
-        evaluateJavascript("arguments[0].click();", $(cookie));
+//        Thread.sleep(waitResponse);
+//        System.out.println("cookie button is display-enable : "+$(cookie).isDisplayed()+" - "+$(cookie).isEnabled());
+//        evaluateJavascript("arguments[0].click();", $(cookie));
         Thread.sleep(waitResponse);
         System.out.println("pay button is display-enable : "+$(payCheckout).isDisplayed()+" - "+$(payCheckout).isEnabled());
     }
