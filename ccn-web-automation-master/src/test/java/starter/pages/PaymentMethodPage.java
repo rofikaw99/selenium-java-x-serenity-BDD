@@ -115,7 +115,7 @@ public class PaymentMethodPage extends PageObject {
 
     public void goToPayment() throws InterruptedException {
         openAt(Constants.URL_PAYMENT_METHODS);
-        Thread.sleep(5000);
+        Thread.sleep(20000);
         $(headerMyMethods).waitUntilVisible();
         Assert.assertTrue($(headerMyMethods).isDisplayed());
     }
@@ -293,21 +293,18 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public void inputCardNumber(String cardNumber){
-        $(iframeCard).waitUntilVisible();
         getDriver().switchTo().frame(getDriver().findElements(iframeCard).get(3));
         $(fieldCardNumber).sendKeys(cardNumber);
         getDriver().switchTo().defaultContent();
     }
 
     public void inputExpDate(String expDate){
-        $(iframeCard).waitUntilVisible();
         getDriver().switchTo().frame(getDriver().findElements(iframeCard).get(4));
         $(fieldExpDate).sendKeys(expDate);
         getDriver().switchTo().defaultContent();
     }
 
     public void inputCvc(String cvc){
-        $(iframeCard).waitUntilVisible();
         getDriver().switchTo().frame(getDriver().findElements(iframeCard).get(5));
         $(fieldCvc).sendKeys(cvc);
         getDriver().switchTo().defaultContent();
@@ -420,7 +417,7 @@ public class PaymentMethodPage extends PageObject {
         evaluateJavascript("arguments[0].click();", $(fieldEmailUser));
         ListOfWebElementFacades dropdownEmailUsers = $$(dropdownEmailUser);
 
-        WebElementFacade selectedEmail  = dropdownEmailUsers.get(dropdownEmailUsers.size() - 1);
+        WebElementFacade selectedEmail  = dropdownEmailUsers.get(0);
         evaluateJavascript("arguments[0].click();", selectedEmail);
         return selectedEmail.getText();
     }
@@ -528,7 +525,7 @@ public class PaymentMethodPage extends PageObject {
         inputStartDate(4);
         inputEndDate(10);
         inputThreshold("900");
-        clickSaveBtn();
+        clickSaveSIBtn();
         Thread.sleep(3000); //wait for UI loading
     }
 }

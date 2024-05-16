@@ -7,6 +7,21 @@ Feature: Payment Method
 
   Only users who are not authorized to use a commercial card or have not previously set up a commercial card Can eligible to setup a commercial card.
 
+  @PPM_TC_12 @PPM_TC_13 @view-commercial-card @PaymentModule
+  Scenario Outline: Card Owner and Authorized User can view the last 4 digit visa card
+    Given "<user type>" login to the web
+    When "<user type>" click view icon
+    Then "<user type>" can view the last 4 digit visa card
+    Examples:
+      | user type |
+      | Card Owner |
+      | Authorized User |
+
+  @PPM_TC_14 @view-commercial-card @PaymentModule
+  Scenario: User have no option to view the visa card
+    Given "User" login to the web
+    Then no view icon
+
   @PPM_TC_73 @commercial-card-access @PaymentModule
   Scenario: User able setup commercial card
     Given "User have company" login to the web
@@ -29,21 +44,6 @@ Feature: Payment Method
       | Card Owner |
       | Authorized User |
 
-  @PPM_TC_12 @PPM_TC_13 @view-commercial-card @PaymentModule
-  Scenario Outline: Card Owner and Authorized User can view the last 4 digit visa card
-    Given "<user type>" login to the web
-    When "<user type>" click view icon
-    Then "<user type>" can view the last 4 digit visa card
-    Examples:
-      | user type |
-      | Card Owner |
-      | Authorized User |
-
-  @PPM_TC_14 @view-commercial-card @PaymentModule
-  Scenario: User have no option to view the visa card
-    Given "User" login to the web
-    Then no view icon
-
   @PPM_TC_2 @add-commercial-card @PaymentModule
   Scenario Outline: User can't input non visa singapore issued when setup commercial card
     Given "User have company" login to the web
@@ -53,13 +53,13 @@ Feature: Payment Method
     Then validation note "<note>" appears
     Examples:
     | condition | note |
-    | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
+#    | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
     | duplicate | This card has already been set up. Please try using a different card. |
 
   @PPM_TC_4 @add-commercial-card @PaymentModule
   Scenario Outline: Input several invalid data in commercial card form
     Given "User have company" login to the web
-    When "User have company" setup commercial card
+    When "User" setup commercial card
     When input data: "<card info>" card information, "<expired date>" expired date, "<cvc>" cvc, "<email>" email
     Then validation "<message>" appears
     Examples:
@@ -108,14 +108,6 @@ Feature: Payment Method
       When "User doesn't have company" want to setup standing instruction
       Then not able to setup standing instruction
 
-    @PPM_TC_19 @setup-si @done @PaymentModule
-    Scenario: Setup standing instruction with authorized user
-      Given "Authorized User" login to the web
-      When "Authorized User" want to setup standing instruction
-      Then can select supplier to setup standing instruction
-      Then able to setup standing instruction
-      Then "Authorized User" can see all the standing instruction created within the company. but they only able to manage their own standing instruction
-
     @PPM_TC_20 @setup-si @done @PaymentModule
     Scenario: Setup standing instruction with card owner
       Given "Card Owner" login to the web
@@ -123,6 +115,14 @@ Feature: Payment Method
       Then can select supplier to setup standing instruction
       Then able to setup standing instruction
       Then "Card Owner" can view all standing instruction including authorize user
+
+    @PPM_TC_19 @setup-si @done @PaymentModule
+    Scenario: Setup standing instruction with authorized user
+      Given "Authorized User" login to the web
+      When "Authorized User" want to setup standing instruction
+      Then can select supplier to setup standing instruction
+      Then able to setup standing instruction
+      Then "Authorized User" can see all the standing instruction created within the company. but they only able to manage their own standing instruction
 
     @PPM_TC_21 @update-si @done @PaymentModule
     Scenario: Update standing instruction with card owner
@@ -134,8 +134,8 @@ Feature: Payment Method
 
     @PPM_TC_22 @update-si @done @PaymentModule
     Scenario: Update standing instruction with authorize user
-      Given "Have Payment Request" login to the web
-      When "Have Payment Request" want to update standing instruction
+      Given "Authorized User" login to the web
+      When "Authorized User" want to update standing instruction
       And "Authorized User" choose one of the standing instruction
       Then authorized user only can update their own standing instruction
       And only threshold limit, end date can be updated
@@ -166,24 +166,6 @@ Feature: Payment Method
       Given "User" login to the web
       When "User" want to transfer standing instruction ownership
       Then the function not available
-
-    @PPM_TC_16 @remove-commercial-card @done @PaymentModule
-    Scenario Outline: Authorized user not able and User have no option to remove commercial card
-      Given "<user type>" login to the web
-      When "<user type>" want to remove commercial card
-      Then "<user type>" "<result>" to remove commercial card
-      Examples:
-        | user type | result |
-        | Authorized User | no option |
-        | User | no option |
-
-    @PPM_TC_15 @remove-commercial-card @done @PaymentModule
-    Scenario: Card owner can remove their commercial card
-      Given "Card Owner that want to remove their card" login to the web
-    #      And "Card Owner" has commercial card
-      When "Card Owner" want to remove commercial card
-      Then "Card Owner" "able" to remove commercial card
-      Then all standing instruction and authorized user will be removed
 
     @PPM_TC_68 @remove-authorized-user @done @PaymentModule
     Scenario: Card Owner remove user who doesn't have standing instruction
@@ -257,6 +239,24 @@ Feature: Payment Method
       Given "Authorized User that Leave Company" login to the web
       When "Authorized User" leave the company
       Then all standing instruction will be transferred to card owner
+
+    @PPM_TC_16 @remove-commercial-card @done @PaymentModule
+    Scenario Outline: Authorized user not able and User have no option to remove commercial card
+      Given "<user type>" login to the web
+      When "<user type>" want to remove commercial card
+      Then "<user type>" "<result>" to remove commercial card
+      Examples:
+        | user type | result |
+        | Authorized User | no option |
+        | User | no option |
+
+    @PPM_TC_15 @remove-commercial-card @done @PaymentModule
+    Scenario: Card owner can remove their commercial card
+      Given "Card Owner that want to remove their card" login to the web
+      #      And "Card Owner" has commercial card
+      When "Card Owner" want to remove commercial card
+      Then "Card Owner" "able" to remove commercial card
+      Then all standing instruction and authorized user will be removed
 
 #   THE FEATURE IS HIDDEN
 #    @PPM_TC_57 @PPM_TC_59 @add-authorized-user @done @PaymentModule

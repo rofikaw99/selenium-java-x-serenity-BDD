@@ -62,9 +62,6 @@ public class PaymentMethodStep {
         //type of user is not affect this step, so being ignored
         paymentMethodPage.goToPayment();
         switch (userType) {
-            case "User":
-                paymentMethodPage.removeCommercialCard();
-                break;
             case "Card Owner":
                 paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
                 break;
@@ -386,7 +383,7 @@ public class PaymentMethodStep {
     public void cardOwnerCanOnlyAuthoriseUserWithinTheirSameCompany() {
         email = paymentMethodPage.chooseEmailUser();
         System.out.println("Selected email " + email);
-        paymentMethodPage.clickConfirmUserBtn();
+        paymentMethodPage.clickConfirmAddUserBtn();
     }
 
     @Then("succeed add authorized user")
@@ -452,6 +449,11 @@ public class PaymentMethodStep {
         switch (userType) {
             case "Card Owner":
                 paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+                if (paymentMethodPage.manageEmailSI().size() == 1) {
+                    paymentMethodPage.clickRemoveSIBtn(0);
+                    paymentMethodPage.clickConfirmRemoveSIBtn();
+                    paymentMethodPage.clickOkBtn();
+                }
                 break;
             case "Authorized User":
                 createAuthorizedUser();
@@ -473,6 +475,11 @@ public class PaymentMethodStep {
         Assert.assertTrue(uniqueEmail.size() >= 1);
         Assert.assertEquals(1, removeUniqueCondition.size());
         Assert.assertEquals(1, siNumberUniqueCondition.size());
+
+        if (userType.equals("Card Owner")){
+            paymentMethodPage.clickRemoveSIBtn(0);
+            paymentMethodPage.clickConfirmRemoveSIBtn();
+        }
     }
 
     @And("able to setup standing instruction")
