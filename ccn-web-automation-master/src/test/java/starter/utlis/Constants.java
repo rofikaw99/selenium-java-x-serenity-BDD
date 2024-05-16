@@ -66,14 +66,14 @@ public class Constants {
 //    public static String EMAIL_CARD_OWNER_WITH_COMPANY = "co2-autoqa-ccn-001@yopmail.com";//co3
     public static String EMAIL_CARD_OWNER_WITH_COMPANY = "co-auto-001@yopmail.com";//co3
     public static String EMAIL_AUTHORIZED_USER = "au-auto-001@yopmail.com";//au
+    public static String EMAIL_USER = "uu-auto-001@yopmail.com";
     public static String EMAIL_TRANSFER_SI = "au1-autoqa-ccn-001@yopmail.com";//au //todo can improve this
     public static String EMAIL_AU_WITHOUT_SI = "au-without-si-autoqa@yopmail.com"; //todo can improve this
     public static String EMAIL_HAVE_PAYMENT_REQUEST = "sgpcn2@yopmail.com";
     public static String USER_OVERVIEW = "qa-ccn-kpxsyhyy@yopmail.com";
     public static String EMAIL_USER_BACKUP = "malaypcn@yopmail.com";
-    public static String EMAIL_USER = "uu-autoqa-ccn-001@yopmail.com";
-    public static String EMAIL_CARD_OWNER_DELETED = "co4-autoqa-ccn-001@yopmail.com";
-    public static String EMAIL_AU_DELETED = "au-deleted-001@yopmail.com";
+    public static String EMAIL_CARD_OWNER_DELETED = "co-sg-001@yopmail.com";
+    public static String EMAIL_AU_DELETED = "co-sg-004@yopmail.com";
 
     //CARD NUMBER FOR PAYMENT
     public static String CARD_NON_VISA_SINGAPORE = "4000005540000008";

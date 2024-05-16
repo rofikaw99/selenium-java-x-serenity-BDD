@@ -228,18 +228,6 @@ Feature: Payment Method
       When confirm remove one of the standing instruction
       Then selected standing instruction disappear from the list
 
-    @PPM_TC_66 @leave-company @done @PaymentModule
-    Scenario: Card owner leave the company
-      Given "Card Owner that Leave Company" login to the web
-      When "Card Owner" leave the company
-      Then all card, authorized user & standing instruction will be removed
-
-    @PPM_TC_67 @leave-company @PaymentModule
-    Scenario: Authorized user leave the company
-      Given "Authorized User that Leave Company" login to the web
-      When "Authorized User" leave the company
-      Then all standing instruction will be transferred to card owner
-
     @PPM_TC_16 @remove-commercial-card @done @PaymentModule
     Scenario Outline: Authorized user not able and User have no option to remove commercial card
       Given "<user type>" login to the web
@@ -253,10 +241,22 @@ Feature: Payment Method
     @PPM_TC_15 @remove-commercial-card @done @PaymentModule
     Scenario: Card owner can remove their commercial card
       Given "Card Owner that want to remove their card" login to the web
-      #      And "Card Owner" has commercial card
+        #      And "Card Owner" has commercial card
       When "Card Owner" want to remove commercial card
       Then "Card Owner" "able" to remove commercial card
       Then all standing instruction and authorized user will be removed
+
+    @PPM_TC_66 @leave-company @done @PaymentModule
+    Scenario: Card owner leave the company
+      Given "Card Owner that Leave Company" login to the web
+      When "Card Owner" leave the company
+      Then all card, authorized user & standing instruction will be removed
+
+    @PPM_TC_67 @leave-company @PaymentModule
+    Scenario: Authorized user leave the company
+      Given "Authorized User that Leave Company" login to the web
+      When "Authorized User" leave the company
+      Then all standing instruction will be transferred to card owner
 
 #   THE FEATURE IS HIDDEN
 #    @PPM_TC_57 @PPM_TC_59 @add-authorized-user @done @PaymentModule

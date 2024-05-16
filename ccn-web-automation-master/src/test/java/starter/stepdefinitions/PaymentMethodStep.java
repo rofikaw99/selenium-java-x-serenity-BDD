@@ -57,6 +57,27 @@ public class PaymentMethodStep {
         }
     }
 
+    public void createAuthorizedUser(String cardEmail, String authEmail) throws Exception {
+        if (!paymentMethodPage.btnEyesCardDisplayed()) {
+            companyPage.myMenuAccount("Sign Out");
+
+            Thread.sleep(3000);
+            loginPage.login(cardEmail);
+            paymentMethodPage.goToPayment();
+            paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+            paymentMethodPage.clickAddUserBtn();
+            paymentMethodPage.chooseEmailUser(authEmail);
+            paymentMethodPage.clickConfirmAddUserBtn();
+            Thread.sleep(3000);
+
+            companyPage.myMenuAccount("Sign Out");
+            Thread.sleep(3000);
+            loginPage.login(authEmail);
+            paymentMethodPage.goToPayment();
+            Assert.assertTrue(paymentMethodPage.btnEyesCardDisplayed());
+        }
+    }
+
     @When("{string} setup commercial card")
     public void setupCommercialCard(String userType) throws Exception {
         //type of user is not affect this step, so being ignored
@@ -68,6 +89,8 @@ public class PaymentMethodStep {
             case "Authorized User":
                 createAuthorizedUser();
                 break;
+            case "User":
+                paymentMethodPage.removeCommercialCard();
         }
     }
 
@@ -112,7 +135,7 @@ public class PaymentMethodStep {
         loginPage.inputPasswordLogin(Constants.PASSWORD);
         Thread.sleep(2000);
         loginPage.pressSignIn();
-        Thread.sleep(17000);
+        Thread.sleep(30000);
         loginPage.validateInMainWeb();
     }
 
@@ -330,15 +353,20 @@ public class PaymentMethodStep {
     }
 
     @And("standing instruction will be removed from the list of standing instruction")
-    public void standingInstructionWillBeRemovedFromTheListOfStandingInstruction() {
-        Assert.assertFalse(paymentMethodPage.manageEmailSI().contains(email));//todo email yg dipake buat scenario standing instruction
+    public void standingInstructionWillBeRemovedFromTheListOfStandingInstruction() throws InterruptedException {
+        Assert.assertFalse(paymentMethodPage.manageEmailSI().contains(email));
+
+        if (!paymentMethodPage.emailAuthorizedUser().contains(Constants.EMAIL_AUTHORIZED_USER)){
+            paymentMethodPage.addAuthorizedUser(Constants.EMAIL_AUTHORIZED_USER);
+            Thread.sleep(3000);
+        }
     }
 
     @And("confirm remove {string} transferring the standing instruction")
     public void confirmRemoveTransferringTheStandingInstruction(String condition) {
         if (condition.equals("with")){
             paymentMethodPage.checkTransferSI();
-            paymentMethodPage.inputEmailToTransferSI(Constants.EMAIL_TRANSFER_SI);
+            paymentMethodPage.inputEmailToTransferSI(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
         }
         paymentMethodPage.clickConfirmRemoveUserBtn();
     }
@@ -648,33 +676,29 @@ public class PaymentMethodStep {
     }
 
     @When("confirm remove one of the standing instruction")
-    public void confirmRemoveOneOfTheStandingInstruction() {
+    public void confirmRemoveOneOfTheStandingInstruction() throws InterruptedException {
         emails = paymentMethodPage.manageEmailSI();
-        email = emails.get(index);
-        emailLength = emails.size();
+        if (emails.size() == 0){
+            paymentMethodPage.createNewSI(0);
+        }
+//        email = emails.get(0);
+//        emailLength = emails.size();
         paymentMethodPage.clickRemoveSIBtn(index);
         paymentMethodPage.clickConfirmRemoveSIBtn();
     }
 
     @Then("selected standing instruction disappear from the list")
     public void selectedStandingInstructionDisappearFromTheList() {
-        Assert.assertEquals(1, paymentMethodPage.getErrorMsgText("Standing Instructions successfully deleted."));
+        Assert.assertTrue(paymentMethodPage.getErrorMsgText("Standing Instructions successfully deleted."));
         paymentMethodPage.clickOkBtn();
     }
 
     @When("{string} leave the company")
-    public void leaveTheCompany(String userType) throws InterruptedException {
+    public void leaveTheCompany(String userType) throws Exception {
         paymentMethodPage.goToPayment();
         if (userType.equals("Card Owner")){
-            if (!paymentMethodPage.btnEyesCardDisplayed()){
-                paymentMethodPage.inputCardNumber(Constants.CARD_TO_BE_DELETED);
-                paymentMethodPage.inputExpDate(Common.createExpDate(8));
-                paymentMethodPage.inputCvc(Constants.CARD_CVC);
-                paymentMethodPage.clickSaveBtn();
-                Thread.sleep(3000);
-            }
-        }
-        Assert.assertTrue(paymentMethodPage.btnEyesCardDisplayed());
+            paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
+        } else if (userType.equals("Authorized User")) createAuthorizedUser(Constants.EMAIL_CARD_OWNER_DELETED, Constants.EMAIL_AU_DELETED);
         paymentMethodPage.goToMyCompany();
         companyPage.pressLeaveCompany();
         companyPage.pressYesBtn();
@@ -692,13 +716,7 @@ public class PaymentMethodStep {
         companyPage.myMenuAccount("Sign Out");
         Thread.sleep(10000);
 
-        loginPage.pressBtnLoginInit();
-        loginPage.changeSigninWindow();
-        loginPage.inputEmailLogin(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
-        loginPage.inputPasswordLogin(Constants.PASSWORD);
-        loginPage.pressSignIn();
-        Thread.sleep(10000);
-        loginPage.validateInMainWeb();
+        loginPage.login(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
 
         paymentMethodPage.goToPayment();
         List<String> emailsManageBy = paymentMethodPage.manageEmailSI();
@@ -741,6 +759,11 @@ public class PaymentMethodStep {
         for (Integer index : indexes){
             Assert.assertNotSame(emails.get(index), email);
         }
+
+        if (!paymentMethodPage.emailAuthorizedUser().contains(Constants.EMAIL_AUTHORIZED_USER)){
+            paymentMethodPage.addAuthorizedUser(Constants.EMAIL_AUTHORIZED_USER);
+            Thread.sleep(3000);
+        }
     }
 
     @And("{string} has commercial card")
@@ -766,32 +789,21 @@ public class PaymentMethodStep {
     public void hasStandingInstruction(String userType) throws Exception {
         if (userType.equals("Authorized User")) {
             //login
-            loginPage.goToMainWeb();
-            loginPage.pressBtnLoginInit();
-            loginPage.changeSigninWindow();
-            loginPage.inputEmailLogin(Constants.EMAIL_AUTHORIZED_USER);
-            loginPage.inputPasswordLogin(Constants.PASSWORD);
-            loginPage.pressSignIn();
-            Thread.sleep(10000);
-            loginPage.validateInMainWeb();
+            loginPage.login(Constants.EMAIL_AUTHORIZED_USER);
 
             //create si
             paymentMethodPage.goToPayment();
             Thread.sleep(3000);
             emails = paymentMethodPage.manageEmailSI();
             if (!emails.contains(Constants.EMAIL_AUTHORIZED_USER)) {
-                if (emails.size() == 1) {
-                    paymentMethodPage.clickRemoveSIBtn(0);
-                    paymentMethodPage.clickConfirmRemoveSIBtn();
-                    Thread.sleep(2000); //waiting for the UI to load
-                    paymentMethodPage.clickOkBtn();
-                }
+//                if (emails.size() == 1) {
+//                    paymentMethodPage.clickRemoveSIBtn(0);
+//                    paymentMethodPage.clickConfirmRemoveSIBtn();
+//                    Thread.sleep(2000); //waiting for the UI to load
+//                    paymentMethodPage.clickOkBtn();
+//                }
                 paymentMethodPage.clickAddNewSIBtn();
-                paymentMethodPage.inputSupplier(index);
-                paymentMethodPage.inputStartDate(4);
-                paymentMethodPage.inputEndDate(10);
-                paymentMethodPage.inputThreshold("900");
-                paymentMethodPage.clickSaveBtn();
+                paymentMethodPage.createNewSI(0);
                 Thread.sleep(3000); //wait for UI loading
                 Assert.assertTrue(paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER));
             }

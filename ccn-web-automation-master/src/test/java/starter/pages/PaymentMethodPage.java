@@ -260,7 +260,7 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public void clickConfirmRemoveUserBtn(){
-        $(btnConfirmRemoveInvitedUser).waitUntilVisible();
+        $(btnConfirmRemoveInvitedUser).waitUntilPresent();
         evaluateJavascript("arguments[0].click();", $(btnConfirmRemoveInvitedUser));
     }
 
@@ -527,5 +527,16 @@ public class PaymentMethodPage extends PageObject {
         inputThreshold("900");
         clickSaveSIBtn();
         Thread.sleep(3000); //wait for UI loading
+    }
+
+    public void selectTransferManageBy(String email){
+        By emailTransfer = By.xpath("//*[contains(@class, 'cube-dropdown-item') and text() = '" + email + "']");
+        evaluateJavascript("arguments[0].click();", $(emailTransfer));
+    }
+
+    public void addAuthorizedUser(String email){
+        clickAddUserBtn();
+        chooseEmailUser(email);
+        clickConfirmAddUserBtn();
     }
 }
