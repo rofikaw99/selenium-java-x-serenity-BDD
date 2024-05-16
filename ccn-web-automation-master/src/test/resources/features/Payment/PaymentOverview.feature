@@ -33,11 +33,6 @@ Feature: Payment Overview
   Scenario Outline: create request payment credit term with status paid
     Given user get SSO token
     And user create credit term payment request
-#    Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
-#    When input filter keyword "<keyword>"
-#    Then verify paid status color code is correct
 
     Examples:
       | condition            | menu                | condition            | menu                | keyword |
