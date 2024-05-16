@@ -1,12 +1,12 @@
 package starter.stepdefinitions;
 
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Assert;
-import starter.pages.CompanyPage;
-import starter.pages.LoginPage;
-import starter.pages.PaymentOverviewPage;
+import starter.pages.*;
+import starter.utlis.Constants;
 
 public class PaymentOverviewStepdefs {
 
@@ -14,10 +14,20 @@ public class PaymentOverviewStepdefs {
     LoginPage loginPage;
 
     @Steps
+    GoToUrl goToUrl;
+
+    @Steps
+    MailServiceYopmailPage mailServiceYopmailPage;
+
+    @Steps
     CompanyPage companyPage;
 
     @Steps
     PaymentOverviewPage paymentOverviewPage;
+
+    @Steps
+    SubscriptionPage subscriptionPage;
+
     private int waitResponse = 5000;
     private int waitLongResponse = 10000;
 
@@ -149,6 +159,16 @@ public class PaymentOverviewStepdefs {
     @Given("user create upcoming payment request")
     public void user_create_upcoming_payment_request() throws Exception {
         paymentOverviewPage.createPaymentRequest();
+    }
+
+    @Then("get triggered {string} notification")
+    public void get_triggered_email_notification(String email) throws Exception {
+        String registerWindow = subscriptionPage.getWindow();
+        subscriptionPage.switchWindowTab();
+        Thread.sleep(2000);
+        goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);
+        Thread.sleep(7000);
+        mailServiceYopmailPage.getTriggeredMailNotification(email);
     }
     @Given("user create credit term payment request")
     public void user_create_credit_term_payment_request() throws Exception {

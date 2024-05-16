@@ -80,7 +80,7 @@ public class PaymentMethodStep {
     }
 
     @Given("{string} login to the web")
-    public void loginToTheWeb(String condition) throws InterruptedException {
+    public void loginToTheWeb(String condition) throws Exception {
         switch (condition) {
             case "User have company" :
             case "User" :
@@ -94,7 +94,7 @@ public class PaymentMethodStep {
             break;
             case "Authorize User Overview" : email = Constants.EMAIL_HAVE_PAYMENT_REQUEST;
             break;
-            case "User Overview" : email = Constants.EMAIL_HAVE_PAYMENT_REQUEST;
+            case "User Overview" : email = Constants.USER_OVERVIEW;
             break;
             case "User Backup" : email = Constants.EMAIL_USER_BACKUP;
                 break;
@@ -113,9 +113,9 @@ public class PaymentMethodStep {
         Thread.sleep(1500);
         loginPage.inputEmailLogin(email);
         loginPage.inputPasswordLogin(Constants.PASSWORD);
-        Thread.sleep(3000);
+        Thread.sleep(2000);
         loginPage.pressSignIn();
-        Thread.sleep(30000);
+        Thread.sleep(17000);
         loginPage.validateInMainWeb();
     }
 
@@ -383,7 +383,7 @@ public class PaymentMethodStep {
     }
 
     @And("Card Owner can only authorise user within their same company")
-    public void cardOwnerCanOnlyAuthoriseUserWithinTheirSameCompany() {
+    public void cardOwnerCanOnlyAuthoriseUserWithinTheirSameCompany() throws InterruptedException {
         email = paymentMethodPage.chooseEmailUser();
         System.out.println("Selected email " + email);
         paymentMethodPage.clickConfirmUserBtn();

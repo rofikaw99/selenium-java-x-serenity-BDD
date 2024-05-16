@@ -48,7 +48,7 @@ public class LoginSteps {
     }
 
     @And("click final sign in button")
-    public void clickFinalSignInButton() {
+    public void clickFinalSignInButton() throws Exception {
         loginPage.pressSignIn();
     }
 
