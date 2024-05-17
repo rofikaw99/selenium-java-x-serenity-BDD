@@ -442,8 +442,8 @@ Feature: Payment Overview
 
   #PaymentNotification
 
-  @PaymentOverview @PaymentNotification
-  Scenario Outline: create request payment upcoming
+  @PN1 @PaymentNotification
+  Scenario Outline: create request payment upcoming to get notification
     Given user get SSO token
     When user create upcoming payment request
     Then get triggered "<email>" notification
@@ -452,3 +452,38 @@ Feature: Payment Overview
     Examples:
       | email              | menu                | keyword |
       | sgpcn2@yopmail.com | My Payment Overview | REF-    |
+
+  @PN2_3 @PaymentNotification
+  Scenario Outline: create request payment outstanding to get notification
+    Given user get SSO token
+    When user create upcoming payment request
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email                | menu                | keyword |
+      | sgpcn2@yopmail.com | My Payment Overview   | REF-    |
+
+  @PN2_3 @PaymentNotification
+  Scenario Outline: create payment but fail then get notification
+    Given user get SSO token
+    When create payment but fail
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email                | menu                | keyword |
+      | sgpcn2@yopmail.com | My Payment Overview   | REF-    |
+
+
+  @PN4 @PaymentNotification
+  Scenario Outline: update payment to expired to get notification
+    Given user get SSO token
+    When user create upcoming payment request
+    And update payment request to "<status>"
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email                | status    | keyword |
+      | sgpcn2@yopmail.com   | EXPIRED   | REF-    |

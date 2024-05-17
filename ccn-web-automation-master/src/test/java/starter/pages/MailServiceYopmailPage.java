@@ -68,10 +68,11 @@ public class MailServiceYopmailPage extends PageObject {
         Constants.VERIFICATION_CODE = StringUtils.getDigits(getEmailText);
     }
 
-    public void getTriggeredMailNotification(String email){
+
+    public void getPaymentNotification(String email){
         // search mail on mailinator
         $(txtSearch).clear();
-        $(txtSearch).sendKeys(email);
+        $(txtSearch).sendKeys(email, Keys.ENTER);
         // press or expand the email
         $(emailOnLists).isDisplayed();
         $(emailOnLists).click();
