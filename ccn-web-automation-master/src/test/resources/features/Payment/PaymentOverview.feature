@@ -450,5 +450,5 @@ Feature: Payment Overview
 
 
     Examples:
-      | email                | menu                | keyword |
-      | Have Payment Request | My Payment Overview | REF-    |
+      | email              | menu                | keyword |
+      | sgpcn2@yopmail.com | My Payment Overview | REF-    |

@@ -66,6 +66,7 @@ public class Constants {
     public static String EMAIL_AUTHORIZED_USER = "au-auto-001@yopmail.com";//au
     public static String EMAIL_USER = "uu-auto-001@yopmail.com";
     public static String EMAIL_HAVE_PAYMENT_REQUEST = "sgpcn2@yopmail.com";
+    public static String EMAIL_AUTHORIZED_HAVE_PAYMENT_REQUEST = "sgpcn3@yopmail.com";
     public static String USER_OVERVIEW = "qa-ccn-kpxsyhyy@yopmail.com";
     public static String EMAIL_USER_BACKUP = "malaypcn@yopmail.com";
     public static String EMAIL_CARD_OWNER_DELETED = "co-sg-001@yopmail.com";

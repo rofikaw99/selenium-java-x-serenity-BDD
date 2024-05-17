@@ -112,7 +112,7 @@ public class PaymentMethodStep {
             break;
             case "Have Payment Request" : email = Constants.EMAIL_HAVE_PAYMENT_REQUEST;
             break;
-            case "Authorize User Overview" : email = Constants.EMAIL_HAVE_PAYMENT_REQUEST;
+            case "Authorize User Overview" : email = Constants.EMAIL_AUTHORIZED_HAVE_PAYMENT_REQUEST;
             break;
             case "User Overview" : email = Constants.USER_OVERVIEW;
             break;
@@ -135,7 +135,7 @@ public class PaymentMethodStep {
         loginPage.inputPasswordLogin(Constants.PASSWORD);
         Thread.sleep(2000);
         loginPage.pressSignIn();
-        Thread.sleep(30000);
+        Thread.sleep(17000);
         loginPage.validateInMainWeb();
     }
 
