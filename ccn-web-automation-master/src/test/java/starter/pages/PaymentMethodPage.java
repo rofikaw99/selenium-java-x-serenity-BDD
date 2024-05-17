@@ -89,8 +89,8 @@ public class PaymentMethodPage extends PageObject {
     private By fieldStartDate = By.xpath("(//input[@placeholder = 'Select Start Date'])[1]");
     private By fieldEndDate = By.xpath("//input[@placeholder = 'Select End Date']");
     private By fieldEndDateUpdate = By.xpath("(//input[@placeholder = 'Select End Date'])[2]");
-    private By datePicker = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '17']");
-    private By datePickerEnd = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '25']");
+    private By datePicker = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '20']");
+    private By datePickerEnd = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '28']");
     private By fieldThreshold = By.id("cube-threshold");
     private By fieldThresholdUpdate = By.xpath("(//*[@id = 'cube-threshold'])[2]");
     private By fieldManageByEnabled = By.xpath("(//input[@placeholder = 'Manage By' and contains(@style, 'auto') ])");
