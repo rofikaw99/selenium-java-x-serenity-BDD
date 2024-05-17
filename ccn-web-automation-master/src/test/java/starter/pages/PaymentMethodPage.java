@@ -89,8 +89,8 @@ public class PaymentMethodPage extends PageObject {
     private By fieldStartDate = By.xpath("(//input[@placeholder = 'Select Start Date'])[1]");
     private By fieldEndDate = By.xpath("//input[@placeholder = 'Select End Date']");
     private By fieldEndDateUpdate = By.xpath("(//input[@placeholder = 'Select End Date'])[2]");
-    private By datePicker = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '17']");
-    private By datePickerEnd = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '25']");
+    private By datePicker = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '20']");
+    private By datePickerEnd = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '28']");
     private By fieldThreshold = By.id("cube-threshold");
     private By fieldThresholdUpdate = By.xpath("(//*[@id = 'cube-threshold'])[2]");
     private By fieldManageByEnabled = By.xpath("(//input[@placeholder = 'Manage By' and contains(@style, 'auto') ])");
@@ -98,7 +98,7 @@ public class PaymentMethodPage extends PageObject {
     private By fieldManageBy = By.xpath("");
     private By btnSaveSI = By.id("si-add-new");
     private By btnSaveSIUpdate = By.id("si-update");
-    private By btnOk = By.xpath("//button[@placeholder = 'OK']");
+    private By btnOk = By.xpath("//*[contains(@class, 'si-modal-confirm')]//button[text() = 'OK']");
 
     private By specEmail(String email){
         return By.xpath("//div[//*[text() = 'List of Authorized Users:']]//*[text()='"+ email+"']" );
@@ -390,15 +390,6 @@ public class PaymentMethodPage extends PageObject {
         evaluateJavascript("arguments[0].click();", $(fieldThresholdUpdate));
         $(fieldThresholdUpdate).clear();
         $(fieldThresholdUpdate).type(threshold);
-    }
-
-    public List<Boolean> enabledRemoveBtnCondition(){
-        ListOfWebElementFacades actionBtns = $$(actionBtn);
-        List<Boolean> enabledCondition = new ArrayList<>();
-        for (WebElementFacade actionBtn : actionBtns){
-            enabledCondition.add(actionBtn.isEnabled());
-        }
-        return enabledCondition;
     }
 
     public void chooseSINo(){
