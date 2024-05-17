@@ -191,8 +191,6 @@ public class PaymentMethodStep {
         paymentMethodPage.clickConfirmRemoveCardBtn();
         Thread.sleep(3000);
         Assert.assertTrue(paymentMethodPage.setupCardHeaderDisplayed());
-        if (paymentMethodPage.setupCardHeaderDisplayed())
-            paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
     }
 
     @Then("{string} {string} to remove commercial card")
@@ -563,7 +561,8 @@ public class PaymentMethodStep {
     }
 
     @Then("only threshold limit, end date can be updated")
-    public void onlyThresholdLimitEndDateCanBeUpdated() {
+    public void onlyThresholdLimitEndDateCanBeUpdated() throws InterruptedException {
+        Thread.sleep(2000);
         paymentMethodPage.updateEndDateUpdate(8);
         paymentMethodPage.updateThreshold("1234");
         paymentMethodPage.clickSaveSIUpdateBtn();
@@ -654,8 +653,8 @@ public class PaymentMethodStep {
 
     @Then("card owner able to remove all the standing instruction within their card")
     public void cardOwnerAbleToRemoveAllTheStandingInstructionWithinTheirCard() {
-        Assert.assertEquals(1, paymentMethodPage.enabledRemoveBtnCondition().size());
-        Assert.assertTrue(paymentMethodPage.enabledRemoveBtnCondition().contains(true));
+        Assert.assertEquals(1, Set.copyOf(paymentMethodPage.enabledActionBtn()).size());
+        Assert.assertTrue(paymentMethodPage.enabledActionBtn().contains(true));
     }
 
     @Then("authorized user only able to remove their standing instruction")
@@ -681,8 +680,6 @@ public class PaymentMethodStep {
         if (emails.size() == 0){
             paymentMethodPage.createNewSI(0);
         }
-//        email = emails.get(0);
-//        emailLength = emails.size();
         paymentMethodPage.clickRemoveSIBtn(index);
         paymentMethodPage.clickConfirmRemoveSIBtn();
     }
@@ -716,7 +713,7 @@ public class PaymentMethodStep {
         companyPage.myMenuAccount("Sign Out");
         Thread.sleep(10000);
 
-        loginPage.login(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
+        loginPage.login(Constants.EMAIL_CARD_OWNER_DELETED);
 
         paymentMethodPage.goToPayment();
         List<String> emailsManageBy = paymentMethodPage.manageEmailSI();
@@ -734,6 +731,7 @@ public class PaymentMethodStep {
                 break;
             }
         }
+        email = emailAuthorizedUser.get(index);
         paymentMethodPage.clickRemoveUserBtn(index);
     }
 
@@ -809,6 +807,11 @@ public class PaymentMethodStep {
             }
             companyPage.myMenuAccount("Sign Out");
         }
+    }
 
+    @And("success delete user without standing instruction")
+    public void successDeleteUserWithoutStandingInstruction() {
+        paymentMethodPage.clickConfirmRemoveUserBtn();
+        Assert.assertFalse(paymentMethodPage.txtSpecEmailDisplayed(email));
     }
 }

@@ -68,14 +68,14 @@ public class Constants {
     public static String EMAIL_HAVE_PAYMENT_REQUEST = "sgpcn2@yopmail.com";
     public static String USER_OVERVIEW = "qa-ccn-kpxsyhyy@yopmail.com";
     public static String EMAIL_USER_BACKUP = "malaypcn@yopmail.com";
-    public static String EMAIL_CARD_OWNER_DELETED = "co-sg-001@yopmail.com";
-    public static String EMAIL_AU_DELETED = "co-sg-004@yopmail.com";
+    public static String EMAIL_CARD_OWNER_DELETED = "co-sg-002@yopmail.com";
+    public static String EMAIL_AU_DELETED = "co-sg-003@yopmail.com";
 
     //CARD NUMBER FOR PAYMENT
     public static String CARD_NON_VISA_SINGAPORE = "4000005540000008";
     public static String CARD_DUPLICATE = "4000007020000003";
     public static String CARD_VISA_SINGAPORE = "4000002920000005"; //for this
-    public static String CARD_TO_BE_DELETED = "4000000400000008"; //AUSTRIA
+    public static String CARD_TO_BE_DELETED = "4000005910000000"; //COLOMBIA
     public static String CARD_CVC = "123";
     public static String CARD_EXP_DATE = Common.createExpDate(3);
 }

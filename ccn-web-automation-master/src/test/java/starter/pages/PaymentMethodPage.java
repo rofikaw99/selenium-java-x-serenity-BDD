@@ -98,7 +98,7 @@ public class PaymentMethodPage extends PageObject {
     private By fieldManageBy = By.xpath("");
     private By btnSaveSI = By.id("si-add-new");
     private By btnSaveSIUpdate = By.id("si-update");
-    private By btnOk = By.xpath("//button[@placeholder = 'OK']");
+    private By btnOk = By.xpath("//*[contains(@class, 'si-modal-confirm')]//button[text() = 'OK']");
 
     private By specEmail(String email){
         return By.xpath("//div[//*[text() = 'List of Authorized Users:']]//*[text()='"+ email+"']" );
@@ -390,15 +390,6 @@ public class PaymentMethodPage extends PageObject {
         evaluateJavascript("arguments[0].click();", $(fieldThresholdUpdate));
         $(fieldThresholdUpdate).clear();
         $(fieldThresholdUpdate).type(threshold);
-    }
-
-    public List<Boolean> enabledRemoveBtnCondition(){
-        ListOfWebElementFacades actionBtns = $$(actionBtn);
-        List<Boolean> enabledCondition = new ArrayList<>();
-        for (WebElementFacade actionBtn : actionBtns){
-            enabledCondition.add(actionBtn.isEnabled());
-        }
-        return enabledCondition;
     }
 
     public void chooseSINo(){

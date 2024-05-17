@@ -137,8 +137,7 @@ Feature: Payment Method
       Given "Authorized User" login to the web
       When "Authorized User" want to update standing instruction
       And "Authorized User" choose one of the standing instruction
-      Then authorized user only can update their own standing instruction
-      And only threshold limit, end date can be updated
+      Then only threshold limit, end date can be updated
       And success update standing instruction
 
     @PPM_TC_23 @update-si @done @PaymentModule
@@ -172,6 +171,7 @@ Feature: Payment Method
       Given "Card Owner" login to the web
       When remove authorized user that doesn't has standing instruction
       Then there's no option to transfer the SI
+      And success delete user without standing instruction
 
     @PPM_TC_65 @remove-authorized-user @done @PaymentModule
     Scenario: Card Owner remove user without transferring the standing instruction
@@ -241,22 +241,21 @@ Feature: Payment Method
     @PPM_TC_15 @remove-commercial-card @done @PaymentModule
     Scenario: Card owner can remove their commercial card
       Given "Card Owner that want to remove their card" login to the web
-        #      And "Card Owner" has commercial card
       When "Card Owner" want to remove commercial card
       Then "Card Owner" "able" to remove commercial card
       Then all standing instruction and authorized user will be removed
-
-    @PPM_TC_66 @leave-company @done @PaymentModule
-    Scenario: Card owner leave the company
-      Given "Card Owner that Leave Company" login to the web
-      When "Card Owner" leave the company
-      Then all card, authorized user & standing instruction will be removed
 
     @PPM_TC_67 @leave-company @PaymentModule
     Scenario: Authorized user leave the company
       Given "Authorized User that Leave Company" login to the web
       When "Authorized User" leave the company
       Then all standing instruction will be transferred to card owner
+
+    @PPM_TC_66 @leave-company @done @PaymentModule
+    Scenario: Card owner leave the company
+      Given "Card Owner that Leave Company" login to the web
+      When "Card Owner" leave the company
+      Then all card, authorized user & standing instruction will be removed
 
 #   THE FEATURE IS HIDDEN
 #    @PPM_TC_57 @PPM_TC_59 @add-authorized-user @done @PaymentModule
