@@ -163,9 +163,6 @@ public class PaymentOverviewStepdefs {
 
     @Then("get triggered {string} notification")
     public void get_triggered_email_notification(String email) throws Exception {
-        String registerWindow = subscriptionPage.getWindow();
-        subscriptionPage.switchWindowTab();
-        Thread.sleep(2000);
         goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);
         Thread.sleep(7000);
         mailServiceYopmailPage.getTriggeredMailNotification(email);
