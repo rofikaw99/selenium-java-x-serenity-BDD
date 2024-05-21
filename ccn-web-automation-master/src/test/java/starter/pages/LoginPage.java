@@ -27,6 +27,7 @@ public class LoginPage extends PageObject {
     private By txtPasswordLogin = By.id("password");
     private By btnSignIn = By.id("next");
     private By TestBCPremiumMulticurrencySandbox = By.xpath("(//*[@id='nav']/ul/li/a)[14]");
+    private By cookieElement = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
     private String initWindow = "";
 
     public void goToMainWeb(){
@@ -125,8 +126,21 @@ public class LoginPage extends PageObject {
         }
     }
     public void pressBtnLoginInit(){
+        if (isCookieDisplayed()) {
+            $(cookieElement).isDisplayed();
+            $(cookieElement).click();
+        } else {
+            System.out.println("Cookie is not displayed. Skip click cookie.");
+        }
         $(btnSignInOnTheHomepage).isDisplayed();
         $(btnSignInOnTheHomepage).click();
+    }
+
+    public boolean isCookieDisplayed() {
+        // Logic to check if cookie is displayed
+        // Return true if displayed, false otherwise
+        // Example:
+         return $(cookieElement).isDisplayed();
     }
     public void changeSigninWindow() {
         initWindow = getDriver().getWindowHandle();

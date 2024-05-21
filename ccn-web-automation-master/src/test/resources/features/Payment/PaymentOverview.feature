@@ -301,7 +301,7 @@ Feature: Payment Overview
       | User Overview           | My Payment Overview | outstanding |
 
   @pageFilter @PaymentOverview @PaymentModule @login
-  Scenario Outline: Card try to change page setting
+  Scenario Outline: Card Owner try to change page setting
     Given "<condition>" login to the web
 #    When User go to "<menu>"
 #    Then verify field to be display on my payment
@@ -310,6 +310,28 @@ Feature: Payment Overview
     Examples:
       | condition            | menu                | page |
       | Have Payment Request | My Payment Overview | 20   |
+
+  @pageFilter @PaymentOverview @PaymentModule @login
+  Scenario Outline: Authorize User try to change page setting
+    Given "<condition>" login to the web
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    And select filter page "<page>"
+
+    Examples:
+      | condition               | menu                | page |
+      | Authorize User Overview | My Payment Overview | 40   |
+
+  @pageFilter @PaymentOverview @PaymentModule @login
+  Scenario Outline: User try to change page setting
+    Given "<condition>" login to the web
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    And select filter page "<page>"
+
+    Examples:
+      | condition               | menu                | page |
+      | User Overview           | My Payment Overview | 70   |
 
   @PPM_TC_27 @PaymentOverview @PaymentModule @login
   Scenario Outline: Card owner do the manual payment with payNow

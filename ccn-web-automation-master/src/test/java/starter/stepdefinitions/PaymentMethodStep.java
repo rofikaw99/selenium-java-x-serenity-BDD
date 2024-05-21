@@ -135,7 +135,7 @@ public class PaymentMethodStep {
         loginPage.inputPasswordLogin(Constants.PASSWORD);
         Thread.sleep(2000);
         loginPage.pressSignIn();
-        Thread.sleep(17000);
+        Thread.sleep(20000);
         loginPage.validateInMainWeb();
     }
 

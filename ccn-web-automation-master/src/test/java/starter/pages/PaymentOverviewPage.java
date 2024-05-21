@@ -30,7 +30,7 @@ public class PaymentOverviewPage extends PageObject {
     private By status = By.id("cube-sort-status");
     private By inputKeywordField = By.xpath("//*[@class='cube-search']//input[@placeholder='Search by...']");
     private By checkoutButton = By.xpath("(//div[contains(@class, 'cube-btn-flex')]//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'undefined')])[1]");
-    private By bulkOutstanding = By.xpath("(//span[contains(@class, 'cube-checkmark-checkbox')])[20]");
+    private By bulkOutstanding = By.xpath("(//span[contains(@class, 'cube-checkmark-checkbox dash')])[1]");
     private By bulkChcekout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'ml-[80px]')]");
     private By payCheckout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-primary') and contains(@class, '!w-[35vw]') and contains(@class, 'ml-[30px]') and @style='height: 48px;']");
     private By cookie1 = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
