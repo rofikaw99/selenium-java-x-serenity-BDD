@@ -137,6 +137,7 @@ public class PaymentMethodStep {
         loginPage.pressSignIn();
         Thread.sleep(20000);
         loginPage.validateInMainWeb();
+        loginPage.clickCookies();
     }
 
     @Then("can't setup commercial card")

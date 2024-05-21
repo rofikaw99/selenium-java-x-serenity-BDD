@@ -28,10 +28,16 @@ public class LoginPage extends PageObject {
     private By btnSignIn = By.id("next");
     private By TestBCPremiumMulticurrencySandbox = By.xpath("(//*[@id='nav']/ul/li/a)[14]");
     private By cookieElement = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
+
+    private By cookies = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
     private String initWindow = "";
 
     public void goToMainWeb(){
         open();
+    }
+
+    public void clickCookies(){
+        if ($$(cookies).size() == 1) evaluateJavascript("arguments[0].click();", $(cookies));
     }
 
     public void goToLoginPage(){
