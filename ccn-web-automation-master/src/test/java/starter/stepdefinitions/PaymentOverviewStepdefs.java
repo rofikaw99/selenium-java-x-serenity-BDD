@@ -1,5 +1,6 @@
 package starter.stepdefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -161,11 +162,22 @@ public class PaymentOverviewStepdefs {
         paymentOverviewPage.createPaymentRequest();
     }
 
+    @And("update to outstanding to trigger notification")
+    public void update_to_outstanding_to_trigger_notification() throws Exception {
+        paymentOverviewPage.createCreditTermPaymentRequestToGetNotification();
+    }
+
+    @And("create payment but fail")
+    public void create_payment_but_fail() throws Exception {
+        paymentOverviewPage.createCreditTermPaymentRequestToGetNotification();
+    }
+
     @Then("get triggered {string} notification")
     public void get_triggered_email_notification(String email) throws Exception {
         goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);
-        Thread.sleep(7000);
-        mailServiceYopmailPage.getTriggeredMailNotification(email);
+        Thread.sleep(1000);
+        mailServiceYopmailPage.getPaymentNotification(email);
+        Thread.sleep(5000);
     }
     @Given("user create credit term payment request")
     public void user_create_credit_term_payment_request() throws Exception {
@@ -175,6 +187,11 @@ public class PaymentOverviewStepdefs {
     @Given("user create {string} payment request with {string}")
     public void user_create_string_payment_request_with(String status, String paymentRequestId) throws Exception {
         paymentOverviewPage.updatePaymentRequest(status, paymentRequestId);
+    }
+
+    @And("update payment request to {string}")
+    public void update_payment_request_to(String status) throws Exception {
+        paymentOverviewPage.updatePaymentRequestToNotify(status);
     }
 
 }

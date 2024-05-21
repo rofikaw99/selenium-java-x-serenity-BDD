@@ -442,7 +442,7 @@ public class CompanyPage extends PageObject {
     }
 
     private void clickAccountCircleIcon() throws Exception {
-        Thread.sleep(waitResponse);
+        Thread.sleep(4000);
         System.out.println("accountCircleIcon is display-enable : "+$(accountCircleIcon).isDisplayed()+" - "+$(accountCircleIcon).isEnabled());
         evaluateJavascript("arguments[0].click();", $(accountCircleIcon));
     }
@@ -453,7 +453,6 @@ public class CompanyPage extends PageObject {
     }
 
     public void myMenuAccount(String menu) throws Exception {
-        Thread.sleep(waitResponse);
         clickAccountCircleIcon();
         Thread.sleep(waitResponse);
         evaluateJavascript("arguments[0].click();", $(By.xpath("//*[contains(text(), '" + menu +  "')]")));
