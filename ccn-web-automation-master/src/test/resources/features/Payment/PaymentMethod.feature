@@ -200,6 +200,9 @@ Feature: Payment Method
   @PPM_TC_65 @remove-authorized-user @done @PaymentModule @card-owner
   Scenario: Card Owner remove user without transferring the standing instruction
     Given "Authorized User" has standing instruction
+
+  @PPM_TC_65 @remove-authorized-user @done @PaymentModule @card-owner
+  Scenario: Card Owner remove user without transferring the standing instruction
     Given "Card Owner" login to the web
     When "Card Owner" go the payment methods page
     When remove authorized user that has standing instruction
@@ -210,6 +213,9 @@ Feature: Payment Method
   @PPM_TC_64 @remove-authorized-user @done @PaymentModule @card-owner
   Scenario: Card Owner remove user with transferring the standing instruction
     Given "Authorized User" has standing instruction
+
+  @PPM_TC_64 @remove-authorized-user @done @PaymentModule @card-owner
+  Scenario: Card Owner remove user with transferring the standing instruction
     Given "Card Owner" login to the web
     When "Card Owner" go the payment methods page
     When remove authorized user that has standing instruction
@@ -278,20 +284,20 @@ Feature: Payment Method
       | user type | result |
       | User | no option |
 
-  @PPM_TC_15 @remove-commercial-card @done @PaymentModule @card-owner
+  @PPM_TC_67 @leave-company @PaymentModule @user-leave
+  Scenario: Authorized user leave the company
+    Given "Authorized User that Leave Company" login to the web
+    When "Authorized User" leave the company
+    Then all standing instruction will be transferred to card owner
+
+  @PPM_TC_15 @remove-commercial-card @done @PaymentModule @user-leave
   Scenario: Card owner can remove their commercial card
     Given "Card Owner that want to remove their card" login to the web
     When "Card Owner" want to remove commercial card
     Then "Card Owner" "able" to remove commercial card
     Then all standing instruction and authorized user will be removed
 
-  @PPM_TC_67 @leave-company @PaymentModule @authorized-user
-  Scenario: Authorized user leave the company
-    Given "Authorized User that Leave Company" login to the web
-    When "Authorized User" leave the company
-    Then all standing instruction will be transferred to card owner
-
-  @PPM_TC_66 @leave-company @done @PaymentModule @card-owner
+  @PPM_TC_66 @leave-company @done @PaymentModule @user-leave
   Scenario: Card owner leave the company
     Given "Card Owner that Leave Company" login to the web
     When "Card Owner" leave the company
