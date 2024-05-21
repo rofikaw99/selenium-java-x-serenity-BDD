@@ -19,18 +19,18 @@ Feature: PCN
   Discount can be applied across to the whole region/country/cities (configurable at the backend)
   Discount can be applied to the product plan by default
 
-  @PCNS1 @PCN
+  @PCNS1 @PCN @login
   Scenario Outline: [ONLINE] Subscription of the first month. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
-    Given go to main web
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<productB>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
+#    Given go to main web
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<productB>"
 #    And open subscriber payment form
 #    When press second sign in button with email "<email2>" and password "<password>" plan C for AWB BC with "<inputSubs>"
 
@@ -39,43 +39,43 @@ Feature: PCN
       | qa-ccn-47562@mailinator.com | CCNPegasus123 | Test BC-Premium Multicurrency#Sandbox | qa-ccn-75754@mailinator.com  | test awbconcierge premium multicurrencysandbox | Bundle BC AWB | 5         |
 
 
-  @PCNS2_1 @PCNS2 @PCN
+  @PCNS2_1 @PCNS2 @PCN @login
   Scenario Outline: [ONLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                         | password      | product                              | email2                         | productB                                       | inputSubs |
       | sgqa-ccn-72920@mailinator.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS2_1 @PCNS2 @PCN
+  @PCNS2_1 @PCNS2 @PCN @login
   Scenario Outline: [ONLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                | password      | product                              | email2                         | productB                                       | inputSubs |
       | malaypcn@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS3 @PCN
+  @PCNS3 @PCN @login
   Scenario Outline: [ONLINE] Subscription of the subsequent month (with new subscription). PCN Configuration:  set to 20% of each subscription; PCN applies to all products, countries, cities, companies. or for specify flat rate product.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 2 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 2 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
 
 
@@ -83,209 +83,209 @@ Feature: PCN
       | email                 | password      | product                              |
       | malaypcn2@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS4 @PCN
+  @PCNS4 @PCN @login
   Scenario Outline: [ONLINE] Subscription of the subsequent month (with new PM Join). PCN Configuration:  set to 10% of each subscription; PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
 
     Examples:
       | email             | password      | product                              |
       | sgpcn@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS5 @PCN
+  @PCNS5 @PCN @login
   Scenario Outline: [ONLINE] Subscription Does not meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies. (include partner product)
     Given go to main web
     When click initial sign in button
-    When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    When input email "<email>" and password "<password>" and press sign in to continue login
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                         | password      | product                              |
       | sgpcn@yopmail.com             | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS6 @PCN
+  @PCNS6 @PCN @login
   Scenario Outline: [ONLINE] Subscription meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan bundle BC AWB
-    And Subscribe plan "<product>"
-    Given go to main web
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<productB>"
-    Given go to main web
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<productC>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan bundle BC AWB
+#    And Subscribe plan "<product>"
+#    Given go to main web
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<productB>"
+#    Given go to main web
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<productC>"
 
     Examples:
       | email               | password      | product       | productB                             | productC                                       |
       | sripcn2@yopmail.com | CCNPegasus123 | Bundle BC AWB | test bc premium multicurrencysandbox | test awbconcierge premium multicurrencysandbox |
 
-  @PCNS7 @PCN
+  @PCNS7 @PCN @login
   Scenario Outline: [ONLINE] Subscription Partner Product then no PCN charge. PCN Configuration:  set to 10% of each subscription, PCN applies to all products, countries, cities, companies. A 10% discount is set for PCN.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan Lead Freight Solutions
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan Lead Freight Solutions
+#    And Subscribe plan "<product>"
 
     Examples:
       | email              | password      | product                                       |
       | sripcn@yopmail.com | CCNPegasus123 | Freight Management System - LFS Multi Upgrade |
 
 
-  @PCNS9 @PCN
+  @PCNS9 @PCN @login
   Scenario Outline: [ONLINE] subscribe specify product flat rate
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan Test IATA TACT RATE-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan Test IATA TACT RATE-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email              | password      | product                                           |
       | sripcn@yopmail.com | CCNPegasus123 | Test IATA TACT RATE-Premium Multicurrency#Sandbox |
 
-  @PCNS10 @PCN
+  @PCNS10 @PCN @login
   Scenario Outline: [ONLINE] Apply discount when meet with the coupon criteria
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email              | password      | product                                        | coupon             |
       | sripcn@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE1 |
 
-  @PCNS13 @PCN
+  @PCNS13 @PCN @login
   Scenario Outline: [ONLINE] Apply discount to specify company
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email               | password      | product                                        | coupon             |
       | thaipcn@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCN13       |
 
-  @PCNS14 @PCN
+  @PCNS14 @PCN @login
   Scenario Outline: [ONLINE] Apply discount to specify pm
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email                | password      | product                                        | coupon      |
       | thaipcn2@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCN4 |
 
-  @PCNS15 @PCN
+  @PCNS15 @PCN @login
   Scenario Outline: [ONLINE] Apply discount to specify plan
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email                | password      | product                              | coupon       |
       | thaipcn2@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | UATSUBSPCN14 |
 
-  @PCNS15 @PCN
+  @PCNS15 @PCN @login
   Scenario Outline: [ONLINE] Apply discount to specify plan type I/C
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email                | password      | product                              | coupon       |
       | thaipcn2@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | UATSUBSPCN17 |
 
-  @PCNS11 @PCN
+  @PCNS11 @PCN @login
   Scenario Outline: [ONLINE] Apply discount when doesn't meet with the coupon criteria
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email              | password      | product                                        | coupon             |
       | sripcn@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE2 |
 
-  @PCN12 @PCN
+  @PCN12 @PCN @login
   Scenario Outline: [ONLINE] PCN charges can be set a specify % of subscription charge, applied to a specify product/plan
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                         | password      | product                              |
       | qa-ccn-23395@mailinator.com   | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS8 @PCN
+  @PCNS8 @PCN @login
   Scenario Outline: [OFFLINE] subscribe flat rate for CN market
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    And select plan BC CN Market
-    And contact us on plan BC CN Market
+#    And back to the main tab browser
+#    And select plan BC CN Market
+#    And contact us on plan BC CN Market
 
     Examples:
       | email                       | password      |
       | qa-ccn-09538@mailinator.com | CCNPegasus123 |
 
-  @PCNS1 @PCN
+  @PCNS1 @PCN @login
   Scenario Outline: [OFFLINE] Subscription of the first month. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
-    Given go to main web
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<productB>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
+#    Given go to main web
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<productB>"
 #    And open subscriber payment form
 #    When press second sign in button with email "<email2>" and password "<password>" plan C for AWB BC with "<inputSubs>"
 
@@ -294,43 +294,43 @@ Feature: PCN
       | indoqa-ccn-47591568@yopmail.com | CCNPegasus123 | Test BC-Premium Multicurrency#Sandbox | qa-ccn-75754@mailinator.com  | test awbconcierge premium multicurrencysandbox | Bundle BC AWB | 5         |
 
 
-  @PCNS2_1 @PCNS2 @PCN
+  @PCNS2_1 @PCNS2 @PCN @login
   Scenario Outline: [OFFLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                          | password      | product                              | email2                         | productB                                       | inputSubs |
       | uaeqa-ccn-74616801@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS2_1 @PCNS2 @PCN
+  @PCNS2_1 @PCNS2 @PCN @login
   Scenario Outline: [OFFLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                           | password      | product                              | email2                         | productB                                       | inputSubs |
       | indoqa-ccn-40425212@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS3 @PCN
+  @PCNS3 @PCN @login
   Scenario Outline: [OFFLINE] Subscription of the subsequent month (with new subscription). PCN Configuration:  set to 20% of each subscription; PCN applies to all products, countries, cities, companies. or for specify flat rate product.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 2 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 2 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
 
 
@@ -338,124 +338,124 @@ Feature: PCN
       | email                          | password      | product                              |
       | uaeqa-ccn-19407167@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS4 @PCN
+  @PCNS4 @PCN @login
   Scenario Outline: [OFFLINE] Subscription of the subsequent month (with new PM Join). PCN Configuration:  set to 10% of each subscription; PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
 
     Examples:
       | email                           | password      | product                              |
       | indoqa-ccn-14890676@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS5 @PCN
+  @PCNS5 @PCN @login @login
   Scenario Outline: [OFFLINE] Subscription Does not meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies. (include partner product)
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                            | password      | product                              |
       | indoqa-ccn-11875860@yopmail.com  | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS6 @PCN
+  @PCNS6 @PCN @login @login
   Scenario Outline: [OFFLINE] Subscription meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan bundle BC AWB
-    And Subscribe plan "<product>"
-    Given go to main web
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<productB>"
-    Given go to main web
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<productC>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan bundle BC AWB
+#    And Subscribe plan "<product>"
+#    Given go to main web
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<productB>"
+#    Given go to main web
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<productC>"
 
     Examples:
       | email                           | password      | product       | productB                             | productC                                       |
       | indoqa-ccn-96297200@yopmail.com | CCNPegasus123 | Bundle BC AWB | test bc premium multicurrencysandbox | test awbconcierge premium multicurrencysandbox |
 
-  @PCNS7 @PCN
+  @PCNS7 @PCN @login @login
   Scenario Outline: [OFFLINE] Subscription Partner Product then no PCN charge. PCN Configuration:  set to 10% of each subscription, PCN applies to all products, countries, cities, companies. A 10% discount is set for PCN.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan Lead Freight Solutions
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan Lead Freight Solutions
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                           | password      | product                                       |
       | indoqa-ccn-47591568@yopmail.com | CCNPegasus123 | Freight Management System - LFS Multi Upgrade |
 
 
-  @PCNS9 @PCN
+  @PCNS9 @PCN @login
   Scenario Outline: [OFFLINE] subscribe specify product flat rate
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan Test IATA TACT RATE-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan Test IATA TACT RATE-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                           | password      | product                                           |
       | indoqa-ccn-47591568@yopmail.com | CCNPegasus123 | Test IATA TACT RATE-Premium Multicurrency#Sandbox |
 
-  @PCNS10 @PCN
+  @PCNS10 @PCN @login
   Scenario Outline: [OFFLINE] Apply discount when meet with the coupon criteria
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email                           | password      | product                                        | coupon             |
       | indoqa-ccn-06843969@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE1 |
 
 
-  @PCNS11 @PCN
+  @PCNS11 @PCN @login
   Scenario Outline: [OFFLINE] Apply discount when doesn't meet with the coupon criteria
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And select plan test awbconcierge premium multicurrencysandbox
-    And Subscribe plan "<product>" and input coupon "<coupon>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And select plan test awbconcierge premium multicurrencysandbox
+#    And Subscribe plan "<product>" and input coupon "<coupon>"
 
     Examples:
       | email                          | password      | product                                        | coupon             |
       | uaeqa-ccn-34314855@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE2 |
 
-  @PCN12 @PCN
+  @PCN12 @PCN @login
   Scenario Outline: [OFFLINE] PCN charges can be set a specify % of subscription charge, applied to a specify product/plan
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-    And back to the main tab browser
-    When "PM 1 Company A" click product tab to subscribe to product
-    And Select plan Test BC-Premium Multicurrency#Sandbox
-    And Subscribe plan "<product>"
+#    And back to the main tab browser
+#    When "PM 1 Company A" click product tab to subscribe to product
+#    And Select plan Test BC-Premium Multicurrency#Sandbox
+#    And Subscribe plan "<product>"
 
     Examples:
       | email                            | password      | product                              |
