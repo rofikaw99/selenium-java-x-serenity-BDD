@@ -215,6 +215,8 @@ public class PaymentOverviewPage extends PageObject {
 
     private static String accessToken;
 
+    private String paymentRequestId;
+
     public static void main(String[] args) {
         fetchAccessToken();
         System.out.println("Access Token: " + accessToken);
@@ -268,7 +270,50 @@ public class PaymentOverviewPage extends PageObject {
                 .body(payload)
                 .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest");
 
-        String paymentRequestId = response.jsonPath().getString("paymentRequestId");
+        paymentRequestId = response.jsonPath().getString("paymentRequestId");
+
+        System.out.println("REF-" + Constants.FOUR_DIGIT);
+        System.out.println("Payment Request ID: " + paymentRequestId);
+    }
+
+
+    public void createCreditTermPaymentRequestToGetNotification() {
+        String payload = "{\n" +
+                "    \"externalReferenceId\": \"EXT-" + Constants.FOUR_DIGIT + "\",\n" +
+                "    \"reference\": \"REF-" + Constants.FOUR_DIGIT + "\",\n" +
+                "    \"totalChargeAmount\": 470,\n" +
+                "    \"currency\": \"SGD\",\n" +
+                "    \"status\": \"READY\",\n" +
+                "    \"meta\": {\n" +
+                "        \"items\": [\n" +
+                "            {\n" +
+                "                \"description\": \"Arm, Ammunition, & Explosives (Strong Room Storage)\",\n" +
+                "                \"amount\": 100\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Valuable Cargo (Strong Room Storage)\",\n" +
+                "                \"amount\": 80\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Export Perishables Storage\",\n" +
+                "                \"amount\": 90\n" +
+                "            },\n" +
+                "            {\n" +
+                "                \"description\": \"Administrative Charge for Return Cargo\",\n" +
+                "                \"amount\": 200\n" +
+                "            }\n" +
+                "        ]\n" +
+                "    },\n" +
+                "    \"paymentMethod\": \"credit_terms\" \n" +
+                "}";
+
+        Response response = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + accessToken)
+                .body(payload)
+                .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest");
+
+        paymentRequestId = response.jsonPath().getString("paymentRequestId");
 
         System.out.println("REF-" + Constants.FOUR_DIGIT);
         System.out.println("Payment Request ID: " + paymentRequestId);
@@ -309,9 +354,7 @@ public class PaymentOverviewPage extends PageObject {
                 .body(payload)
                 .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest");
 
-        String paymentRequestId = response.jsonPath().getString("paymentRequestId");
-
-
+        paymentRequestId = response.jsonPath().getString("paymentRequestId");
         System.out.println("REF-" + Constants.FOUR_DIGIT);
         System.out.println("Payment Request ID: " + paymentRequestId);
     }
@@ -330,6 +373,22 @@ public class PaymentOverviewPage extends PageObject {
 
         System.out.println("Status code: " + response.getStatusCode());
 //        Assert.assertEquals("Status code not as acpected", 200, response.getStatusCode());
+        System.out.println("Response body: " + response.getBody().asString());
+    }
+
+    public void updatePaymentRequestToNotify(String status){
+        String payload = "{\n" +
+                "    \"paymentRequestId\": \"" + paymentRequestId + "\",\n" +
+                "    \"status\": \"" + status + "\"\n" +
+                "}";
+
+        Response response = RestAssured.given()
+                .header("Content-Type", "application/json")
+                .header("Authorization", "Bearer " + accessToken)
+                .body(payload)
+                .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/UpdatePaymentRequest");
+
+        System.out.println("Status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
     }
 
