@@ -19,7 +19,7 @@ Feature: PCN
   Discount can be applied across to the whole region/country/cities (configurable at the backend)
   Discount can be applied to the product plan by default
 
-  @PCNS1 @PCN @login
+  @PCNS1 @PCN
   Scenario Outline: [ONLINE] Subscription of the first month. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -39,7 +39,7 @@ Feature: PCN
       | qa-ccn-47562@mailinator.com | CCNPegasus123 | Test BC-Premium Multicurrency#Sandbox | qa-ccn-75754@mailinator.com  | test awbconcierge premium multicurrencysandbox | Bundle BC AWB | 5         |
 
 
-  @PCNS2_1 @PCNS2 @PCN @login
+  @PCNS2_1 @PCNS2 @PCN
   Scenario Outline: [ONLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -53,7 +53,7 @@ Feature: PCN
       | email                         | password      | product                              | email2                         | productB                                       | inputSubs |
       | sgqa-ccn-72920@mailinator.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS2_1 @PCNS2 @PCN @login
+  @PCNS2_1 @PCNS2 @PCN
   Scenario Outline: [ONLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -67,7 +67,7 @@ Feature: PCN
       | email                | password      | product                              | email2                         | productB                                       | inputSubs |
       | malaypcn@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS3 @PCN @login
+  @PCNS3 @PCN
   Scenario Outline: [ONLINE] Subscription of the subsequent month (with new subscription). PCN Configuration:  set to 20% of each subscription; PCN applies to all products, countries, cities, companies. or for specify flat rate product.
     Given go to main web
     When click initial sign in button
@@ -83,7 +83,7 @@ Feature: PCN
       | email                 | password      | product                              |
       | malaypcn2@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS4 @PCN @login
+  @PCNS4 @PCN
   Scenario Outline: [ONLINE] Subscription of the subsequent month (with new PM Join). PCN Configuration:  set to 10% of each subscription; PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -98,7 +98,7 @@ Feature: PCN
       | email             | password      | product                              |
       | sgpcn@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS5 @PCN @login
+  @PCNS5 @PCN
   Scenario Outline: [ONLINE] Subscription Does not meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies. (include partner product)
     Given go to main web
     When click initial sign in button
@@ -112,7 +112,7 @@ Feature: PCN
       | email                         | password      | product                              |
       | sgpcn@yopmail.com             | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS6 @PCN @login
+  @PCNS6 @PCN
   Scenario Outline: [ONLINE] Subscription meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -134,7 +134,7 @@ Feature: PCN
       | email               | password      | product       | productB                             | productC                                       |
       | sripcn2@yopmail.com | CCNPegasus123 | Bundle BC AWB | test bc premium multicurrencysandbox | test awbconcierge premium multicurrencysandbox |
 
-  @PCNS7 @PCN @login
+  @PCNS7 @PCN
   Scenario Outline: [ONLINE] Subscription Partner Product then no PCN charge. PCN Configuration:  set to 10% of each subscription, PCN applies to all products, countries, cities, companies. A 10% discount is set for PCN.
     Given go to main web
     When click initial sign in button
@@ -149,7 +149,7 @@ Feature: PCN
       | sripcn@yopmail.com | CCNPegasus123 | Freight Management System - LFS Multi Upgrade |
 
 
-  @PCNS9 @PCN @login
+  @PCNS9 @PCN
   Scenario Outline: [ONLINE] subscribe specify product flat rate
     Given go to main web
     When click initial sign in button
@@ -163,7 +163,7 @@ Feature: PCN
       | email              | password      | product                                           |
       | sripcn@yopmail.com | CCNPegasus123 | Test IATA TACT RATE-Premium Multicurrency#Sandbox |
 
-  @PCNS10 @PCN @login
+  @PCNS10 @PCN
   Scenario Outline: [ONLINE] Apply discount when meet with the coupon criteria
     Given go to main web
     When click initial sign in button
@@ -177,7 +177,7 @@ Feature: PCN
       | email              | password      | product                                        | coupon             |
       | sripcn@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE1 |
 
-  @PCNS13 @PCN @login
+  @PCNS13 @PCN
   Scenario Outline: [ONLINE] Apply discount to specify company
     Given go to main web
     When click initial sign in button
@@ -191,7 +191,7 @@ Feature: PCN
       | email               | password      | product                                        | coupon             |
       | thaipcn@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCN13       |
 
-  @PCNS14 @PCN @login
+  @PCNS14 @PCN
   Scenario Outline: [ONLINE] Apply discount to specify pm
     Given go to main web
     When click initial sign in button
@@ -205,7 +205,7 @@ Feature: PCN
       | email                | password      | product                                        | coupon      |
       | thaipcn2@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCN4 |
 
-  @PCNS15 @PCN @login
+  @PCNS15 @PCN
   Scenario Outline: [ONLINE] Apply discount to specify plan
     Given go to main web
     When click initial sign in button
@@ -219,7 +219,7 @@ Feature: PCN
       | email                | password      | product                              | coupon       |
       | thaipcn2@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | UATSUBSPCN14 |
 
-  @PCNS15 @PCN @login
+  @PCNS15 @PCN
   Scenario Outline: [ONLINE] Apply discount to specify plan type I/C
     Given go to main web
     When click initial sign in button
@@ -233,7 +233,7 @@ Feature: PCN
       | email                | password      | product                              | coupon       |
       | thaipcn2@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | UATSUBSPCN17 |
 
-  @PCNS11 @PCN @login
+  @PCNS11 @PCN
   Scenario Outline: [ONLINE] Apply discount when doesn't meet with the coupon criteria
     Given go to main web
     When click initial sign in button
@@ -247,7 +247,7 @@ Feature: PCN
       | email              | password      | product                                        | coupon             |
       | sripcn@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE2 |
 
-  @PCN12 @PCN @login
+  @PCN12 @PCN
   Scenario Outline: [ONLINE] PCN charges can be set a specify % of subscription charge, applied to a specify product/plan
     Given go to main web
     When click initial sign in button
@@ -261,7 +261,7 @@ Feature: PCN
       | email                         | password      | product                              |
       | qa-ccn-23395@mailinator.com   | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS8 @PCN @login
+  @PCNS8 @PCN
   Scenario Outline: [OFFLINE] subscribe flat rate for CN market
     Given go to main web
     When click initial sign in button
@@ -274,7 +274,7 @@ Feature: PCN
       | email                       | password      |
       | qa-ccn-09538@mailinator.com | CCNPegasus123 |
 
-  @PCNS1 @PCN @login
+  @PCNS1 @PCN
   Scenario Outline: [OFFLINE] Subscription of the first month. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -294,7 +294,7 @@ Feature: PCN
       | indoqa-ccn-47591568@yopmail.com | CCNPegasus123 | Test BC-Premium Multicurrency#Sandbox | qa-ccn-75754@mailinator.com  | test awbconcierge premium multicurrencysandbox | Bundle BC AWB | 5         |
 
 
-  @PCNS2_1 @PCNS2 @PCN @login
+  @PCNS2_1 @PCNS2 @PCN
   Scenario Outline: [OFFLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -308,7 +308,7 @@ Feature: PCN
       | email                          | password      | product                              | email2                         | productB                                       | inputSubs |
       | uaeqa-ccn-74616801@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS2_1 @PCNS2 @PCN @login
+  @PCNS2_1 @PCNS2 @PCN
   Scenario Outline: [OFFLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -322,7 +322,7 @@ Feature: PCN
       | email                           | password      | product                              | email2                         | productB                                       | inputSubs |
       | indoqa-ccn-40425212@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox | sgqa-ccn-72921@mailinator.com  | test awbconcierge premium multicurrencysandbox | 5         |
 
-  @PCNS3 @PCN @login
+  @PCNS3 @PCN
   Scenario Outline: [OFFLINE] Subscription of the subsequent month (with new subscription). PCN Configuration:  set to 20% of each subscription; PCN applies to all products, countries, cities, companies. or for specify flat rate product.
     Given go to main web
     When click initial sign in button
@@ -338,7 +338,7 @@ Feature: PCN
       | email                          | password      | product                              |
       | uaeqa-ccn-19407167@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS4 @PCN @login
+  @PCNS4 @PCN
   Scenario Outline: [OFFLINE] Subscription of the subsequent month (with new PM Join). PCN Configuration:  set to 10% of each subscription; PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -353,7 +353,7 @@ Feature: PCN
       | email                           | password      | product                              |
       | indoqa-ccn-14890676@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS5 @PCN @login @login
+  @PCNS5 @PCN
   Scenario Outline: [OFFLINE] Subscription Does not meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies. (include partner product)
     Given go to main web
     When click initial sign in button
@@ -367,7 +367,7 @@ Feature: PCN
       | email                            | password      | product                              |
       | indoqa-ccn-11875860@yopmail.com  | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @PCNS6 @PCN @login @login
+  @PCNS6 @PCN
   Scenario Outline: [OFFLINE] Subscription meet minimum PCN Charge. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
@@ -389,7 +389,7 @@ Feature: PCN
       | email                           | password      | product       | productB                             | productC                                       |
       | indoqa-ccn-96297200@yopmail.com | CCNPegasus123 | Bundle BC AWB | test bc premium multicurrencysandbox | test awbconcierge premium multicurrencysandbox |
 
-  @PCNS7 @PCN @login @login
+  @PCNS7 @PCN
   Scenario Outline: [OFFLINE] Subscription Partner Product then no PCN charge. PCN Configuration:  set to 10% of each subscription, PCN applies to all products, countries, cities, companies. A 10% discount is set for PCN.
     Given go to main web
     When click initial sign in button
@@ -404,7 +404,7 @@ Feature: PCN
       | indoqa-ccn-47591568@yopmail.com | CCNPegasus123 | Freight Management System - LFS Multi Upgrade |
 
 
-  @PCNS9 @PCN @login
+  @PCNS9 @PCN
   Scenario Outline: [OFFLINE] subscribe specify product flat rate
     Given go to main web
     When click initial sign in button
@@ -418,7 +418,7 @@ Feature: PCN
       | email                           | password      | product                                           |
       | indoqa-ccn-47591568@yopmail.com | CCNPegasus123 | Test IATA TACT RATE-Premium Multicurrency#Sandbox |
 
-  @PCNS10 @PCN @login
+  @PCNS10 @PCN
   Scenario Outline: [OFFLINE] Apply discount when meet with the coupon criteria
     Given go to main web
     When click initial sign in button
@@ -433,7 +433,7 @@ Feature: PCN
       | indoqa-ccn-06843969@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE1 |
 
 
-  @PCNS11 @PCN @login
+  @PCNS11 @PCN
   Scenario Outline: [OFFLINE] Apply discount when doesn't meet with the coupon criteria
     Given go to main web
     When click initial sign in button
@@ -447,7 +447,7 @@ Feature: PCN
       | email                          | password      | product                                        | coupon             |
       | uaeqa-ccn-34314855@yopmail.com | CCNPegasus123 | test awbconcierge premium multicurrencysandbox | UATSUBSPCNOFFLINE2 |
 
-  @PCN12 @PCN @login
+  @PCN12 @PCN
   Scenario Outline: [OFFLINE] PCN charges can be set a specify % of subscription charge, applied to a specify product/plan
     Given go to main web
     When click initial sign in button
