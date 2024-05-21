@@ -365,7 +365,7 @@ Feature: Payment Overview
 
 
   @PPM_TC_29 @PaymentOverview @PaymentModule @authorized-user @login
-  Scenario Outline: User do manual payment with payNow
+  Scenario Outline: User doing manual payment with payNow
     Given "<condition>" login to the web
     When User go to "<menu>"
     Then verify field to be display on my payment
