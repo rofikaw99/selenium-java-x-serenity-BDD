@@ -442,7 +442,7 @@ public class CompanyPage extends PageObject {
     }
 
     private void clickAccountCircleIcon() throws Exception {
-        Thread.sleep(4000);
+        Thread.sleep(9000);
         System.out.println("accountCircleIcon is display-enable : "+$(accountCircleIcon).isDisplayed()+" - "+$(accountCircleIcon).isEnabled());
         evaluateJavascript("arguments[0].click();", $(accountCircleIcon));
     }
