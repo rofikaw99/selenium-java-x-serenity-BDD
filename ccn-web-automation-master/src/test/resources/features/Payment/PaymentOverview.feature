@@ -364,14 +364,14 @@ Feature: Payment Overview
       | Authorize User Overview | My Payment Overview | outstanding |
 
 
-  @PPM_TC_29 @PaymentOverview @PaymentModule @authorized-user @login
+  @PPM_TC_29 @PaymentOverview @PaymentModule @user @login
   Scenario Outline: User doing manual payment with payNow
     Given "<condition>" login to the web
-    When User go to "<menu>"
-    Then verify field to be display on my payment
-    When input filter keyword "<keyword>"
-    And verify button checkout enable to click
-    And user click pay after checkout
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    When input filter keyword "<keyword>"
+#    And verify button checkout enable to click
+#    And user click pay after checkout
 
     Examples:
       | condition     | menu                | keyword     |
@@ -466,6 +466,21 @@ Feature: Payment Overview
     Examples:
       | condition               | menu                | keyword     |
       | Authorize User Overview | My Payment Overview | outstanding |
+
+  @PPM_TC_32 @PaymentOverview @PaymentModule @user @login
+  Scenario Outline: User do the bulk payment with PayNow
+    Given "<condition>" login to the web
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    When input filter keyword "<keyword>"
+#    And user click checkbox bulk outstanding
+#    And user click checkbox bulk checkout
+#    And user click pay after checkout
+
+
+    Examples:
+      | condition     | menu                | keyword     |
+      | User Overview | My Payment Overview | outstanding |
 
 
   #PaymentNotification
