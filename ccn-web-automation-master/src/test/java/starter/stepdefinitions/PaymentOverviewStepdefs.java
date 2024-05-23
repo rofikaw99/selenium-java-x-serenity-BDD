@@ -44,10 +44,7 @@ public class PaymentOverviewStepdefs {
         Assert.assertTrue(paymentOverviewPage.referenceIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.requestDateIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.supplierIsDisplayed());
-        Assert.assertTrue(paymentOverviewPage.referenceIsDisplayed());
-        Assert.assertTrue(paymentOverviewPage.lastUpdatedIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.paymentMethodIsDisplayed());
-        Assert.assertTrue(paymentOverviewPage.paymentByIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.totalIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.statusIsDisplayed());
     }

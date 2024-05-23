@@ -891,7 +891,7 @@ Feature: Payment Overview
       | condition               | menu                | keyword     |
       | Authorize User Overview | My Payment Overview | outstanding |
 
-  @PPM_TC_30 @PaymentOverview @PaymentModule @login @card-owner
+  @PPM_TC_30 @PaymentOverview @PaymentModule @login @card-owner @newEnhancementPaymentOverview
   Scenario Outline: Card Owner do the bulk payment with PayNow
     Given "<condition>" login to the web
 #    When User go to "<menu>"

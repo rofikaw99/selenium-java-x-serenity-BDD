@@ -322,7 +322,7 @@ public class PaymentOverviewPage extends PageObject {
     public void createPaymentRequest() {
         String payload = "{\n" +
                 "    \"externalReferenceId\": \"EXT-" + Constants.FOUR_DIGIT + "\",\n" +
-                "    \"reference\": \"REF-" + Constants.FOUR_DIGIT + "\",\n" +
+                "    \"reference\": \"TEST-PAYMENT, REF-1234, 1146, 1234, Headquarter SQ Company\",\n" +
                 "    \"totalChargeAmount\": 470,\n" +
                 "    \"currency\": \"SGD\",\n" +
                 "    \"status\": \"UPCOMING\",\n" +
