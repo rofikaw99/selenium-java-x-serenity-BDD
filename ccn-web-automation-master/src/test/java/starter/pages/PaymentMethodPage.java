@@ -358,11 +358,7 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public void inputSupplier(int index) throws InterruptedException {
-<<<<<<< HEAD
-        Thread.sleep(4000);
-=======
         Thread.sleep(3000);
->>>>>>> 21c33f5fc205c57dd8351713b52d06c0853859f7
         $(fieldSupplier).waitUntilPresent();
         evaluateJavascript("arguments[0].click();", $(fieldSupplier));
         evaluateJavascript("arguments[0].click();", $$(dropdownSupplier).get(index));
