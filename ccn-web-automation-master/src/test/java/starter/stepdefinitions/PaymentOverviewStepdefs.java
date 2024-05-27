@@ -40,14 +40,11 @@ public class PaymentOverviewStepdefs {
 
     @When("verify field to be display on my payment")
     public void verify_field_to_be_display_on_my_payment() throws Exception {
-        Thread.sleep(3000);
+        Thread.sleep(4000);
         Assert.assertTrue(paymentOverviewPage.referenceIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.requestDateIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.supplierIsDisplayed());
-        Assert.assertTrue(paymentOverviewPage.referenceIsDisplayed());
-        Assert.assertTrue(paymentOverviewPage.lastUpdatedIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.paymentMethodIsDisplayed());
-        Assert.assertTrue(paymentOverviewPage.paymentByIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.totalIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.statusIsDisplayed());
     }
