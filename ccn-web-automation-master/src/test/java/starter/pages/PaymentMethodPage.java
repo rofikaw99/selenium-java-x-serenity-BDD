@@ -89,8 +89,10 @@ public class PaymentMethodPage extends PageObject {
     private By fieldStartDate = By.xpath("(//input[@placeholder = 'Select Start Date'])[1]");
     private By fieldEndDate = By.xpath("//input[@placeholder = 'Select End Date']");
     private By fieldEndDateUpdate = By.xpath("(//input[@placeholder = 'Select End Date'])[2]");
-    private By datePicker = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '23']");
-    private By datePickerEnd = By.xpath("//*[@class = 'cube-date-range-day-container']//*[text() = '25']");
+    private By datePicker(int addedDate) {
+        String date = Common.addDate(addedDate);
+        return By.xpath("//*[@aria-disabled = 'false']//*[@class = 'cube-date-range-day-container']//*[text() = '"+ date +"']");
+    }
     private By fieldThreshold = By.id("cube-threshold");
     private By fieldThresholdUpdate = By.xpath("(//*[@id = 'cube-threshold'])[2]");
     private By fieldManageByEnabled = By.xpath("(//input[@placeholder = 'Manage By' and contains(@style, 'auto') ])");
@@ -114,7 +116,7 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public void goToPayment() throws InterruptedException {
-        openAt(Constants.URL_PAYMENT_METHODS);
+//        openAt(Constants.URL_PAYMENT_METHODS);
         Thread.sleep(20000);
         $(headerMyMethods).waitUntilVisible();
         Assert.assertTrue($(headerMyMethods).isDisplayed());
@@ -356,7 +358,7 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public void inputSupplier(int index) throws InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(3000);
         $(fieldSupplier).waitUntilPresent();
         evaluateJavascript("arguments[0].click();", $(fieldSupplier));
         evaluateJavascript("arguments[0].click();", $$(dropdownSupplier).get(index));
@@ -365,18 +367,18 @@ public class PaymentMethodPage extends PageObject {
     public void inputStartDate(int startDate){
         $(fieldStartDate).waitUntilVisible();
         evaluateJavascript("arguments[0].click();", $(fieldStartDate));
-        evaluateJavascript("arguments[0].click();", $(datePicker));
+        evaluateJavascript("arguments[0].click();", $(datePicker(startDate)));
     }
 
     public void inputEndDate(int endDate){
         $(fieldEndDate).waitUntilVisible();
         evaluateJavascript("arguments[0].click();", $(fieldEndDate));
-        evaluateJavascript("arguments[0].click();", $(datePickerEnd));
+        evaluateJavascript("arguments[0].click();", $(datePicker(endDate)));
     }
 
     public void updateEndDateUpdate(int endDate) {
         evaluateJavascript("arguments[0].click();", $(fieldEndDateUpdate));
-        evaluateJavascript("arguments[0].click();", $(datePickerEnd));
+        evaluateJavascript("arguments[0].click();", $(datePicker(endDate)));
     }
 
     public void inputThreshold(String threshold){
