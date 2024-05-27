@@ -180,9 +180,9 @@ Feature: Payment Method
   @PPM_TC_25 @transfer-si @PaymentModule @authorized-user @login
   Scenario: Authorized User can't transfer standing instruction ownership
     Given "Authorized User" login to the web
-#    When "Authorized User" want to transfer standing instruction ownership
-#    And "Authorized User" choose one of the standing instruction
-#    Then Authorized User can't transfer standing instruction ownership
+    When "Authorized User" want to transfer standing instruction ownership
+    And "Authorized User" choose one of the standing instruction
+    Then Authorized User can't transfer standing instruction ownership
 
   @PPM_TC_26 @transfer-si @done @PaymentModule @user @login
   Scenario: The function to transfer standing instruction not available for user

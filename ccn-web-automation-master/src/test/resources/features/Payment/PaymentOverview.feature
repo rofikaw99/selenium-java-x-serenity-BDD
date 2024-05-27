@@ -894,8 +894,8 @@ Feature: Payment Overview
   @PPM_TC_30 @PaymentOverview @PaymentModule @login @card-owner @newEnhancementPaymentOverview
   Scenario Outline: Card Owner do the bulk payment with PayNow
     Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
+    When User go to "<menu>"
+    Then verify field to be display on my payment
 #    When input filter keyword "<keyword>"
 #    And user click checkbox bulk outstanding
 #    And user click checkbox bulk checkout

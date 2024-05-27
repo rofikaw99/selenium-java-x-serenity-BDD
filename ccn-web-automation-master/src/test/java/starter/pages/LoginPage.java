@@ -120,6 +120,11 @@ public class LoginPage extends PageObject {
         }
         inputEmailLogin(email);
         inputPasswordLogin(password);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         pressSignIn();
     }
 
