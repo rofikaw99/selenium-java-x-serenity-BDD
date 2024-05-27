@@ -34,7 +34,11 @@ Feature: Payment Method
   Scenario: User able setup commercial card
     Given "User have company" login to the web
     When "User" setup commercial card
+<<<<<<< HEAD
+#    Then user able to setup commercial card
+=======
     Then user able to setup commercial card
+>>>>>>> 21c33f5fc205c57dd8351713b52d06c0853859f7
 
   @PPM_TC_1 @commercial-card-access @PaymentModule @user @login
   Scenario: User able setup commercial card

@@ -27,6 +27,7 @@ public class LoginPage extends PageObject {
     private By txtPasswordLogin = By.id("password");
     private By btnSignIn = By.id("next");
     private By TestBCPremiumMulticurrencySandbox = By.xpath("(//*[@id='nav']/ul/li/a)[14]");
+    private By cookieElement = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
 
     private By cookies = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
     private String initWindow = "";
@@ -119,6 +120,11 @@ public class LoginPage extends PageObject {
         }
         inputEmailLogin(email);
         inputPasswordLogin(password);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         pressSignIn();
     }
 
@@ -131,8 +137,21 @@ public class LoginPage extends PageObject {
         }
     }
     public void pressBtnLoginInit(){
+        if (isCookieDisplayed()) {
+            $(cookieElement).isDisplayed();
+            $(cookieElement).click();
+        } else {
+            System.out.println("Cookie is not displayed. Skip click cookie.");
+        }
         $(btnSignInOnTheHomepage).isDisplayed();
         $(btnSignInOnTheHomepage).click();
+    }
+
+    public boolean isCookieDisplayed() {
+        // Logic to check if cookie is displayed
+        // Return true if displayed, false otherwise
+        // Example:
+         return $(cookieElement).isDisplayed();
     }
     public void changeSigninWindow() {
         initWindow = getDriver().getWindowHandle();

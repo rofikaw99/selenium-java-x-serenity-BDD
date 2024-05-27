@@ -300,8 +300,9 @@ Feature: Payment Overview
       | condition               | menu                | keyword     |
       | User Overview           | My Payment Overview | outstanding |
 
+
   @pageFilter @PaymentOverview @PaymentModule @login @card-owner
-  Scenario Outline: Card try to change page setting
+  Scenario Outline: Card Owner try to change page setting
     Given "<condition>" login to the web
     When User go to "<menu>"
     Then verify field to be display on my payment
@@ -310,6 +311,29 @@ Feature: Payment Overview
     Examples:
       | condition            | menu                | page |
       | Have Payment Request | My Payment Overview | 20   |
+
+
+  @pageFilter @PaymentOverview @PaymentModule @login
+  Scenario Outline: Authorize User try to change page setting
+    Given "<condition>" login to the web
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    And select filter page "<page>"
+
+    Examples:
+      | condition               | menu                | page |
+      | Authorize User Overview | My Payment Overview | 40   |
+
+  @pageFilterUser @PaymentOverview @PaymentModule @login
+  Scenario Outline: User try to change page setting
+    Given "<condition>" login to the web
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    And select filter page "<page>"
+
+    Examples:
+      | condition               | menu                | page |
+      | User Overview           | My Payment Overview | 70   |
 
   @PPM_TC_27 @PaymentOverview @PaymentModule @card-owner @login
   Scenario Outline: Card owner do the manual payment with payNow
@@ -338,6 +362,20 @@ Feature: Payment Overview
     Examples:
       | condition               | menu                | keyword     |
       | Authorize User Overview | My Payment Overview | outstanding |
+
+
+  @PPM_TC_29 @PaymentOverview @PaymentModule @user @login
+  Scenario Outline: User doing manual payment with payNow
+    Given "<condition>" login to the web
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    And verify button checkout enable to click
+    And user click pay after checkout
+
+    Examples:
+      | condition     | menu                | keyword     |
+      | User Overview | My Payment Overview | outstanding |
 
 
   @PPM_TC_30 @PaymentOverview @PaymentModule @login @card-owner
@@ -428,6 +466,21 @@ Feature: Payment Overview
     Examples:
       | condition               | menu                | keyword     |
       | Authorize User Overview | My Payment Overview | outstanding |
+
+  @PPM_TC_32 @PaymentOverview @PaymentModule @user @login
+  Scenario Outline: User do the bulk payment with PayNow
+    Given "<condition>" login to the web
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    And user click checkbox bulk outstanding
+    And user click checkbox bulk checkout
+    And user click pay after checkout
+
+
+    Examples:
+      | condition     | menu                | keyword     |
+      | User Overview | My Payment Overview | outstanding |
 
 
   #PaymentNotification
@@ -838,11 +891,11 @@ Feature: Payment Overview
       | condition               | menu                | keyword     |
       | Authorize User Overview | My Payment Overview | outstanding |
 
-  @PPM_TC_30 @PaymentOverview @PaymentModule @login @card-owner
+  @PPM_TC_30 @PaymentOverview @PaymentModule @login @card-owner @newEnhancementPaymentOverview
   Scenario Outline: Card Owner do the bulk payment with PayNow
     Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
+    When User go to "<menu>"
+    Then verify field to be display on my payment
 #    When input filter keyword "<keyword>"
 #    And user click checkbox bulk outstanding
 #    And user click checkbox bulk checkout
