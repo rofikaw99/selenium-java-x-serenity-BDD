@@ -327,9 +327,9 @@ Feature: Payment Overview
   @pageFilterUser @PaymentOverview @PaymentModule @login
   Scenario Outline: User try to change page setting
     Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
-#    And select filter page "<page>"
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    And select filter page "<page>"
 
     Examples:
       | condition               | menu                | page |
@@ -367,11 +367,11 @@ Feature: Payment Overview
   @PPM_TC_29 @PaymentOverview @PaymentModule @user @login
   Scenario Outline: User doing manual payment with payNow
     Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
-#    When input filter keyword "<keyword>"
-#    And verify button checkout enable to click
-#    And user click pay after checkout
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    And verify button checkout enable to click
+    And user click pay after checkout
 
     Examples:
       | condition     | menu                | keyword     |
@@ -470,12 +470,12 @@ Feature: Payment Overview
   @PPM_TC_32 @PaymentOverview @PaymentModule @user @login
   Scenario Outline: User do the bulk payment with PayNow
     Given "<condition>" login to the web
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
-#    When input filter keyword "<keyword>"
-#    And user click checkbox bulk outstanding
-#    And user click checkbox bulk checkout
-#    And user click pay after checkout
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    And user click checkbox bulk outstanding
+    And user click checkbox bulk checkout
+    And user click pay after checkout
 
 
     Examples:
