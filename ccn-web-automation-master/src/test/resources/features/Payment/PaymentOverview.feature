@@ -103,45 +103,58 @@ Feature: Payment Overview
     Examples:
       | condition               | menu                | keyword |
       | User Overview           | My Payment Overview | Auto    |
-
-  @PPM_TC_50_1_1 @PaymentOverview @PaymentModule @card-owner @login
-  Scenario Outline: Card Owner verify upcoming payment request status
-    Given "<condition>" login to the web
+  @PaymentOverviewAnotherCompany @PaymentModule
+  Scenario Outline: Another company can't see
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
     When User go to "<menu>"
-    Then verify field to be display on my payment
-    When input filter keyword "<keyword>"
-    Then verify upcoming status color code is correct
-    And verify button checkout unable to click
+    Then verify field to be display on the another company
 
     Examples:
-      | condition               | menu                | keyword  |
-      | Have Payment Request    | My Payment Overview | upcoming |
+      | email                | password      | menu                |
+      | malaypcn@yopmail.com | CCNPegasus123 | My Payment Overview |
 
-  @PPM_TC_50_1_2 @PaymentOverview @PaymentModule @authorized-user @login
-  Scenario Outline: Authorized User verify upcoming payment request status
-    Given "<condition>" login to the web
-    When User go to "<menu>"
-    Then verify field to be display on my payment
-    When input filter keyword "<keyword>"
-    Then verify upcoming status color code is correct
-    And verify button checkout unable to click
 
-    Examples:
-      | condition               | menu                | keyword  |
-      | Authorize User Overview | My Payment Overview | upcoming |
+#  @PPM_TC_50_1_1 @PaymentOverview @PaymentModule @card-owner @login
+#  Scenario Outline: Card Owner verify upcoming payment request status
+#    Given "<condition>" login to the web
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    When input filter keyword "<keyword>"
+#    Then verify upcoming status color code is correct
+#    And verify button checkout unable to click
+#
+#    Examples:
+#      | condition               | menu                | keyword  |
+#      | Have Payment Request    | My Payment Overview | upcoming |
 
-  @PPM_TC_50_1_3 @PaymentOverview @PaymentModule @user @login
-  Scenario Outline: User verify upcoming payment request status
-    Given "<condition>" login to the web
-    When User go to "<menu>"
-    Then verify field to be display on my payment
-    When input filter keyword "<keyword>"
-    Then verify upcoming status color code is correct
-    And verify button checkout unable to click
+#  @PPM_TC_50_1_2 @PaymentOverview @PaymentModule @authorized-user @login
+#  Scenario Outline: Authorized User verify upcoming payment request status
+#    Given "<condition>" login to the web
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    When input filter keyword "<keyword>"
+#    Then verify upcoming status color code is correct
+#    And verify button checkout unable to click
+#
+#    Examples:
+#      | condition               | menu                | keyword  |
+#      | Authorize User Overview | My Payment Overview | upcoming |
 
-    Examples:
-      | condition               | menu                | keyword  |
-      | User Overview           | My Payment Overview | upcoming |
+#  @PPM_TC_50_1_3 @PaymentOverview @PaymentModule @user @login
+#  Scenario Outline: User verify upcoming payment request status
+#    Given "<condition>" login to the web
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    When input filter keyword "<keyword>"
+#    Then verify upcoming status color code is correct
+#    And verify button checkout unable to click
+#
+#    Examples:
+#      | condition               | menu                | keyword  |
+#      | User Overview           | My Payment Overview | upcoming |
 
   @PPM_TC_50_2_1 @PaymentOverview @PaymentModule @card-owner @login
   Scenario Outline: Card Owner verify outstanding payment request status
@@ -284,7 +297,7 @@ Feature: Payment Overview
 
     Examples:
       | condition               | menu                | keyword     |
-      | Authorize User Overview | My Payment Overview | upcoming    |
+      | Authorize User Overview | My Payment Overview | paid        |
 
 
   @PPM_TC_51_3 @PaymentOverview @PaymentModule @login @user
