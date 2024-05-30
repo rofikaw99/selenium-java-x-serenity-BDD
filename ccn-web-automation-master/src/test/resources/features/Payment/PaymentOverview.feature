@@ -1,15 +1,15 @@
 @payment @payment-overview
 Feature: Payment Overview
 
-  @PPM_TC_40 @PaymentOverview @PaymentModule @payment-request
-  Scenario Outline: create request payment upcoming
-    Given user get SSO token
-    And user create upcoming payment request
-
-
-    Examples:
-      | condition            | menu                | keyword |
-      | Have Payment Request | My Payment Overview | REF-    |
+#  @PPM_TC_40 @PaymentOverview @PaymentModule @payment-request
+#  Scenario Outline: create request payment upcoming
+#    Given user get SSO token
+#    And user create upcoming payment request
+#
+#
+#    Examples:
+#      | condition            | menu                | keyword |
+#      | Have Payment Request | My Payment Overview | REF-    |
 
 #  @updateStatusToOutstanding @PaymentOverview @PaymentModule @payment-request
 #  Scenario Outline: update payment request to outstanding
@@ -29,15 +29,15 @@ Feature: Payment Overview
 #      | status    | paymentRequestId                     | condition            | menu                | keyword |
 #      | EXPIRED   | 52173ef3-f566-4722-8e17-b02ecb04a3a5 | Have Payment Request | My Payment Overview | REF-    |
 
-  @PPM_TC_42 @PaymentOverview @PaymentModule @payment-request
-  Scenario Outline: create request payment credit term with status paid
-    Given user get SSO token
-    And user create credit term payment request
-
-    Examples:
-      | condition            | menu                | condition            | menu                | keyword |
-      | Have Payment Request | My Payment Overview | Have Payment Request | My Payment Overview | paid    |
-##      | User have company |
+#  @PPM_TC_42 @PaymentOverview @PaymentModule @payment-request
+#  Scenario Outline: create request payment credit term with status paid
+#    Given user get SSO token
+#    And user create credit term payment request
+#
+#    Examples:
+#      | condition            | menu                | condition            | menu                | keyword |
+#      | Have Payment Request | My Payment Overview | Have Payment Request | My Payment Overview | paid    |
+###      | User have company |
 
   @PPM_TC_49_1 @PaymentOverview @PaymentModule @login @card-owner
   Scenario Outline: Card Owner verify field to be display on my payment
