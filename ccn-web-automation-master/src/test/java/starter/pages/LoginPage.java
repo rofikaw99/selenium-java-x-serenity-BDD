@@ -118,10 +118,15 @@ public class LoginPage extends PageObject {
             email = Constants.FULL_EMAIL_AFTER_LOGIN;
             password = Constants.PASSWORD;
         }
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         inputEmailLogin(email);
         inputPasswordLogin(password);
         try {
-            Thread.sleep(2000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

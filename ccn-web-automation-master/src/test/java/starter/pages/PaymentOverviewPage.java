@@ -45,8 +45,13 @@ public class PaymentOverviewPage extends PageObject {
     private By supplierInfo = By.xpath("(//p)[13]");
     private By statusInfo = By.xpath("(//p)[16]");
 
+    private By notFoundOverview = By.xpath("//div[@class=\"w-full top-0 flex items-center justify-center my-14\"]");
+
     public boolean referenceIsDisplayed(){
         return $(reference).isDisplayed();
+    }
+    public boolean noDataFound(){
+        return $(notFoundOverview).isDisplayed();
     }
     public boolean requestDateIsDisplayed(){
         return $(requestDate).isDisplayed();
