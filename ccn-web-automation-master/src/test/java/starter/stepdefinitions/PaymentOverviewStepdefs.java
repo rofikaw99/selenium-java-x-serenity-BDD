@@ -49,7 +49,7 @@ public class PaymentOverviewStepdefs {
         Assert.assertTrue(paymentOverviewPage.statusIsDisplayed());
     }
 
-    @When("verify field to be display on the another company")
+    @When("verify field to be display that payment request not display")
     public void verify_field_to_be_display_on_the_another_company() throws Exception {
         Thread.sleep(4000);
         Assert.assertTrue(paymentOverviewPage.noDataFound());

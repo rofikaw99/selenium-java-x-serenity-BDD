@@ -103,6 +103,7 @@ Feature: Payment Overview
     Examples:
       | condition               | menu                | keyword |
       | User Overview           | My Payment Overview | Auto    |
+
   @PaymentOverviewAnotherCompany @PaymentModule
   Scenario Outline: Another company can't see
     Given go to main web
@@ -110,12 +111,37 @@ Feature: Payment Overview
     When input email "<email>" and password "<password>" and press sign in to continue login
     And back to the main tab browser
     When User go to "<menu>"
-    Then verify field to be display on the another company
+    Then verify field to be display that payment request not display
 
     Examples:
       | email                | password      | menu                |
       | malaypcn@yopmail.com | CCNPegasus123 | My Payment Overview |
 
+  @AuthorizedUserNotSubscribeService @PaymentModule
+  Scenario Outline: When authorized user not subscribe the TDSB service still can view the payment request
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+
+    Examples:
+      | email                       | password      | menu                |
+      | qa-ccn-tp5pkqv2@yopmail.com | CCNPegasus123 | My Payment Overview |
+
+  @UserNotSubscribeService @PaymentModule
+  Scenario Outline: When user not subscribe the TDSB service can't view the payment request
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    When User go to "<menu>"
+    Then verify field to be display that payment request not display
+
+    Examples:
+      | email                       | password      | menu                |
+      | qa-ccn-cgfqhpqm@yopmail.com | CCNPegasus123 | My Payment Overview |
 
 #  @PPM_TC_50_1_1 @PaymentOverview @PaymentModule @card-owner @login
 #  Scenario Outline: Card Owner verify upcoming payment request status
