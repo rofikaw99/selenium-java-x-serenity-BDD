@@ -49,6 +49,12 @@ public class PaymentOverviewStepdefs {
         Assert.assertTrue(paymentOverviewPage.statusIsDisplayed());
     }
 
+    @When("verify field to be display that payment request not display")
+    public void verify_field_to_be_display_on_the_another_company() throws Exception {
+        Thread.sleep(4000);
+        Assert.assertTrue(paymentOverviewPage.noDataFound());
+    }
+
     @When("input filter keyword {string}")
     public void input_filter_keyword(String keyword) throws Exception {
         paymentOverviewPage.inputKeyword(keyword);

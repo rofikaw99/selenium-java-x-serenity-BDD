@@ -593,6 +593,8 @@ Feature: PCN
 #      | companyemail    | email              | password      | companyName  | companyRegis | typeOfCompany | countryB        | city     | name                 | designation | mobileNo     | iataNo  | cassNo | officeAddress       | postCode | mobileNoCompany | product       | cityB            | country   |
 #      | ina@yopmail.com | inawon@yopmail.com | CCNPegasus123 | Test         | INA          | GSA           | ID - INDONESIA  | JAKARTA  | perusahaan indonesia | marketing   | 081234567891 | 1234567 | 1234   | 101 Cantonment road |   089774 |      1111111111 | AWB Concierge | JOG - YOGYAKARTA | Indonesia |
 #
+
+
   @create_user_company_SG
   Scenario Outline: create user company from singapore
     Given go to main web
