@@ -108,6 +108,7 @@ public class PaymentMethodStep {
         switch (condition) {
             case "User have company" :
             case "User" :
+            case "User who company has card" :
                 email = Constants.EMAIL_USER;
             break;
             case "Card Owner" : email = Constants.EMAIL_CARD_OWNER_WITH_COMPANY;
@@ -124,6 +125,7 @@ public class PaymentMethodStep {
                 break;
             case "Card Owner that want to remove their card" :
             case "Card Owner that Leave Company" :
+            case "User who company doesn't has card" :
                 email = Constants.EMAIL_CARD_OWNER_DELETED;
                 break;
             case "Authorized User that Leave Company" : email = Constants.EMAIL_AU_DELETED;
@@ -173,7 +175,7 @@ public class PaymentMethodStep {
     @And("press save commercial card")
     public void pressSaveCommercialCard() throws InterruptedException {
         paymentMethodPage.clickSaveBtn();
-        Thread.sleep(3000);
+        Thread.sleep(15000);
     }
 
     @When("{string} want to remove commercial card")
@@ -194,7 +196,7 @@ public class PaymentMethodStep {
     public void allStandingInstructionAndAuthorizedUserWillBeRemoved() throws InterruptedException {
         paymentMethodPage.clickDeleteCardBtn();
         paymentMethodPage.clickConfirmRemoveCardBtn();
-        Thread.sleep(3000);
+        Thread.sleep(10000);
         Assert.assertTrue(paymentMethodPage.setupCardHeaderDisplayed());
     }
 
@@ -235,7 +237,7 @@ public class PaymentMethodStep {
     @Then("no view icon")
     public void noViewIcon() throws Exception {
         goToPayment();
-        Assert.assertFalse(paymentMethodPage.btnEyesCardDisplayed());
+        Assert.assertTrue(paymentMethodPage.btnEyesCardHidden());
     }
 
     @When("{string} want add authorized user")
@@ -249,6 +251,10 @@ public class PaymentMethodStep {
                 break;
             case "Authorized User":
                 createAuthorizedUser();
+                break;
+            case "User who company doesn't has card":
+            case "User":
+                paymentMethodPage.removeCommercialCard();
                 break;
         }
     }

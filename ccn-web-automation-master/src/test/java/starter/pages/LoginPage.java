@@ -205,7 +205,7 @@ public class LoginPage extends PageObject {
         inputPasswordLogin(Constants.PASSWORD);
         Thread.sleep(3000);
         pressSignIn();
-        Thread.sleep(15000);
+        Thread.sleep(35000);
         validateInMainWeb();
     }
 
