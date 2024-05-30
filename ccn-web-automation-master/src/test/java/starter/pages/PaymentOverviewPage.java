@@ -32,7 +32,7 @@ public class PaymentOverviewPage extends PageObject {
     private By checkoutButton = By.xpath("(//div[contains(@class, 'cube-btn-flex')]//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'undefined')])[1]");
     private By bulkOutstanding = By.xpath("(//span[contains(@class, 'cube-checkmark-checkbox') and contains(@class, 'check')])[23]");
     private By bulkChcekout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'ml-[80px]')]");
-    private By payCheckout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-primary') and contains(@class, '!w-[35vw]') and contains(@class, 'ml-[30px]') and @style='height: 48px;']");
+    private By payCheckout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-primary') and contains(@class, '!w-[212px]') and contains(@class, 'ml-[30px]') and contains(@style, 'height: 48px;') and text()='Pay']");
     private By cookie1 = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
     private By payNow = By.xpath("//button[@class='cube-button cube-secondary   ']");
     private By payCC = By.xpath("//div[@class='SubmitButton-IconContainer']");
@@ -138,40 +138,12 @@ public class PaymentOverviewPage extends PageObject {
     }
 
     public void payCheckoutButton()throws Exception{
-//        Thread.sleep(waitResponse); // Wait for response
-//        WebElement cookie = driver.findElement(By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]"));
-//
-//        System.out.println("Cookie button is display-enabled : " + cookie.isDisplayed() + " - " + cookie.isEnabled());
-//
-//        if (cookie.isDisplayed() && cookie.isEnabled()) {
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", cookie); // Click on the cookie button using JavaScript
-//            System.out.println("Clicked on the cookie button.");
-//        } else {
-//            System.out.println("Cookie button is not displayed or enabled. Skipping click.");
-//        }
-//        Thread.sleep(waitResponse);
-//        System.out.println("cookie button is display-enable : "+$(cookie).isDisplayed()+" - "+$(cookie).isEnabled());
-//        evaluateJavascript("arguments[0].click();", $(cookie));
         Thread.sleep(waitResponse);
         System.out.println("pay button is display-enable : "+$(payCheckout).isDisplayed()+" - "+$(payCheckout).isEnabled());
         evaluateJavascript("arguments[0].click();", $(payCheckout));
     }
 
     public void payForCCCheckoutButton()throws Exception{
-//        Thread.sleep(waitResponse); // Wait for response
-//        WebElement cookie = driver.findElement(By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]"));
-//
-//        System.out.println("Cookie button is display-enabled : " + cookie.isDisplayed() + " - " + cookie.isEnabled());
-//
-//        if (cookie.isDisplayed() && cookie.isEnabled()) {
-//            ((JavascriptExecutor) driver).executeScript("arguments[0].click();", cookie); // Click on the cookie button using JavaScript
-//            System.out.println("Clicked on the cookie button.");
-//        } else {
-//            System.out.println("Cookie button is not displayed or enabled. Skipping click.");
-//        }
-//        Thread.sleep(waitResponse);
-//        System.out.println("cookie button is display-enable : "+$(cookie).isDisplayed()+" - "+$(cookie).isEnabled());
-//        evaluateJavascript("arguments[0].click();", $(cookie));
         Thread.sleep(waitResponse);
         System.out.println("pay button is display-enable : "+$(payCheckout).isDisplayed()+" - "+$(payCheckout).isEnabled());
     }
