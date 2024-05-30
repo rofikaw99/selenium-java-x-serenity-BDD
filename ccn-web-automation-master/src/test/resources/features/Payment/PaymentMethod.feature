@@ -27,25 +27,23 @@ Feature: Payment Method
 
   @PPM_TC_14 @view-commercial-card @PaymentModule @user @login
   Scenario: User have no option to view the visa card
-    Given "User" login to the web
+    Given "User who company has card" login to the web
     Then no view icon
 
   @PPM_TC_73 @commercial-card-access @PaymentModule @user @login
   Scenario: User able setup commercial card
-    Given "User have company" login to the web
+    Given "User who company doesn't has card" login to the web
     When "User" setup commercial card
-#    Then user able to setup commercial card
-
-
+    Then user able to setup commercial card
 
   @PPM_TC_1 @commercial-card-access @PaymentModule @user @login
-  Scenario: User able setup commercial card
+  Scenario: User who doesn't have company unable to setup commercial card
     Given "User doesn't have company" login to the web
     When "User" setup commercial card
     Then button setup company appears since "User" have to create company first
 
   @PPM_TC_6 @commercial-card-access @PaymentModule @card-owner @login
-  Scenario Outline: User who has been authorized to use a commercial card can't setup commercial card
+  Scenario Outline: Card Owner can't setup commercial card
     Given "<user type>" login to the web
     When "<user type>" setup commercial card
     Then can't setup commercial card
@@ -54,7 +52,7 @@ Feature: Payment Method
       | Card Owner |
 
   @PPM_TC_7 @commercial-card-access @PaymentModule @authorized-user @login
-  Scenario Outline: User who has been authorized to use a commercial card can't setup commercial card
+  Scenario Outline: Authorized User can't setup commercial card
     Given "<user type>" login to the web
     When "<user type>" setup commercial card
     Then can't setup commercial card
@@ -64,7 +62,7 @@ Feature: Payment Method
 
   @PPM_TC_2 @add-commercial-card @PaymentModule @user @login
   Scenario Outline: User can't input non visa singapore issued when setup commercial card
-    Given "User have company" login to the web
+    Given "User who company doesn't has card" login to the web
     When "User" setup commercial card
     And user input "<condition>" commercial card
     And press save commercial card
@@ -76,7 +74,7 @@ Feature: Payment Method
 
   @PPM_TC_4 @add-commercial-card @PaymentModule @user @login
   Scenario Outline: Input several invalid data in commercial card form
-    Given "User have company" login to the web
+    Given "User who company doesn't has card" login to the web
     When "User" setup commercial card
     When input data: "<card info>" card information, "<expired date>" expired date, "<cvc>" cvc, "<email>" email
     Then validation "<message>" appears
@@ -87,16 +85,16 @@ Feature: Payment Method
       |           |  invalid              |             |               | Your card's expiration year is in the past.|
       |           |                       | invalid     |               | Your card's security code is incomplete. |
 
-  @PPM_TC_3 @add-commercial-card @login
-  Scenario: User able to save commercial card when input valid VISA number
-    Given "User have company" login to the web
-    When "user" setup commercial card
-    And user input "valid VISA number" commercial card
-    And press save commercial card
-    Then commercial card will be saved (tokenization)
+#  @PPM_TC_3 @add-commercial-card @login
+#  Scenario: User able to save commercial card when input valid VISA number
+#    Given "User who company doesn't has card" login to the web
+#    When "user" setup commercial card
+#    And user input "valid VISA number" commercial card
+#    And press save commercial card
+#    Then commercial card will be saved (tokenization)
 
-  @PPM_TC_10 @PPM_TC_11 @add-authorized-user @PaymentModule @authorized-user @login
-  Scenario Outline: Authorized User and User doesn't have function to add authorized user
+  @PPM_TC_10 @add-authorized-user @PaymentModule @authorized-user @login
+  Scenario Outline: Authorized User doesn't have function to add authorized user
     Given "<user type>" login to the web
     When "<user type>" want add authorized user
     Then the manage authored user function not available for "<user type>"
@@ -104,16 +102,17 @@ Feature: Payment Method
     | user type |
     | Authorized User |
 
-  @PPM_TC_10 @PPM_TC_11 @add-authorized-user @PaymentModule @user @login
-  Scenario Outline: Authorized User and User doesn't have function to add authorized user
+  @PPM_TC_11 @add-authorized-user @PaymentModule @user @login
+  Scenario Outline: User doesn't have function to add authorized user
     Given "<user type>" login to the web
     When "<user type>" want add authorized user
     Then the manage authored user function not available for "<user type>"
     Examples:
       | user type |
-      | User |
+      | User who company doesn't has card |
+      | User who company has card |
 
-  @PPM_TC_8 @add-authorized-user @PaymentModule @card-owner @login
+  @PPM_TC_8 @add-authorized-user @PaymentModule  @card-owner @login
   Scenario: Card Owner success add authorized user
     Given "Card Owner" login to the web
     When "Card Owner" want add authorized user
@@ -132,6 +131,12 @@ Feature: Payment Method
   Scenario: Non company user not able to setup standing instruction
     Given "User doesn't have company" login to the web
     When "User doesn't have company" want to setup standing instruction
+    Then not able to setup standing instruction
+
+  @PPM_TC_90 @setup-si @done @PaymentModule @user @login
+  Scenario: User who company has card not able to setup standing instruction
+    Given "User who company has card" login to the web
+    When "User who company has card" want to setup standing instruction
     Then not able to setup standing instruction
 
   @PPM_TC_20 @setup-si @done @PaymentModule @card-owner @login
@@ -226,7 +231,7 @@ Feature: Payment Method
     And standing instruction will be managed by the selected user
 
   @PPM_TC_90 @remove-authorized-user @done @PaymentModule @authorized-user @login
-  Scenario Outline: Authorized User and User can't remove the list of authorized user
+  Scenario Outline: Authorized User can't remove the list of authorized user
     Given "<user type>" login to the web
     When "<user type>" want remove authorized user
     Then the manage authored user function not available for "<user type>"
@@ -235,7 +240,7 @@ Feature: Payment Method
       | Authorized User |
 
   @PPM_TC_90 @remove-authorized-user @done @PaymentModule @user @login
-  Scenario Outline: Authorized User and User can't remove the list of authorized user
+  Scenario Outline: User can't remove the list of authorized user
     Given "<user type>" login to the web
     When "<user type>" want remove authorized user
     Then the manage authored user function not available for "<user type>"
@@ -269,7 +274,7 @@ Feature: Payment Method
     Then selected standing instruction disappear from the list
 
   @PPM_TC_16 @remove-commercial-card @done @PaymentModule @authorized-user @login
-  Scenario Outline: Authorized user not able and User have no option to remove commercial card
+  Scenario Outline: Authorized user not able to remove commercial card
     Given "<user type>" login to the web
     When "<user type>" want to remove commercial card
     Then "<user type>" "<result>" to remove commercial card
@@ -278,7 +283,7 @@ Feature: Payment Method
       | Authorized User | no option |
 
   @PPM_TC_16 @remove-commercial-card @done @PaymentModule @user @login
-  Scenario Outline: Authorized user not able and User have no option to remove commercial card
+  Scenario Outline: User have no option to remove commercial card
     Given "<user type>" login to the web
     When "<user type>" want to remove commercial card
     Then "<user type>" "<result>" to remove commercial card

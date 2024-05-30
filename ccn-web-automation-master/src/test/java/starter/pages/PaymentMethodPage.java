@@ -33,6 +33,7 @@ public class PaymentMethodPage extends PageObject {
     //Card Section
     private By btnDeleteCard = By.xpath("//*[@class = 'btn-delete']");
     private By btnEyes = By.xpath("//*[@class = 'show-icon-container']");
+    private By btnEyesHidden = By.xpath("//*[@class = 'hidden']//*[@class = 'show-icon-container']");
     private By txtCardNo = By.xpath("//*[@class = 'visa-number']");
 
     //Popup Confirmation Remove Commercial Card
@@ -118,7 +119,7 @@ public class PaymentMethodPage extends PageObject {
     public void goToPayment() throws InterruptedException {
 //        openAt(Constants.URL_PAYMENT_METHODS);
         Thread.sleep(20000);
-        $(headerMyMethods).waitUntilVisible();
+        $(headerMyMethods).waitUntilPresent();
         Assert.assertTrue($(headerMyMethods).isDisplayed());
     }
 
@@ -138,13 +139,16 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public boolean cardInfoHeaderDisplayed(){
-        return $$(cardInformationHeader).size() == 1;
+        return $$(cardInformationHeader).size() == 2;
     }
     public boolean btnSetupCompanyDisplayed(){
         return $$(btnsetupCompany).size() == 1;
     }
     public boolean btnEyesCardDisplayed(){
         return $$(btnEyes).size() == 1;
+    }
+    public boolean btnEyesCardHidden(){
+        return $$(btnEyesHidden).size() == 1;
     }
     public boolean btnRemoveDisplayed(){
         return $$(btnRemove).size() == 1;
@@ -505,7 +509,7 @@ public class PaymentMethodPage extends PageObject {
         if (btnEyesCardDisplayed()) {
             clickDeleteCardBtn();
             clickConfirmRemoveCardBtn();
-            Thread.sleep(3000);
+            Thread.sleep(10000);
             Assert.assertTrue(setupCardHeaderDisplayed());
         }
     }
