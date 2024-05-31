@@ -357,7 +357,6 @@ public class PaymentMethodStep {
 
     @Then("succeed remove authorized user who has standing instruction")
     public void succeedRemoveAuthorizedUserWhoHasStandingInstruction() throws InterruptedException {
-        Thread.sleep(4000); //wait for the loading in UI
         Assert.assertFalse(paymentMethodPage.txtSpecEmailDisplayed(email));
     }
 
@@ -372,12 +371,13 @@ public class PaymentMethodStep {
     }
 
     @And("confirm remove {string} transferring the standing instruction")
-    public void confirmRemoveTransferringTheStandingInstruction(String condition) {
+    public void confirmRemoveTransferringTheStandingInstruction(String condition) throws InterruptedException {
         if (condition.equals("with")){
             paymentMethodPage.checkTransferSI();
             paymentMethodPage.inputEmailToTransferSI(Constants.EMAIL_CARD_OWNER_WITH_COMPANY);
         }
         paymentMethodPage.clickConfirmRemoveUserBtn();
+        Thread.sleep(7000);
     }
 
     @When("{string} go the payment methods page")
@@ -442,7 +442,7 @@ public class PaymentMethodStep {
         loginPage.inputEmailLogin(Constants.EMAIL_AUTHORIZED_USER);
         loginPage.inputPasswordLogin(Constants.PASSWORD);
         loginPage.pressSignIn();
-        Thread.sleep(10000);
+        Thread.sleep(30000);
         loginPage.validateInMainWeb();
 
         //create si

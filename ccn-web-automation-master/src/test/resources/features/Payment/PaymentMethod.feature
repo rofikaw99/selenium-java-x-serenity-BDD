@@ -8,7 +8,7 @@ Feature: Payment Method
   Only users who are not authorized to use a commercial card or have not previously set up a commercial card Can eligible to setup a commercial card.
 
   @PPM_TC_12 @view-commercial-card @PaymentModule @authorized-user @login
-  Scenario Outline: Card Owner and Authorized User can view the last 4 digit visa card
+  Scenario Outline: Authorized User can view the last 4 digit visa card
     Given "<user type>" login to the web
     When "<user type>" click view icon
     Then "<user type>" can view the last 4 digit visa card
@@ -17,7 +17,7 @@ Feature: Payment Method
       | Authorized User |
 
   @PPM_TC_13 @view-commercial-card @PaymentModule @card-owner @login
-  Scenario Outline: Card Owner and Authorized User can view the last 4 digit visa card
+  Scenario Outline: Card Owner can view the last 4 digit visa card
     Given "<user type>" login to the web
     When "<user type>" click view icon
     Then "<user type>" can view the last 4 digit visa card
@@ -85,13 +85,13 @@ Feature: Payment Method
       |           |  invalid              |             |               | Your card's expiration year is in the past.|
       |           |                       | invalid     |               | Your card's security code is incomplete. |
 
-#  @PPM_TC_3 @add-commercial-card @login
-#  Scenario: User able to save commercial card when input valid VISA number
-#    Given "User who company doesn't has card" login to the web
-#    When "user" setup commercial card
-#    And user input "valid VISA number" commercial card
-#    And press save commercial card
-#    Then commercial card will be saved (tokenization)
+  @PPM_TC_3 @add-commercial-card @login
+  Scenario: User able to save commercial card when input valid VISA number
+    Given "User who company doesn't has card" login to the web
+    When "user" setup commercial card
+    And user input "valid VISA number" commercial card
+    And press save commercial card
+    Then commercial card will be saved (tokenization)
 
   @PPM_TC_10 @add-authorized-user @PaymentModule @authorized-user @login
   Scenario Outline: Authorized User doesn't have function to add authorized user
@@ -205,7 +205,7 @@ Feature: Payment Method
     And success delete user without standing instruction
 
   @PPM_TC_65 @remove-authorized-user @done @PaymentModule @card-owner @login
-  Scenario: Card Owner remove user without transferring the standing instruction
+  Scenario: Authorized user has standing instruction for remove without transferring SI
     Given "Authorized User" has standing instruction
 
   @PPM_TC_65 @remove-authorized-user @done @PaymentModule @card-owner
@@ -218,7 +218,7 @@ Feature: Payment Method
     And standing instruction will be removed from the list of standing instruction
 
   @PPM_TC_64 @remove-authorized-user @done @PaymentModule @card-owner @login
-  Scenario: Card Owner remove user with transferring the standing instruction
+  Scenario: Authorized user has standing instruction for remove with transferring SI
     Given "Authorized User" has standing instruction
 
   @PPM_TC_64 @remove-authorized-user @done @PaymentModule @card-owner
