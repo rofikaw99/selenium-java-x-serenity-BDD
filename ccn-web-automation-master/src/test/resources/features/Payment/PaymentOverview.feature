@@ -1,7 +1,7 @@
 @payment @payment-overview
 Feature: Payment Overview
 
-#  @PPM_TC_40 @PaymentOverview @PaymentModule @payment-request
+#  @PPM_TC_40 @PaymentOverview @PaymentModule @payment-request @authorized-user
 #  Scenario Outline: create request payment upcoming
 #    Given user get SSO token
 #    And user create upcoming payment request
@@ -29,7 +29,7 @@ Feature: Payment Overview
 #      | status    | paymentRequestId                     | condition            | menu                | keyword |
 #      | EXPIRED   | 52173ef3-f566-4722-8e17-b02ecb04a3a5 | Have Payment Request | My Payment Overview | REF-    |
 
-#  @PPM_TC_42 @PaymentOverview @PaymentModule @payment-request
+#  @PPM_TC_42 @PaymentOverview @PaymentModule @payment-request @authorized-user
 #  Scenario Outline: create request payment credit term with status paid
 #    Given user get SSO token
 #    And user create credit term payment request
@@ -104,7 +104,7 @@ Feature: Payment Overview
       | condition               | menu                | keyword |
       | User Overview           | My Payment Overview | Auto    |
 
-  @PaymentOverviewAnotherCompany @PaymentModule
+  @PaymentOverviewAnotherCompany @PaymentModule @user
   Scenario Outline: Another company can't see
     Given go to main web
     When click initial sign in button
@@ -117,7 +117,7 @@ Feature: Payment Overview
       | email                | password      | menu                |
       | malaypcn@yopmail.com | CCNPegasus123 | My Payment Overview |
 
-  @AuthorizedUserNotSubscribeService @PaymentModule
+  @AuthorizedUserNotSubscribeService @PaymentModule @authorized-user
   Scenario Outline: When authorized user not subscribe the TDSB service still can view the payment request
     Given go to main web
     When click initial sign in button
@@ -130,7 +130,7 @@ Feature: Payment Overview
       | email                       | password      | menu                |
       | qa-ccn-tp5pkqv2@yopmail.com | CCNPegasus123 | My Payment Overview |
 
-  @UserNotSubscribeService @PaymentModule
+  @UserNotSubscribeService @PaymentModule @user
   Scenario Outline: When user not subscribe the TDSB service can't view the payment request
     Given go to main web
     When click initial sign in button
