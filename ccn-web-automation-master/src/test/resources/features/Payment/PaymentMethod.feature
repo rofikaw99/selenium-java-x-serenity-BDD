@@ -291,14 +291,14 @@ Feature: Payment Method
       | user type | result |
       | User | no option |
 
-  @PPM_TC_15 @remove-commercial-card @done @PaymentModule @user-leave @login
+  @PPM_TC_15 @remove-commercial-card @done @PaymentModule @user-leave @login @card-owner
   Scenario: Card owner can remove their commercial card
     Given "Card Owner that want to remove their card" login to the web
     When "Card Owner" want to remove commercial card
     Then "Card Owner" "able" to remove commercial card
     Then all standing instruction and authorized user will be removed
 
-  @PPM_TC_67 @leave-company @PaymentModule @user-leave @login
+  @PPM_TC_67 @leave-company @PaymentModule @user-leave @login @authorized-user
   Scenario: Authorized user leave the company
     Given "Authorized User that Leave Company" login to the web
     When "Authorized User" leave the company
