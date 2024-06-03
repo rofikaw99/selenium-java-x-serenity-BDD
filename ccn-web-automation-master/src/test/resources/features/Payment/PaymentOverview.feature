@@ -1,15 +1,15 @@
 @payment @payment-overview
 Feature: Payment Overview
 
-#  @PPM_TC_40 @PaymentOverview @PaymentModule @payment-request @authorized-user
-#  Scenario Outline: create request payment upcoming
-#    Given user get SSO token
-#    And user create upcoming payment request
-#
-#
-#    Examples:
-#      | condition            | menu                | keyword |
-#      | Have Payment Request | My Payment Overview | REF-    |
+  @PPM_TC_40 @PaymentOverview @PaymentModule @payment-request
+  Scenario Outline: create request payment upcoming
+    Given user get SSO token
+    And user create upcoming payment request
+
+
+    Examples:
+      | condition            | menu                | keyword |
+      | Have Payment Request | My Payment Overview | REF-    |
 
 #  @updateStatusToOutstanding @PaymentOverview @PaymentModule @payment-request
 #  Scenario Outline: update payment request to outstanding
@@ -29,14 +29,14 @@ Feature: Payment Overview
 #      | status    | paymentRequestId                     | condition            | menu                | keyword |
 #      | EXPIRED   | 52173ef3-f566-4722-8e17-b02ecb04a3a5 | Have Payment Request | My Payment Overview | REF-    |
 
-#  @PPM_TC_42 @PaymentOverview @PaymentModule @payment-request @authorized-user
-#  Scenario Outline: create request payment credit term with status paid
-#    Given user get SSO token
-#    And user create credit term payment request
-#
-#    Examples:
-#      | condition            | menu                | condition            | menu                | keyword |
-#      | Have Payment Request | My Payment Overview | Have Payment Request | My Payment Overview | paid    |
+  @PPM_TC_42 @PaymentOverview @PaymentModule @payment-request
+  Scenario Outline: create request payment credit term with status paid
+    Given user get SSO token
+    And user create credit term payment request
+
+    Examples:
+      | condition            | menu                | condition            | menu                | keyword |
+      | Have Payment Request | My Payment Overview | Have Payment Request | My Payment Overview | paid    |
 ###      | User have company |
 
   @PPM_TC_49_1 @PaymentOverview @PaymentModule @login @card-owner
@@ -235,32 +235,6 @@ Feature: Payment Overview
       | condition               | menu                | keyword |
       | Have Payment Request    | My Payment Overview | paid    |
 
-
-  @PPM_TC_50_3_2 @PaymentOverview @PaymentModule @authorized-user @login
-  Scenario Outline: Authorized User verify paid payment request status
-    Given "<condition>" login to the web
-    When User go to "<menu>"
-    Then verify field to be display on my payment
-    When input filter keyword "<keyword>"
-    Then verify paid status color code is correct
-
-    Examples:
-      | condition               | menu                | keyword |
-      | Authorize User Overview | My Payment Overview | paid    |
-
-
-  @PPM_TC_50_3_3 @PaymentOverview @PaymentModule @user @login
-  Scenario Outline: User verify paid payment request status
-    Given "<condition>" login to the web
-    When User go to "<menu>"
-    Then verify field to be display on my payment
-    When input filter keyword "<keyword>"
-    Then verify paid status color code is correct
-
-    Examples:
-      | condition               | menu                | keyword |
-      | User Overview           | My Payment Overview | paid    |
-
   @PPM_TC_50_4_1 @PaymentOverview @PaymentModule @card-owner @login
   Scenario Outline: Card Owner verify expired payment request status
     Given "<condition>" login to the web
@@ -323,11 +297,11 @@ Feature: Payment Overview
 
     Examples:
       | condition               | menu                | keyword     |
-      | Authorize User Overview | My Payment Overview | paid        |
+      | Authorize User Overview | My Payment Overview | outstanding |
 
 
   @PPM_TC_51_3 @PaymentOverview @PaymentModule @login @user
-  Scenario Outline: User verify payment detail information Authorized User
+  Scenario Outline: User verify payment detail information User
     Given "<condition>" login to the web
     When User go to "<menu>"
     Then verify field to be display on my payment
@@ -522,50 +496,50 @@ Feature: Payment Overview
       | User Overview | My Payment Overview | outstanding |
 
 
-#  #PaymentNotification
-#
-#  @PN1 @PaymentNotification
-#  Scenario Outline: create request payment upcoming to get notification
-#    Given user get SSO token
-#    When user create upcoming payment request
-#    Then get triggered "<email>" notification
-#
-#
-#    Examples:
-#      | email              | menu                | keyword |
-#      | sgpcn2@yopmail.com | My Payment Overview | REF-    |
-#
-#  @PN2_3 @PaymentNotification
-#  Scenario Outline: create request payment outstanding to get notification
-#    Given user get SSO token
-#    When user create upcoming payment request
-#    Then get triggered "<email>" notification
-#
-#
-#    Examples:
-#      | email                | menu                | keyword |
-#      | sgpcn2@yopmail.com | My Payment Overview   | REF-    |
-#
-#  @PN2_3 @PaymentNotification
-#  Scenario Outline: create payment but fail then get notification
-#    Given user get SSO token
-#    When create payment but fail
-#    Then get triggered "<email>" notification
-#
-#
-#    Examples:
-#      | email                | menu                | keyword |
-#      | sgpcn2@yopmail.com | My Payment Overview   | REF-    |
-#
-#
-#  @PN4 @PaymentNotification
-#  Scenario Outline: update payment to expired to get notification
-#    Given user get SSO token
-#    When user create upcoming payment request
-#    And update payment request to "<status>"
-#    Then get triggered "<email>" notification
-#
-#
-#    Examples:
-#      | email                | status    | keyword |
-#      | sgpcn2@yopmail.com   | EXPIRED   | REF-    |
+  #PaymentNotification
+
+  @PN1 @PaymentNotification @payment-request
+  Scenario Outline: create request payment upcoming to get notification
+    Given user get SSO token
+    When user create upcoming payment request
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email              | menu                | keyword |
+      | sgpcn2@yopmail.com | My Payment Overview | REF-    |
+
+  @PN2_3 @PaymentNotification @payment-request
+  Scenario Outline: create request payment outstanding to get notification
+    Given user get SSO token
+    When user create upcoming payment request
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email                | menu                | keyword |
+      | sgpcn2@yopmail.com | My Payment Overview   | REF-    |
+
+  @PN2_3 @PaymentNotification @payment-request
+  Scenario Outline: create payment but fail then get notification
+    Given user get SSO token
+    When create payment but fail
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email                | menu                | keyword |
+      | sgpcn2@yopmail.com | My Payment Overview   | REF-    |
+
+
+  @PN4 @PaymentNotification @payment-request
+  Scenario Outline: update payment to expired to get notification
+    Given user get SSO token
+    When user create upcoming payment request
+    And update payment request to "<status>"
+    Then get triggered "<email>" notification
+
+
+    Examples:
+      | email                | status    | keyword |
+      | sgpcn2@yopmail.com   | EXPIRED   | REF-    |
