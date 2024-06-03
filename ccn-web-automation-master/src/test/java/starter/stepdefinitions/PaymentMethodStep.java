@@ -87,10 +87,10 @@ public class PaymentMethodStep {
         //type of user is not affect this step, so being ignored
         goToPayment();
         switch (userType) {
-            case "Card Owner":
+            case "Card Admin":
                 paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
                 break;
-            case "Authorized User":
+            case "Card User":
                 createAuthorizedUser();
                 break;
             case "User":
@@ -111,9 +111,9 @@ public class PaymentMethodStep {
             case "User who company has card" :
                 email = Constants.EMAIL_USER;
             break;
-            case "Card Owner" : email = Constants.EMAIL_CARD_OWNER_WITH_COMPANY;
+            case "Card Admin" : email = Constants.EMAIL_CARD_OWNER_WITH_COMPANY;
             break;
-            case "Authorized User" : email = Constants.EMAIL_AUTHORIZED_USER;
+            case "Card User" : email = Constants.EMAIL_AUTHORIZED_USER;
             break;
             case "Have Payment Request" : email = Constants.EMAIL_HAVE_PAYMENT_REQUEST;
             break;
@@ -123,12 +123,12 @@ public class PaymentMethodStep {
             break;
             case "User Backup" : email = Constants.EMAIL_USER_BACKUP;
                 break;
-            case "Card Owner that want to remove their card" :
-            case "Card Owner that Leave Company" :
+            case "Card Admin that want to remove their card" :
+            case "Card Admin that Leave Company" :
             case "User who company doesn't has card" :
                 email = Constants.EMAIL_CARD_OWNER_DELETED;
                 break;
-            case "Authorized User that Leave Company" : email = Constants.EMAIL_AU_DELETED;
+            case "Card User that Leave Company" : email = Constants.EMAIL_AU_DELETED;
                 break;
             default: email = Constants.EMAIL_WITHOUT_COMPANY;
         }
@@ -183,16 +183,16 @@ public class PaymentMethodStep {
         //type of user is not affect this step, so being ignored
         goToPayment();
         switch (userType) {
-            case "Authorized User":
+            case "Card User":
                 createAuthorizedUser();
                 break;
-            case "Card Owner":
+            case "Card Admin":
                 paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
                 break;
         }
     }
 
-    @Then("all standing instruction and authorized user will be removed")
+    @Then("all standing instruction and Card User will be removed")
     public void allStandingInstructionAndAuthorizedUserWillBeRemoved() throws InterruptedException {
         paymentMethodPage.clickDeleteCardBtn();
         paymentMethodPage.clickConfirmRemoveCardBtn();
@@ -204,12 +204,12 @@ public class PaymentMethodStep {
     public void toRemoveCommercialCard(String userType, String result) {
         //result is ignored
         switch (userType) {
-            case "Authorized User":
+            case "Card User":
             case "User":
             case "User Backup":
                 Assert.assertFalse(paymentMethodPage.btnDeleteCardDisplayed());
                 break;
-            case "Card Owner":
+            case "Card Admin":
                 Assert.assertTrue(paymentMethodPage.btnDeleteCardEnabled());
                 break;
         }
@@ -219,10 +219,10 @@ public class PaymentMethodStep {
     public void clickViewIcon(String userType) throws Exception {
         //type of user is ignored
         goToPayment();
-        if (userType.equals("Card Owner")) {
+        if (userType.equals("Card Admin")) {
             if (!paymentMethodPage.btnEyesCardDisplayed())
                 paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
-        } if (userType.equals("Authorized User"))
+        } if (userType.equals("Card User"))
             if (!paymentMethodPage.btnEyesCardDisplayed())
                 createAuthorizedUser();
         paymentMethodPage.clickEyesBtn();
@@ -240,16 +240,16 @@ public class PaymentMethodStep {
         Assert.assertTrue(paymentMethodPage.btnEyesCardHidden());
     }
 
-    @When("{string} want add authorized user")
+    @When("{string} want add Card User")
     public void wantAddAuthorizedUser(String userType) throws Exception {
         //userType is ignored
         goToPayment();
         switch (userType) {
-            case "Card Owner":
+            case "Card Admin":
                 paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
                 paymentMethodPage.clickAddUserBtn();
                 break;
-            case "Authorized User":
+            case "Card User":
                 createAuthorizedUser();
                 break;
             case "User who company doesn't has card":
@@ -276,12 +276,12 @@ public class PaymentMethodStep {
         paymentMethodPage.clickSetupCompanyBtn();
     }
 
-    @Then("Card Owner will be redirected to My Company page")
+    @Then("Card Admin will be redirected to My Company page")
     public void cardOwnerWillBeRedirectedToMyCompanyPage() {
         Assert.assertTrue(paymentMethodPage.getCurrentUrl().contains("manage-company"));
     }
 
-    @And("card owner added {string} authorized user that has not yet join company")
+    @And("Card Admin added {string} Card User that has not yet join company")
     public void cardOwnerAddedAuthorizedUserThatHasNotYetJoinCompany(String amount) throws InterruptedException {
         paymentMethodPage.clickAddUserBtn();
         for (int i = 0; i < Integer.parseInt(amount); i++)
@@ -307,11 +307,11 @@ public class PaymentMethodStep {
         paymentMethodPage.txtInvitedEmailDisplayed(emails.get(0));
     }
 
-    @When("{string} want remove authorized user")
+    @When("{string} want remove Card User")
     public void wantRemoveAuthorizedUser(String userType) throws Exception {
         //userType is ignored
         goToPayment();
-        if (userType.equals("Card Owner")) {
+        if (userType.equals("Card Admin")) {
             if (paymentMethodPage.emailAuthorizedUser().size() < 1)
                 paymentMethodPage.clickAddUserBtn();
                 email = paymentMethodPage.chooseEmailUser();
@@ -321,7 +321,7 @@ public class PaymentMethodStep {
         }
     }
 
-    @And("card owner has not yet invite the authorized user")
+    @And("Card Admin has not yet invite the Card User")
     public void cardOwnerHasNotYetInviteTheAuthorizedUser() {
         email = Constants.FULL_MAIL;
         emails.add(email);
@@ -330,7 +330,7 @@ public class PaymentMethodStep {
         paymentMethodPage.clickConfirmUserBtn();
     }
 
-    @And("card owner invite the authorized user without company")
+    @And("Card Admin invite the Card User without company")
     public void cardOwnerInviteTheAuthorizedUserWithoutCompany() {
         email = Constants.FULL_MAIL;
         emails.add(email);
@@ -341,7 +341,7 @@ public class PaymentMethodStep {
         paymentMethodPage.clickConfirmInviteUserBtn();
     }
 
-    @When("remove that invited authorized user")
+    @When("remove that invited Card User")
     public void removeThatInvitedAuthorizedUser() throws InterruptedException {
         Thread.sleep(1000);
         index = paymentMethodPage.indexOfEmail(email);
@@ -349,13 +349,13 @@ public class PaymentMethodStep {
         paymentMethodPage.clickConfirmUserBtn();
     }
 
-    @Then("succeed remove authorized user without company")
+    @Then("succeed remove Card User without company")
     public void succeedRemoveAuthorizedUserWithoutCompany() throws InterruptedException {
         Thread.sleep(4000); //wait for the loading in UI
         Assert.assertFalse(paymentMethodPage.checkingInvitedUser(emails.get(0)));
     }
 
-    @Then("succeed remove authorized user who has standing instruction")
+    @Then("succeed remove Card User who has standing instruction")
     public void succeedRemoveAuthorizedUserWhoHasStandingInstruction() throws InterruptedException {
         Thread.sleep(4000); //wait for the loading in UI
         Assert.assertFalse(paymentMethodPage.txtSpecEmailDisplayed(email));
@@ -416,19 +416,19 @@ public class PaymentMethodStep {
         }
     }
 
-    @And("Card Owner can only authorise user within their same company")
+    @And("Card Admin can only authorise user within their same company")
     public void cardOwnerCanOnlyAuthoriseUserWithinTheirSameCompany() throws InterruptedException {
         email = paymentMethodPage.chooseEmailUser();
         System.out.println("Selected email " + email);
         paymentMethodPage.clickConfirmAddUserBtn();
     }
 
-    @Then("succeed add authorized user")
+    @Then("succeed add Card User")
     public void succeedAddAuthorizedUser() {
         paymentMethodPage.txtSpecEmailDisplayed(email);
     }
 
-    @Then("failed add authorized user with validation")
+    @Then("failed add Card User with validation")
     public void failedAddAuthorizedUserWithValidation() {
         paymentMethodPage.getErrorMsgText("");//todo validation
     }
@@ -457,7 +457,7 @@ public class PaymentMethodStep {
         companyPage.myMenuAccount("Sign Out");
     }
 
-    @When("remove authorized user that has standing instruction")
+    @When("remove Card User that has standing instruction")
     public void removeAuthorizedUserThatHasStandingInstruction() throws Exception {
         emails = paymentMethodPage.manageEmailSI();
         if (emails.size() < 1) {
@@ -484,7 +484,7 @@ public class PaymentMethodStep {
         //userType is ignored
         goToPayment();
         switch (userType) {
-            case "Card Owner":
+            case "Card Admin":
                 paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
                 if (paymentMethodPage.manageEmailSI().size() == 1) {
                     paymentMethodPage.clickRemoveSIBtn(0);
@@ -492,7 +492,7 @@ public class PaymentMethodStep {
                     paymentMethodPage.clickOkBtn();
                 }
                 break;
-            case "Authorized User":
+            case "Card User":
                 createAuthorizedUser();
                 break;
         }
@@ -513,7 +513,7 @@ public class PaymentMethodStep {
         Assert.assertEquals(1, removeUniqueCondition.size());
         Assert.assertEquals(1, siNumberUniqueCondition.size());
 
-        if (userType.equals("Card Owner")){
+        if (userType.equals("Card Admin")){
             paymentMethodPage.clickRemoveSIBtn(0);
             paymentMethodPage.clickConfirmRemoveSIBtn();
         }
@@ -556,13 +556,13 @@ public class PaymentMethodStep {
         goToPayment();
         emails = paymentMethodPage.manageEmailSI();
         switch (userType) {
-            case "Card Owner":
+            case "Card Admin":
                 if (emails.size() < 1) {
                     paymentMethodPage.createNewSI(index);
                     Assert.assertTrue(paymentMethodPage.manageEmailSI().size() > 0);
                 }
                 break;
-            case "Authorized User":
+            case "Card User":
                 if (!emails.contains(Constants.EMAIL_AUTHORIZED_USER)) {
                     paymentMethodPage.createNewSI(index);
                     Assert.assertTrue(paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER));
@@ -579,7 +579,7 @@ public class PaymentMethodStep {
         paymentMethodPage.clickSaveSIUpdateBtn();
     }
 
-    @And("authorized user only can update their own standing instruction")
+    @And("Card User only can update their own standing instruction")
     public void authorizedUserOnlyCanUpdateTheirOwnStandingInstruction() {
         Set<Boolean> siNumberUniqueCondition = Set.copyOf(paymentMethodPage.enabledSINumberBtn());
         if (!paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER)){
@@ -592,8 +592,8 @@ public class PaymentMethodStep {
 
     @And("{string} choose one of the standing instruction")
     public void chooseOneOfTheStandingInstruction(String userType) {
-        if (userType.equals("Card Owner")) paymentMethodPage.chooseSINo(0);
-        else if (userType.equals("Authorized User")) {
+        if (userType.equals("Card Admin")) paymentMethodPage.chooseSINo(0);
+        else if (userType.equals("Card User")) {
             index = paymentMethodPage.manageEmailSI().indexOf(Constants.EMAIL_AUTHORIZED_USER);
             paymentMethodPage.chooseSINo(index);
         }
@@ -610,13 +610,13 @@ public class PaymentMethodStep {
         goToPayment();
         emails = paymentMethodPage.manageEmailSI();
         switch (userType) {
-            case "Card Owner":
+            case "Card Admin":
                 if (emails.size() < 1) {
                     paymentMethodPage.createNewSI(index);
                     Assert.assertTrue(paymentMethodPage.manageEmailSI().size() > 0);
                 }
                 break;
-            case "Authorized User":
+            case "Card User":
                 if (!emails.contains(Constants.EMAIL_AUTHORIZED_USER)) {
                     paymentMethodPage.createNewSI(index);
                     Assert.assertTrue(paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER));
@@ -625,12 +625,12 @@ public class PaymentMethodStep {
         }
     }
 
-    @Then("Authorized User can't transfer standing instruction ownership")
+    @Then("Card User can't transfer standing instruction ownership")
     public void authorizedUserCanTTransferStandingInstructionOwnership() {
         Assert.assertTrue(paymentMethodPage.fieldManageByDisabled());
     }
 
-    @Then("Card Owner able to transfer instruction ownership")
+    @Then("Card Admin able to transfer instruction ownership")
     public void cardOwnerAbleToTransferInstructionOwnership() {
         Assert.assertTrue(paymentMethodPage.fieldManageByEnabled());
     }
@@ -662,13 +662,13 @@ public class PaymentMethodStep {
         goToPayment();
     }
 
-    @Then("card owner able to remove all the standing instruction within their card")
+    @Then("Card Admin able to remove all the standing instruction within their card")
     public void cardOwnerAbleToRemoveAllTheStandingInstructionWithinTheirCard() {
         Assert.assertEquals(1, Set.copyOf(paymentMethodPage.enabledActionBtn()).size());
         Assert.assertTrue(paymentMethodPage.enabledActionBtn().contains(true));
     }
 
-    @Then("authorized user only able to remove their standing instruction")
+    @Then("Card User only able to remove their standing instruction")
     public void authorizedUserOnlyAbleToRemoveTheirStandingInstruction() {
         List<String> emailSI = paymentMethodPage.manageEmailSI();
         List<Boolean> enabledRemove = paymentMethodPage.enabledActionBtn();
@@ -704,22 +704,22 @@ public class PaymentMethodStep {
     @When("{string} leave the company")
     public void leaveTheCompany(String userType) throws Exception {
         goToPayment();
-        if (userType.equals("Card Owner")){
+        if (userType.equals("Card Admin")){
             paymentMethodPage.setupCommercialCard(Constants.CARD_TO_BE_DELETED);
-        } else if (userType.equals("Authorized User")) createAuthorizedUser(Constants.EMAIL_CARD_OWNER_DELETED, Constants.EMAIL_AU_DELETED);
+        } else if (userType.equals("Card User")) createAuthorizedUser(Constants.EMAIL_CARD_OWNER_DELETED, Constants.EMAIL_AU_DELETED);
         paymentMethodPage.goToMyCompany();
         companyPage.pressLeaveCompany();
         companyPage.pressYesBtn();
         Thread.sleep(3000);
     }
 
-    @Then("all card, authorized user & standing instruction will be removed")
+    @Then("all card, Card User & standing instruction will be removed")
     public void allCardAuthorizedUserStandingInstructionWillBeRemoved() throws Exception {
         goToPayment();
         Assert.assertTrue(paymentMethodPage.btnSetupCompanyDisplayed());
     }
 
-    @Then("all standing instruction will be transferred to card owner")
+    @Then("all standing instruction will be transferred to Card Admin")
     public void allStandingInstructionWillBeTransferredToCardOwner() throws Exception {
         companyPage.myMenuAccount("Sign Out");
         Thread.sleep(10000);
@@ -731,7 +731,7 @@ public class PaymentMethodStep {
         Assert.assertFalse(emailsManageBy.contains(Constants.EMAIL_AUTHORIZED_USER));
     }
 
-    @When("remove authorized user that doesn't has standing instruction")
+    @When("remove Card User that doesn't has standing instruction")
     public void removeAuthorizedUserThatDoesnTHasStandingInstruction() throws Exception {
         goToPayment();
         List<String> emailAuthorizedUser = paymentMethodPage.emailAuthorizedUser();
@@ -796,7 +796,7 @@ public class PaymentMethodStep {
 
     @Given("{string} has standing instruction")
     public void hasStandingInstruction(String userType) throws Exception {
-        if (userType.equals("Authorized User")) {
+        if (userType.equals("Card User")) {
             //login
             loginPage.login(Constants.EMAIL_AUTHORIZED_USER);
 
