@@ -162,7 +162,7 @@ public class PaymentOverviewStepdefs {
 
     @Given("user create upcoming payment request")
     public void user_create_upcoming_payment_request() throws Exception {
-        paymentOverviewPage.createPaymentRequest();
+        paymentOverviewPage.createPaymentRequestAPI();
     }
 
     @And("update to outstanding to trigger notification")
