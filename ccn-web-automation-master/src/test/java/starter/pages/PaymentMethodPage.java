@@ -407,9 +407,10 @@ public class PaymentMethodPage extends PageObject {
         evaluateJavascript("arguments[0].click();", siNumbers.get(index));
     }
 
-    public String chooseEmailUser(){
+    public String chooseEmailUser() throws InterruptedException {
         $(fieldEmailUser).waitUntilVisible();
         evaluateJavascript("arguments[0].click();", $(fieldEmailUser));
+        Thread.sleep(1000);
         ListOfWebElementFacades dropdownEmailUsers = $$(dropdownEmailUser);
 
         WebElementFacade selectedEmail  = dropdownEmailUsers.get(0);

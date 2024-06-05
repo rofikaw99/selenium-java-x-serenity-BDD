@@ -419,7 +419,7 @@ public class PaymentMethodStep {
 
     @And("Card Admin can only authorise user within their same company")
     public void cardOwnerCanOnlyAuthoriseUserWithinTheirSameCompany() throws InterruptedException {
-        email = paymentMethodPage.chooseEmailUser();
+        paymentMethodPage.chooseEmailUser("auto-001@yopmail.com");
         System.out.println("Selected email " + email);
         paymentMethodPage.clickConfirmAddUserBtn();
     }
