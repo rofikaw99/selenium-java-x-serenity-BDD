@@ -114,6 +114,18 @@ Feature: Payment Overview
     Then verify field to be display that payment request not display
 
     Examples:
+      | email                       | password      | menu                |
+      | qa-ccn-49965651@yopmail.com | CCNPegasus123 | My Payment Overview |
+
+  @nonSGCompanyCantAccessPaymentOverview @PaymentModule @user
+  Scenario Outline: non SG company can't access payment module
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    Then User go to "<menu>" to verify that the non SG can't access payment module
+
+    Examples:
       | email                | password      | menu                |
       | malaypcn@yopmail.com | CCNPegasus123 | My Payment Overview |
 
