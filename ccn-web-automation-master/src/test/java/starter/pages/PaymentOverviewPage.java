@@ -1,6 +1,7 @@
 package starter.pages;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import net.thucydides.core.pages.PageObject;
 import org.junit.Assert;
@@ -10,6 +11,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import starter.utlis.Constants;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static net.serenitybdd.rest.SerenityRest.*;
 
@@ -29,8 +33,8 @@ public class PaymentOverviewPage extends PageObject {
     private By total = By.id("cube-sort-total");
     private By status = By.id("cube-sort-status");
     private By inputKeywordField = By.xpath("//*[@class='cube-search']//input[@placeholder='Search by...']");
-    private By checkoutButton = By.xpath("(//div[contains(@class, 'cube-btn-flex')]//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'undefined')])[1]");
-    private By bulkOutstanding = By.xpath("(//span[contains(@class, 'cube-checkmark-checkbox') and contains(@class, 'check')])[23]");
+    private By checkoutButton = By.xpath("(//div[contains(@class, 'cube-btn-flex')]//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'undefined')])[2]");
+    private By bulkOutstanding = By.xpath("(//span[contains(@class, 'cube-checkmark-checkbox') and contains(@class, 'check')])[24]");
     private By bulkChcekout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'ml-[80px]')]");
     private By payCheckout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-primary') and contains(@class, '!w-[212px]') and contains(@class, 'ml-[30px]') and contains(@style, 'height: 48px;') and text()='Pay']");
     private By cookie1 = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
@@ -176,20 +180,6 @@ public class PaymentOverviewPage extends PageObject {
         System.out.println(supplierInfo);
         System.out.println(statusInfo);
     }
-
-    public void cek2(){
-        String url = "https://reqres.in/api/users?page=2";
-        given().when().get(url);
-        System.out.println("response of api " + lastResponse().path("data"));
-    }
-
-    public void cek(){
-        // then() -> method untuk melakukan verifikasi atau pengecekan terhadap
-        // response yang dihasilkan
-        // method then digunakan untuk memverifikasi response yg dikembalikan
-        then().statusCode(200);
-    }
-
     private static String accessToken;
 
     private String paymentRequestId;
@@ -213,6 +203,17 @@ public class PaymentOverviewPage extends PageObject {
     }
 
     public void createCreditTermPaymentRequest() {
+        String baseURL = "http://172.16.200.223:6969";
+
+        // API endpoint
+        String endpoint = "/5a3d543b1dcc447ca293ee63ef120a8f/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest";
+
+        // Set request headers
+        Map<String, String> headers = new HashMap<>();
+        headers.put("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e");
+        headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzL3YyLjAiLCJpYXQiOjE3MTc0ODg1MzYsIm5iZiI6MTcxNzQ4ODUzNiwiZXhwIjoxNzE3NDkyNDM2LCJhaW8iOiJFMk5nWU1pVXZyNWltdmRUc1VmZkZxVnN2WDhsWjNKcTZGd2hoOFc3dW94NExLdkRVeXdBIiwiYXpwIjoiMmYzNWRkNTUtOWVlMS00YTA3LWE4YWYtNzhlMjEzZTFkNjNiIiwiYXpwYWNyIjoiMSIsIm9pZCI6Ijc3NDYwNzQyLTllYTAtNDNiNS1iMTNhLTY0NzJjNWQxYWMxNyIsInJoIjoiMC5BVDhBbWloTDRqc3kzVXFIWmNjYnE0c1lvMW9Ba3Fwd1l4dElxaGU3ejNqQWc2Y19BQUEuIiwic3ViIjoiNzc0NjA3NDItOWVhMC00M2I1LWIxM2EtNjQ3MmM1ZDFhYzE3IiwidGlkIjoiZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzIiwidXRpIjoiWTN6TkVMelBjVTJ1YWNzVnd0Z0VBQSIsInZlciI6IjIuMCJ9.NStfu25W7aePHT95zuNEFnHAmahqhSWtyjhE8vMBLXF-VkodAojk9xRjgesh18ionlemz94d-h0rG5Z-Xlb3cz5OSTabauOLQpIXkwPcBPdly0xxUQVBHhEyYT-ne1bszRWcLy-vRD3RIwQ6SRkIIr8AUqhNC0i6pffBtYseMLsP6QEQqAb1z0nE0zu-pWUiGKpvXJjKk8iu1MTscn9DQjH09KZVoaboeAITSn72TkrYUAhT-wu3HzJI7lqY6TFWoZ7XpmX_DzWdH55-TtvBUCykiA3NI32MmUYfz08gLthljqRUgrzY9NjdEMtrVB4kRP8u3ZSqAhDHEchvjwvoow");
+        headers.put("Content-Type", "application/json");
+
         String payload = "{\n" +
                 "    \"externalReferenceId\": \"EXT-" + Constants.FOUR_DIGIT + "\",\n" +
                 "    \"reference\": \"REF-" + Constants.FOUR_DIGIT + "\",\n" +
@@ -241,20 +242,35 @@ public class PaymentOverviewPage extends PageObject {
                 "    \"paymentMethod\": \"credit_terms\" \n" +
                 "}";
 
-        Response response = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + accessToken)
-                .body(payload)
-                .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest");
+        // Combine base URL and endpoint
+        String url = baseURL + endpoint;
 
+        // Send POST request using REST Assured
+        Response response = RestAssured.given()
+                .headers("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e",
+                        "Authorization", accessToken,
+                        "Content-Type", ContentType.JSON.toString())
+                .body(payload)
+                .post(url);
         paymentRequestId = response.jsonPath().getString("paymentRequestId");
 
-        System.out.println("REF-" + Constants.FOUR_DIGIT);
-        System.out.println("Payment Request ID: " + paymentRequestId);
+        // Print response body
+        System.out.println("Response Body: " + paymentRequestId );
     }
 
 
     public void createCreditTermPaymentRequestToGetNotification() {
+        String baseURL = "http://172.16.200.223:6969";
+
+        // API endpoint
+        String endpoint = "/5a3d543b1dcc447ca293ee63ef120a8f/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest";
+
+        // Set request headers
+        Map<String, String> headers = new HashMap<>();
+        headers.put("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e");
+        headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzL3YyLjAiLCJpYXQiOjE3MTc0ODg1MzYsIm5iZiI6MTcxNzQ4ODUzNiwiZXhwIjoxNzE3NDkyNDM2LCJhaW8iOiJFMk5nWU1pVXZyNWltdmRUc1VmZkZxVnN2WDhsWjNKcTZGd2hoOFc3dW94NExLdkRVeXdBIiwiYXpwIjoiMmYzNWRkNTUtOWVlMS00YTA3LWE4YWYtNzhlMjEzZTFkNjNiIiwiYXpwYWNyIjoiMSIsIm9pZCI6Ijc3NDYwNzQyLTllYTAtNDNiNS1iMTNhLTY0NzJjNWQxYWMxNyIsInJoIjoiMC5BVDhBbWloTDRqc3kzVXFIWmNjYnE0c1lvMW9Ba3Fwd1l4dElxaGU3ejNqQWc2Y19BQUEuIiwic3ViIjoiNzc0NjA3NDItOWVhMC00M2I1LWIxM2EtNjQ3MmM1ZDFhYzE3IiwidGlkIjoiZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzIiwidXRpIjoiWTN6TkVMelBjVTJ1YWNzVnd0Z0VBQSIsInZlciI6IjIuMCJ9.NStfu25W7aePHT95zuNEFnHAmahqhSWtyjhE8vMBLXF-VkodAojk9xRjgesh18ionlemz94d-h0rG5Z-Xlb3cz5OSTabauOLQpIXkwPcBPdly0xxUQVBHhEyYT-ne1bszRWcLy-vRD3RIwQ6SRkIIr8AUqhNC0i6pffBtYseMLsP6QEQqAb1z0nE0zu-pWUiGKpvXJjKk8iu1MTscn9DQjH09KZVoaboeAITSn72TkrYUAhT-wu3HzJI7lqY6TFWoZ7XpmX_DzWdH55-TtvBUCykiA3NI32MmUYfz08gLthljqRUgrzY9NjdEMtrVB4kRP8u3ZSqAhDHEchvjwvoow");
+        headers.put("Content-Type", "application/json");
+
         String payload = "{\n" +
                 "    \"externalReferenceId\": \"EXT-" + Constants.FOUR_DIGIT + "\",\n" +
                 "    \"reference\": \"REF-" + Constants.FOUR_DIGIT + "\",\n" +
@@ -284,89 +300,150 @@ public class PaymentOverviewPage extends PageObject {
                 "    \"paymentMethod\": \"credit_terms\" \n" +
                 "}";
 
-        Response response = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + accessToken)
-                .body(payload)
-                .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest");
+        // Combine base URL and endpoint
+        String url = baseURL + endpoint;
 
+        // Send POST request using REST Assured
+        Response response = RestAssured.given()
+                .headers("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e",
+                        "Authorization", accessToken,
+                        "Content-Type", ContentType.JSON.toString())
+                .body(payload)
+                .post(url);
         paymentRequestId = response.jsonPath().getString("paymentRequestId");
 
-        System.out.println("REF-" + Constants.FOUR_DIGIT);
-        System.out.println("Payment Request ID: " + paymentRequestId);
+        // Print response body
+        System.out.println("Response Body: " + paymentRequestId );
     }
+        public void createPaymentRequestAPI() {
 
-    public void createPaymentRequest() {
-        String payload = "{\n" +
-                "    \"externalReferenceId\": \"EXT-" + Constants.FOUR_DIGIT + "\",\n" +
-                "    \"reference\": \"TEST-PAYMENT, REF-1234, 1146, 1234, Headquarter SQ Company\",\n" +
-                "    \"totalChargeAmount\": 470,\n" +
-                "    \"currency\": \"SGD\",\n" +
-                "    \"status\": \"UPCOMING\",\n" +
-                "    \"meta\": {\n" +
-                "        \"items\": [\n" +
-                "            {\n" +
-                "                \"description\": \"Arm, Ammunition, & Explosives (Strong Room Storage)\",\n" +
-                "                \"amount\": 100\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"description\": \"Valuable Cargo (Strong Room Storage)\",\n" +
-                "                \"amount\": 80\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"description\": \"Export Perishables Storage\",\n" +
-                "                \"amount\": 90\n" +
-                "            },\n" +
-                "            {\n" +
-                "                \"description\": \"Administrative Charge for Return Cargo\",\n" +
-                "                \"amount\": 200\n" +
-                "            }\n" +
-                "        ]\n" +
-                "    }\n" +
-                "}";
+            String baseURL = "http://172.16.200.223:6969";
 
-        Response response = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + accessToken)
-                .body(payload)
-                .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest");
+            // API endpoint
+            String endpoint = "/5a3d543b1dcc447ca293ee63ef120a8f/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest";
 
-        paymentRequestId = response.jsonPath().getString("paymentRequestId");
-        System.out.println("REF-" + Constants.FOUR_DIGIT);
-        System.out.println("Payment Request ID: " + paymentRequestId);
-    }
+            // Set request headers
+            Map<String, String> headers = new HashMap<>();
+            headers.put("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e");
+            headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzL3YyLjAiLCJpYXQiOjE3MTc0ODg1MzYsIm5iZiI6MTcxNzQ4ODUzNiwiZXhwIjoxNzE3NDkyNDM2LCJhaW8iOiJFMk5nWU1pVXZyNWltdmRUc1VmZkZxVnN2WDhsWjNKcTZGd2hoOFc3dW94NExLdkRVeXdBIiwiYXpwIjoiMmYzNWRkNTUtOWVlMS00YTA3LWE4YWYtNzhlMjEzZTFkNjNiIiwiYXpwYWNyIjoiMSIsIm9pZCI6Ijc3NDYwNzQyLTllYTAtNDNiNS1iMTNhLTY0NzJjNWQxYWMxNyIsInJoIjoiMC5BVDhBbWloTDRqc3kzVXFIWmNjYnE0c1lvMW9Ba3Fwd1l4dElxaGU3ejNqQWc2Y19BQUEuIiwic3ViIjoiNzc0NjA3NDItOWVhMC00M2I1LWIxM2EtNjQ3MmM1ZDFhYzE3IiwidGlkIjoiZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzIiwidXRpIjoiWTN6TkVMelBjVTJ1YWNzVnd0Z0VBQSIsInZlciI6IjIuMCJ9.NStfu25W7aePHT95zuNEFnHAmahqhSWtyjhE8vMBLXF-VkodAojk9xRjgesh18ionlemz94d-h0rG5Z-Xlb3cz5OSTabauOLQpIXkwPcBPdly0xxUQVBHhEyYT-ne1bszRWcLy-vRD3RIwQ6SRkIIr8AUqhNC0i6pffBtYseMLsP6QEQqAb1z0nE0zu-pWUiGKpvXJjKk8iu1MTscn9DQjH09KZVoaboeAITSn72TkrYUAhT-wu3HzJI7lqY6TFWoZ7XpmX_DzWdH55-TtvBUCykiA3NI32MmUYfz08gLthljqRUgrzY9NjdEMtrVB4kRP8u3ZSqAhDHEchvjwvoow");
+            headers.put("Content-Type", "application/json");
+
+            // Request body
+            String requestBody = "{\n" +
+                    "    \"externalReferenceId\": \"EXT-145\",\n" +
+                    "    \"reference\": \"TEST-PAYMENT, REF-1241, 1146, 1234, Supp\",\n" +
+                    "    \"totalChargeAmount\": 40,\n" +
+                    "    \"currency\": \"SGD\",\n" +
+                    "    \"status\": \"UPCOMING\",\n" +
+                    "    \"chargeDateTime\": \"2024-06-25\",\n" +
+                    "    \"meta\": {\n" +
+                    "        \"items\": [\n" +
+                    "            {\n" +
+                    "                \"description\": \"item 1 description\",\n" +
+                    "                \"amount\": 10\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"description\": \"item 2 description\",\n" +
+                    "                \"amount\": 10\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"description\": \"item 3 description\",\n" +
+                    "                \"amount\": 10\n" +
+                    "            },\n" +
+                    "            {\n" +
+                    "                \"description\": \"item 4 description\",\n" +
+                    "                \"amount\": 10\n" +
+                    "            }\n" +
+                    "        ],\n" +
+                    "        \"notes\": [\n" +
+                    "            \"Amount: SGD 40\",\n" +
+                    "            \"note: Approved\",\n" +
+                    "            \"Booking Date: 24 Feb 2024\",\n" +
+                    "            \"AWB: 618-1234566\"\n" +
+                    "        ]\n" +
+                    "    }\n" +
+                    "}";
+
+            // Combine base URL and endpoint
+            String url = baseURL + endpoint;
+
+            // Send POST request using REST Assured
+            Response response = RestAssured.given()
+                    .headers("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e",
+                            "Authorization", accessToken,
+                            "Content-Type", ContentType.JSON.toString())
+                    .body(requestBody)
+                    .post(url);
+            paymentRequestId = response.jsonPath().getString("paymentRequestId");
+
+            // Print response body
+            System.out.println("Response Body: " + paymentRequestId );
+        }
 
     public void updatePaymentRequest(String status, String paymentRequestId){
+        String baseURL = "http://172.16.200.223:6969";
+
+        // API endpoint
+        String endpoint = "/5a3d543b1dcc447ca293ee63ef120a8f/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest";
+
+        // Set request headers
+        Map<String, String> headers = new HashMap<>();
+        headers.put("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e");
+        headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzL3YyLjAiLCJpYXQiOjE3MTc0ODg1MzYsIm5iZiI6MTcxNzQ4ODUzNiwiZXhwIjoxNzE3NDkyNDM2LCJhaW8iOiJFMk5nWU1pVXZyNWltdmRUc1VmZkZxVnN2WDhsWjNKcTZGd2hoOFc3dW94NExLdkRVeXdBIiwiYXpwIjoiMmYzNWRkNTUtOWVlMS00YTA3LWE4YWYtNzhlMjEzZTFkNjNiIiwiYXpwYWNyIjoiMSIsIm9pZCI6Ijc3NDYwNzQyLTllYTAtNDNiNS1iMTNhLTY0NzJjNWQxYWMxNyIsInJoIjoiMC5BVDhBbWloTDRqc3kzVXFIWmNjYnE0c1lvMW9Ba3Fwd1l4dElxaGU3ejNqQWc2Y19BQUEuIiwic3ViIjoiNzc0NjA3NDItOWVhMC00M2I1LWIxM2EtNjQ3MmM1ZDFhYzE3IiwidGlkIjoiZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzIiwidXRpIjoiWTN6TkVMelBjVTJ1YWNzVnd0Z0VBQSIsInZlciI6IjIuMCJ9.NStfu25W7aePHT95zuNEFnHAmahqhSWtyjhE8vMBLXF-VkodAojk9xRjgesh18ionlemz94d-h0rG5Z-Xlb3cz5OSTabauOLQpIXkwPcBPdly0xxUQVBHhEyYT-ne1bszRWcLy-vRD3RIwQ6SRkIIr8AUqhNC0i6pffBtYseMLsP6QEQqAb1z0nE0zu-pWUiGKpvXJjKk8iu1MTscn9DQjH09KZVoaboeAITSn72TkrYUAhT-wu3HzJI7lqY6TFWoZ7XpmX_DzWdH55-TtvBUCykiA3NI32MmUYfz08gLthljqRUgrzY9NjdEMtrVB4kRP8u3ZSqAhDHEchvjwvoow");
+        headers.put("Content-Type", "application/json");
+
         String payload = "{\n" +
                 "    \"paymentRequestId\": \"" + paymentRequestId + "\",\n" +
                 "    \"status\": \"" + status + "\"\n" +
                 "}";
 
-        Response response = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + accessToken)
-                .body(payload)
-                .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/UpdatePaymentRequest");
+        // Combine base URL and endpoint
+        String url = baseURL + endpoint;
 
-        System.out.println("Status code: " + response.getStatusCode());
-//        Assert.assertEquals("Status code not as acpected", 200, response.getStatusCode());
-        System.out.println("Response body: " + response.getBody().asString());
+        // Send POST request using REST Assured
+        Response response = RestAssured.given()
+                .headers("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e",
+                        "Authorization", accessToken,
+                        "Content-Type", ContentType.JSON.toString())
+                .body(payload)
+                .post(url);
+        paymentRequestId = response.jsonPath().getString("paymentRequestId");
+
+        // Print response body
+        System.out.println("Response Body: " + paymentRequestId );
     }
 
     public void updatePaymentRequestToNotify(String status){
+        String baseURL = "http://172.16.200.223:6969";
+
+        // API endpoint
+        String endpoint = "/5a3d543b1dcc447ca293ee63ef120a8f/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest";
+
+        // Set request headers
+        Map<String, String> headers = new HashMap<>();
+        headers.put("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e");
+        headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzL3YyLjAiLCJpYXQiOjE3MTc0ODg1MzYsIm5iZiI6MTcxNzQ4ODUzNiwiZXhwIjoxNzE3NDkyNDM2LCJhaW8iOiJFMk5nWU1pVXZyNWltdmRUc1VmZkZxVnN2WDhsWjNKcTZGd2hoOFc3dW94NExLdkRVeXdBIiwiYXpwIjoiMmYzNWRkNTUtOWVlMS00YTA3LWE4YWYtNzhlMjEzZTFkNjNiIiwiYXpwYWNyIjoiMSIsIm9pZCI6Ijc3NDYwNzQyLTllYTAtNDNiNS1iMTNhLTY0NzJjNWQxYWMxNyIsInJoIjoiMC5BVDhBbWloTDRqc3kzVXFIWmNjYnE0c1lvMW9Ba3Fwd1l4dElxaGU3ejNqQWc2Y19BQUEuIiwic3ViIjoiNzc0NjA3NDItOWVhMC00M2I1LWIxM2EtNjQ3MmM1ZDFhYzE3IiwidGlkIjoiZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzIiwidXRpIjoiWTN6TkVMelBjVTJ1YWNzVnd0Z0VBQSIsInZlciI6IjIuMCJ9.NStfu25W7aePHT95zuNEFnHAmahqhSWtyjhE8vMBLXF-VkodAojk9xRjgesh18ionlemz94d-h0rG5Z-Xlb3cz5OSTabauOLQpIXkwPcBPdly0xxUQVBHhEyYT-ne1bszRWcLy-vRD3RIwQ6SRkIIr8AUqhNC0i6pffBtYseMLsP6QEQqAb1z0nE0zu-pWUiGKpvXJjKk8iu1MTscn9DQjH09KZVoaboeAITSn72TkrYUAhT-wu3HzJI7lqY6TFWoZ7XpmX_DzWdH55-TtvBUCykiA3NI32MmUYfz08gLthljqRUgrzY9NjdEMtrVB4kRP8u3ZSqAhDHEchvjwvoow");
+        headers.put("Content-Type", "application/json");
+
         String payload = "{\n" +
                 "    \"paymentRequestId\": \"" + paymentRequestId + "\",\n" +
                 "    \"status\": \"" + status + "\"\n" +
                 "}";
 
-        Response response = RestAssured.given()
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + accessToken)
-                .body(payload)
-                .post("http://cube.sandbox.ccn/9af033381cea4417af7b0821c82101e5/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/UpdatePaymentRequest");
+        // Combine base URL and endpoint
+        String url = baseURL + endpoint;
 
-        System.out.println("Status code: " + response.getStatusCode());
-        System.out.println("Response body: " + response.getBody().asString());
+        // Send POST request using REST Assured
+        Response response = RestAssured.given()
+                .headers("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e",
+                        "Authorization", accessToken,
+                        "Content-Type", ContentType.JSON.toString())
+                .body(payload)
+                .post(url);
+        paymentRequestId = response.jsonPath().getString("paymentRequestId");
+
+        // Print response body
+        System.out.println("Response Body: " + paymentRequestId );
     }
 
 
