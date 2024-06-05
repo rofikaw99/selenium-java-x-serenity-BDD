@@ -74,7 +74,7 @@ public class Constants {
     public static String EMAIL_AU_DELETED = "co-sg-004@yopmail.com";
 
     //CARD NUMBER FOR PAYMENT
-    public static String CARD_NON_VISA_SINGAPORE = "4000005540000008";
+    public static String CARD_NON_VISA_SINGAPORE = "4000007020000003";
     public static String CARD_DUPLICATE = "4000007020000003";
     public static String CARD_VISA_SINGAPORE = "4000002920000005"; //for this
     public static String CARD_TO_BE_DELETED = "4000002180000000"; //ECUADOR

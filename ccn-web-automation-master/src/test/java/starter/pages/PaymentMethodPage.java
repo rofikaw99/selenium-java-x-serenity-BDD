@@ -55,7 +55,7 @@ public class PaymentMethodPage extends PageObject {
     private By btnSaveDisabled = By.xpath("(//*[contains(@id, 'payment-form')]//*[@id='submit'])[2]");
 
     //Authorized User Section
-    private By txtListOfUser = By.xpath("//*[text() = 'List of Authorized Users:']");
+    private By txtListOfUser = By.xpath("//*[text() = 'List of Card User:']");
     private By btnAddUser = By.xpath("//*[text() = 'Add Users']");
     private By fieldEmailUser = By.xpath("//*[@class = 'cube-input-email-input']");
     private By dropdownEmailUser = By.xpath("//*[@class='cube-dropdown-option']");
@@ -120,7 +120,7 @@ public class PaymentMethodPage extends PageObject {
 //        openAt(Constants.URL_PAYMENT_METHODS);
         Thread.sleep(20000);
         $(headerMyMethods).waitUntilPresent();
-        Assert.assertTrue($(headerMyMethods).isDisplayed());
+        Assert.assertTrue($(headerMyMethods).isPresent());
     }
 
     public void goToMyCompany(){
@@ -407,9 +407,10 @@ public class PaymentMethodPage extends PageObject {
         evaluateJavascript("arguments[0].click();", siNumbers.get(index));
     }
 
-    public String chooseEmailUser(){
+    public String chooseEmailUser() throws InterruptedException {
         $(fieldEmailUser).waitUntilVisible();
         evaluateJavascript("arguments[0].click();", $(fieldEmailUser));
+        Thread.sleep(1000);
         ListOfWebElementFacades dropdownEmailUsers = $$(dropdownEmailUser);
 
         WebElementFacade selectedEmail  = dropdownEmailUsers.get(0);
