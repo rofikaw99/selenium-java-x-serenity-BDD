@@ -69,8 +69,8 @@ Feature: Payment Method
     Then validation note "<note>" appears
     Examples:
     | condition | note |
-#    | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
-    | duplicate | This card has already been set up. Please try using a different card. |
+    | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
+#    | duplicate | This card has already been set up. Please try using a different card. |
 
   @PPM_TC_4 @add-commercial-card @PaymentModule @user @login
   Scenario Outline: Input several invalid data in commercial card form
@@ -309,6 +309,18 @@ Feature: Payment Method
     Given "Card Admin that Leave Company" login to the web
     When "Card Admin" leave the company
     Then all card, Card User & standing instruction will be removed
+
+  @nonSGCompanyCantAccessPaymentMethod @PaymentModule @user
+  Scenario Outline: non SG company can't access payment module
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    Then User go to "<menu>" to verify that the non SG can't access payment module
+
+    Examples:
+      | email                | password      | menu               |
+      | malaypcn@yopmail.com | CCNPegasus123 | My Payment Methods |
 
 #   THE FEATURE IS HIDDEN
 #    @PPM_TC_57 @PPM_TC_59 @add-card-user @done @PaymentModule

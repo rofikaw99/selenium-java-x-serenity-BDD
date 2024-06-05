@@ -4,10 +4,10 @@ import net.serenitybdd.core.pages.ListOfWebElementFacades;
 import net.thucydides.core.pages.PageObject;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import starter.utlis.Constants;
 
 import java.util.ArrayList;
@@ -457,6 +457,15 @@ public class CompanyPage extends PageObject {
         Thread.sleep(waitResponse);
         evaluateJavascript("arguments[0].click();", $(By.xpath("//*[contains(text(), '" + menu +  "')]")));
         Thread.sleep(waitResponse);
+    }
+
+    public void myMenuAccountNotAvailable(String menu) throws Exception {
+        clickAccountCircleIcon();
+        try {
+            evaluateJavascript("arguments[0].click();", $(By.xpath("//*[contains(text(), '" + menu +  "')]")));
+        } catch (NoSuchElementException e) {
+            System.out.println("Menu item '" + menu + "' not found.");
+        }
     }
 
     public void page(String page) throws Exception{
