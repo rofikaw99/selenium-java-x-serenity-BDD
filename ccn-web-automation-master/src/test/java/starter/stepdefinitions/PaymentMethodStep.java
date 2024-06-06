@@ -737,8 +737,8 @@ public class PaymentMethodStep {
         goToPayment();
         List<String> emailAuthorizedUser = paymentMethodPage.emailAuthorizedUser();
         Set<String> emailSI = Set.copyOf(paymentMethodPage.manageEmailSI());
-        for (int i = emailAuthorizedUser.size() - 1; i >= 0 ; i--){
-            if (!emailSI.contains(emailAuthorizedUser.get(i))) {
+        for (int i = 0; i < emailAuthorizedUser.size(); i++){
+            if (!emailSI.contains(emailAuthorizedUser.get(i)) && (!emailAuthorizedUser.get(i).equals(Constants.EMAIL_AUTHORIZED_USER))) {
                 index = i;
                 break;
             }
