@@ -49,7 +49,7 @@ public class PCNStep {
     }
 
     @When("press second sign in button with email {string} and password {string} plan C for AWB BC with {string}")
-    public void pressSecondSignInButtonWithEmailAndPasswordPlanCForAWBBCWith(String email, String password, String plan) {
+    public void pressSecondSignInButtonWithEmailAndPasswordPlanCForAWBBCWith(String email, String password, String plan) throws InterruptedException {
         loginPage.goToLoginPage();
         loginPage.changeSigninWindow();
         loginPage.loginCubeforall(email, password);
@@ -80,7 +80,7 @@ public class PCNStep {
     }
 
     @Given("press sign in button")
-    public void pressSignInButton() {
+    public void pressSignInButton() throws InterruptedException {
         loginPage.pressBtnLoginInit();
         loginPage.changeSigninWindow();
     }
