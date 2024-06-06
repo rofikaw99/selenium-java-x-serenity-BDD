@@ -335,7 +335,7 @@ public class PaymentOverviewPage extends PageObject {
                     "    \"totalChargeAmount\": 40,\n" +
                     "    \"currency\": \"SGD\",\n" +
                     "    \"status\": \"UPCOMING\",\n" +
-                    "    \"chargeDateTime\": \"2024-06-25\",\n" +
+                    "    \"chargeDateTime\": \"2024-06-29\",\n" +
                     "    \"meta\": {\n" +
                     "        \"items\": [\n" +
                     "            {\n" +

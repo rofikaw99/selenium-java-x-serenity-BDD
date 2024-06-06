@@ -38,6 +38,12 @@ public class PaymentOverviewStepdefs {
         companyPage.myMenuAccount(menu);
     }
 
+    @Then("User go to {string} to verify that the non SG can't access payment module")
+    public void gotoPayment(String menu) throws Exception {
+        //type of user is not affect this step, so being ignored
+        companyPage.myMenuAccountNotAvailable(menu);
+    }
+
     @When("verify field to be display on my payment")
     public void verify_field_to_be_display_on_my_payment() throws Exception {
         Thread.sleep(4000);
