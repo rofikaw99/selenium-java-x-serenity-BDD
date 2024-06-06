@@ -39,8 +39,7 @@ Feature: Payment Method
   @PPM_TC_1 @commercial-card-access @PaymentModule @user @login
   Scenario: User who doesn't have company unable to setup commercial card
     Given "User doesn't have company" login to the web
-    When "User" setup commercial card
-    Then button setup company appears since "User" have to create company first
+    Then User go to "My Payment Methods" to verify that the non SG can't access payment module
 
   @PPM_TC_6 @commercial-card-access @PaymentModule @card-admin @login
   Scenario Outline: Card Admin can't setup commercial card
@@ -122,16 +121,12 @@ Feature: Payment Method
   @PPM_TC_58 @add-card-user @done @PaymentModule @user @login
   Scenario: User who doesn't have company can't add Card User
     Given "User doesn't have company" login to the web
-    When "User" want add Card User
-    Then button setup company appears since "User" have to create company first
-    When click button setup company
-    Then Card Admin will be redirected to My Company page
+    Then User go to "My Payment Methods" to verify that the non SG can't access payment module
 
   @PPM_TC_18 @setup-si @done @PaymentModule @user @login
   Scenario: Non company user not able to setup standing instruction
     Given "User doesn't have company" login to the web
-    When "User doesn't have company" want to setup standing instruction
-    Then not able to setup standing instruction
+    Then User go to "My Payment Methods" to verify that the non SG can't access payment module
 
   @PPM_TC_90 @setup-si @done @PaymentModule @user @login
   Scenario: User who company has card not able to setup standing instruction
@@ -308,7 +303,7 @@ Feature: Payment Method
   Scenario: Card Admin leave the company
     Given "Card Admin that Leave Company" login to the web
     When "Card Admin" leave the company
-    Then all card, Card User & standing instruction will be removed
+    Then User go to "My Payment Methods" to verify that the non SG can't access payment module
 
   @nonSGCompanyCantAccessPaymentMethod @PaymentModule @user
   Scenario Outline: non SG company can't access payment module
