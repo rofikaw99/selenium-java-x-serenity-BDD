@@ -30,14 +30,18 @@ public class LoginPage extends PageObject {
     private By cookieElement = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
 
     private By cookies = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
+    private By okErrorSession = By.id("cube-confirm-sign-in");
     private String initWindow = "";
 
     public void goToMainWeb(){
         open();
     }
-
     public void clickCookies(){
         if ($$(cookies).size() == 1) evaluateJavascript("arguments[0].click();", $(cookies));
+    }
+
+    public void clickOKSession(){
+        if ($$(okErrorSession).size() == 1) evaluateJavascript("arguments[0].click();", $(okErrorSession));
     }
 
     public void goToLoginPage(){
@@ -141,7 +145,9 @@ public class LoginPage extends PageObject {
             System.out.println("cookies not displayed "+e);
         }
     }
-    public void pressBtnLoginInit(){
+    public void pressBtnLoginInit() throws InterruptedException {
+        Thread.sleep(2000);
+        clickOKSession();
         if (isCookieDisplayed()) {
             $(cookieElement).isDisplayed();
             $(cookieElement).click();
