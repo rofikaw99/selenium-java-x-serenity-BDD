@@ -148,12 +148,12 @@ public class LoginPage extends PageObject {
     public void pressBtnLoginInit() throws InterruptedException {
         Thread.sleep(2000);
         clickOKSession();
-        if (isCookieDisplayed()) {
-            $(cookieElement).isDisplayed();
-            $(cookieElement).click();
-        } else {
-            System.out.println("Cookie is not displayed. Skip click cookie.");
-        }
+//        if (isCookieDisplayed()) {
+//            $(cookieElement).isDisplayed();
+//            $(cookieElement).click();
+//        } else {
+//            System.out.println("Cookie is not displayed. Skip click cookie.");
+//        }
         $(btnSignInOnTheHomepage).isDisplayed();
         $(btnSignInOnTheHomepage).click();
     }
