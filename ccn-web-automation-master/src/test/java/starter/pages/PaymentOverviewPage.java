@@ -44,6 +44,7 @@ public class PaymentOverviewPage extends PageObject {
     private By upcomingTextColor = By.xpath("(//td[@class='row-label']/div[contains(text(), 'UPCOMING')])[1]");
     private By paidTextColor = By.xpath("(//td[@class='row-label']/div[contains(text(), 'PAID')])[1]");
     private By expiredTextColor = By.xpath("(//td[@class='row-label']/div[contains(text(), 'EXPIRED')])[1]");
+    private By cancelledTextColor = By.xpath("(//td[@class='row-label']/div[contains(text(), 'CANCELED')])[1]");
     private By gotoDetailPayments = By.xpath("(//div[contains(@class, 'text-') and contains(@class, 'font-') and contains(@class, 'cursor-pointer')])[1]");
     private By requestDateInfo = By.xpath("(//p)[12]");
     private By supplierInfo = By.xpath("(//p)[13]");
@@ -110,6 +111,12 @@ public class PaymentOverviewPage extends PageObject {
         $(expiredTextColor).isDisplayed();
         String style = $(expiredTextColor).getAttribute("style");
         System.out.println("Style attribute of oustandingTextColor: " + style);
+    }
+
+    public void verifyCancelledColorCode(){
+        $(cancelledTextColor).isDisplayed();
+        String style = $(cancelledTextColor).getAttribute("style");
+        System.out.println("Style attribute of cancelledTextColor: " + style);
     }
 
     public void verifyUpcomingColorCode(){
