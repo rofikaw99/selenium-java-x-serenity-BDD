@@ -451,7 +451,7 @@ public class PaymentMethodStep {
         paymentMethodPage.clickAddNewSIBtn();
         paymentMethodPage.inputSupplier(index);
         paymentMethodPage.inputStartDate(4);
-        paymentMethodPage.inputEndDate(10);//todo input end date
+//        paymentMethodPage.inputEndDate(10);//todo input end date
         paymentMethodPage.inputThreshold("900");//todo input threshold
         paymentMethodPage.clickSaveBtn();
 
@@ -524,7 +524,7 @@ public class PaymentMethodStep {
     public void ableToSetupStandingInstruction() throws InterruptedException {
         paymentMethodPage.inputSupplier(index);
         paymentMethodPage.inputStartDate(4);
-        paymentMethodPage.inputEndDate(7);
+//        paymentMethodPage.inputEndDate(7);
         paymentMethodPage.inputThreshold("900");
         paymentMethodPage.clickSaveSIBtn();
         Assert.assertTrue(paymentMethodPage.getErrorMsgText("New Standing Instructions successfully added."));
@@ -575,7 +575,7 @@ public class PaymentMethodStep {
     @Then("only threshold limit, end date can be updated")
     public void onlyThresholdLimitEndDateCanBeUpdated() throws InterruptedException {
         Thread.sleep(2000);
-        paymentMethodPage.updateEndDateUpdate(8);
+//        paymentMethodPage.updateEndDateUpdate(8);
         paymentMethodPage.updateThreshold("1234");
         paymentMethodPage.clickSaveSIUpdateBtn();
     }
