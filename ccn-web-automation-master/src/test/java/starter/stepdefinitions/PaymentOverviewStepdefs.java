@@ -88,6 +88,11 @@ public class PaymentOverviewStepdefs {
         paymentOverviewPage.verifyExpiredColorCode();
     }
 
+    @Then("verify cancelled status color code is correct")
+    public void verify_cancelled_status_color_code_is_correct() throws Exception {
+        paymentOverviewPage.verifyCancelledColorCode();
+    }
+
     @When("verify upcoming status color code is correct")
     public void verify_upcoming_status_color_code_is_correct() throws Exception {
         paymentOverviewPage.verifyUpcomingColorCode();
