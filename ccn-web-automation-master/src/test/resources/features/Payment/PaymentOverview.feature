@@ -283,6 +283,19 @@ Feature: Payment Overview
       | condition               | menu                | keyword |
       | User Overview           | My Payment Overview | expired |
 
+
+  @PaymentCancelled @PaymentOverview @PaymentModule @card-admin @login
+  Scenario Outline: Card Admin verify cancelled payment request status
+    Given "<condition>" login to the web
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    Then verify cancelled status color code is correct
+
+    Examples:
+      | condition               | menu                | keyword |
+      | Have Payment Request    | My Payment Overview | canc    |
+
   @PPM_TC_51_1 @PaymentOverview @PaymentModule @card-admin @login
   Scenario Outline: Card Admin verify payment detail information
     Given "<condition>" login to the web
