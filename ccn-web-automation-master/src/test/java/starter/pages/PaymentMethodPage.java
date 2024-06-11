@@ -26,7 +26,8 @@ public class PaymentMethodPage extends PageObject {
 
     //Payment Method Page
     private By setupCardHeader = By.xpath("//div[text() = 'Set up Commercial Card']");
-    private By cardInformationHeader = By.xpath("//div[text() = 'Commercial Card Information']");
+//    private By cardInformationHeader = By.xpath("//div[text() = 'Commercial Card Information']");
+    private By cardInformationHeader = By.xpath("//div[text() = 'View your card details below.']");
     private By btnsetupCompany = By.xpath("//*[div[contains(text(), 'company')]]//button[text() = 'Set Up']");
     private By btnAddNewSI = By.xpath("//p[text() = 'Add New']");
 
@@ -38,24 +39,17 @@ public class PaymentMethodPage extends PageObject {
 
     //Popup Confirmation Remove Commercial Card
     private By btnConfirm = By.id("cube-confirm-remove-commercial-card");
-    private By btnCancel = By.id("cube-cancel-remove-commercial-card");
 
     //Setup Commercial Card Popup
     private By iframeCard = By.xpath("(//*[@id = 'payment-form']//iframe[contains(@name, '__privateStripeFrame')])");
-    private By fieldCardHolderName = By.xpath("//*[contains(@class, 'cube-setup-form')]//*[@id = 'payment-form']//*[@id = 'cube-card-holder-name']");
     private By fieldCardNumber = By.xpath("//*[@placeholder = '1234 1234 1234 1234']");
     private By fieldExpDate = By.xpath("//*[@name = 'exp-date']");
     private By fieldCvc = By.xpath("//*[@name = 'cvc']");
-    private By fieldEmail = By.xpath("//*[contains(@class, 'cube-setup-form')]//*[@id = 'payment-form']//*[@id = 'cube-email']");
-    private By fieldFullName = By.id("Field-nameInput");
-    private By fieldCountry = By.id("Field-countryInput");
-    private By fieldAddressLine1 = By.id("Field-addressLine1Input");
-    private By fieldPostalCode = By.id("Field-postalCodeInput");
     private By btnSave = By.xpath("//*[contains(@class, 'cube-setup-form')]//*[@id='submit']");
     private By btnSaveDisabled = By.xpath("(//*[contains(@id, 'payment-form')]//*[@id='submit'])[2]");
 
     //Authorized User Section
-    private By txtListOfUser = By.xpath("//*[text() = 'List of Card User:']");
+    private By txtListOfUser = By.xpath("//*[text() = 'List of Card Users:']");
     private By btnAddUser = By.xpath("//*[text() = 'Add Users']");
     private By fieldEmailUser = By.xpath("//*[@class = 'cube-input-email-input']");
     private By dropdownEmailUser = By.xpath("//*[@class='cube-dropdown-option']");
@@ -69,9 +63,9 @@ public class PaymentMethodPage extends PageObject {
     private By btnConfirmInvite = By.id("btn-confirm-invite");
     private By btnRemove = By.id("btn-remove-user");
     private By txtInfoInviteUser = By.xpath("//*[text() = 'User(s) is not a member of your company']");
-    private By authorizedEmailTxt = By.xpath("//*[text() = 'User(s) is not a member of your company']"); //todo get the email
     private By listOfInvitedUser = By.xpath("//*[@class = 'warning-card-content']//li");
-    private By listOfAuthorizedUser = By.xpath("//div[contains(@class, 'mt-[24px]')]//li");
+//    private By listOfAuthorizedUser = By.xpath("//div[contains(@class, 'mt-[24px]')]//li");
+    private By listOfAuthorizedUser = By.xpath("//div[contains(@class, 'mt-[8px]')]//li");
 
     //Popup Remove Authorized User
     private By checkboxTransferSI = By.xpath("//*[@class = 'cube-modal' and @style = 'display: block;']//*[text()= 'Transfer Standing Instructions']");
@@ -80,7 +74,7 @@ public class PaymentMethodPage extends PageObject {
 
     //SI Table
     private By txtSINo = By.xpath("//*[@id = 'si-number']/p");
-    private By txtSIManageBy = By.xpath("//tr//*[@class = 'row-label'][6]//div");
+    private By txtSIManageBy = By.xpath("//tr//*[@class = 'manage-by-column']");
     private By actionBtn = By.id("si-delete");
     private By confirmRemoveSIBtn = By.id("cube-columns-apply");
 
@@ -88,17 +82,14 @@ public class PaymentMethodPage extends PageObject {
     private By fieldSupplier = By.xpath("//input[@placeholder = 'Supplier Name']");
     private By dropdownSupplier = By.id("si-supplier-name-item");
     private By fieldStartDate = By.xpath("(//input[@placeholder = 'Select Start Date'])[1]");
-    private By fieldEndDate = By.xpath("//input[@placeholder = 'Select End Date']");
-    private By fieldEndDateUpdate = By.xpath("(//input[@placeholder = 'Select End Date'])[2]");
     private By datePicker(int addedDate) {
         String date = Common.addDate(addedDate);
         return By.xpath("//*[@aria-disabled = 'false']//*[@class = 'cube-date-range-day-container']//*[text() = '"+ date +"']");
     }
     private By fieldThreshold = By.id("cube-threshold");
     private By fieldThresholdUpdate = By.xpath("(//*[@id = 'cube-threshold'])[2]");
-    private By fieldManageByEnabled = By.xpath("(//input[@placeholder = 'Manage By' and contains(@style, 'auto') ])");
-    private By fieldManageByDisabled = By.xpath("(//input[@placeholder = 'Manage By' and contains(@style, 'default') ])");
-    private By fieldManageBy = By.xpath("");
+    private By fieldManageByEnabled = By.xpath("(//input[@placeholder = 'Managed By' and contains(@style, 'auto') ])");
+    private By fieldManageByDisabled = By.xpath("(//input[@placeholder = 'Managed By' and contains(@style, 'default') ])");
     private By btnSaveSI = By.id("si-add-new");
     private By btnSaveSIUpdate = By.id("si-update");
     private By btnOk = By.xpath("//*[contains(@class, 'si-modal-confirm')]//button[text() = 'OK']");
@@ -117,7 +108,6 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public void goToPayment() throws InterruptedException {
-//        openAt(Constants.URL_PAYMENT_METHODS);
         Thread.sleep(20000);
         $(headerMyMethods).waitUntilPresent();
         Assert.assertTrue($(headerMyMethods).isPresent());
@@ -139,7 +129,7 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public boolean cardInfoHeaderDisplayed(){
-        return $$(cardInformationHeader).size() == 2;
+        return $$(cardInformationHeader).size() == 1;
     }
     public boolean btnSetupCompanyDisplayed(){
         return $$(btnsetupCompany).size() == 1;
@@ -202,9 +192,6 @@ public class PaymentMethodPage extends PageObject {
         return $$(checkboxTransferSI).size() == 2;
     }
 
-    public boolean btnAddSIDisplayed(){
-        return $$(btnAddNewSI).size() == 1;
-    }
     public String getCurrentUrl(){
         return getDriver().getCurrentUrl();
     }
@@ -212,12 +199,6 @@ public class PaymentMethodPage extends PageObject {
     public void checkTransferSI(){
         $(checkboxTransferSI).waitUntilVisible();
         evaluateJavascript("arguments[0].click();", $(checkboxTransferSI));
-    }
-
-    public void waitLoadingDisappears(){
-        setWaitForTimeout(50000);
-        $(loadingPage).waitUntilNotVisible();
-        Assert.assertEquals(0, $$(loadingPage).size());
     }
 
     public void inputEmailToTransferSI(String email){
@@ -289,11 +270,6 @@ public class PaymentMethodPage extends PageObject {
 
     public void clickRemoveUserBtn(int index){
         evaluateJavascript("arguments[0].click();", $$(btnRemove).get(index));
-    }
-
-    public void inputCardHolderName(String cardHolderName){
-        $(fieldCardHolderName).waitUntilVisible();
-        $(fieldCardHolderName).type(cardHolderName);
     }
 
     public void inputCardNumber(String cardNumber){
@@ -372,17 +348,6 @@ public class PaymentMethodPage extends PageObject {
         $(fieldStartDate).waitUntilVisible();
         evaluateJavascript("arguments[0].click();", $(fieldStartDate));
         evaluateJavascript("arguments[0].click();", $(datePicker(startDate)));
-    }
-
-    public void inputEndDate(int endDate){
-        $(fieldEndDate).waitUntilVisible();
-        evaluateJavascript("arguments[0].click();", $(fieldEndDate));
-        evaluateJavascript("arguments[0].click();", $(datePicker(endDate)));
-    }
-
-    public void updateEndDateUpdate(int endDate) {
-        evaluateJavascript("arguments[0].click();", $(fieldEndDateUpdate));
-        evaluateJavascript("arguments[0].click();", $(datePicker(endDate)));
     }
 
     public void inputThreshold(String threshold){
@@ -519,7 +484,6 @@ public class PaymentMethodPage extends PageObject {
         clickAddNewSIBtn();
         inputSupplier(index);
         inputStartDate(4);
-        inputEndDate(10);
         inputThreshold("900");
         clickSaveSIBtn();
         Thread.sleep(3000); //wait for UI loading

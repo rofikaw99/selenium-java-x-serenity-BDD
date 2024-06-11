@@ -75,7 +75,7 @@ public class Constants {
 
     //CARD NUMBER FOR PAYMENT
     public static String CARD_NON_VISA_SINGAPORE = "4000002180000000"; //ECUADOR
-    public static String CARD_DUPLICATE = "4000001960000008";
+    public static String CARD_DUPLICATE = "4000007020000003";
     public static String CARD_VISA_SINGAPORE = "4000002920000005"; //for this
     public static String CARD_TO_BE_DELETED = "4000007020000003"; //ECUADOR
     public static String CARD_CVC = "123";

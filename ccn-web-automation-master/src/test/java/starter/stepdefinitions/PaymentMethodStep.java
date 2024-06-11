@@ -357,7 +357,7 @@ public class PaymentMethodStep {
     }
 
     @Then("succeed remove Card User who has standing instruction")
-    public void succeedRemoveAuthorizedUserWhoHasStandingInstruction() throws InterruptedException {
+    public void succeedRemoveAuthorizedUserWhoHasStandingInstruction() {
         Assert.assertFalse(paymentMethodPage.txtSpecEmailDisplayed(email));
     }
 
@@ -418,7 +418,7 @@ public class PaymentMethodStep {
     }
 
     @And("Card Admin can only authorise user within their same company")
-    public void cardOwnerCanOnlyAuthoriseUserWithinTheirSameCompany() throws InterruptedException {
+    public void cardOwnerCanOnlyAuthoriseUserWithinTheirSameCompany() {
         paymentMethodPage.chooseEmailUser("auto-001@yopmail.com");
         System.out.println("Selected email " + email);
         paymentMethodPage.clickConfirmAddUserBtn();
@@ -451,8 +451,7 @@ public class PaymentMethodStep {
         paymentMethodPage.clickAddNewSIBtn();
         paymentMethodPage.inputSupplier(index);
         paymentMethodPage.inputStartDate(4);
-        paymentMethodPage.inputEndDate(10);//todo input end date
-        paymentMethodPage.inputThreshold("900");//todo input threshold
+        paymentMethodPage.inputThreshold("900");
         paymentMethodPage.clickSaveBtn();
 
         companyPage.myMenuAccount("Sign Out");
@@ -524,7 +523,6 @@ public class PaymentMethodStep {
     public void ableToSetupStandingInstruction() throws InterruptedException {
         paymentMethodPage.inputSupplier(index);
         paymentMethodPage.inputStartDate(4);
-        paymentMethodPage.inputEndDate(7);
         paymentMethodPage.inputThreshold("900");
         paymentMethodPage.clickSaveSIBtn();
         Assert.assertTrue(paymentMethodPage.getErrorMsgText("New Standing Instructions successfully added."));
@@ -575,7 +573,6 @@ public class PaymentMethodStep {
     @Then("only threshold limit, end date can be updated")
     public void onlyThresholdLimitEndDateCanBeUpdated() throws InterruptedException {
         Thread.sleep(2000);
-        paymentMethodPage.updateEndDateUpdate(8);
         paymentMethodPage.updateThreshold("1234");
         paymentMethodPage.clickSaveSIUpdateBtn();
     }
@@ -806,12 +803,6 @@ public class PaymentMethodStep {
             Thread.sleep(3000);
             emails = paymentMethodPage.manageEmailSI();
             if (!emails.contains(Constants.EMAIL_AUTHORIZED_USER)) {
-//                if (emails.size() == 1) {
-//                    paymentMethodPage.clickRemoveSIBtn(0);
-//                    paymentMethodPage.clickConfirmRemoveSIBtn();
-//                    Thread.sleep(2000); //waiting for the UI to load
-//                    paymentMethodPage.clickOkBtn();
-//                }
                 paymentMethodPage.clickAddNewSIBtn();
                 paymentMethodPage.createNewSI(0);
                 Thread.sleep(3000); //wait for UI loading
