@@ -69,7 +69,7 @@ Feature: Payment Method
     Examples:
     | condition | note |
     | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
-#    | duplicate | This card has already been set up. Please try using a different card. |
+    | duplicate | This card has already been set up. Please try using a different card. |
 
   @PPM_TC_4 @add-commercial-card @PaymentModule @user @login
   Scenario Outline: Input several invalid data in commercial card form
@@ -241,7 +241,7 @@ Feature: Payment Method
     Then the manage authored user function not available for "<user type>"
     Examples:
       | user type |
-      | User            |
+      | User      |
 
   @PPM_TC_69 @remove-si @done @PaymentModule @card-admin @login
   Scenario: Card Admin able to remove all standing instruction within the card
@@ -286,24 +286,26 @@ Feature: Payment Method
       | user type | result |
       | User | no option |
 
-  @PPM_TC_15 @remove-commercial-card @done @PaymentModule @user-leave @login @card-admin
-  Scenario: Card Admin can remove their commercial card
-    Given "Card Admin that want to remove their card" login to the web
-    When "Card Admin" want to remove commercial card
-    Then "Card Admin" "able" to remove commercial card
-    Then all standing instruction and Card User will be removed
+# COMMENTED BECAUSE THE ACCOUNT IS UNAVAILABLE
 
-  @PPM_TC_67 @leave-company @PaymentModule @user-leave @login @card-user
-  Scenario: Card User leave the company
-    Given "Card User that Leave Company" login to the web
-    When "Card User" leave the company
-    Then all standing instruction will be transferred to Card Admin
-
-  @PPM_TC_66 @leave-company @done @PaymentModule @card-admin @login
-  Scenario: Card Admin leave the company
-    Given "Card Admin that Leave Company" login to the web
-    When "Card Admin" leave the company
-    Then User go to "My Payment Methods" to verify that the non SG can't access payment module
+#  @PPM_TC_15 @remove-commercial-card @done @PaymentModule @user-leave @login @card-admin
+#  Scenario: Card Admin can remove their commercial card
+#    Given "Card Admin that want to remove their card" login to the web
+#    When "Card Admin" want to remove commercial card
+#    Then "Card Admin" "able" to remove commercial card
+#    Then all standing instruction and Card User will be removed
+#
+#  @PPM_TC_67 @leave-company @PaymentModule @user-leave @login @card-user
+#  Scenario: Card User leave the company
+#    Given "Card User that Leave Company" login to the web
+#    When "Card User" leave the company
+#    Then all standing instruction will be transferred to Card Admin
+#
+#  @PPM_TC_66 @leave-company @done @PaymentModule @card-admin @login
+#  Scenario: Card Admin leave the company
+#    Given "Card Admin that Leave Company" login to the web
+#    When "Card Admin" leave the company
+#    Then User go to "My Payment Methods" to verify that the non SG can't access payment module
 
   @nonSGCompanyCantAccessPaymentMethod @PaymentModule @user
   Scenario Outline: non SG company can't access payment module
