@@ -520,8 +520,7 @@ public class PaymentMethodStep {
     }
 
     @And("able to setup standing instruction")
-    public void ableToSetupStandingInstruction() throws InterruptedException {
-        paymentMethodPage.inputSupplier(index);
+    public void ableToSetupStandingInstruction() {
         paymentMethodPage.inputStartDate(4);
         paymentMethodPage.inputThreshold("900");
         paymentMethodPage.clickSaveSIBtn();
@@ -544,9 +543,13 @@ public class PaymentMethodStep {
     }
 
     @And("can select supplier to setup standing instruction")
-    public void canSelectSupplierToSetupStandingInstruction() {
+    public void canSelectSupplierToSetupStandingInstruction() throws InterruptedException {
+        int index = 0;
         paymentMethodPage.clickAddNewSIBtn();
         paymentMethodPage.fieldSupplierDisplayed();
+        paymentMethodPage.inputSupplier(index);
+        paymentMethodPage.inputProduct(index);
+        paymentMethodPage.inputCurrency(index);
     }
 
     @When("{string} want to update standing instruction")
@@ -573,6 +576,9 @@ public class PaymentMethodStep {
     @Then("only threshold limit, end date can be updated")
     public void onlyThresholdLimitEndDateCanBeUpdated() throws InterruptedException {
         Thread.sleep(2000);
+        paymentMethodPage.supplierDisabled();
+        paymentMethodPage.productDisabled();
+        paymentMethodPage.currencyDisabled();
         paymentMethodPage.updateThreshold("1234");
         paymentMethodPage.clickSaveSIUpdateBtn();
     }
@@ -816,5 +822,27 @@ public class PaymentMethodStep {
     public void successDeleteUserWithoutStandingInstruction() {
         paymentMethodPage.clickConfirmRemoveUserBtn();
         Assert.assertFalse(paymentMethodPage.txtSpecEmailDisplayed(email));
+    }
+
+    @Then("can select the product of the supplier")
+    public void canSelectTheProductOfTheSupplier() {
+
+
+    }
+
+    @Then("can select supplier {string} to setup standing instruction")
+    public void canSelectSupplierToSetupStandingInstruction(String supplier) throws InterruptedException {
+        paymentMethodPage.clickAddNewSIBtn();
+        paymentMethodPage.inputSupplier(supplier);
+    }
+
+    @Then("can select the product {string} of the supplier")
+    public void canSelectTheProductOfTheSupplier(String product) {
+        paymentMethodPage.inputProduct(product);
+    }
+
+    @Then("can select the currency {string}")
+    public void canSelectTheCurrency(String currency) {
+        paymentMethodPage.inputCurrency(currency);
     }
 }

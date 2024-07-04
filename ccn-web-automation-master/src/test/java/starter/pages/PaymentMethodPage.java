@@ -64,7 +64,6 @@ public class PaymentMethodPage extends PageObject {
     private By btnRemove = By.id("btn-remove-user");
     private By txtInfoInviteUser = By.xpath("//*[text() = 'User(s) is not a member of your company']");
     private By listOfInvitedUser = By.xpath("//*[@class = 'warning-card-content']//li");
-//    private By listOfAuthorizedUser = By.xpath("//div[contains(@class, 'mt-[24px]')]//li");
     private By listOfAuthorizedUser = By.xpath("//div[contains(@class, 'mt-[8px]')]//li");
 
     //Popup Remove Authorized User
@@ -79,8 +78,12 @@ public class PaymentMethodPage extends PageObject {
     private By confirmRemoveSIBtn = By.id("cube-columns-apply");
 
     //Create SI Popup
-    private By fieldSupplier = By.xpath("//input[@placeholder = 'Supplier Name']");
-    private By dropdownSupplier = By.id("si-supplier-name-item");
+    private By fieldSupplier = By.id("selected-si-supplier-name");
+    private By supplierNameItem = By.id("si-supplier-name-item");
+    private By fieldProduct = By.id("selected-si-product-service");
+    private By productNameItem = By.id("si-product-service-item");
+    private By fieldCurrency = By.id("selected-si-currency");
+    private By currencyItem = By.id("si-currency-item");
     private By fieldStartDate = By.xpath("(//input[@placeholder = 'Select Start Date'])[1]");
     private By datePicker(int addedDate) {
         String date = Common.addDate(addedDate);
@@ -337,11 +340,70 @@ public class PaymentMethodPage extends PageObject {
         }
     }
 
+    public void supplierDisabled() {
+        Assert.assertTrue(Boolean.parseBoolean($(fieldSupplier).getAttribute("readonly")));
+    }
+
+    public void productDisabled() {
+        Assert.assertTrue(Boolean.parseBoolean($(fieldProduct).getAttribute("readonly")));
+    }
+
+    public void currencyDisabled() {
+        Assert.assertTrue(Boolean.parseBoolean($(fieldCurrency).getAttribute("readonly")));
+    }
+
     public void inputSupplier(int index) throws InterruptedException {
         Thread.sleep(3000);
         $(fieldSupplier).waitUntilPresent();
         evaluateJavascript("arguments[0].click();", $(fieldSupplier));
-        evaluateJavascript("arguments[0].click();", $$(dropdownSupplier).get(index));
+        evaluateJavascript("arguments[0].click();", $$(supplierNameItem).get(index));
+    }
+
+    public void inputSupplier(String supp) throws InterruptedException {
+        Thread.sleep(3000);
+        $(fieldSupplier).waitUntilPresent();
+        evaluateJavascript("arguments[0].click();", $(fieldSupplier));
+        ListOfWebElementFacades supplierName = $$(supplierNameItem);
+        for (WebElementFacade e: supplierName){
+            if (e.getText().equals(supp)) {
+                evaluateJavascript("arguments[0].click();", e);
+                break;
+            }
+        }
+    }
+
+    public void inputProduct(String product) {
+        $(fieldProduct).waitUntilPresent();
+        evaluateJavascript("arguments[0].click();", $(fieldProduct));
+        ListOfWebElementFacades productName = $$(productNameItem);
+        for (WebElementFacade e: productName){
+            if (e.getText().equals(product)) evaluateJavascript("arguments[0].click();", e);
+            break;
+        }
+    }
+
+    public void inputProduct(int index) throws InterruptedException {
+        Thread.sleep(3000);
+        $(fieldProduct).waitUntilPresent();
+        evaluateJavascript("arguments[0].click();", $(fieldProduct));
+        evaluateJavascript("arguments[0].click();", $$(productNameItem).get(index));
+    }
+
+    public void inputCurrency(String currency) {
+        $(fieldCurrency).waitUntilPresent();
+        evaluateJavascript("arguments[0].click();", $(fieldCurrency));
+        ListOfWebElementFacades currencyName = $$(currencyItem);
+        for (WebElementFacade e: currencyName){
+            if (e.getText().equals(currency)) evaluateJavascript("arguments[0].click();", e);
+            break;
+        }
+    }
+
+    public void inputCurrency(int index) throws InterruptedException {
+        Thread.sleep(3000);
+        $(fieldCurrency).waitUntilPresent();
+        evaluateJavascript("arguments[0].click();", $(fieldCurrency));
+        evaluateJavascript("arguments[0].click();", $$(currencyItem).get(index));
     }
 
     public void inputStartDate(int startDate){
@@ -483,7 +545,9 @@ public class PaymentMethodPage extends PageObject {
     public void createNewSI(int index) throws InterruptedException {
         clickAddNewSIBtn();
         inputSupplier(index);
+        inputProduct(index);
         inputStartDate(4);
+        inputCurrency(index);
         inputThreshold("900");
         clickSaveSIBtn();
         Thread.sleep(3000); //wait for UI loading
