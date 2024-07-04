@@ -135,10 +135,22 @@ Feature: Payment Method
     Then not able to setup standing instruction
 
   @PPM_TC_20 @setup-si @done @PaymentModule @card-admin @login
-  Scenario: Setup standing instruction with Card Admin
+  Scenario: Setup standing instruction with Card Admin and SVS products
     Given "Card Admin" login to the web
     When "Card Admin" want to setup standing instruction
-    Then can select supplier to setup standing instruction
+    Then can select supplier "Cargo Community Network" to setup standing instruction
+    Then can select the product "Shipment Visibility Service" of the supplier
+    Then can select the currency "USD"
+    Then able to setup standing instruction
+    Then "Card Admin" can view all standing instruction including authorize user
+
+  @PPM_TC_20_2 @setup-si @done @PaymentModule @card-admin @login
+  Scenario: Setup standing instruction with Card Admin and TDSB products
+    Given "Card Admin" login to the web
+    When "Card Admin" want to setup standing instruction
+    Then can select supplier "SATS" to setup standing instruction
+    Then can select the product "Truck Dock Slot Booking" of the supplier
+    Then can select the currency "SGD"
     Then able to setup standing instruction
     Then "Card Admin" can view all standing instruction including authorize user
 
