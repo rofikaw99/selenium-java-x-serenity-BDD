@@ -223,9 +223,11 @@ public class PaymentOverviewPage extends PageObject {
 
         String payload = "{\n" +
                 "    \"externalReferenceId\": \"EXT-" + Constants.FOUR_DIGIT + "\",\n" +
-                "    \"reference\": \"REF-" + Constants.FOUR_DIGIT + "\",\n" +
+                "    \"reference\": \"TEST-PAYMENT, REF-1241, 1146, 1234, Supp\",\n" +
                 "    \"totalChargeAmount\": 470,\n" +
                 "    \"currency\": \"SGD\",\n" +
+                "    \"status\": \"UPCOMING\",\n" +
+                "    \"chargeDateTime\": \"2024-06-19\",\n" +
                 "    \"meta\": {\n" +
                 "        \"items\": [\n" +
                 "            {\n" +
@@ -246,7 +248,7 @@ public class PaymentOverviewPage extends PageObject {
                 "            }\n" +
                 "        ]\n" +
                 "    },\n" +
-                "    \"paymentMethod\": \"credit_terms\" \n" +
+                "    \"paymentMethod\": \"credit_term\" \n" +
                 "}";
 
         // Combine base URL and endpoint
@@ -342,7 +344,7 @@ public class PaymentOverviewPage extends PageObject {
                     "    \"totalChargeAmount\": 40,\n" +
                     "    \"currency\": \"SGD\",\n" +
                     "    \"status\": \"UPCOMING\",\n" +
-                    "    \"chargeDateTime\": \"2024-06-29\",\n" +
+                    "    \"chargeDateTime\": \"2024-06-19\",\n" +
                     "    \"meta\": {\n" +
                     "        \"items\": [\n" +
                     "            {\n" +
