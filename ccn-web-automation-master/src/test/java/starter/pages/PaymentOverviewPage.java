@@ -338,7 +338,7 @@ public class PaymentOverviewPage extends PageObject {
             // Request body
             String requestBody = "{\n" +
                     "    \"externalReferenceId\": \"EXT-145\",\n" +
-                    "    \"reference\": \"TEST-PAYMENT, REF-1241, 1146, 1234, Supp\",\n" +
+                    "    \"reference\": \"TEST-PAYMENT, REF-1367, 1146, 1234, Main Supplier\",\n" +
                     "    \"totalChargeAmount\": 40,\n" +
                     "    \"currency\": \"SGD\",\n" +
                     "    \"status\": \"UPCOMING\",\n" +
