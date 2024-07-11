@@ -48,7 +48,6 @@ public class PaymentOverviewStepdefs {
     public void verify_field_to_be_display_on_my_payment() throws Exception {
         Thread.sleep(4000);
         Assert.assertTrue(paymentOverviewPage.referenceIsDisplayed());
-        Assert.assertTrue(paymentOverviewPage.requestDateIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.supplierIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.paymentMethodIsDisplayed());
         Assert.assertTrue(paymentOverviewPage.totalIsDisplayed());

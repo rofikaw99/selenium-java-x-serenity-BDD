@@ -155,6 +155,38 @@ Feature: Payment Overview
       | email                       | password      | menu                |
       | qa-ccn-cgfqhpqm@yopmail.com | CCNPegasus123 | My Payment Overview |
 
+  @DisappearingPayButton @PaymentModule @card-user
+  Scenario Outline: Only can pay with payNow for TDSB product when card-user setup with non SG visa
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    And verify button checkout enable to click
+    And user click pay after checkout
+
+    Examples:
+      | email                       | password      | menu                | keyword |
+      | autoqa-ccn-001@yopmail.com  | CCNPegasus123 | My Payment Overview | TDSB    |
+
+  @SVSCardOnly @PaymentModule @card-user
+  Scenario Outline: Pay with card only for TDSB product when card-user setup with non SG visa
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    And verify button checkout enable to click
+    And user click pay after checkout
+
+    Examples:
+      | email                       | password      | menu                | keyword |
+      | autoqa-ccn-001@yopmail.com  | CCNPegasus123 | My Payment Overview | Cargo   |
+
 #  @PPM_TC_50_1_1 @PaymentOverview @PaymentModule @card-admin @login
 #  Scenario Outline: Card Admin verify upcoming payment request status
 #    Given "<condition>" login to the web
