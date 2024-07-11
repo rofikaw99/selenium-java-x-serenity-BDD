@@ -107,7 +107,6 @@ public class FWBResharingPage {
                 .put(endpointUrl);
 
         documentIDshareForm = response.jsonPath().getString("documentID");
-
         // Printing response for verification
         System.out.println("Response status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
@@ -135,13 +134,11 @@ public class FWBResharingPage {
                 .body(requestBody)
                 .when()
                 .put(endpointUrl);
-
         documentIDshareExplicitForm = response.jsonPath().getString("documentID");
 
         // Printing response for verification
         System.out.println("Response status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
-
         // Assertions
          Assert.assertEquals(response.getStatusCode(), 200);
     }
@@ -166,12 +163,9 @@ public class FWBResharingPage {
                 .when()
                 .post(endpointUrl);
 
-
-
         // Printing response for verification
         System.out.println("Response status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
-
         // Assertions
          Assert.assertEquals(response.getStatusCode(), 200);
     }

@@ -33,7 +33,7 @@ public class PaymentOverviewPage extends PageObject {
     private By total = By.id("cube-sort-total");
     private By status = By.id("cube-sort-status");
     private By inputKeywordField = By.xpath("//*[@class='cube-search']//input[@placeholder='Search by...']");
-    private By checkoutButton = By.xpath("(//div[contains(@class, 'cube-btn-flex')]//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'undefined')])[2]");
+    private By checkoutButton = By.xpath("(//div[contains(@class, 'cube-btn-flex')]//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'undefined')])[1]");
     private By bulkOutstanding = By.xpath("(//span[contains(@class, 'cube-checkmark-checkbox') and contains(@class, 'check')])[24]");
     private By bulkChcekout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'ml-[80px]')]");
     private By payCheckout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-primary') and contains(@class, '!w-[212px]') and contains(@class, 'ml-[30px]') and contains(@style, 'height: 48px;') and text()='Pay']");
@@ -150,13 +150,20 @@ public class PaymentOverviewPage extends PageObject {
 
     public void payCheckoutButton()throws Exception{
         Thread.sleep(waitResponse);
-        System.out.println("pay button is display-enable : "+$(payCheckout).isDisplayed()+" - "+$(payCheckout).isEnabled());
         evaluateJavascript("arguments[0].click();", $(payCheckout));
     }
 
     public void payForCCCheckoutButton()throws Exception{
         Thread.sleep(waitResponse);
-        System.out.println("pay button is display-enable : "+$(payCheckout).isDisplayed()+" - "+$(payCheckout).isEnabled());
+        boolean isDisplayed = $(payCheckout).isDisplayed();
+        boolean isEnabled = $(payCheckout).isEnabled();
+        System.out.println("pay button is display-enable : " + isDisplayed + " - " + isEnabled);
+
+        if (isDisplayed && isEnabled) {
+            System.out.println("pay button is display-enable : "+$(payCheckout).isDisplayed()+" - "+$(payCheckout).isEnabled());
+        } else {
+            System.out.println("Pay checkout button is not displayed or not enabled.");
+        }
     }
     public void scrollToElement(By element) {
         ((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", find(element));
