@@ -172,7 +172,7 @@ Feature: Payment Overview
       | autoqa-ccn-001@yopmail.com  | CCNPegasus123 | My Payment Overview | TDSB    |
 
   @SVSCardOnly @PaymentModule @card-user
-  Scenario Outline: Pay with card only for TDSB product when card-user setup with non SG visa
+  Scenario Outline: Pay with card only for SVS product when card-user setup with non SG visa
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
@@ -186,6 +186,22 @@ Feature: Payment Overview
     Examples:
       | email                       | password      | menu                | keyword |
       | autoqa-ccn-001@yopmail.com  | CCNPegasus123 | My Payment Overview | Cargo   |
+
+#  @paymentIntentFail @PaymentModule @card-user
+#  Scenario Outline: payment intent fail
+#    Given go to main web
+#    When click initial sign in button
+#    When input email "<email>" and password "<password>" and press sign in to continue login
+#    And back to the main tab browser
+#    When User go to "<menu>"
+#    Then verify field to be display on my payment
+#    When input filter keyword "<keyword>"
+#    And verify button checkout enable to click
+#    And user click pay after checkout
+#
+#    Examples:
+#      | email               | password      | menu                | keyword |
+#      | sripcn@yopmail.com  | CCNPegasus123 | My Payment Overview | Cargo   |
 
 #  @PPM_TC_50_1_1 @PaymentOverview @PaymentModule @card-admin @login
 #  Scenario Outline: Card Admin verify upcoming payment request status
@@ -551,6 +567,17 @@ Feature: Payment Overview
     Examples:
       | condition     | menu                | keyword     |
       | User Overview | My Payment Overview | outstanding |
+
+  @downloadPaymentReport @PaymentOverview @PaymentModule @user
+  Scenario Outline: Download agent report on Payment Overview
+    Given "<condition>" login to the web
+    When User go to "<menu>"
+    And verify field to be display on my payment
+    Then download the report
+
+    Examples:
+      | condition               | menu                |
+      | User Overview           | My Payment Overview |
 
 
   #PaymentNotification

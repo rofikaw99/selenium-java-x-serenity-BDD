@@ -37,6 +37,8 @@ public class PaymentOverviewPage extends PageObject {
     private By bulkOutstanding = By.xpath("(//span[contains(@class, 'cube-checkmark-checkbox') and contains(@class, 'check')])[24]");
     private By bulkChcekout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-default') and contains(@class, 'ml-[80px]')]");
     private By payCheckout = By.xpath("//button[contains(@class, 'cube-button') and contains(@class, 'cube-primary') and contains(@class, '!w-[212px]') and contains(@class, 'ml-[30px]') and contains(@style, 'height: 48px;') and text()='Pay']");
+    private By downloadReport = By.xpath("(//div[text()='Download Report'])[1]");
+    private By downloadReport2 = By.xpath("//button[text()='Download']");
     private By cookie1 = By.xpath("(//button[@class='cky-btn cky-btn-accept' and @aria-label='Accept All'])[1]");
     private By payNow = By.xpath("//button[@class='cube-button cube-secondary   ']");
     private By payCC = By.xpath("//div[@class='SubmitButton-IconContainer']");
@@ -151,6 +153,13 @@ public class PaymentOverviewPage extends PageObject {
     public void payCheckoutButton()throws Exception{
         Thread.sleep(waitResponse);
         evaluateJavascript("arguments[0].click();", $(payCheckout));
+    }
+
+    public void downloadReportButton()throws Exception{
+        evaluateJavascript("arguments[0].click();", $(downloadReport));
+        Thread.sleep(waitResponse);
+        evaluateJavascript("arguments[0].click();", $(downloadReport2));
+        Thread.sleep(waitResponse);
     }
 
     public void payForCCCheckoutButton()throws Exception{

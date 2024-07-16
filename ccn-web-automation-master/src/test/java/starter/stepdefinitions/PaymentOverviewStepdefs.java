@@ -121,6 +121,11 @@ public class PaymentOverviewStepdefs {
         Thread.sleep(waitResponse);
     }
 
+    @When("download the report")
+    public void download_report() throws Exception {
+        paymentOverviewPage.downloadReportButton();
+        Thread.sleep(waitResponse);
+    }
 
     @When("user click pay for CC after checkout")
     public void user_click_pay_for_CC_after_checkout() throws Exception {
