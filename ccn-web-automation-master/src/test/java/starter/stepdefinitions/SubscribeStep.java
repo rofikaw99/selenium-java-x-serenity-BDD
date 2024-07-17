@@ -6,10 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Assert;
-import starter.pages.CompanyPage;
-import starter.pages.GoToUrl;
-import starter.pages.MailServiceMailinatorPage;
-import starter.pages.SubscriptionPage;
+import starter.pages.*;
 import starter.utlis.Constants;
 
 public class SubscribeStep {
@@ -22,6 +19,9 @@ public class SubscribeStep {
 
     @Steps
     GoToUrl goToUrl;
+
+    @Steps
+    LoginPage loginPage;
 
     @Steps
     MailServiceMailinatorPage mailServiceMailinatorPage;
@@ -205,5 +205,10 @@ public class SubscribeStep {
     public void validateActivePeriodeFromToFor(String string, String string2, String product) throws Exception {
         Boolean result = subscriptionPage.verifytableBcycleSubscription(product, string, string2);
         Assert.assertEquals(true, result);
+    }
+
+    @Given("User with {string} and password {string} login to the web")
+    public void userWithAndPasswordLoginToTheWeb(String email, String password) throws InterruptedException {
+        loginPage.login(email, password);
     }
 }

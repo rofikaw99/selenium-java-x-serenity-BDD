@@ -215,6 +215,18 @@ public class LoginPage extends PageObject {
         validateInMainWeb();
     }
 
+    public void login(String email, String password) throws InterruptedException {
+        goToMainWeb();
+        pressBtnLoginInit();
+        changeSigninWindow();
+        inputEmailLogin(email);
+        inputPasswordLogin(password);
+        Thread.sleep(3000);
+        pressSignIn();
+        Thread.sleep(35000);
+        validateInMainWeb();
+    }
+
 //	private SearchContext shadowDomcpsubscribe() throws Exception {
 //		JavascriptExecutor js = (JavascriptExecutor) driver;
 //		Thread.sleep(waitResponse);
