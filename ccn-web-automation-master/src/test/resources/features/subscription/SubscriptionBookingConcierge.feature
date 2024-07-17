@@ -2,10 +2,7 @@ Feature: Booking Concierge Product Plan
 
   @CargoMartbyCargoAiplan @e2e
   Scenario Outline: Subscribe Booking Concierge plan
-    Given accept cookie
-    When click initial sign in button
-    When input email "<Email>" and password "<Password>" and press sign in to continue login
-    And back to the main tab browser
+    Given User with "<Email>" and password "<Password>" login to the web
     Given "User A" click product tab to subscribe to product
     And Select plan "Plan A" "<product>"
     And Subscribe plan "<product>"

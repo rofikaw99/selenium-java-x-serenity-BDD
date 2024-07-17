@@ -20,13 +20,10 @@ import static net.serenitybdd.rest.SerenityRest.*;
 
 public class PaymentMethodPage extends PageObject {
 
-    private int waitResponse = 3000;
-    private By loadingPage = By.xpath("//*[@class = 'cube-spinner-container']");
     private By headerMyMethods = By.xpath("//*[text() = 'My Payment Methods']");
 
     //Payment Method Page
     private By setupCardHeader = By.xpath("//div[text() = 'Set up Commercial Card']");
-//    private By cardInformationHeader = By.xpath("//div[text() = 'Commercial Card Information']");
     private By cardInformationHeader = By.xpath("//div[text() = 'View your card details below.']");
     private By btnsetupCompany = By.xpath("//*[div[contains(text(), 'company')]]//button[text() = 'Set Up']");
     private By btnAddNewSI = By.xpath("//p[text() = 'Add New']");
@@ -46,7 +43,6 @@ public class PaymentMethodPage extends PageObject {
     private By fieldExpDate = By.xpath("//*[@name = 'exp-date']");
     private By fieldCvc = By.xpath("//*[@name = 'cvc']");
     private By btnSave = By.xpath("//*[contains(@class, 'cube-setup-form')]//*[@id='submit']");
-    private By btnSaveDisabled = By.xpath("(//*[contains(@id, 'payment-form')]//*[@id='submit'])[2]");
 
     //Authorized User Section
     private By txtListOfUser = By.xpath("//*[text() = 'List of Card Users:']");
@@ -74,6 +70,7 @@ public class PaymentMethodPage extends PageObject {
     //SI Table
     private By txtSINo = By.xpath("//*[@id = 'si-number']/p");
     private By txtSIManageBy = By.xpath("//tr//*[@class = 'manage-by-column']");
+    private By txtSupplier = By.xpath("//*[@id = 'cube-table-standing-instructions']//*[@class = 'row-label'][2]");
     private By actionBtn = By.id("si-delete");
     private By confirmRemoveSIBtn = By.id("cube-columns-apply");
 
@@ -153,9 +150,6 @@ public class PaymentMethodPage extends PageObject {
         return $(btnSave).isDisabled();
     }
 
-    public boolean btnInviteDisplayed(){
-        return $$(btnInviteUser).size() == 1;
-    }
     public boolean txtInfoInviteUserDisplayed(){
         return $$(txtInfoInviteUser).size() == 1;
     }
@@ -174,9 +168,6 @@ public class PaymentMethodPage extends PageObject {
     }
     public boolean txtListOfUserDisplayed(){
         return $$(txtListOfUser).size() == 1;
-    }
-    public int numberOfSI(){
-        return getDriver().findElements(txtSINo).size();
     }
     public boolean btnDeleteCardEnabled(){
         return $(btnDeleteCard).isEnabled();
@@ -303,7 +294,7 @@ public class PaymentMethodPage extends PageObject {
     }
 
     public void clickSaveSIUpdateBtn(){
-        $(btnSaveSIUpdate).waitUntilVisible();
+        $(btnSaveSIUpdate).waitUntilPresent();
         evaluateJavascript("arguments[0].click();", $(btnSaveSIUpdate));
     }
 
@@ -490,6 +481,15 @@ public class PaymentMethodPage extends PageObject {
             emailsTxt.add(e.getText().toLowerCase());
         }
         return emailsTxt;
+    }
+
+    public List<String> supplierName(){
+        List<WebElement> suppliers = getDriver().findElements(txtSupplier);
+        List<String> supplierTxt = new ArrayList<>();
+        for (WebElement e: suppliers){
+            supplierTxt.add(e.getText());
+        }
+        return supplierTxt;
     }
 
     public List<String> emailAuthorizedUser(){

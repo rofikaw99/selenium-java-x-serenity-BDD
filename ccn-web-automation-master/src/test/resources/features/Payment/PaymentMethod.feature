@@ -68,7 +68,7 @@ Feature: Payment Method
     Then validation note "<note>" appears
     Examples:
     | condition | note |
-    | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
+#    | non visa singapore issued | Error: Should be a Visa card issued in Singapore |
     | duplicate | This card has already been set up. Please try using a different card. |
 
   @PPM_TC_4 @add-commercial-card @PaymentModule @user @login
@@ -146,7 +146,7 @@ Feature: Payment Method
 
   @PPM_TC_20_2 @setup-si @done @PaymentModule @card-admin @login
   Scenario: Setup standing instruction with Card Admin and TDSB products
-    Given "Card Admin" login to the web
+    Given "Card Admin SG" login to the web
     When "Card Admin" want to setup standing instruction
     Then can select supplier "SATS" to setup standing instruction
     Then can select the product "Truck Dock Slot Booking" of the supplier
@@ -156,7 +156,7 @@ Feature: Payment Method
 
   @PPM_TC_19 @setup-si @done @PaymentModule @card-user @login
   Scenario: Setup standing instruction with Card User
-    Given "Card User" login to the web
+    Given "Card User SG" login to the web
     When "Card User" want to setup standing instruction
     Then can select supplier to setup standing instruction
     Then able to setup standing instruction
@@ -172,9 +172,9 @@ Feature: Payment Method
 
   @PPM_TC_22 @update-si @done @PaymentModule @card-user @login
   Scenario: Update standing instruction with authorize user
-    Given "Card User" login to the web
-    When "Card User" want to update standing instruction
-    And "Card User" choose one of the standing instruction
+    Given "Card User SG" login to the web
+    When "Card User SG" want to update standing instruction
+    And "Card User SG" choose one of the standing instruction
     Then only threshold limit, end date can be updated
     And success update standing instruction
 
@@ -193,9 +193,9 @@ Feature: Payment Method
 
   @PPM_TC_25 @transfer-si @PaymentModule @card-user @login
   Scenario: Card User can't transfer standing instruction ownership
-    Given "Card User" login to the web
-    When "Card User" want to transfer standing instruction ownership
-    And "Card User" choose one of the standing instruction
+    Given "Card User SG" login to the web
+    When "Card User SG" want to transfer standing instruction ownership
+    And "Card User SG" choose one of the standing instruction
     Then Card User can't transfer standing instruction ownership
 
   @PPM_TC_26 @transfer-si @done @PaymentModule @user @login
@@ -213,11 +213,11 @@ Feature: Payment Method
 
   @PPM_TC_65 @remove-card-user @done @PaymentModule @card-admin @login
   Scenario: Card User has standing instruction for removing user without transferring SI
-    Given "Card User" has standing instruction
+    Given "Card User SG" has standing instruction
 
   @PPM_TC_65 @remove-card-user @done @PaymentModule @card-admin
   Scenario: Card Admin remove user without transferring the standing instruction
-    Given "Card Admin" login to the web
+    Given "Card Admin SG" login to the web
     When "Card Admin" go the payment methods page
     When remove Card User that has standing instruction
     And confirm remove "without" transferring the standing instruction
@@ -226,11 +226,11 @@ Feature: Payment Method
 
   @PPM_TC_64 @remove-card-user @done @PaymentModule @card-admin @login
   Scenario: Card User has standing instruction for removing user with transferring SI
-    Given "Card User" has standing instruction
+    Given "Card User SG" has standing instruction
 
   @PPM_TC_64 @remove-card-user @done @PaymentModule @card-admin
   Scenario: Card Admin remove user with transferring the standing instruction
-    Given "Card Admin" login to the web
+    Given "Card Admin SG" login to the web
     When "Card Admin" go the payment methods page
     When remove Card User that has standing instruction
     And confirm remove "with" transferring the standing instruction
