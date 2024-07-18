@@ -155,7 +155,7 @@ Feature: Payment Overview
       | email                       | password      | menu                |
       | qa-ccn-cgfqhpqm@yopmail.com | CCNPegasus123 | My Payment Overview |
 
-  @disappearingPayButton @PaymentModule @card-user
+  @DisappearingPayButton @PaymentModule @card-user
   Scenario Outline: Only can pay with payNow for TDSB product when card-user setup with non SG visa
     Given go to main web
     When click initial sign in button
