@@ -165,7 +165,7 @@ Feature: Payment Overview
     Then verify field to be display on my payment
     When input filter keyword "<keyword>"
     And verify button checkout enable to click
-    And user click pay after checkout
+    And user click pay for CC after checkout
 
     Examples:
       | email                       | password      | menu                | keyword |
@@ -181,27 +181,27 @@ Feature: Payment Overview
     Then verify field to be display on my payment
     When input filter keyword "<keyword>"
     And verify button checkout enable to click
-    And user click pay after checkout
+    And user click pay for CC after checkout
 
     Examples:
       | email                       | password      | menu                | keyword |
       | autoqa-ccn-001@yopmail.com  | CCNPegasus123 | My Payment Overview | Cargo   |
 
-#  @paymentIntentFail @PaymentModule @card-user
-#  Scenario Outline: payment intent fail
-#    Given go to main web
-#    When click initial sign in button
-#    When input email "<email>" and password "<password>" and press sign in to continue login
-#    And back to the main tab browser
-#    When User go to "<menu>"
-#    Then verify field to be display on my payment
-#    When input filter keyword "<keyword>"
-#    And verify button checkout enable to click
-#    And user click pay after checkout
-#
-#    Examples:
-#      | email               | password      | menu                | keyword |
-#      | sripcn@yopmail.com  | CCNPegasus123 | My Payment Overview | Cargo   |
+  @paymentIntentFail @PaymentModule @card-user
+  Scenario Outline: payment intent fail
+    Given go to main web
+    When click initial sign in button
+    When input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    When User go to "<menu>"
+    Then verify field to be display on my payment
+    When input filter keyword "<keyword>"
+    And verify button checkout enable to click
+    And user click pay after checkout
+    Then get triggered "<email>" notification
+    Examples:
+      | email               | password      | menu                | keyword | email              |
+      | sripcn@yopmail.com  | CCNPegasus123 | My Payment Overview | Cargo   | sgpcn2@yopmail.com |
 
 #  @PPM_TC_50_1_1 @PaymentOverview @PaymentModule @card-admin @login
 #  Scenario Outline: Card Admin verify upcoming payment request status
