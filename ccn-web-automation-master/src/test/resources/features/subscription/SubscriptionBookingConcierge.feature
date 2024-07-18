@@ -1,6 +1,6 @@
 Feature: Booking Concierge Product Plan
 
-  @CargoMartbyCargoAiplan @e2e
+  @CargoMartbyCargoAiplan @booking-concierge @e2e
   Scenario Outline: Subscribe Booking Concierge plan
     Given User with "<Email>" and password "<Password>" login to the web
     Given "User A" click product tab to subscribe to product
