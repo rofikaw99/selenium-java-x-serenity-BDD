@@ -388,7 +388,7 @@ Feature: Payment Overview
       | User Overview           | My Payment Overview | outstanding |
 
 
-  @pageFilter @PaymentOverview @PaymentModule @login @card-admin
+  @pageFilter20 @PaymentOverview @PaymentModule @login @card-admin
   Scenario Outline: Card Admin try to change page setting
     Given "<condition>" login to the web
     When User go to "<menu>"
