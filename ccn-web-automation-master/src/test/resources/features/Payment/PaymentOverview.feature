@@ -155,13 +155,14 @@ Feature: Payment Overview
       | email                       | password      | menu                |
       | qa-ccn-cgfqhpqm@yopmail.com | CCNPegasus123 | My Payment Overview |
 
-  @DisappearingPayButton @PaymentModule @card-user
+  @disappearingPayButton @PaymentModule @card-user
   Scenario Outline: Only can pay with payNow for TDSB product when card-user setup with non SG visa
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
     And back to the main tab browser
     When User go to "<menu>"
+    Then verify field to be display on my payment
     Then verify field to be display on my payment
     When input filter keyword "<keyword>"
     And verify button checkout enable to click
