@@ -535,6 +535,12 @@ public class PaymentMethodStep {
     @And("can select supplier to setup standing instruction")
     public void canSelectSupplierToSetupStandingInstruction() throws InterruptedException {
         int index = 0;
+        List<String> manageBy = paymentMethodPage.manageEmailSI();
+        if (manageBy.contains(Constants.EMAIL_AUTHORIZED_USER_SG)) {
+            paymentMethodPage.clickRemoveSIBtn(manageBy.indexOf(Constants.EMAIL_AUTHORIZED_USER_SG));
+            paymentMethodPage.clickConfirmRemoveSIBtn();
+            paymentMethodPage.clickOkBtn();
+        }
         paymentMethodPage.clickAddNewSIBtn();
         paymentMethodPage.fieldSupplierDisplayed();
         paymentMethodPage.inputSupplier(index);
