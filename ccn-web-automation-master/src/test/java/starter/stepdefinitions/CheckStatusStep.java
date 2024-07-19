@@ -17,6 +17,13 @@ public class CheckStatusStep {
         else checkStatusPage.getCheckStatus("4e59bb35-fc37-48d7-9852-a25a6e0b9190");
     }
 
+    @And("user get service id pair service type service with service with reference ID")
+    public void userGetpair_service_type_service_with_serviceID(String type) {
+        if (type.equals("App")) checkStatusPage.getCheckStatus("e29da7aa-92cf-450e-87a1-ee914a94da5f");
+        else checkStatusPage.getCheckStatus("e29da7aa-92cf-450e-87a1-ee914a94da5f");
+
+    }
+
     @Given("user get SSO token for check status")
     public void userGetSSOTokenForCheckStatus() {
         CheckStatusPage.fetchAccessToken();
@@ -24,6 +31,11 @@ public class CheckStatusStep {
 
     @Then("success get detail of service id")
     public void successGetDetailOfServiceId() {
+        checkStatusPage.assertSuccessCheckStatus();
+    }
+
+    @Then("failed get detail of service id")
+    public void failedGetDetailOfServiceId() {
         checkStatusPage.assertSuccessCheckStatus();
     }
 }
