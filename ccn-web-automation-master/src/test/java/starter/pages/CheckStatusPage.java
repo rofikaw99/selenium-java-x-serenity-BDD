@@ -45,12 +45,8 @@ public class CheckStatusPage extends PageObject {
         then().statusCode(200);
     }
 
-<<<<<<< HEAD
-    public void assertFailedCheckStatus(){
-        then().statusCode(401);
-=======
+
     public void assertFailedCheckStatus(int statusCode){
         then().statusCode(statusCode);
->>>>>>> 3e42ba6dfe57e8f1ccfefa12d0d8d74898361080
     }
 }

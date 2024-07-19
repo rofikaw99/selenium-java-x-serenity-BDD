@@ -34,14 +34,9 @@ public class CheckStatusStep {
         checkStatusPage.assertSuccessCheckStatus();
     }
 
-<<<<<<< HEAD
-    @Then("failed get detail of service id")
-    public void failedGetDetailOfServiceId() {
-        checkStatusPage.assertSuccessCheckStatus();
-=======
+
     @Then("failed with {int} get detail of service id")
     public void failedWithGetDetailOfServiceId(int statusCode) {
         checkStatusPage.assertFailedCheckStatus(statusCode);
->>>>>>> 3e42ba6dfe57e8f1ccfefa12d0d8d74898361080
     }
 }
