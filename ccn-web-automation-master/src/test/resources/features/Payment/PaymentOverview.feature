@@ -188,7 +188,7 @@ Feature: Payment Overview
       | email                       | password      | menu                | keyword |
       | autoqa-ccn-001@yopmail.com  | CCNPegasus123 | My Payment Overview | Cargo   |
 
-  @paymentIntentFail @PaymentModule @card-user
+  @PaymentIntentFail @PaymentModule @card-user
   Scenario Outline: payment intent fail
     Given go to main web
     When click initial sign in button
