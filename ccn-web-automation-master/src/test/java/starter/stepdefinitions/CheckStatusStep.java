@@ -14,7 +14,7 @@ public class CheckStatusStep {
     @And("user get service id {string} with reference ID")
     public void userGetServiceIdWithReferenceID(String type) {
         if (type.equals("Service")) checkStatusPage.getCheckStatus("5c3d42c5-d14a-4ba4-a3d7-77cf68e0bd99");
-        else checkStatusPage.getCheckStatus("4e59bb35-fc37-48d7-9852-a25a6e0b9190");
+        else checkStatusPage.getCheckStatus("e29da7aa-92cf-450e-87a1-ee914a94da5f");
     }
 
     @And("user get service id pair service type service with service with reference ID")
@@ -34,8 +34,14 @@ public class CheckStatusStep {
         checkStatusPage.assertSuccessCheckStatus();
     }
 
+<<<<<<< HEAD
     @Then("failed get detail of service id")
     public void failedGetDetailOfServiceId() {
         checkStatusPage.assertSuccessCheckStatus();
+=======
+    @Then("failed with {int} get detail of service id")
+    public void failedWithGetDetailOfServiceId(int statusCode) {
+        checkStatusPage.assertFailedCheckStatus(statusCode);
+>>>>>>> 3e42ba6dfe57e8f1ccfefa12d0d8d74898361080
     }
 }
