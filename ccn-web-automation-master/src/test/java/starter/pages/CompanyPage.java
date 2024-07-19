@@ -83,7 +83,8 @@ public class CompanyPage extends PageObject {
     private By dropdownMenuCity = By.xpath("//*[@id=\"city\"]/div[1]/input");
     private By dropdownCities = By.id("city-item");
 
-    private By pageOption = By.xpath("//div[@class='cube-dropdown-selected']");
+//    private By pageOption = By.xpath("//div[@class='cube-dropdown-selected']");
+    private By pageOption = By.xpath("//div[@id='selected-' and text()='10']");
     private By accountCircleIcon = By.xpath("//div[contains(@class, 'circle-initial letter-avatar')]");
     private By menuAccount = By.xpath("//*[@service-id='2ccbe74c-493b-47a4-8dee-80bdb147e895' and @client-id='268e587b-a947-421b-a737-b5573c6ea075' and @target-service-id='52bf0c2e-6ea1-459f-b863-f4dccc28a296' and @login-redirect-url='/portal' and @logout-redirect-url='/' and @env='ppd' and @login-type='popup' and @contract-version='1' and @authority-url='https://ccnssoppd.b2clogin.com/ccnssoppd.onmicrosoft.com' and @sign-up-sign-in-authority='b2c_1a_signup_signinnewusersyn' and @forgot-password-policy-name='b2c_1a_passwordreset' and @label-button='Sign In' and @contract_name='Profile' and @polling-interval='10000' and @redirect-interval='100' and @china-site='https://cndev.cubeforall.com/' and @general-site='https://sandbox.cubeforall.com/']");
 //    private By lsMenuAccounts = By.xpath("//*[@id=\"toppage\"]/header/div[2]/div[2]/div[2]/div[2]/wc-login/div/div/div[2]/div[2]/div");
@@ -470,9 +471,9 @@ public class CompanyPage extends PageObject {
 
     public void page(String page) throws Exception{
         Thread.sleep(waitResponse);
+        evaluateJavascript("window.scrollBy(0,700)", "");
         System.out.println("cookie button is display-enable : "+$(pageOption).isDisplayed()+" - "+$(pageOption).isEnabled());
         evaluateJavascript("arguments[0].click();", $(pageOption));
-        Thread.sleep(2000);
         evaluateJavascript("arguments[0].click();", $(By.xpath("//div[contains(text(), '"+ page +"') and @tabindex='0']")));
         Thread.sleep(waitResponse);
     }

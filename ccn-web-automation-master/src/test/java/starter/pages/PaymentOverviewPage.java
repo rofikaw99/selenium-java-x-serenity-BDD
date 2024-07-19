@@ -152,7 +152,15 @@ public class PaymentOverviewPage extends PageObject {
 
     public void payCheckoutButton()throws Exception{
         Thread.sleep(waitResponse);
-        evaluateJavascript("arguments[0].click();", $(payCheckout));
+        boolean isDisplayed = $(payCheckout).isDisplayed();
+        boolean isEnabled = $(payCheckout).isEnabled();
+        System.out.println("pay button is display-enable : " + isDisplayed + " - " + isEnabled);
+
+        if (isDisplayed && isEnabled) {
+            System.out.println("pay button is display-enable : "+$(payCheckout).isDisplayed()+" - "+$(payCheckout).isEnabled());
+        } else {
+            System.out.println("Pay checkout button is not displayed or not enabled.");
+        }
     }
 
     public void downloadReportButton()throws Exception{

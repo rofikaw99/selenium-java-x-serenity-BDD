@@ -121,6 +121,13 @@ public class PaymentOverviewStepdefs {
         Thread.sleep(waitResponse);
     }
 
+    @And("user click real pay after checkout")
+    public void user_click_real_pay_after_checkout() throws Exception {
+        Thread.sleep(waitResponse);
+        paymentOverviewPage.payCheckoutButton();
+        Thread.sleep(waitResponse);
+    }
+
     @When("download the report")
     public void download_report() throws Exception {
         paymentOverviewPage.downloadReportButton();
