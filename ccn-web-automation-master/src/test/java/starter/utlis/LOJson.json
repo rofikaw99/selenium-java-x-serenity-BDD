@@ -1,0 +1,178 @@
+{
+  "@context": {
+    "cargo": "https://onerecord.iata.org/ns/cargo#"
+  },
+  "@type": "cargo:Waybill",
+  "cargo:skeletonIndicator": false,
+  "cargo:arrivalLocation": {
+    "@type": "cargo:Location",
+    "cargo:skeletonIndicator": false,
+    "cargo:locationCodes": "FRA"
+  },
+  "cargo:departureLocation": {
+    "@type": "cargo:Location",
+    "cargo:skeletonIndicator": false,
+    "cargo:locationCodes": "SIN"
+  },
+  "cargo:carrierDeclarationPlace": {
+    "@type": "cargo:Location",
+    "cargo:skeletonIndicator": false,
+    "cargo:locationCodes": "SINGAPORE"
+  },
+  "cargo:involvedParties": [
+    {
+      "@type": "cargo:Party",
+      "cargo:partyRole": "Consignor",
+      "cargo:partyDetails": {
+        "@type": "cargo:Company",
+        "cargo:skeletonIndicator": false,
+        "cargo:shortName": "SCHENKER SINGAPORE PTE LTD",
+        "cargo:basedAtLocation": {
+          "@type": "cargo:Location",
+          "cargo:skeletonIndicator": true,
+          "cargo:address": {
+            "@type": "cargo:Address",
+            "cargo:cityName": "SINGAPORE",
+            "cargo:postalCode": "498747",
+            "cargo:streetAddressLines": [
+              "ALPS AVENUE 20"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "@type": "cargo:Party",
+      "cargo:partyRole": "Consignee",
+      "cargo:partyDetails": {
+        "@type": "cargo:Company",
+        "cargo:skeletonIndicator": false,
+        "cargo:shortName": "SCHENKER DEUTSCHLAND AG JETCARGO IM",
+        "cargo:basedAtLocation": {
+          "@type": "cargo:Location",
+          "cargo:skeletonIndicator": true,
+          "cargo:address": {
+            "@type": "cargo:Address",
+            "cargo:cityName": "FRANKFURT AM MAIN",
+            "cargo:postalCode": "60549",
+            "cargo:regionName": "HE",
+            "cargo:streetAddressLines": [
+              "CARGO CITY SUED GEBAEUDE 529"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "@type": "cargo:Party",
+      "cargo:partyRole": "Agent",
+      "cargo:partyDetails": {
+        "@type": "cargo:Company",
+        "cargo:skeletonIndicator": false,
+        "cargo:shortName": "SCHENKER SINGAPORE PTE LTD",
+        "cargo:basedAtLocation": {
+          "@type": "cargo:Location",
+          "cargo:skeletonIndicator": true,
+          "cargo:address": {
+            "@type": "cargo:Address",
+            "cargo:cityName": "SINGAPORE"
+          }
+        },
+        "cargo:iataCargoAgentCode": "3231705",
+        "cargo:iataCargoAgentLocationIdentifier": "0006"
+      }
+    }
+  ],
+  "cargo:waybillLineItems": [
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "1",
+      "cargo:chargeableWeightForRate": {
+        "@type": "cargo:Value",
+        "cargo:unit": "KGM",
+        "cargo:numericalValue": "1510.0"
+      },
+      "cargo:grossWeightForRate": {
+        "@type": "cargo:Value",
+        "cargo:unit": "KGM",
+        "cargo:numericalValue": "1510.0"
+      },
+      "cargo:rateClassCode": "U",
+      "cargo:goodsDescriptionForRate": "CONSOLIDATION AS PER",
+      "cargo:pieceCountForRate": "2"
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "2",
+      "cargo:goodsDescriptionForRate": "ATTACHED MANIFEST"
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "3",
+      "cargo:goodsDescriptionForRate": "EORI DE54914790255"
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "4",
+      "cargo:hsCodeForRate": "854239"
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "5",
+      "cargo:hsCodeForRate": "854231"
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "6",
+      "cargo:uldOwnerCode": {
+        "_": "SQ",
+        "schemeAgencyID": "1"
+      },
+      "cargo:uldType": "AKE",
+      "cargo:uldSerialNumber": "89285"
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "7",
+      "cargo:uldOwnerCode": {
+        "_": "SQ",
+        "schemeAgencyID": "1"
+      },
+      "cargo:uldType": "AKE",
+      "cargo:uldSerialNumber": "15456"
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "8",
+      "cargo:dimensionsForRate": {
+        "@type": "cargo:Dimensions",
+        "cargo:volume": "9.06"
+      }
+    },
+    {
+      "@type": "cargo:WaybillLineItem",
+      "cargo:lineItemNumber": "9"
+    }
+  ],
+  "cargo:otherCharges": [
+    {
+      "@type": "cargo:OtherCharge",
+      "cargo:otherChargeCode": "CG",
+      "cargo:chargePaymentType": "P",
+      "cargo:entitlement": "C",
+      "cargo:otherChargeAmount": {
+        "@type": "cargo:CurrencyValue",
+        "cargo:numericalValue": 6,
+        "cargo:currencyUnit": "SGD"
+      }
+    }
+  ],
+  "cargo:waybillType": "DIRECT",
+  "cargo:otherChargesIndicator": "P",
+  "cargo:weightValuationIndicator": "P",
+  "cargo:carrierDeclarationDate": "2024-04-22T00:00:00.000Z",
+  "cargo:carrierDeclarationSignature": "SINGANATHANMAYYAPPAN",
+  "cargo:consignorDeclarationSignature": "SINGANATHANMAYYAPPAN",
+  "cargo:waybillPrefix": "618",
+  "cargo:waybillNumber": "31648013"
+}
