@@ -54,7 +54,7 @@ public class LoginSteps {
 
     @Then("back to the main tab browser")
     public void backToTheMainTabBrowser() throws InterruptedException {
-        Thread.sleep(16000);
+        Thread.sleep(15000);
         loginPage.validateInMainWeb();
     }
 
