@@ -145,7 +145,7 @@ public class PaymentMethodStep {
         loginPage.inputPasswordLogin(Constants.PASSWORD);
         Thread.sleep(3000);
         loginPage.pressSignIn();
-        Thread.sleep(36000);
+        Thread.sleep(16000);
         loginPage.validateInMainWeb();
         loginPage.clickCookies();
     }
