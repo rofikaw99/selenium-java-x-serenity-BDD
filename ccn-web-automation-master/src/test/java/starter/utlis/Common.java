@@ -14,6 +14,10 @@ public class Common {
         return formatDate(addToCurrentDate(Calendar.DAY_OF_MONTH, numberOfDaysToAdd), "dd MMMM yyyy");
     }
 
+    public static String createFlightDate(int numberOfMonthsToAdd){
+        return formatDate(addToCurrentDate(Calendar.MONTH, numberOfMonthsToAdd), "dd/MM/yyyy");
+    }
+
     public static String addDate(int numberOfDaysToAdd){
         String date = formatDate(addToCurrentDate(Calendar.DAY_OF_MONTH, numberOfDaysToAdd), "dd");
         if (date.startsWith("0")) date = date.replaceFirst("0", "");
