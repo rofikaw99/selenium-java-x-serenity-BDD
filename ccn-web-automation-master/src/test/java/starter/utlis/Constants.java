@@ -2,6 +2,8 @@ package starter.utlis;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import java.util.List;
+
 public class Constants {
 
     public static final String CHROME = "Chrome";
@@ -82,5 +84,23 @@ public class Constants {
     public static String CARD_TO_BE_DELETED = "4000007020000003"; //ECUADOR
     public static String CARD_CVC = "123";
     public static String CARD_EXP_DATE = Common.createExpDate(3);
+    public static List<String> validAwbNo = List.of(
+            "618-24708552",
+            "618-61898200",
+            "176-45677892",
+            "618-62787454",
+            "618-27108605",
+            "618-76230851",
+            "176-12312311",
+            "938-81129882",
+            "618-45449994",
+            "176-81129882",
+            "618-41258884",
+            "618-63640566",
+            "157-90260155",
+            "618-64882801",
+            "618-23163276"
+    );
+
 }
 
