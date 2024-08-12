@@ -55,7 +55,7 @@ public class TransformXfwbAPI {
     public void verifyConsignorDeclarationSignature(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.SCoA_Signatory(jsonXml), XFWBResponse.consignorDeclarationSignature(jsonObject));
     }
-    public void carrierDeclarationDate(JSONObject jsonXml, JSONObject jsonObject){
+    public void verifyCarrierDeclarationDate(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.BHD_SCaA_ActualDateTime(jsonXml), XFWBResponse.carrierDeclarationDate(jsonObject));
     }
     public void verifyCarrierDeclarationSignature(JSONObject jsonXml, JSONObject jsonObject){
