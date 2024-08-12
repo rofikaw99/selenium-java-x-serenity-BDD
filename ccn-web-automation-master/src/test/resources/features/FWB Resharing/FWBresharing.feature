@@ -58,3 +58,43 @@ Feature: FWB Re sharing
     Examples:
       | contentType  | contentName                  | contact                                        |
       | MAWBRequest  | test-monday-12-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
+
+  @FWB_R_7
+  Scenario Outline:  Create BC Document then Perform Share Via Coloader
+    Given create "<contentType>" doc with "<contentName>" for share via
+    When share "<via>" "<contact>" to airline
+    Then verify document succeed share to airline
+
+    Examples:
+      | contentType      | contentName                  | via                                    | contact                                   |
+      | BookingRequest   | test-monday-12-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgagt86cts_sha01@ccnexchange.com  |
+
+  @FWB_R_8
+  Scenario Outline:  Create BC Document then Perform Share Via non Coloader
+    Given create "<contentType>" doc with "<contentName>" for share via
+    When share "<via>" "<contact>" to airline
+    Then verify document failed share to airline
+
+    Examples:
+      | contentType      | contentName                  | via                                        | contact                            |
+      | BookingRequest   | test-monday-12-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
+
+  @FWB_R_9
+  Scenario Outline:  Create AWB C Document then Perform Share Via Coloader
+    Given create "<contentType>" doc with "<contentName>" for share via
+    When share "<via>" "<contact>" to airline
+    Then verify document succeed share to airline
+
+    Examples:
+      | contentType  | contentName                  | via                                    | contact                                   |
+      | MAWBRequest  | test-monday-12-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgagt86cts_sha01@ccnexchange.com  |
+
+  @FWB_R_10
+  Scenario Outline:  Create AWB C Document then Perform Share Via non Coloader
+    Given create "<contentType>" doc with "<contentName>" for share via
+    When share "<via>" "<contact>" to airline
+    Then verify document failed share to airline
+
+    Examples:
+      | contentType  | contentName                  | via                                        | contact                            |
+      | MAWBRequest  | test-monday-12-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
