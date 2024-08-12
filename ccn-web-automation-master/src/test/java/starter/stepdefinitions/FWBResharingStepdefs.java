@@ -28,6 +28,11 @@ public class FWBResharingStepdefs {
         fwbResharingPage.createDocFromSystem(contentType, contentName);
     }
 
+    @Given("create {string} doc with {string} for share via")
+    public void create_doc_for_share_via(String contentType, String contentName) throws Exception {
+        fwbResharingPage.createDocForShareVia(contentType, contentName);
+    }
+
     @Given("Check that notification already share to the member within company")
     public void Check_that_notification_already_share_to_the_member_within_company() throws Exception {
         fwbResharingPage.testGetDocument();
@@ -44,6 +49,12 @@ public class FWBResharingStepdefs {
 //        fwbResharingPage.testShareDocument(contact);
     }
 
+    @When("share {string} {string} to airline")
+    public void share_via(String via, String contact) throws Exception {
+        fwbResharingPage.testShareVia(via, contact);
+//        fwbResharingPage.testShareDocument(contact);
+    }
+
     @Then("make sure that the notification share to the right user")
     public void make_sure_that_the_notification_share_to_the_right_user() throws Exception {
         fwbResharingPage.testGetDocumentShareForm();
@@ -51,6 +62,16 @@ public class FWBResharingStepdefs {
     @Then("make sure that the notification share to SATS")
     public void make_sure_that_the_notification_share_to_SATS() throws Exception {
         fwbResharingPage.testGetExplicitDocument();
+    }
+
+    @Then("verify document succeed share to airline")
+    public void verify_document_succeed_share() throws Exception {
+        fwbResharingPage.testGetDocumentShareViaColoader();
+    }
+
+    @Then("verify document failed share to airline")
+    public void verify_document_failed_share() throws Exception {
+        fwbResharingPage.testGetDocumentShareViaNonColoader();
     }
 
 }
