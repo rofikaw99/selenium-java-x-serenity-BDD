@@ -23,6 +23,11 @@ public class FWBResharingStepdefs {
         fwbResharingPage.createDoc(contentType, contentName);
     }
 
+    @Given("create {string} doc with {string} from system")
+    public void create_doc_from_system(String contentType, String contentName) throws Exception {
+        fwbResharingPage.createDocFromSystem(contentType, contentName);
+    }
+
     @Given("Check that notification already share to the member within company")
     public void Check_that_notification_already_share_to_the_member_within_company() throws Exception {
         fwbResharingPage.testGetDocument();
@@ -36,6 +41,7 @@ public class FWBResharingStepdefs {
     @When("do explicit sharing {string}")
     public void do_explicit_sharing(String contact) throws Exception {
         fwbResharingPage.testShareExplicitDocument(contact);
+//        fwbResharingPage.testShareDocument(contact);
     }
 
     @Then("make sure that the notification share to the right user")

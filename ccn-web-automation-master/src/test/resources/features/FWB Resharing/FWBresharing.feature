@@ -8,7 +8,7 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType      | contentName                |
-      | BookingRequest   | test-monday-08-july-2024   |
+      | BookingRequest   | test-sunday-08-august-2024   |
 
   @FWB_R_2
   Scenario Outline: Create AWB C Document and Check Implicit Sharing
@@ -16,8 +16,8 @@ Feature: FWB Re sharing
     And  Check that notification already share to the member within company
 
     Examples:
-      | contentType  | contentName                |
-      | MAWBRequest  | test-monday-08-july-2024   |
+      | contentType  | contentName                  |
+      | MAWBRequest  | test-sunday-08-august-2024   |
 
   @FWB_R_3
   Scenario Outline:  Create BC Document and Do Extended Sharing
@@ -26,8 +26,8 @@ Feature: FWB Re sharing
     Then make sure that the notification share to the right user
 
     Examples:
-      | contentType      | contentName                | contact            |
-      | BookingRequest   | test-monday-08-july-2024   | sripcn@yopmail.com |
+      | contentType      | contentName                  | contact            |
+      | BookingRequest   | test-sunday-08-August-2024   | sripcn@yopmail.com |
 
   @FWB_R_4
   Scenario Outline:  Create AWB C Document and Do Extended Sharing
@@ -36,25 +36,25 @@ Feature: FWB Re sharing
     Then make sure that the notification share to the right user
 
     Examples:
-      | contentType  | contentName                | contact            |
-      | MAWBRequest  | test-monday-08-july-2024   | sripcn@yopmail.com |
+      | contentType  | contentName                  | contact            |
+      | MAWBRequest  | test-sunday-08-August-2024   | sripcn@yopmail.com |
 
   @FWB_R_5
   Scenario Outline:  Create BC Document and Do Explicit Sharing
-    Given create "<contentType>" doc with "<contentName>"
+    Given create "<contentType>" doc with "<contentName>" from system
     When do explicit sharing "<contact>"
     Then make sure that the notification share to SATS
 
     Examples:
-      | contentType      | contentName                | contact                                        |
-      | BookingRequest   | test-monday-08-july-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
+      | contentType      | contentName                  | contact                                        |
+      | BookingRequest   | test-sunday-08-August-2024   | system.csggha01singcxh@ccnexchange.com  |
 
   @FWB_R_6
   Scenario Outline:  Create AWB C Document and Do Explicit Sharing
-    Given create "<contentType>" doc with "<contentName>"
+    Given create "<contentType>" doc with "<contentName>" from system
     When do explicit sharing "<contact>"
     Then make sure that the notification share to SATS
 
     Examples:
-      | contentType  | contentName                | contact                                        |
-      | MAWBRequest  | test-monday-08-july-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
+      | contentType  | contentName                  | contact                                        |
+      | MAWBRequest  | test-sunday-08-August-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
