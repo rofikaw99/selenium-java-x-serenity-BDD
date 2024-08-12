@@ -49,7 +49,7 @@ public class GetLoStep {
                 transformXfwbPage.verifyAccountingInformation(jsonXml, responseJson);
                 break;
             case "carrierDeclarationDate":
-                transformXfwbPage.verifyCarrierDeclarationPlace(jsonXml, responseJson);
+                transformXfwbPage.verifyCarrierDeclarationDate(jsonXml, responseJson);
                 break;
             case "carrierDeclarationSignature":
                 transformXfwbPage.verifyCarrierDeclarationSignature(jsonXml, responseJson);

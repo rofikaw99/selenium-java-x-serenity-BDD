@@ -522,11 +522,11 @@ public class PaymentMethodStep {
         //userType is ignored
         Set<Boolean> removeUniqueCondition = Set.copyOf(paymentMethodPage.enabledActionBtn());
         Set<Boolean> siNumberUniqueCondition = Set.copyOf(paymentMethodPage.enabledSINumberBtn());
-        if (!paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER)){
+        if (!paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER_SG)){
             Assert.assertTrue(removeUniqueCondition.contains(false));
             Assert.assertTrue(siNumberUniqueCondition.contains(false));
         }
-        if (paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER)){
+        if (paymentMethodPage.manageEmailSI().contains(Constants.EMAIL_AUTHORIZED_USER_SG)){
             Assert.assertTrue(removeUniqueCondition.contains(true));
             Assert.assertTrue(siNumberUniqueCondition.contains(true));
         }

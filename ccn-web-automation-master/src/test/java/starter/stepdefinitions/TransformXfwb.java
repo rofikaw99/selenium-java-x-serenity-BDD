@@ -41,7 +41,7 @@ public class TransformXfwb {
                 transformXfwbPage.verifyConsignorDeclarationSignature(jsonXml, jsonObject);
                 break;
             case "carrierDeclarationDate":
-                transformXfwbPage.carrierDeclarationDate(jsonXml, jsonObject);
+                transformXfwbPage.verifyCarrierDeclarationDate(jsonXml, jsonObject);
                 break;
             case "carrierDeclarationSignature":
                 transformXfwbPage.verifyCarrierDeclarationSignature(jsonXml, jsonObject);
@@ -49,7 +49,7 @@ public class TransformXfwb {
             case "carrierDeclarationPlace":
                 transformXfwbPage.verifyCarrierDeclarationPlace(jsonXml, jsonObject);
                 break;
-    }
+        }
     }
 
     @Then("verify mapping data of {string} to data in response of Waybill {string}")
