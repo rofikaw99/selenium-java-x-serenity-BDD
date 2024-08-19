@@ -76,6 +76,9 @@ public class Constants {
     public static String EMAIL_CARD_OWNER_DELETED = "co-sg-001@yopmail.com";
 //    public static String EMAIL_CARD_OWNER_DELETED = "co-my-001@yopmail.com";
     public static String EMAIL_AU_DELETED = "co-sg-004@yopmail.com";
+    public static String PUBLIC_SERVICE_GATEWAY = "https://cubedev.ccnexchange.com";
+    public static String PRIVATE_SERVICE_GATEWAY = "http://cube.dev.ccn";
+
 
     //CARD NUMBER FOR PAYMENT
     public static String CARD_NON_VISA_SINGAPORE = "4000002180000000"; //ECUADOR
