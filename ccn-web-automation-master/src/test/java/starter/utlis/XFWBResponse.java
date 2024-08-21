@@ -1,5 +1,6 @@
 package starter.utlis;
 
+import net.serenitybdd.core.SkipStepException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -10,13 +11,41 @@ import java.util.Map;
 
 public class XFWBResponse {
 
+    public static String key;
+
+    public static String shippingRefNo(JSONObject jsonObject){
+        return jsonObject.getString("cargo:shippingRefNo");
+    }
     public static String waybillPrefix(JSONObject jsonObject){
         return jsonObject.getString("cargo:waybillPrefix");
     }
     public static String waybillNumber(JSONObject jsonObject){
         return jsonObject.getString("cargo:waybillNumber");
     }
-
+    public static Map<String, Object> declaredValueForCarriage(JSONObject jsonObject){
+        String key = "cargo:declaredValueForCarriage";
+        if (jsonObject.has(key)) {
+            JSONObject declaredValueForCarriage = jsonObject.getJSONObject(key);
+            return Map.of("content", declaredValueForCarriage.getInt("cargo:numericalValue"),
+                    "currencyID", declaredValueForCarriage.getString("cargo:currencyUnit"));
+        }
+        else throw new SkipStepException("there is no " + key + " in body response");
+    }
+    public static Map<String, Object> declaredValueForCustoms(JSONObject jsonObject){
+        String key = "cargo:declaredValueForCustoms";
+        if (jsonObject.has(key)) {
+            JSONObject declaredValueForCustoms = jsonObject.getJSONObject(key);
+            return Map.of("content", declaredValueForCustoms.getInt("cargo:numericalValue"),
+                    "currencyID", declaredValueForCustoms.getString("cargo:currencyUnit"));
+        }
+        else throw new SkipStepException("there is no " + key + " in body response");
+    }
+    public static String insuredAmount(JSONObject jsonObject){
+        String key = "cargo:insuredAmount";
+        if (jsonObject.has(key))
+            return jsonObject.getString("cargo:insuredAmount");
+        else throw new SkipStepException("there is no " + key + " in body response");
+    }
     public static String waybillType(JSONObject jsonObject){
         return jsonObject
                 .getJSONObject("cargo:waybillType")
@@ -25,6 +54,17 @@ public class XFWBResponse {
 
     public static String consignorDeclarationSignature(JSONObject jsonObject){
         return jsonObject.getString("cargo:consignorDeclarationSignature");
+    }
+
+    public static Integer slacForRate(JSONObject jsonObject){
+        String key = "cargo:slacForRate";
+        if (jsonObject.has(key)) return jsonObject.getInt(key);
+        else throw new SkipStepException("there is no " + key + " in body response");
+    }
+    public static String productCode(JSONObject jsonObject){
+        String key = "cargo:productCode";
+        if (jsonObject.has(key)) return jsonObject.getString(key);
+        else throw new SkipStepException("there is no " + key + " in body response");
     }
 
     public static String carrierDeclarationDate(JSONObject jsonObject){
@@ -46,7 +86,6 @@ public class XFWBResponse {
                 .getJSONObject("cargo:weightValuationIndicator")
                 .getString("cargo:code");
     }
-
     public static String otherChargesIndicator(JSONObject jsonObject){
         return jsonObject
                 .getJSONObject("cargo:otherChargesIndicator")
@@ -118,6 +157,9 @@ public class XFWBResponse {
                 case "AGT":
                     result.put("Agent", explrObject);
                     break;
+                case "FFW":
+                    result.put("Associated Party", explrObject);
+                    break;
             }
         }
         return result.get(partyType);
@@ -128,6 +170,11 @@ public class XFWBResponse {
     public static String PD_Name(JSONObject jsonObject, String partyType){
         return partyDetails(jsonObject, partyType).getString("cargo:name");
     }
+    public static String PD_OtherIdentifiers(JSONObject jsonObject, String partyType){
+        String key = "cargo:otherIdentifiers";
+        if (involvedParties(jsonObject, partyType).has(key)) return involvedParties(jsonObject, partyType).getJSONObject(key).getString("cargo:textualValue");
+        else throw new SkipStepException("there is no response for: " + key);
+    }
     public static JSONObject PD_basedAtLocation(JSONObject jsonObject, String partyType){
         return partyDetails(jsonObject, partyType).getJSONObject("cargo:basedAtLocation");
     }
@@ -135,16 +182,64 @@ public class XFWBResponse {
         return PD_basedAtLocation(jsonObject, partyType).getJSONObject("cargo:address");
     }
     public static String PD_BAL_A_countryCode(JSONObject jsonObject, String partyType){
-        return PD_BAL_address(jsonObject, partyType).getJSONObject("cargo:country").getString("cargo:code");
+        String key = "cargo:country";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getJSONObject(key).getString("cargo:code");
+        else throw new SkipStepException("there is no response for: " + key);
     }
     public static String PD_BAL_A_cityCode(JSONObject jsonObject, String partyType){
-        return PD_BAL_address(jsonObject, partyType).getJSONObject("cargo:cityCode").getString("cargo:codeDescription");
+        String key = "cargo:cityCode";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getJSONObject(key).getString("cargo:codeDescription");
+        else throw new SkipStepException("there is no response for: " + key);
     }
-    public static Object PD_BAL_A_postalCode(JSONObject jsonObject, String partyType){
-        return PD_BAL_address(jsonObject, partyType).getJSONObject("cargo:postalCode").get("cargo:code");
+    public static String PD_BAL_A_cityName(JSONObject jsonObject, String partyType){
+        String key = "cargo:cityName";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getJSONObject(key).getString("cargo:codeDescription");
+        else throw new SkipStepException("there is no response for: " + key);
+    }
+    public static String PD_BAL_A_postalCode(JSONObject jsonObject, String partyType){
+        return PD_BAL_address(jsonObject, partyType).getJSONObject("cargo:postalCode").getString("cargo:code");
     }
     public static String PD_BAL_streetAddressLines(JSONObject jsonObject, String partyType){
         return PD_BAL_address(jsonObject, partyType).getString("cargo:streetAddressLines");
+    }
+    public static String PD_BAL_regionName(JSONObject jsonObject, String partyType){
+        String key = "cargo:regionCode";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getJSONObject(key).getString("cargo:codeDescription");
+        else throw new SkipStepException("there is no response for: " + key);
+    }
+    public static String PD_BAL_regionCode(JSONObject jsonObject, String partyType){
+        String key = "cargo:regionCode";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getJSONObject(key).getString("cargo:code");
+        else throw new SkipStepException("there is no response for: " + key);
+    }
+    public static String PD_BAL_firstName(JSONObject jsonObject, String partyType){
+        String key = "cargo:firstName";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getString(key);
+        else throw new SkipStepException("there is no response for: " + key);
+    }
+    public static String PD_BAL_department(JSONObject jsonObject, String partyType){
+        String key = "cargo:department";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getString(key);
+        else throw new SkipStepException("there is no response for: " + key);
+    }
+    public static String PD_BAL_textualValue(JSONObject jsonObject, String partyType){
+        String key = "cargo:textualValue";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getString(key);
+        else throw new SkipStepException("there is no response for: " + key);
+    }
+    public static String PD_BAL_A_postOfficeBox(JSONObject jsonObject, String partyType){
+        String key = "cargo:postOfficeBox";
+        if (PD_BAL_address(jsonObject, partyType).has(key))
+            return PD_BAL_address(jsonObject, partyType).getString(key);
+        else throw new SkipStepException("there is no response for: " + key);
     }
     public static String PD_IataCargoAgentLocationIdentifier(JSONObject jsonObject, String partyType){
         return partyDetails(jsonObject, partyType).getString("cargo:iataCargoAgentLocationIdentifier");
@@ -161,6 +256,12 @@ public class XFWBResponse {
                 .getJSONObject(0)
                 .getString("cargo:code");
     }
+    public static String DL_LocationName(JSONObject jsonObject){
+        String key = "cargo:locationName";
+        if (DepartureLocation(jsonObject).has(key))
+            return DepartureLocation(jsonObject).getString(key);
+        else throw new SkipStepException("there is no " + key + "in response body");
+    }
     public static JSONObject ArrivalLocation(JSONObject jsonObject){
         return jsonObject.getJSONObject("cargo:arrivalLocation");
     }
@@ -170,6 +271,12 @@ public class XFWBResponse {
                 .getJSONObject(0)
                 .getString("cargo:code");
     }
+    public static String AL_LocationName(JSONObject jsonObject){
+        String key = "cargo:locationName";
+        if (DepartureLocation(jsonObject).has(key))
+            return DepartureLocation(jsonObject).getString(key);
+        else throw new SkipStepException("there is no " + key + "in response body");
+    }
     public static JSONObject LOs(JSONObject jsonObject){
         return jsonObject
                 .getJSONArray("internal:LOs")
@@ -178,14 +285,18 @@ public class XFWBResponse {
     public static JSONObject ServedActivity(JSONObject jsonObject){
         return LOs(jsonObject).getJSONObject("cargo:servedActivity");
     }
-    public static String SA_ModeQualifier_Code(JSONObject jsonObject){
-        return ServedActivity(jsonObject).getJSONObject("cargo:modeQualifier").getString("cargo:code");
-    }
-    public static String SA_ModeCode_Code(JSONObject jsonObject){
-        return ServedActivity(jsonObject).getJSONObject("cargo:modeCode").getString("cargo:code");
-    }
     public static String SA_TransportIdentifier(JSONObject jsonObject){
         return ServedActivity(jsonObject).getString("cargo:transportIdentifier");
+    }
+    public static String SA_ModeCode(JSONObject jsonObject){
+        String key = "cargo:modeCode";
+        if (ServedActivity(jsonObject).has(key)) return ServedActivity(jsonObject).getJSONObject(key).getString("cargo:code");
+        else throw new SkipStepException("there is no value for " + key + " in response body");
+    }
+    public static String SA_ModeQualifier(JSONObject jsonObject){
+        String key = "cargo:modeQualifier";
+        if (ServedActivity(jsonObject).has(key)) return ServedActivity(jsonObject).getJSONObject(key).getString("cargo:code");
+        else throw new SkipStepException("there is no value for " + key + " in response body");
     }
     public static String SA_OperatingTransportMeans_TransportOrganization_AirlineCode(JSONObject jsonObject){
         return ServedActivity(jsonObject)
@@ -214,8 +325,60 @@ public class XFWBResponse {
                 .getString("cargo:locationName");
     }
     public static String SA_AL_LocationType(JSONObject jsonObject){
-        return SA_ArrivalLocation(jsonObject)
-                .getString("cargo:locationType");
+        String key = "cargo:locationType";
+        if (SA_ArrivalLocation(jsonObject).has(key))
+            return SA_ArrivalLocation(jsonObject).getString("cargo:locationType");
+        else throw new SkipStepException("there is no value of " + key + " in response body");
+    }
+    public static JSONObject SA_DepartureLocation(JSONObject jsonObject){
+        return ServedActivity(jsonObject)
+                .getJSONObject("cargo:departureLocation");
+    }
+    public static String SA_DL_LocationCodes_Code(JSONObject jsonObject){
+        return SA_DepartureLocation(jsonObject)
+                .getJSONArray("cargo:locationCodes")
+                .getJSONObject(0)
+                .getString("cargo:code");
+    }
+    public static String SA_DL_LocationName(JSONObject jsonObject){
+        return SA_DepartureLocation(jsonObject)
+                .getString("cargo:locationName");
+    }
+    public static String SA_DL_LocationType(JSONObject jsonObject){
+        String key = "cargo:locationType";
+        if (SA_DepartureLocation(jsonObject).has(key))
+            return SA_DepartureLocation(jsonObject).getString(key);
+        else throw new SkipStepException("there is no value of " + key + " in response body");
+    }
+    public static JSONObject SA_OperatingTransportMeans(JSONObject jsonObject){
+        String key = "cargo:operatingTransportMeans";
+        if (ServedActivity(jsonObject).has(key))
+            return ServedActivity(jsonObject).getJSONObject(key);
+        else throw new SkipStepException("there is no value of " + key + " in response body");
+    }
+    public static String SA_OTM_VehicleRegistration(JSONObject jsonObject){
+        String key = "cargo:vehicleRegistration";
+        if (SA_OperatingTransportMeans(jsonObject).has(key))
+            return SA_OperatingTransportMeans(jsonObject).getString(key);
+        else throw new SkipStepException("there is no value of " + key + " in response body");
+    }
+    public static String SA_OTM_VehicleSize(JSONObject jsonObject){
+        String key = "cargo:vehicleSize";
+        if (SA_OperatingTransportMeans(jsonObject).has(key))
+            return SA_OperatingTransportMeans(jsonObject).getString(key);
+        else throw new SkipStepException("there is no value of " + key + " in response body");
+    }
+    public static String SA_OTM_VehicleType(JSONObject jsonObject){
+        String key = "cargo:vehicleType";
+        if (SA_OperatingTransportMeans(jsonObject).has(key))
+            return SA_OperatingTransportMeans(jsonObject).getJSONObject(key).getString("cargo:code");
+        else throw new SkipStepException("there is no value of " + key + " in response body");
+    }
+    public static String SA_Seal(JSONObject jsonObject){
+        String key = "cargo:Seal";
+        if (ServedActivity(jsonObject).has(key))
+            return ServedActivity(jsonObject).getString(key);
+        else throw new SkipStepException("there is no value of " + key + " in response body");
     }
     public static List<String> SpecialHandlingCodes(JSONObject jsonObject){
         JSONArray arr = shipment(jsonObject)
@@ -237,6 +400,36 @@ public class XFWBResponse {
     public static String AccountingInformation(JSONObject jsonObject){
         return jsonObject
                 .getString("cargo:accountingInformation");
+    }
+    public static JSONObject ExternalReferences(JSONObject jsonObject){
+        return jsonObject
+                .getJSONObject("cargo:externalReferences");
+    }
+    public static String OriginCurrency(JSONObject jsonObject){
+        String key = "cargo:originCurrency";
+        if (jsonObject.has(key))
+        return jsonObject.getString("cargo:originCurrency");
+        else throw new SkipStepException("there is no value for " + key);
+    }
+    public static String ER_DocumentIdentifier(JSONObject jsonObject){
+        return ExternalReferences(jsonObject)
+                .getString("cargo:documentIdentifier");
+    }
+    public static String ER_DocumentName(JSONObject jsonObject){
+        return ExternalReferences(jsonObject)
+                .getString("cargo:documentName");
+    }
+    public static String ER_DocumentType(JSONObject jsonObject){
+        return ExternalReferences(jsonObject)
+                .getString("cargo:documentType");
+    }
+    public static String ER_ValidFrom(JSONObject jsonObject){
+        return ExternalReferences(jsonObject)
+                .getString("cargo:validFrom");
+    }
+    public static String ER_ValidUntil(JSONObject jsonObject){
+        return ExternalReferences(jsonObject)
+                .getString("cargo:validUntil");
     }
     public static JSONArray CustomsInformation(JSONObject jsonObject){
         return shipment(jsonObject)

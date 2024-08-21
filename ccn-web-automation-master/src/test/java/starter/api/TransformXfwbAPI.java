@@ -8,8 +8,11 @@ import starter.utlis.XFWBRequest;
 import starter.utlis.XFWBResponse;
 import starter.utlis.XFWBXml;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 
 import static net.serenitybdd.rest.SerenityRest.*;
@@ -17,7 +20,7 @@ import static net.serenitybdd.rest.SerenityRest.*;
 public class TransformXfwbAPI {
     String response;
 
-    public String transformXfwb() throws IOException {
+    public String transformXfwb(String payload) throws IOException {
         String url = "https://onerecordppd.cubeforall.com/6b0b831ee6b546f4b4ac0eab642874c6/transformXFWB3";
         String accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZmFmMDVlYmUtYzNkYy00NDM3LWJjMmQtMmE4MTU2NTNmNzVjL3YyLjAiLCJpYXQiOjE3MTU4MTgxNTIsIm5iZiI6MTcxNTgxODE1MiwiZXhwIjoxNzE1ODIyMDUyLCJhaW8iOiJBU1FBMi84V0FBQUFuUXhVSG9WQVBwUzErMjdjcGxMbnRKS1RONm0vQWFCNWdObU9VekpIazd3PSIsImF6cCI6ImNiZmM2ODkzLTNjMTMtNDJjMi1hMzFlLTg3NGMxNWQ2ZmVhYyIsImF6cGFjciI6IjEiLCJyaCI6IjAuQVQ4QXZsN3ctdHpETjBTOExTcUJWbFAzWEZvQWtxcHdZeHRJcWhlN3ozakFnNmRBQUFBLiIsInRpZCI6ImZhZjA1ZWJlLWMzZGMtNDQzNy1iYzJkLTJhODE1NjUzZjc1YyIsInV0aSI6Im5mWVN1dDRadmtHSzd4NWVPMlFhQUEiLCJ2ZXIiOiIyLjAifQ.Fycbt6eI8nQgoR3nE5X259kOuEO6SpZi1DxAKv19P_VMfqhoCFo_0azOGb7s5Lq9qcAQ1eBqJlv4jscYG-DUbdVGfzN8BRlc6-H1fs1yNJUYZvRnyW1ZR8jF82ghwkhgb8A3stQ3SV0XOWRRyXw1iXuLSJgZf7VKbcQQrFjixDfkTJkUg14B7Dl3fKQwJVdt5CYnJDRGpnwQv7635JQDRmFNv1RNmhk7VpqWYrL2lndCltec_acpbkCq-shW23Al-UwWGafpXsBc_CO7l65juHuXXRHh2xb3GKO2iqAijb5VV0oGz25Iun7EHGVa1E7Zw9Mxr_rz-haun5iTe98mow";
 
@@ -26,7 +29,7 @@ public class TransformXfwbAPI {
                         "Authorization", "Bearer " + accessToken,
                         "Content-Type", "application/xml",
                         "Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000")
-                .body(XFWBXml.xmlPayload)
+                .body(payload)
                 .post(url)
                 .then()
                 .extract()
@@ -40,16 +43,37 @@ public class TransformXfwbAPI {
         return response;
     }
 
+    public void verifyShippingRefNo(JSONObject jsonXml, JSONObject jsonObject) {
+        Assert.assertEquals(XFWBRequest.BHD_SenderAssignedID(jsonXml), XFWBResponse.shippingRefNo(jsonObject));
+    }
     public void verifyWaybillPrefix(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(List.of(XFWBRequest.BHD_ID(jsonXml).split("-")).get(0), XFWBResponse.waybillPrefix(jsonObject));
     }
     public void verifyWaybillNumber(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(List.of(XFWBRequest.BHD_ID(jsonXml).split("-")).get(1), XFWBResponse.waybillNumber(jsonObject));
     }
+    public void verifyNilCarriageValueIndicator(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.NilCarriageValueIndicator(jsonXml), XFWBResponse.declaredValueForCarriage(jsonObject));
+    }
+    public void verifyNilCustomsValueIndicator(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.NilCustomsValueIndicator(jsonXml), XFWBResponse.declaredValueForCustoms(jsonObject));
+    }
+    public void verifyDeclaredValueForCarriageAmount(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.DeclaredValueForCarriageAmount(jsonXml), XFWBResponse.declaredValueForCarriage(jsonObject));
+    }
+    public void verifyDeclaredValueForCustomsAmount(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.DeclaredValueForCustomsAmount(jsonXml), XFWBResponse.declaredValueForCustoms(jsonObject));
+    }
+    public void verifyNilInsuranceValueIndicator(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.NilInsuranceValueIndicator(jsonXml), XFWBResponse.insuredAmount(jsonObject));
+    }
+    public void verifyInsuranceValueAmount(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.InsuranceValueAmount(jsonXml), XFWBResponse.insuredAmount(jsonObject));
+    }
     public void verifyWaybillType(JSONObject jsonXml, JSONObject jsonObject){
         String expected = XFWBRequest.IHN_ContentCode(jsonXml);
         if (expected.equals("D")) expected = "DIRECT";
-        else expected = "MASTER";
+        else if (expected.equals("C")) expected = "MASTER";
         Assert.assertEquals(expected, XFWBResponse.waybillType(jsonObject));
     }
     public void verifyConsignorDeclarationSignature(JSONObject jsonXml, JSONObject jsonObject){
@@ -93,29 +117,149 @@ public class TransformXfwbAPI {
     public void verifyPieceCountForRate(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.TotalPieceQuantity(jsonXml), XFWBResponse.pieceCountForRate(jsonObject));
     }
+    public void verifyPackageQuantity(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.PackageQuantity(jsonXml), XFWBResponse.slacForRate(jsonObject));
+    }
+    public void verifyProductID(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.ProductID(jsonXml), XFWBResponse.productCode(jsonObject));
+    }
     public void verifyNameConsignorParty(JSONObject jsonXml, JSONObject jsonObject, String party){
         Assert.assertEquals(XFWBRequest.CoP_Name(jsonXml), XFWBResponse.PD_Name(jsonObject, party));
     }
+    public void verifyConsignorPartyAccID(JSONObject jsonXml, JSONObject jsonObject, String party){
+        Assert.assertEquals(String.valueOf(XFWBRequest.CoP_AccountID(jsonXml)), XFWBResponse.PD_OtherIdentifiers(jsonObject, party));
+    }
     public void verifyConsignorPostalCode(JSONObject jsonXml, JSONObject jsonObject, String party){
-        Assert.assertEquals(XFWBRequest.CoP_PSA_PostcodeCode(jsonXml), XFWBResponse.PD_BAL_A_postalCode(jsonObject, party));
+        Assert.assertEquals(String.valueOf(XFWBRequest.CoP_PSA_PostcodeCode(jsonXml)), XFWBResponse.PD_BAL_A_postalCode(jsonObject, party));
     }
     public void verifyConsignorStreetAddressLines(JSONObject jsonXml, JSONObject jsonObject, String party){
         Assert.assertEquals(XFWBRequest.CoP_PSA_StreetName(jsonXml), XFWBResponse.PD_BAL_streetAddressLines(jsonObject, party));
     }
+    public void verifyConsignorCityName(JSONObject jsonXml, JSONObject jsonObject, String party){
+        Assert.assertEquals(XFWBRequest.CoP_PSA_CityName(jsonXml), XFWBResponse.PD_BAL_A_cityName(jsonObject, party));
+    }
     public void verifyConsignorCountryCode(JSONObject jsonXml, JSONObject jsonObject, String party) {
         Assert.assertEquals(XFWBRequest.CoP_PSA_CountryID(jsonXml), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyConsignorCountry(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_PSA_CountryName(jsonXml), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyConsignorRegionName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_PSA_CountrySubDivisionName(jsonXml), XFWBResponse.PD_BAL_regionName(jsonObject, party));
+    }
+    public void verifyConsignorPostOfficeBox(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CoP_PSA_PostOfficeBox(jsonXml)), XFWBResponse.PD_BAL_A_postOfficeBox(jsonObject, party));
+    }
+    public void verifyConsignorCityID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_PSA_CityID(jsonXml), XFWBResponse.PD_BAL_A_cityCode(jsonObject, party));
+    }
+    public void verifyConsignorCountrySubDivisionID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_PSA_CountrySubDivisionID(jsonXml), XFWBResponse.PD_BAL_regionCode(jsonObject, party));
+    }
+    public void verifyConsignorPersonName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_DTC_PersonName(jsonXml), XFWBResponse.PD_BAL_firstName(jsonObject, party));
+    }
+    public void verifyConsigneePersonName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CeP_DTC_PersonName(jsonXml), XFWBResponse.PD_BAL_firstName(jsonObject, party));
+    }
+    public void verifyFFPPersonName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_DTC_PersonName(jsonXml), XFWBResponse.PD_BAL_firstName(jsonObject, party));
+    }
+    public void verifyAssociatedPartyPersonName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_DTC_PersonName(jsonXml), XFWBResponse.PD_BAL_firstName(jsonObject, party));
+    }
+    public void verifyConsignorDepartmentName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_DTC_DepartmentName(jsonXml), XFWBResponse.PD_BAL_department(jsonObject, party));
+    }
+    public void verifyConsigneeDepartmentName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CeP_DTC_DepartmentName(jsonXml), XFWBResponse.PD_BAL_department(jsonObject, party));
+    }
+    public void verifyFFPDepartmentName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_DTC_DepartmentName(jsonXml), XFWBResponse.PD_BAL_department(jsonObject, party));
+    }
+    public void verifyAssociatedPartyDepartmentName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_DTC_DepartmentName(jsonXml), XFWBResponse.PD_BAL_department(jsonObject, party));
+    }
+    public void verifyConsignorDirectTelephoneCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_DTC_DirectTelephoneCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyConsigneeDirectTelephoneCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CeP_DTC_DirectTelephoneCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyFFPDirectTelephoneCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_DTC_DirectTelephoneCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyAssociatedPartyDirectTelephoneCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_DTC_DirectTelephoneCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyConsignorFaxCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_DTC_FaxCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyConsigneeFaxCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CeP_DTC_FaxCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyFFPFaxCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_DTC_FaxCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyAssociatedPartyFaxCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_DTC_FaxCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyConsignorURIEmailCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_DTC_URIEmailCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyConsigneeURIEmailCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CeP_DTC_URIEmailCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyFFPURIEmailCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_DTC_URIEmailCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyAssociatedPartyURIEmailCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_DTC_URIEmailCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyConsignorTelexCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CoP_DTC_TelexCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyConsigneeTelexCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.CeP_DTC_TelexCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyFFPTelexCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_DTC_TelexCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
+    }
+    public void verifyAssociatedPartyTelexCommunication(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_DTC_TelexCommunication(jsonXml), XFWBResponse.PD_BAL_textualValue(jsonObject, party));
     }
     public void verifyNameConsigneeParty(JSONObject jsonXml, JSONObject jsonObject, String party){
         Assert.assertEquals(XFWBRequest.CeP_Name(jsonXml), XFWBResponse.PD_Name(jsonObject, party));
     }
     public void verifyConsigneePostalCode(JSONObject jsonXml, JSONObject jsonObject, String party){
-        Assert.assertEquals(XFWBRequest.CeP_PSA_PostcodeCode(jsonXml), XFWBResponse.PD_BAL_A_postalCode(jsonObject, party));
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_PostcodeCode(jsonXml)), XFWBResponse.PD_BAL_A_postalCode(jsonObject, party));
     }
     public void verifyConsigneeStreetAddressLines(JSONObject jsonXml, JSONObject jsonObject, String party){
         Assert.assertEquals(XFWBRequest.CeP_PSA_StreetName(jsonXml), XFWBResponse.PD_BAL_streetAddressLines(jsonObject, party));
     }
-    public void verifyConsigneeCountryCode(JSONObject jsonXml, JSONObject jsonObject, String party) {
-        Assert.assertEquals(XFWBRequest.CeP_PSA_CountryID(jsonXml), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    public void verifyConsigneeAccountID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_AccountID(jsonXml)), XFWBResponse.PD_OtherIdentifiers(jsonObject, party));
+    }
+    public void verifyConsigneeCityName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_CityName(jsonXml)), XFWBResponse.PD_BAL_A_cityName(jsonObject, party));
+    }
+    public void verifyConsigneeCountryID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_CountryID(jsonXml)), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyConsigneeCountryName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_CountryName(jsonXml)), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyConsigneeCountrySubDivisionName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_CountrySubDivisionName(jsonXml)), XFWBResponse.PD_BAL_regionName(jsonObject, party));
+    }
+    public void verifyConsigneePostOfficeBox(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_PostOfficeBox(jsonXml)), XFWBResponse.PD_BAL_A_postOfficeBox(jsonObject, party));
+    }
+    public void verifyConsigneeCityID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_CityID(jsonXml)), XFWBResponse.PD_BAL_A_cityCode(jsonObject, party));
+    }
+    public void verifyConsigneeCountrySubDivisionID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.CeP_PSA_CountrySubDivisionID(jsonXml)), XFWBResponse.PD_BAL_regionCode(jsonObject, party));
     }
     public void verifyNameFreightForwarderParty(JSONObject jsonXml, JSONObject jsonObject, String party){
         Assert.assertEquals(XFWBRequest.FFP_Name(jsonXml), XFWBResponse.PD_Name(jsonObject, party));
@@ -123,17 +267,89 @@ public class TransformXfwbAPI {
     public void verifyFreightForwarderCargoAgentId(JSONObject jsonXml, JSONObject jsonObject, String party) {
         Assert.assertEquals(XFWBRequest.FFP_CargoAgentID(jsonXml), XFWBResponse.PD_IataCargoAgentCode(jsonObject, party));
     }
+    public void verifyFreightForwarderAccountID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.FFP_AccountID(jsonXml)), XFWBResponse.PD_OtherIdentifiers(jsonObject, party));
+    }
+    public void verifyFreightForwarderPostcodeCode(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.FFP_FFA_PostcodeCode(jsonXml)), XFWBResponse.PD_BAL_A_postalCode(jsonObject, party));
+    }
+    public void verifyFreightForwarderStreetName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_FFA_StreetName(jsonXml), XFWBResponse.PD_BAL_streetAddressLines(jsonObject, party));
+    }
+    public void verifyFreightForwarderCityName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_FFA_CityName(jsonXml), XFWBResponse.PD_BAL_A_cityName(jsonObject, party));
+    }
+    public void verifyFreightForwarderCountryID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_FFA_CountryID(jsonXml), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyFreightForwarderCountryName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_FFA_CountryName(jsonXml), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyFreightForwarderCountrySubDivisionName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_FFA_CountrySubDivisionName(jsonXml), XFWBResponse.PD_BAL_regionName(jsonObject, party));
+    }
+    public void verifyFreightForwarderPostOfficeBox(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.FFP_FFA_PostOfficeBox(jsonXml)), XFWBResponse.PD_BAL_A_postOfficeBox(jsonObject, party));
+    }
+    public void verifyFreightForwarderCityID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_FFA_CityID(jsonXml), XFWBResponse.PD_BAL_A_cityCode(jsonObject, party));
+    }
+    public void verifyFreightForwarderCountrySubDivisionID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.FFP_FFA_CountrySubDivisionID(jsonXml), XFWBResponse.PD_BAL_regionCode(jsonObject, party));
+    }
     public void verifyFreightForwarderSpecifiedCargoAgentLocationId(JSONObject jsonXml, JSONObject jsonObject, String party) {
         Assert.assertEquals(XFWBRequest.FFP_SpecifiedCargoAgentLocation_ID(jsonXml), XFWBResponse.PD_IataCargoAgentLocationIdentifier(jsonObject, party));
+    }
+    public void verifyAssociatedPartyName(JSONObject jsonXml, JSONObject jsonObject, String party){
+        Assert.assertEquals(XFWBRequest.AP_Name(jsonXml), XFWBResponse.PD_Name(jsonObject, party));
+    }
+    public void verifyAssociatedPartyPostcodeCode(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.AP_PSA_PostcodeCode(jsonXml)), XFWBResponse.PD_BAL_A_postalCode(jsonObject, party));
+    }
+    public void verifyAssociatedPartyStreetName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_PSA_StreetName(jsonXml), XFWBResponse.PD_BAL_streetAddressLines(jsonObject, party));
+    }
+    public void verifyAssociatedPartyCityName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_PSA_CityName(jsonXml), XFWBResponse.PD_BAL_A_cityName(jsonObject, party));
+    }
+    public void verifyAssociatedPartyCountryID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_PSA_CountryID(jsonXml), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyAssociatedPartyCountryName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_PSA_CountryName(jsonXml), XFWBResponse.PD_BAL_A_countryCode(jsonObject, party));
+    }
+    public void verifyAssociatedPartyCountrySubDivisionName(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_PSA_CountrySubDivisionName(jsonXml), XFWBResponse.PD_BAL_regionName(jsonObject, party));
+    }
+    public void verifyAssociatedPartyPostOfficeBox(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(String.valueOf(XFWBRequest.AP_PSA_PostOfficeBox(jsonXml)), XFWBResponse.PD_BAL_A_postOfficeBox(jsonObject, party));
+    }
+    public void verifyAssociatedPartyCityID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_PSA_CityID(jsonXml), XFWBResponse.PD_BAL_A_cityCode(jsonObject, party));
+    }
+    public void verifyAssociatedPartyCountrySubDivisionID(JSONObject jsonXml, JSONObject jsonObject, String party) {
+        Assert.assertEquals(XFWBRequest.AP_PSA_CountrySubDivisionID(jsonXml), XFWBResponse.PD_BAL_regionCode(jsonObject, party));
     }
     public void verifyOriginLocationId(JSONObject jsonXml, JSONObject jsonObject) {
         Assert.assertEquals(XFWBRequest.OL_ID(jsonXml), XFWBResponse.DL_LocationCodes_Code(jsonObject));
     }
+    public void verifyOriginLocationName(JSONObject jsonXml, JSONObject jsonObject) {
+        Assert.assertEquals(XFWBRequest.OL_Name(jsonXml), XFWBResponse.DL_LocationName(jsonObject));
+    }
     public void verifyFinalDestinationLocationId(JSONObject jsonXml, JSONObject jsonObject) {
         Assert.assertEquals(XFWBRequest.FDL_ID(jsonXml), XFWBResponse.AL_LocationCodes_Code(jsonObject));
     }
+    public void verifyFinalDestinationLocationName(JSONObject jsonXml, JSONObject jsonObject) {
+        Assert.assertEquals(XFWBRequest.FDL_Name(jsonXml), XFWBResponse.AL_LocationName(jsonObject));
+    }
     public void verifySpecifiedLogisticsTransportMovementID(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.SLTM_ID(jsonXml), XFWBResponse.SA_TransportIdentifier(jsonObject));
+    }
+    public void verifySpecifiedLogisticsTransportMovementStageCode(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.SLTM_StageCode(jsonXml), XFWBResponse.SA_ModeQualifier(jsonObject));
+    }
+    public void verifySpecifiedLogisticsTransportMovementModeCode(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.SLTM_ModeCode(jsonXml), XFWBResponse.SA_ModeCode(jsonObject));
     }
     public void verifyUsedLogisticsTransportMeans(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.SLTM_UsedLogisticsTransportMeans_Name(jsonXml), XFWBResponse.SA_OperatingTransportMeans_TransportOrganization_AirlineCode(jsonObject));
@@ -141,17 +357,47 @@ public class TransformXfwbAPI {
     public void verifyScheduledOccurrenceDateTime(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.SLTM_AE_ScheduledOccurrenceDateTime(jsonXml), XFWBResponse.SA_MovementTimes_MovementTimestamp(jsonObject));
     }
+    public void verifyDepartureScheduledOccurrenceDateTime(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.SLTM_DE_ScheduledOccurrenceDateTime(jsonXml), XFWBResponse.SA_MovementTimes_MovementTimestamp(jsonObject));
+    }
     public void verifyOccurrenceArrivalLocationID(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.SLTM_AE_OAL_ID(jsonXml), XFWBResponse.SA_AL_LocationCodes_Code(jsonObject));
     }
+    public void verifyOccurrenceDepartureLocationName(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.SLTM_DE_ODL_Name(jsonXml), XFWBResponse.SA_DL_LocationName(jsonObject));
+    }
+    public void verifyOccurrenceDepartureTypeCode(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.SLTM_DE_ODL_TypeCode(jsonXml), XFWBResponse.SA_DL_LocationType(jsonObject));
+    }
+    public void verifyOccurrenceDepartureLocationID(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.SLTM_DE_ODL_ID(jsonXml), XFWBResponse.SA_DL_LocationCodes_Code(jsonObject));
+    }
     public void verifyOccurrenceArrivalLocationName(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.SLTM_AE_OAL_Name(jsonXml), XFWBResponse.SA_AL_LocationName(jsonObject));
+    }
+    public void verifyOccurrenceArrivalTypeCode(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.SLTM_AE_OAL_TypeCode(jsonXml), XFWBResponse.SA_AL_LocationType(jsonObject));
+    }
+    public void verifyUtilizedLogisticsTransportEquipmentID(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(String.valueOf(XFWBRequest.ULTE_ID(jsonXml)), XFWBResponse.SA_OTM_VehicleRegistration(jsonObject));
+    }
+    public void verifyUtilizedLogisticsTransportEquipmentCharacteristicCode(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.ULTE_CharacteristicCode(jsonXml), XFWBResponse.SA_OTM_VehicleType(jsonObject));
+    }
+    public void verifyUtilizedLogisticsTransportEquipmentCharacteristic(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(String.valueOf(XFWBRequest.ULTE_Characteristic(jsonXml)), XFWBResponse.SA_OTM_VehicleSize(jsonObject));
+    }
+    public void verifyUtilizedLogisticsTransportEquipmentAffixedLogisticsSeal(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(String.valueOf(XFWBRequest.ULTE_AffixedLogisticsSeal_ID(jsonXml)), XFWBResponse.SA_Seal(jsonObject));
     }
     public void verifySpecialHandlingCodes(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.HandlingSPHInstructions(jsonXml), XFWBResponse.SpecialHandlingCodes(jsonObject));
     }
     public void verifyTextualHandlingInstructionsDescription(JSONObject jsonXml, String type, JSONObject jsonObject){
-        Assert.assertEquals(XFWBRequest.HSSRI_Description(type, jsonXml), XFWBResponse.TextualHandlingInstructions(jsonObject));
+        Assert.assertTrue(XFWBResponse.TextualHandlingInstructions(jsonObject).containsAll(XFWBRequest.HSSRI_Description(type, jsonXml)));
+    }
+    public void verifyOSITextualHandlingInstructionsDescription(JSONObject jsonXml, String type, JSONObject jsonObject){
+        Assert.assertTrue(XFWBResponse.TextualHandlingInstructions(jsonObject).containsAll(XFWBRequest.OSI_Description(type, jsonXml)));
     }
     public void verifyAccountingInformation(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.IncludedAccountingNote(jsonXml), XFWBResponse.AccountingInformation(jsonObject));
@@ -167,6 +413,22 @@ public class TransformXfwbAPI {
     }
     public void verifyCustomsInformationCountryID(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.ICN_CountryID(jsonXml), XFWBResponse.CI_Country(jsonObject));
+    }
+    public void verifyAssociatedReferenceDocumentID(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(String.valueOf(XFWBRequest.ARD_ID(jsonXml)), XFWBResponse.ER_DocumentIdentifier(jsonObject));
+    }
+    public void verifyAssociatedReferenceDocumentIssueDateTime(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.ARD_IssueDateTime(jsonXml), XFWBResponse.ER_ValidFrom(jsonObject));
+        Assert.assertEquals(XFWBRequest.ARD_IssueDateTime(jsonXml), XFWBResponse.ER_ValidUntil(jsonObject));
+    }
+    public void verifyAssociatedReferenceDocumentTypeCode(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(String.valueOf(XFWBRequest.ARD_TypeCode(jsonXml)), XFWBResponse.ER_DocumentType(jsonObject));
+    }
+    public void verifyAssociatedReferenceDocumentName(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(XFWBRequest.ARD_Name(jsonXml), XFWBResponse.ER_DocumentName(jsonObject));
+    }
+    public void verifyApplicableOriginCurrencyExchangeSourceCurrencyCode(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals(String.valueOf(XFWBRequest.ApplicableOriginCurrencyExchange_SourceCurrencyCode(jsonXml)), XFWBResponse.OriginCurrency(jsonObject));
     }
     public void verifyOtherChargesOtherChargeAmount(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.ALLC_ActualAmount(jsonXml), XFWBResponse.OC_OtherChargeAmount(jsonObject));
@@ -216,15 +478,5 @@ public class TransformXfwbAPI {
     public void verifyApplicableFreightRateServiceChargeAppliedAmount(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.AR_IMCI_AFRSC_AppliedAmount(jsonXml), XFWBResponse.WLI_RateCharge(jsonObject));
     }
-    public void verifyAccountingInformationMapping(String key) {
-        JSONObject jsonObject = new JSONObject(response);
-        JSONObject jsonXml = XML.toJSONObject(XFWBXml.xmlPayload);
-        switch (key) {
-            case "accountingInformation":
-                verifyAccountingInformation(jsonXml, jsonObject);
-                break;
-            default:
-                throw new SkipStepException("there is no searched key");
-        }
-    }
+
 }
