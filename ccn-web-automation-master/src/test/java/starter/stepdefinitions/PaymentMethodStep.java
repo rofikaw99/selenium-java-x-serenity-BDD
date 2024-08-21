@@ -139,7 +139,7 @@ public class PaymentMethodStep {
 
         loginPage.goToMainWeb();
         loginPage.pressBtnLoginInit();
-        loginPage.changeSigninWindow();
+//        loginPage.changeSigninWindow();
         Thread.sleep(2500);
         loginPage.inputEmailLogin(email);
         loginPage.inputPasswordLogin(Constants.PASSWORD);
