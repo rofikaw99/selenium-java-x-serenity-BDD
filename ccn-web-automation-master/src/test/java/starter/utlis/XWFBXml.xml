@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rsm:Waybill xmlns:rsm="iata:waybill:1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:8" xmlns:ram="iata:datamodel:3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:local="urn:local">
+    <rsm:MessageHeaderDocument>
+        <ram:ID>XFWB</ram:ID>
+        <ram:Name>Air Waybill</ram:Name>
+        <ram:TypeCode>740</ram:TypeCode>
+        <ram:IssueDateTime>2024-07-31T10:59:53</ram:IssueDateTime>
+        <ram:PurposeCode>Creation</ram:PurposeCode>
+        <ram:VersionID>3</ram:VersionID>
+        <ram:ConversationID>XFWB20240731105953259</ram:ConversationID>
+        <ram:SenderParty>
+            <ram:PrimaryID schemeID="P">CSGAGT01XSPKJSQ/SIN01</ram:PrimaryID>
+        </ram:SenderParty>
+        <ram:RecipientParty>
+            <ram:PrimaryID schemeID="P">CSGAIR01SINFMSQ</ram:PrimaryID>
+        </ram:RecipientParty>
+    </rsm:MessageHeaderDocument>
+    <rsm:BusinessHeaderDocument>
+        <ram:ID>618-67009950</ram:ID>
+        <ram:SenderAssignedID>A736463</ram:SenderAssignedID>
+        <ram:IncludedHeaderNote>
+            <ram:ContentCode>D</ram:ContentCode>
+        </ram:IncludedHeaderNote>
+        <ram:SignatoryConsignorAuthentication>
+            <ram:Signatory>KUEHNE NAGEL PTE. LT</ram:Signatory>
+        </ram:SignatoryConsignorAuthentication>
+        <ram:SignatoryCarrierAuthentication>
+            <ram:ActualDateTime>2024-04-22T00:00:00</ram:ActualDateTime>
+            <ram:Signatory>KUEHNE NAGEL PTE LTD</ram:Signatory>
+            <ram:IssueAuthenticationLocation>
+                <ram:Name>SINGAPORE</ram:Name>
+            </ram:IssueAuthenticationLocation>
+        </ram:SignatoryCarrierAuthentication>
+    </rsm:BusinessHeaderDocument>
+    <rsm:MasterConsignment>
+        <ram:FreightForwarderAssignedID>1058707155</ram:FreightForwarderAssignedID>
+        <ram:NilCarriageValueIndicator>true</ram:NilCarriageValueIndicator>
+        <ram:NilCustomsValueIndicator>true</ram:NilCustomsValueIndicator>
+        <ram:DeclaredValueForCarriageAmount currencyID="USD">90</ram:DeclaredValueForCarriageAmount>
+        <ram:DeclaredValueForCustomsAmount currencyID="USD">780</ram:DeclaredValueForCustomsAmount>
+        <ram:NilInsuranceValueIndicator>true</ram:NilInsuranceValueIndicator>
+        <ram:InsuranceValueAmount currencyID="USD">120</ram:InsuranceValueAmount>
+        <ram:TotalChargePrepaidIndicator>true</ram:TotalChargePrepaidIndicator>
+        <ram:TotalDisbursementPrepaidIndicator>true</ram:TotalDisbursementPrepaidIndicator>
+        <ram:IncludedTareGrossWeightMeasure unitCode="KGM">1.8</ram:IncludedTareGrossWeightMeasure>
+        <ram:GrossVolumeMeasure unitCode="MTQ">0.018</ram:GrossVolumeMeasure>
+        <ram:TotalPieceQuantity>1</ram:TotalPieceQuantity>
+        <ram:PackageQuantity>6</ram:PackageQuantity>
+        <ram:ProductID>A545656F</ram:ProductID>
+        <ram:ConsignorParty>
+            <ram:Name>KUEHNE NAGEL PTE. LTD AIRPORT LO</ram:Name>
+            <ram:AccountID>1</ram:AccountID>
+            <ram:PostalStructuredAddress>
+                <ram:PostcodeCode>498792</ram:PostcodeCode>
+                <ram:PostOfficeBox>498792</ram:PostOfficeBox>
+                <ram:StreetName>80 ALPS AVENUE ADDENDUM 01-05 0</ram:StreetName>
+                <ram:CityName>SINGAPORE</ram:CityName>
+                <ram:CityID>SG</ram:CityID>
+                <ram:CountryID>SG</ram:CountryID>
+                <ram:CountryName>SINGAPORE</ram:CountryName>
+                <ram:CountrySubDivisionName>SINGAPORE</ram:CountrySubDivisionName>
+                <ram:CountrySubDivisionID>SG</ram:CountrySubDivisionID>
+            </ram:PostalStructuredAddress>
+            <ram:DefinedTradeContact>
+                <ram:PersonName>Sia Ghofur</ram:PersonName>
+                <ram:DepartmentName>Aviation</ram:DepartmentName>
+                <ram:DirectTelephoneCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:DirectTelephoneCommunication>
+                <ram:FaxCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:FaxCommunication>
+                <ram:URIEmailCommunication>
+                    <ram:URIID>6565892903</ram:URIID>
+                </ram:URIEmailCommunication>
+                <ram:TelexCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:TelexCommunication>
+            </ram:DefinedTradeContact>
+        </ram:ConsignorParty>
+        <ram:ConsigneeParty>
+            <ram:Name>SHANGHAI DATIAN W INTERNATIONAL TRA</ram:Name>
+            <ram:AccountID>2</ram:AccountID>
+            <ram:PostalStructuredAddress>
+                <ram:PostcodeCode>2000080</ram:PostcodeCode>
+                <ram:StreetName>RO 2101 LITONG PLAZA</ram:StreetName>
+                <ram:CityName>SHANGHAI</ram:CityName>
+                <ram:CityID>PVG</ram:CityID>
+                <ram:CountryID>CN</ram:CountryID>
+                <ram:CountryName>CHINA</ram:CountryName>
+                <ram:CountrySubDivisionName>Shanghai district</ram:CountrySubDivisionName>
+                <ram:CountrySubDivisionID>PVG</ram:CountrySubDivisionID>
+                <ram:PostOfficeBox>2000086</ram:PostOfficeBox>
+            </ram:PostalStructuredAddress>
+            <ram:DefinedTradeContact>
+                <ram:PersonName>Sia Ghofur P</ram:PersonName>
+                <ram:DepartmentName>Aviation</ram:DepartmentName>
+                <ram:FaxCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:FaxCommunication>
+                <ram:URIEmailCommunication>
+                    <ram:URIID>6565892903</ram:URIID>
+                </ram:URIEmailCommunication>
+                <ram:TelexCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:TelexCommunication>
+                <ram:DirectTelephoneCommunication>
+                    <ram:CompleteNumber>00862160152046</ram:CompleteNumber>
+                </ram:DirectTelephoneCommunication>
+            </ram:DefinedTradeContact>
+        </ram:ConsigneeParty>
+        <ram:FreightForwarderParty>
+            <ram:Name>KUEHNE NAGEL PTE. LTD AIRPORT LOGIS</ram:Name>
+            <ram:AccountID>3</ram:AccountID>
+            <ram:CargoAgentID>3231713</ram:CargoAgentID>
+            <ram:FreightForwarderAddress>
+                <ram:PostcodeCode>498792</ram:PostcodeCode>
+                <ram:PostOfficeBox>498792</ram:PostOfficeBox>
+                <ram:StreetName>80 ALPS AVENUE ADDENDUM 01-05 0</ram:StreetName>
+                <ram:CityName>SINGAPORE</ram:CityName>
+                <ram:CityID>SG</ram:CityID>
+                <ram:CountryID>SG</ram:CountryID>
+                <ram:CountryName>SINGAPORE</ram:CountryName>
+                <ram:CountrySubDivisionName>SINGAPORE</ram:CountrySubDivisionName>
+                <ram:CountrySubDivisionID>SG</ram:CountrySubDivisionID>
+            </ram:FreightForwarderAddress>
+            <ram:SpecifiedCargoAgentLocation>
+                <ram:ID>0005</ram:ID>
+            </ram:SpecifiedCargoAgentLocation>
+            <ram:DefinedTradeContact>
+                <ram:PersonName>Sia Ghofur P</ram:PersonName>
+                <ram:DepartmentName>Aviation</ram:DepartmentName>
+                <ram:FaxCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:FaxCommunication>
+                <ram:URIEmailCommunication>
+                    <ram:URIID>6565892903</ram:URIID>
+                </ram:URIEmailCommunication>
+                <ram:TelexCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:TelexCommunication>
+                <ram:DirectTelephoneCommunication>
+                    <ram:CompleteNumber>00862160152046</ram:CompleteNumber>
+                </ram:DirectTelephoneCommunication>
+            </ram:DefinedTradeContact>
+        </ram:FreightForwarderParty>
+        <ram:AssociatedParty>
+            <ram:Name>KUEHNE NAGEL PTE. LTD AIRPORT LOGIS</ram:Name>
+            <ram:Role>Notify Party</ram:Role>
+            <ram:PostalStructuredAddress>
+                <ram:PostcodeCode>498792</ram:PostcodeCode>
+                <ram:PostOfficeBox>498792</ram:PostOfficeBox>
+                <ram:StreetName>80 ALPS AVENUE ADDENDUM 01-05 0</ram:StreetName>
+                <ram:CityName>SINGAPORE</ram:CityName>
+                <ram:CityID>SG</ram:CityID>
+                <ram:CountryID>SG</ram:CountryID>
+                <ram:CountryName>SINGAPORE</ram:CountryName>
+                <ram:CountrySubDivisionName>SINGAPORE</ram:CountrySubDivisionName>
+                <ram:CountrySubDivisionID>SG</ram:CountrySubDivisionID>
+            </ram:PostalStructuredAddress>
+            <ram:DefinedTradeContact>
+                <ram:PersonName>Sia Ghofur P</ram:PersonName>
+                <ram:DepartmentName>Aviation</ram:DepartmentName>
+                <ram:FaxCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:FaxCommunication>
+                <ram:URIEmailCommunication>
+                    <ram:URIID>6565892903</ram:URIID>
+                </ram:URIEmailCommunication>
+                <ram:TelexCommunication>
+                    <ram:CompleteNumber>6565892903</ram:CompleteNumber>
+                </ram:TelexCommunication>
+                <ram:DirectTelephoneCommunication>
+                    <ram:CompleteNumber>00862160152046</ram:CompleteNumber>
+                </ram:DirectTelephoneCommunication>
+            </ram:DefinedTradeContact>
+        </ram:AssociatedParty>
+        <ram:OriginLocation>
+            <ram:ID>SIN</ram:ID>
+            <ram:Name>SINGAPORE</ram:Name>
+        </ram:OriginLocation>
+        <ram:FinalDestinationLocation>
+            <ram:ID>PVG</ram:ID>
+            <ram:Name>SHANGHAI</ram:Name>
+        </ram:FinalDestinationLocation>
+        <ram:SpecifiedLogisticsTransportMovement>
+            <ram:StageCode />
+            <ram:ID>SQ826</ram:ID>
+            <ram:UsedLogisticsTransportMeans>
+                <ram:Name>SQ</ram:Name>
+            </ram:UsedLogisticsTransportMeans>
+            <ram:ArrivalEvent>
+                <ram:ScheduledOccurrenceDateTime>2024-04-23T00:00:00</ram:ScheduledOccurrenceDateTime>
+                <ram:OccurrenceArrivalLocation>
+                    <ram:ID>PVG</ram:ID>
+                    <ram:Name>SQ</ram:Name>
+                </ram:OccurrenceArrivalLocation>
+            </ram:ArrivalEvent>
+            <ram:DepartureEvent>
+                <ram:ScheduledOccurrenceDateTime>2024-04-23T00:00:00</ram:ScheduledOccurrenceDateTime>
+                <ram:OccurrenceDepartureLocation>
+                    <ram:ID>SG</ram:ID>
+                    <ram:Name>SQ</ram:Name>
+                </ram:OccurrenceDepartureLocation>
+            </ram:DepartureEvent>
+        </ram:SpecifiedLogisticsTransportMovement>
+        <ram:UtilizedLogisticsTransportEquipment>
+            <ram:ID>1</ram:ID>
+            <ram:CharacteristicCode>A435</ram:CharacteristicCode>
+            <ram:Characteristic>789</ram:Characteristic>
+            <ram:AffixedLogisticsSeal>
+                <ram:ID>A784</ram:ID>
+            </ram:AffixedLogisticsSeal>
+        </ram:UtilizedLogisticsTransportEquipment>
+        <ram:HandlingSPHInstructions>
+            <ram:DescriptionCode>ECC</ram:DescriptionCode>
+        </ram:HandlingSPHInstructions>
+        <ram:HandlingSPHInstructions>
+            <ram:DescriptionCode>SPX</ram:DescriptionCode>
+        </ram:HandlingSPHInstructions>
+        <ram:HandlingSPHInstructions>
+            <ram:DescriptionCode>EAW</ram:DescriptionCode>
+        </ram:HandlingSPHInstructions>
+        <ram:HandlingSSRInstructions>
+            <ram:Description>SPX SHP ID UEN199400013D SHIPPER CTC SRI GANESH SIVARAJAH TEL 65</ram:Description>
+        </ram:HandlingSSRInstructions>
+        <ram:HandlingSSRInstructions>
+            <ram:Description>82033209 CNE ID USCI9131010963122297XT CTC NANCY BU TEL 862160152</ram:Description>
+        </ram:HandlingSSRInstructions>
+        <ram:HandlingOSIInstructions>
+            <ram:Description>82033209 CNE ID USCI9131010963122297XT CTC NANCY BU TEL 862160152</ram:Description>
+        </ram:HandlingOSIInstructions>
+        <ram:IncludedAccountingNote>
+            <ram:ContentCode>GEN</ram:ContentCode>
+            <ram:Content>FK-XPS</ram:Content>
+        </ram:IncludedAccountingNote>
+        <ram:IncludedCustomsNote>
+            <ram:ContentCode>T</ram:ContentCode>
+            <ram:Content>UEN199400013D</ram:Content>
+            <ram:SubjectCode>SHP</ram:SubjectCode>
+            <ram:CountryID>SG</ram:CountryID>
+        </ram:IncludedCustomsNote>
+        <ram:IncludedCustomsNote>
+            <ram:ContentCode>T</ram:ContentCode>
+            <ram:Content>USCI9131010963122297XT</ram:Content>
+            <ram:SubjectCode>CNE</ram:SubjectCode>
+            <ram:CountryID>CN</ram:CountryID>
+        </ram:IncludedCustomsNote>
+        <ram:IncludedCustomsNote>
+            <ram:ContentCode>CT</ram:ContentCode>
+            <ram:Content>00862160152046</ram:Content>
+            <ram:SubjectCode>CNE</ram:SubjectCode>
+            <ram:CountryID>CN</ram:CountryID>
+        </ram:IncludedCustomsNote>
+        <ram:IncludedCustomsNote>
+            <ram:ContentCode>RA</ram:ContentCode>
+            <ram:Content>RCA02012008</ram:Content>
+            <ram:SubjectCode>ISS</ram:SubjectCode>
+            <ram:CountryID>SG</ram:CountryID>
+        </ram:IncludedCustomsNote>
+        <ram:IncludedCustomsNote>
+            <ram:ContentCode>ED</ram:ContentCode>
+            <ram:Content>0624</ram:Content>
+        </ram:IncludedCustomsNote>
+        <ram:AssociatedReferenceDocument>
+            <ram:ID>123</ram:ID>
+            <ram:IssueDateTime>2024-04-23T00:00:00</ram:IssueDateTime>
+            <ram:TypeCode>1</ram:TypeCode>
+            <ram:Name>Reference Document</ram:Name>
+        </ram:AssociatedReferenceDocument>
+        <ram:ApplicableOriginCurrencyExchange>
+            <ram:SourceCurrencyCode>SGD</ram:SourceCurrencyCode>
+        </ram:ApplicableOriginCurrencyExchange>
+        <ram:ApplicableLogisticsAllowanceCharge>
+            <ram:ID>MY</ram:ID>
+            <ram:PrepaidIndicator>true</ram:PrepaidIndicator>
+            <ram:PartyTypeCode>C</ram:PartyTypeCode>
+            <ram:ActualAmount currencyID="SGD">10</ram:ActualAmount>
+        </ram:ApplicableLogisticsAllowanceCharge>
+        <ram:ApplicableRating>
+            <ram:TypeCode>F</ram:TypeCode>
+            <ram:IncludedMasterConsignmentItem>
+                <ram:SequenceNumeric>1</ram:SequenceNumeric>
+                <ram:GrossWeightMeasure unitCode="KGM">1.8</ram:GrossWeightMeasure>
+                <ram:PieceQuantity>1</ram:PieceQuantity>
+                <ram:NatureIdentificationTransportCargo>
+                    <ram:Identification>CONSOLIDATION AS PER</ram:Identification>
+                </ram:NatureIdentificationTransportCargo>
+                <ram:ApplicableFreightRateServiceCharge>
+                    <ram:CategoryCode>M</ram:CategoryCode>
+                    <ram:ChargeableWeightMeasure unitCode="KGM">3</ram:ChargeableWeightMeasure>
+                    <ram:AppliedRate>87</ram:AppliedRate>
+                    <ram:AppliedAmount currencyID="SGD">87</ram:AppliedAmount>
+                </ram:ApplicableFreightRateServiceCharge>
+            </ram:IncludedMasterConsignmentItem>
+            <ram:IncludedMasterConsignmentItem>
+                <ram:SequenceNumeric>2</ram:SequenceNumeric>
+                <ram:GrossVolumeMeasure unitCode="MTQ">0.018</ram:GrossVolumeMeasure>
+            </ram:IncludedMasterConsignmentItem>
+            <ram:IncludedMasterConsignmentItem>
+                <ram:SequenceNumeric>3</ram:SequenceNumeric>
+                <ram:NatureIdentificationTransportCargo>
+                    <ram:Identification>ATTACHED MANIFEST</ram:Identification>
+                </ram:NatureIdentificationTransportCargo>
+            </ram:IncludedMasterConsignmentItem>
+            <ram:IncludedMasterConsignmentItem>
+                <ram:SequenceNumeric>4</ram:SequenceNumeric>
+                <ram:TransportLogisticsPackage>
+                    <ram:ItemQuantity>1</ram:ItemQuantity>
+                    <ram:LinearSpatialDimension>
+                        <ram:WidthMeasure unitCode="CMT">29</ram:WidthMeasure>
+                        <ram:LengthMeasure unitCode="CMT">56</ram:LengthMeasure>
+                        <ram:HeightMeasure unitCode="CMT">11</ram:HeightMeasure>
+                    </ram:LinearSpatialDimension>
+                </ram:TransportLogisticsPackage>
+            </ram:IncludedMasterConsignmentItem>
+        </ram:ApplicableRating>
+        <ram:ApplicableTotalRating>
+            <ram:TypeCode>F</ram:TypeCode>
+            <ram:ApplicablePrepaidCollectMonetarySummation>
+                <ram:PrepaidIndicator>true</ram:PrepaidIndicator>
+                <ram:WeightChargeTotalAmount currencyID="SGD">87</ram:WeightChargeTotalAmount>
+                <ram:CarrierTotalDuePayableAmount currencyID="SGD">10.00</ram:CarrierTotalDuePayableAmount>
+                <ram:GrandTotalAmount currencyID="SGD">97</ram:GrandTotalAmount>
+            </ram:ApplicablePrepaidCollectMonetarySummation>
+        </ram:ApplicableTotalRating>
+    </rsm:MasterConsignment>
+</rsm:Waybill>

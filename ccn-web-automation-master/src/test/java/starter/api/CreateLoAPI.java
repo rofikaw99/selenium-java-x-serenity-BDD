@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.then;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
 public class CreateLoAPI {
@@ -35,5 +36,8 @@ public class CreateLoAPI {
     }
     public void verifyThereIsLOId(){
         then().body("$", hasKey("@id"));
+    }
+    public void verifyTheTypeIsWaybill(){
+        then().body("@type", equalTo("cargo:Waybill"));
     }
 }
