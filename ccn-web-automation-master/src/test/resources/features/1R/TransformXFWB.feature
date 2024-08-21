@@ -1,7 +1,7 @@
-@transform-xfwb
+@xfwb @transform-xfwb
 Feature: Transform XFWB
 
-  @xfwb-2
+  @xfwb-2 @done
   Scenario Outline: Verify BusinessHeaderDocument path for every key data
     Given user transform xfwb
     Then verify mapping data of "<value>" "<child>" "<child_2>" to data in response of Waybill "<mapping>"
@@ -10,18 +10,23 @@ Feature: Transform XFWB
       | ID    |       |         | waybillPrefix |
       | ID    |       |         | waybillNumber |
       | SenderAssignedID  |  |  |shippingRefNo |
-      | IncludedHeaderNote | ContentCode | |waybillType  |
+      | IncludedHeaderNote | ContentCode | | waybillType  |
+      | IncludedHeaderNote | Content | |   |
       | SignatoryConsignorAuthentication| Signatory | | consignorDeclarationSignature |
       | SignatoryCarrierAuthentication  | ActualDateTime | | carrierDeclarationDate |
       | SignatoryCarrierAuthentication  | Signatory |      | carrierDeclarationSignature |
       | SignatoryCarrierAuthentication  | IssueAuthenticationLocation | Name | carrierDeclarationPlace |
 
-  @xfwb-3
+  @xfwb-3 @done
   Scenario Outline: Verify MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data of "<value>" to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
+      | ID |            |
+      | AdditionalID |            |
+      | FreightForwarderAssignedID |            |
+      | AssociatedReferenceID |            |
       | NilCarriageValueIndicator | declaredValueForCarriage |
       | DeclaredValueForCarriageAmount | declaredValueForCarriage |
       | NilCustomsValueIndicator                          | declaredValueForCustoms  |
@@ -32,16 +37,19 @@ Feature: Transform XFWB
       | TotalDisbursementPrepaidIndicator                | otherChargesIndicator    |
       | IncludedTareGrossWeightMeasure                   | totalGrossWeight         |
       | GrossVolumeMeasure                               | dimensionsForRate        |
+      | DensityGroupCode                               |         |
       | PackageQuantity                                  | slacForRate              |
       | TotalPieceQuantity                               | pieceCountForRate        |
-      | ProductID                                        | CarrierProduct#productCode |
+      | ProductID                                        | productCode |
 
-  @xfwb-4
+  @xfwb-4 @done
   Scenario Outline: Verify ConsignorParty of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" "<child>" of ConsignorParty to data in response of Waybill "<mapping>"
     Examples:
       | value | child | mapping |
+      | PrimaryID  | |  |
+      | AdditionalID  | |  |
       | Name  | | name |
       | AccountID | | otherIdentifiers |
       | PostalStructuredAddress | PostcodeCode | postalCode  |
@@ -54,13 +62,13 @@ Feature: Transform XFWB
       | PostalStructuredAddress | CityID | cityCode        |
       | PostalStructuredAddress | CountrySubDivisionID | regionCode              |
       | DefinedTradeContact     | PersonName | firstName        |
-      | DefinedTradeContact     | DepartmentName | textualValue |
-      | DefinedTradeContact     | DirectTelephoneCommunication | textualValue#productCode |
+      | DefinedTradeContact     | DepartmentName | department |
+      | DefinedTradeContact     | DirectTelephoneCommunication | textualValue |
       | DefinedTradeContact     | FaxCommunication | textualValue |
       | DefinedTradeContact     | URIEmailCommunication | textualValue |
       | DefinedTradeContact     | TelexCommunication | textualValue |
 
-  @xfwb-5
+  @xfwb-5 @done
   Scenario Outline: Verify ConsigneeParty of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" "<child>" of ConsigneeParty to data in response of Waybill "<mapping>"
@@ -79,12 +87,12 @@ Feature: Transform XFWB
       | PostalStructuredAddress | CountrySubDivisionID | regionCode              |
       | DefinedTradeContact     | PersonName | firstName        |
       | DefinedTradeContact     | DepartmentName | textualValue |
-      | DefinedTradeContact     | DirectTelephoneCommunication | textualValue#productCode |
+      | DefinedTradeContact     | DirectTelephoneCommunication | textualValue |
       | DefinedTradeContact     | FaxCommunication | textualValue |
       | DefinedTradeContact     | URIEmailCommunication | textualValue |
       | DefinedTradeContact     | TelexCommunication | textualValue |
 
-  @xfwb-6
+  @xfwb-6 @done
   Scenario Outline: Verify FreightForwarderParty of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" "<child>" of FreightForwarderParty to data in response of Waybill "<mapping>"
@@ -93,42 +101,70 @@ Feature: Transform XFWB
       | Name  | | name |
       | AccountID | | otherIdentifiers |
       | CargoAgentID | | iataCargoAgentCode |
-      | PostalStructuredAddress | PostcodeCode | postalCode  |
-      | PostalStructuredAddress | StreetName | streetAddressLines  |
-      | PostalStructuredAddress | CityName | cityName            |
-      | PostalStructuredAddress | CountryID | countryCode            |
-      | PostalStructuredAddress | CountryName | country |
-      | PostalStructuredAddress | CountrySubDivisionName | regionName    |
-      | PostalStructuredAddress | PostOfficeBox | postOfficeBox         |
-      | PostalStructuredAddress | CityID | cityCode        |
-      | PostalStructuredAddress | CountrySubDivisionID | regionCode              |
+      | FreightForwarderAddress | PostcodeCode | postalCode  |
+      | FreightForwarderAddress | StreetName | streetAddressLines  |
+      | FreightForwarderAddress | CityName | cityName            |
+      | FreightForwarderAddress | CountryID | countryCode            |
+      | FreightForwarderAddress | CountryName | country |
+      | FreightForwarderAddress | CountrySubDivisionName | regionName    |
+      | FreightForwarderAddress | PostOfficeBox | postOfficeBox         |
+      | FreightForwarderAddress | CityID | cityCode        |
+      | FreightForwarderAddress | CountrySubDivisionID | regionCode              |
       | SpecifiedCargoAgentLocation | ID | iataCargoAgentLocationIdentifier              |
       | DefinedTradeContact     | PersonName | firstName        |
       | DefinedTradeContact     | DepartmentName | textualValue |
-      | DefinedTradeContact     | DirectTelephoneCommunication | textualValue#productCode |
+      | DefinedTradeContact     | DirectTelephoneCommunication | textualValue |
       | DefinedTradeContact     | FaxCommunication | textualValue |
       | DefinedTradeContact     | URIEmailCommunication | textualValue |
       | DefinedTradeContact     | TelexCommunication | textualValue |
 
-  @xfwb-7
+  @xfwb-100 @done
+  Scenario Outline: Verify AssociatedParty of MasterConsignment path for every key data
+    Given user transform xfwb
+    Then verify mapping data "<value>" "<child>" of AssociatedParty to data in response of Waybill "<mapping>"
+    Examples:
+      | value | child | mapping |
+      | Name  | | name |
+      | RoleCode  | |  |
+      | Role  | | partyrole |
+      | FreightForwarderAddress | PostcodeCode | postalCode  |
+      | FreightForwarderAddress | StreetName | streetAddressLines  |
+      | FreightForwarderAddress | CityName | cityName            |
+      | FreightForwarderAddress | CountryID | countryCode            |
+      | FreightForwarderAddress | CountryName | country |
+      | FreightForwarderAddress | CountrySubDivisionName | regionName    |
+      | FreightForwarderAddress | PostOfficeBox | postOfficeBox         |
+      | FreightForwarderAddress | CityID | cityCode        |
+      | FreightForwarderAddress | CountrySubDivisionID | regionCode              |
+      | SpecifiedAddressLocation | ID |               |
+      | SpecifiedAddressLocation | Name |               |
+      | PostalStructuredAddress | TypeCode |               |
+      | DefinedTradeContact     | PersonName | firstName        |
+      | DefinedTradeContact     | DepartmentName | textualValue |
+      | DefinedTradeContact     | DirectTelephoneCommunication | textualValue |
+      | DefinedTradeContact     | FaxCommunication | textualValue |
+      | DefinedTradeContact     | URIEmailCommunication | textualValue |
+      | DefinedTradeContact     | TelexCommunication | textualValue |
+
+  @xfwb-7 @done
   Scenario Outline: Verify OriginLocation of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" of OriginLocation to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
       | ID  | code |
-      | Name | Locationname |
+      | Name | name |
 
-  @xfwb-8
+  @xfwb-8 @done
   Scenario Outline: Verify FinalDestinationLocation of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" of FinalDestinationLocation to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
       | ID  | code |
-      | Name | Locationname |
+      | Name | name |
 
-  @xfwb-9
+  @xfwb-9 @done
   Scenario Outline: Verify SpecifiedLogisticsTransportMovement of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" "<child>" "<child_2>" of SpecifiedLogisticsTransportMovement to data in response of Waybill "<mapping>"
@@ -136,7 +172,9 @@ Feature: Transform XFWB
       | value | child | child_2 | mapping |
       | StageCode  |  |         | modeQualifier |
       | ModeCode |    |         | modeCode |
+      | Mode |    |         |  |
       | ID |          |         | transportIdentifier |
+      | SequenceNumeric |          |         |  |
       | UsedLogisticsTransportMeans | Name | | airlineCode |
       | ArrivalEvent | ScheduledOccurrenceDateTime | | movementTimestamp |
       | ArrivalEvent | OccurrenceArrivalLocation | ID | code |
@@ -147,23 +185,45 @@ Feature: Transform XFWB
       | DepartureEvent | OccurrenceDepartureLocation | Name | locationName |
       | DepartureEvent | OccurrenceDepartureLocation | TypeCode | locationType |
 
-  @xfwb-10
+  @xfwb-101 @done
+  Scenario Outline: Verify UtilizedLogisticsTransportEquipment of MasterConsignment path for every key data
+    Given user transform xfwb
+    Then verify mapping data "<value>" of UtilizedLogisticsTransportEquipment to data in response of Waybill "<mapping>"
+    Examples:
+      | value | mapping |
+      | ID | vehicleRegistration |
+      | CharacteristicCode | vehicleType |
+      | Characteristic | vehicleSize |
+      | AffixedLogisticsSeal | seal |
+
+  @xfwb-10 @done
   Scenario Outline: Verify HandlingSPHInstructions of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" of HandlingSPHInstructions to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
+      | Description |  |
       | DescriptionCode | specialHandlingCodes |
 
-  @xfwb-11
+  @xfwb-11 @done
   Scenario Outline: Verify HandlingSSRInstructions of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" of HandlingSSRInstructions to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
       | Description | textualHandlingInstructions |
+      | DescriptionCode |  |
 
-  @xfwb-12
+  @xfwb-102 @done
+  Scenario Outline: Verify HandlingOSIInstructions of MasterConsignment path for every key data
+    Given user transform xfwb
+    Then verify mapping data "<value>" of HandlingOSIInstructions to data in response of Waybill "<mapping>"
+    Examples:
+      | value | mapping |
+      | Description | textualHandlingInstructions |
+      | DescriptionCode |  |
+
+  @xfwb-12 @done
   Scenario Outline: Verify IncludedAccountingNote of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" of IncludedAccountingNote to data in response of Waybill "<mapping>"
@@ -172,7 +232,7 @@ Feature: Transform XFWB
       | ContentCode | accountingInformation |
       | Code | accountingInformation |
 
-  @xfwb-13
+  @xfwb-13 @done
   Scenario Outline: Verify IncludedCustomsNote of MasterConsignment path for every key data
     Given user transform xfwb
     Then verify mapping data "<value>" of IncludedCustomsNote to data in response of Waybill "<mapping>"
@@ -182,6 +242,25 @@ Feature: Transform XFWB
       | Content | note |
       | SubjectCode | subjectCode |
       | CountryID | country |
+
+  @xfwb-103 @done
+  Scenario Outline: Verify AssociatedReferenceDocument of MasterConsignment path for every key data
+    Given user transform xfwb
+    Then verify mapping data "<value>" of AssociatedReferenceDocument to data in response of Waybill "<mapping>"
+    Examples:
+      | value | mapping |
+      | ID | documentIdentifier |
+      | IssueDateTime | validFrom, validUntil |
+      | TypeCode | documentType |
+      | Name | documentName |
+
+  @xfwb-104 @done
+  Scenario Outline: Verify ApplicableOriginCurrencyExchange of MasterConsignment path for every key data
+    Given user transform xfwb
+    Then verify mapping data "<value>" of ApplicableOriginCurrencyExchange to data in response of Waybill "<mapping>"
+    Examples:
+      | value | mapping |
+      | SourceCurrencyCode | originCurrency |
 
   @xfwb-14
   Scenario Outline: Verify ApplicableLogisticsAllowanceCharge of MasterConsignment path for every key data

@@ -1,13 +1,16 @@
 package starter.stepdefinitions;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import org.json.JSONObject;
+import org.json.XML;
 import starter.api.CreateLoAPI;
 import starter.api.GetLoAPI;
-import starter.api.TransformXfwbPage;
+import starter.api.TransformXfwbAPI;
+import starter.utlis.XFWBXml;
 
 import java.io.IOException;
 
@@ -18,10 +21,12 @@ public class GetLoStep {
     @Steps
     GetLoAPI getLoAPI;
     @Steps
-    TransformXfwbPage transformXfwbPage;
+    TransformXfwbAPI transformXfwbPage;
 
     String id;
     JSONObject responseJson;
+    JSONObject jsonXml;
+
     @Given("Create logistic objects using predefined json")
     public void createLogisticObjectsUsingPredefinedJson() throws IOException {
         id = createLoAPI.createLORequest();
@@ -29,6 +34,7 @@ public class GetLoStep {
 
     @When("get logistic objects using ID of response")
     public void getLogisticObjectsUsingIDOfResponse() {
+        jsonXml = XML.toJSONObject(XFWBXml.xmlPayload);
         responseJson = getLoAPI.getLORequest(id);
     }
 
@@ -41,23 +47,28 @@ public class GetLoStep {
     public void verifyMappingDataOfToAPIResponse(String key) {
         switch (key){
             case "accountingInformation":
-                transformXfwbPage.verifyAccountingInformation(responseJson);
+                transformXfwbPage.verifyAccountingInformation(jsonXml, responseJson);
                 break;
             case "carrierDeclarationDate":
-                transformXfwbPage.verifyCarrierDeclarationPlace(responseJson);
+                transformXfwbPage.verifyCarrierDeclarationDate(jsonXml, responseJson);
                 break;
             case "carrierDeclarationSignature":
-                transformXfwbPage.verifyCarrierDeclarationSignature(responseJson);
+                transformXfwbPage.verifyCarrierDeclarationSignature(jsonXml, responseJson);
                 break;
             case "consignorDeclarationSignature":
-                transformXfwbPage.verifyConsignorDeclarationSignature(responseJson);
+                transformXfwbPage.verifyConsignorDeclarationSignature(jsonXml, responseJson);
                 break;
             case "waybillPrefix":
-                transformXfwbPage.verifyWaybillPrefix(responseJson);
+                transformXfwbPage.verifyWaybillPrefix(jsonXml, responseJson);
                 break;
             case "waybillNumber":
-                transformXfwbPage.verifyWaybillNumber(responseJson);
+                transformXfwbPage.verifyWaybillNumber(jsonXml, responseJson);
                 break;
         }
+    }
+
+    @And("verify the id of body is equals with the request data")
+    public void verifyTheIdOfBodyIsEqualsWithTheRequestData() {
+        getLoAPI.verifyIdEqualRequest(id);
     }
 }

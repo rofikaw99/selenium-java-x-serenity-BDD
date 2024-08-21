@@ -21,4 +21,9 @@ public class CreateLoStep {
     public void verifyThereIsIdOfLOInBodyResponse() {
         createLoAPI.verifyThereIsLOId();
     }
+
+    @And("verify the type value is {string}")
+    public void verifyTheTypeValueIs(String arg0) {
+        createLoAPI.verifyTheTypeIsWaybill();
+    }
 }

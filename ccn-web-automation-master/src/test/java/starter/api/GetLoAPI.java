@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.then;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
 public class GetLoAPI {
@@ -30,5 +31,8 @@ public class GetLoAPI {
     }
     public void verifySuccessGetLO(){
         then().statusCode(200);
+    }
+    public void verifyIdEqualRequest(String id){
+        then().body("@id", equalTo(id));
     }
 }
