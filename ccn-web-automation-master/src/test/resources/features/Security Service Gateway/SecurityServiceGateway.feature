@@ -15,3 +15,8 @@ Feature: Security Service Gateway
   Scenario: Check status with private service gateway with API key but no token
     Given  Check status with "private" service gateway with API key but no token
     Then verify the response is unauthorized
+
+  @SSG_JWTTB_1
+  Scenario: Check status with private service gateway with modified host
+    Given  Check status with "private" service gateway with modified host
+    Then verify the response is succeed
