@@ -13,6 +13,7 @@ import starter.utlis.Constants;
 public class SecurityServiceGatewayStepdefs {
     @Steps
     SecurityServiceGatewayPage securityServiceGatewayStepdefsPage;
+    CheckStatusPage checkStatusPage;
 
     private int waitResponse = 5000;
     private int waitLongResponse = 10000;
@@ -40,8 +41,24 @@ public class SecurityServiceGatewayStepdefs {
         securityServiceGatewayStepdefsPage.Check_status_with_private_service_gateway_with_no_token_and_API_key(serviceGatewayType);
     }
 
+    @Given("Check status with {string} service gateway with modified host")
+    public void Check_status_with_private_service_gateway_with_modified_host(String condition) throws Exception {
+        switch (condition) {
+            case "public" : serviceGatewayType = Constants.PUBLIC_SERVICE_GATEWAY;
+                break;
+            case "private" : serviceGatewayType = Constants.PRIVATE_SERVICE_GATEWAY;
+                break;
+        }
+        securityServiceGatewayStepdefsPage.Check_status_with_private_service_gateway_with_modified_host(serviceGatewayType);
+    }
+
     @Then("verify the response is unauthorized")
     public void verify_the_response_is_unauthorized() throws Exception {
         securityServiceGatewayStepdefsPage.assertFailed401();
+    }
+
+    @Then("verify the response is succeed")
+    public void verify_the_response_is_succeede() throws Exception {
+        checkStatusPage.assertSuccessCheckStatus();
     }
 }

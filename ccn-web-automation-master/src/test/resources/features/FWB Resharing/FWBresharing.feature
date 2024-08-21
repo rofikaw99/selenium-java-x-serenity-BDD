@@ -57,7 +57,28 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType  | contentName                  | contact                                        |
-      | MAWBRequest  | test-monday-16-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
+#      | MAWBRequest  | test-monday-19-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
+      | MAWBRequest  | test-monday-19-august-2024   | system.csgair01sinfmsq@ccnexchange.com  |
+
+  @FWB_R_11
+  Scenario Outline:  Create DockShipment Document and Do Explicit Sharing
+    Given create "<contentType>" doc with "<contentName>" from system
+    When do explicit sharing "<contact>"
+    Then make sure that the notification share to SATS
+
+    Examples:
+      | contentType  | contentName                  | contact                                        |
+      | DockShipment  | test-monday-19-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
+
+  @FWB_R_12
+  Scenario Outline:  Create DockShipment Document and Do Explicit Sharing
+    Given create "<contentType>" doc with "<contentName>" from system
+    When do explicit sharing "<contact>"
+    Then make sure that the notification share to SATS
+
+    Examples:
+      | contentType  | contentName                  | contact                                        |
+      | DockBookingUpdate  | test-monday-19-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
 
   @FWB_R_7
   Scenario Outline:  Create BC Document then Perform Share Via Coloader
