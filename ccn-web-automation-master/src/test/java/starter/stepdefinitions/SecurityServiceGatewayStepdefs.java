@@ -58,7 +58,7 @@ public class SecurityServiceGatewayStepdefs {
     }
 
     @Then("verify the response is succeed")
-    public void verify_the_response_is_succeed() throws Exception {
+    public void verify_the_response_is_succeede() throws Exception {
         checkStatusPage.assertSuccessCheckStatus();
     }
 }
