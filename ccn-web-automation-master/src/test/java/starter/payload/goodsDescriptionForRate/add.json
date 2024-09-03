@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "cargo": "https://onerecord.iata.org/ns/cargo#",
+    "api": "https://onerecord.iata.org/ns/api#"
+  },
+  "@type": "api:Change",
+  "api:hasLogisticsObject": {
+    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc91ec8366ab67171fb631"
+  },
+  "api:hasDescription": "Add goodsDescriptionForRate",
+  "api:hasOperation": [
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc91ec8366ab67171fb631",
+      "api:p": "https://onerecord.iata.org/ns/cargo#goodsDescriptionForRate",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "CONSOLIDATION AS PER ATTACHED MANIFEST EORI DE54914790255 Updated"
+        }
+      ]
+    }
+  ],
+  "api:hasRevision": {
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+    "@value": "3"
+  }
+}

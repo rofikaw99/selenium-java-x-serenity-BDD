@@ -355,7 +355,9 @@ public class LOResponse {
         return result;
     }
     public static JSONObject waybillLineItems_hsCodeForRate(JSONObject jsonObject){
-        return waybillLineItems(jsonObject).getJSONObject("cargo:hsCodeForRate");
+        JSONObject result = null;
+        if (waybillLineItems(jsonObject).has("cargo:hsCodeForRate")) result = waybillLineItems(jsonObject).getJSONObject("cargo:hsCodeForRate");
+        return result;
     }
     public static String waybillLineItems_hsCodeForRate_id(JSONObject jsonObject){
         return waybillLineItems_hsCodeForRate(jsonObject).getString("@id");
@@ -371,7 +373,9 @@ public class LOResponse {
         return otherCharges(jsonObject).getString("@id");
     }
     public static JSONObject otherCharges_otherChargeCode(JSONObject jsonObject){
-        return otherCharges(jsonObject).getJSONObject("cargo:otherChargeCode");
+        JSONObject result = null;
+        if (otherCharges(jsonObject).has("cargo:otherChargeCode")) result = otherCharges(jsonObject).getJSONObject("cargo:otherChargeCode");
+        return result;
     }
     public static String otherCharges_otherChargeCode_id(JSONObject jsonObject){
         return otherCharges_otherChargeCode(jsonObject).getString("@id");
@@ -607,6 +611,9 @@ public class LOResponse {
     }
     public static String S_P_involvedInActions_loadingType_code(JSONObject jsonObject){
         return S_pieces_involvedInActions_loadingType(jsonObject).getString("cargo:code");
+    }
+    public static JSONArray shipment_specialHandlingCodes(JSONObject jsonObject){
+        return shipment(jsonObject).getJSONArray("cargo:specialHandlingCodes");
     }
     public static JSONObject shipment_specialHandlingCodes(JSONObject jsonObject, int index){
         return shipment(jsonObject).getJSONArray("cargo:specialHandlingCodes").getJSONObject(index);

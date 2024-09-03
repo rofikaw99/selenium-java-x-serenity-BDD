@@ -564,4 +564,139 @@ public class UpdateLOStep {
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyShipmentDescriptionDeleted(jsonResponse);
     }
+
+    @When("user add Shipment description")
+    public void userAddShipmentDescription() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.waybillLineItems_id(responseJson);
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addShipmentDescription(revision, idTarget);
+    }
+
+    @And("the Shipment description value added in the latest get lo")
+    public void theShipmentDescriptionValueAddedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyShipmentDescriptionAdded(jsonResponse);
+    }
+
+    @When("user delete Commodity \\(price) code")
+    public void userDeleteCommodityPriceCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        String hsCodeForRateId = LOResponse.waybillLineItems_hsCodeForRate_id(responseJson);
+
+        Map<String, String> actualData = new HashMap<>();
+        actualData.put("idHsCodeForRate", hsCodeForRateId);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteCommodityCode(revision, idTarget, actualData);
+    }
+
+    @And("the commodity \\(price) code value deleted in the latest get lo")
+    public void theCommodityPriceCodeValueDeletedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyHsCodeForRateDeleted(jsonResponse);
+    }
+
+    @When("user add Commodity \\(price) code")
+    public void userAddCommodityPriceCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.waybillLineItems_id(responseJson);
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addCommodityCode(revision, idTarget);
+    }
+
+    @And("the commodity \\(price) code value added in the latest get lo")
+    public void theCommodityPriceCodeValueAddedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyHsCodeForRateAdded(jsonResponse);
+    }
+
+    @When("user delete special handling code")
+    public void userDeleteSpecialHandlingCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        String idSpecialHandlingCode = LOResponse.shipment_specialHandlingCodes_id(responseJson, 0);
+
+        Map<String, String> actualData = new HashMap<>();
+        actualData.put("idSpecialHandlingCode", idSpecialHandlingCode);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteSpecialHandlingCode(revision, idTarget, actualData);
+    }
+
+    @And("the special handling code value deleted in the latest get lo")
+    public void theSpecialHandlingCodeValueDeletedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifySpecialHandlingCodeDeleted(jsonResponse);
+    }
+
+    @When("user add special handling code")
+    public void userAddSpecialHandlingCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addSpecialHandlingCode(revision, idTarget);
+    }
+
+    @And("the special handling code value added in the latest get lo")
+    public void theSpecialHandlingCodeValueAddedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifySpecialHandlingCodeAdded(jsonResponse);
+    }
+
+    @When("user delete OCDC charges, MYC, SCC, RAC, etc")
+    public void userDeleteOCDCChargesMYCSCCRACEtc() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.otherCharges_id(responseJson);
+        String idOtherChargeCode = LOResponse.otherCharges_otherChargeCode_id(responseJson);
+
+        Map<String, String> actualData = new HashMap<>();
+        actualData.put("idOtherChargeCode", idOtherChargeCode);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteOtherChargeCode(revision, idTarget, actualData);
+    }
+
+    @And("the OCDC charges, MYC, SCC, RAC, etc value deleted in the latest get lo")
+    public void theOCDCChargesMYCSCCRACEtcValueDeletedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyOtherChargesDeleted(jsonResponse);
+    }
+
+    @When("user add OCDC charges, MYC, SCC, RAC, etc")
+    public void userAddOCDCChargesMYCSCCRACEtc() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.otherCharges_id(responseJson);
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addOtherChargeCode(revision, idTarget);
+    }
+
+    @And("the OCDC charges, MYC, SCC, RAC, etc value added in the latest get lo")
+    public void theOCDCChargesMYCSCCRACEtcValueAddedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyOtherChargesAdded(jsonResponse);
+    }
 }

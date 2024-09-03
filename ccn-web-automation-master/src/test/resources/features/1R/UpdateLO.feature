@@ -177,8 +177,19 @@ Feature: Update LO
     And the Shipment description value deleted in the latest get lo
     And the revision value changes to increment 1
 
+  @7.2 @done
+  Scenario: 7.2 Add Shipment description
+    Given user login SSO for one record
+    And user transform xfwb
+    And user success create LO for deleted key "goodsDescriptionForRate"
+    And user success get LO
+    When user add Shipment description
+    Then success update "Shipment description"
+    And the Shipment description value added in the latest get lo
+    And the revision value changes to increment 1
+
   @8
-  Scenario: 8. Commodity (price) code
+  Scenario: 8. Update Commodity (price) code
     Given user login SSO for one record
     And user transform xfwb
     And user success create LO
@@ -188,7 +199,29 @@ Feature: Update LO
     And the commodity (price) code value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @9
+  @8.1 @done
+  Scenario: 8.1 Delete Commodity (price) code
+    Given user login SSO for one record
+    And user transform xfwb
+    And user success create LO
+    And user success get LO
+    When user delete Commodity (price) code
+    Then success update "Commodity (price) code"
+    And the commodity (price) code value deleted in the latest get lo
+    And the revision value changes to increment 1
+
+  @8.2 @done
+  Scenario: 8.2 Add Commodity (price) code
+    Given user login SSO for one record
+    And user transform xfwb
+    And user success create LO for deleted key "hsCodeForRate"
+    And user success get LO
+    When user add Commodity (price) code
+    Then success update "Commodity (price) code"
+    And the commodity (price) code value added in the latest get lo
+    And the revision value changes to increment 1
+
+  @9 @done
   Scenario: 9. Special handling code
     Given user login SSO for one record
     And user transform xfwb
@@ -197,6 +230,28 @@ Feature: Update LO
     When user update special handling code
     Then success update "special handling code"
     And the special handling code value changes in the latest get lo
+    And the revision value changes to increment 1
+
+  @9.1 @done
+  Scenario: 9.1 Delete Special handling code
+    Given user login SSO for one record
+    And user transform xfwb
+    And user success create LO
+    And user success get LO
+    When user delete special handling code
+    Then success update "special handling code"
+    And the special handling code value deleted in the latest get lo
+    And the revision value changes to increment 1
+
+  @9.2
+  Scenario: 9.2 Add Special handling code
+    Given user login SSO for one record
+    And user transform xfwb
+    And user success create LO for deleted key "specialHandlingCode"
+    And user success get LO
+    When user add special handling code
+    Then success update "special handling code"
+    And the special handling code value added in the latest get lo
     And the revision value changes to increment 1
 
   @10
@@ -221,7 +276,7 @@ Feature: Update LO
     And the consignee name, address value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @12
+  @12 @done
   Scenario: 12. OCDC charges, MYC, SCC, RAC, etc
     Given user login SSO for one record
     And user transform xfwb
@@ -230,4 +285,26 @@ Feature: Update LO
     When user update OCDC charges, MYC, SCC, RAC, etc
     Then success update "OCDC charges, MYC, SCC, RAC, etc"
     And the OCDC charges, MYC, SCC, RAC, etc value changes in the latest get lo
+    And the revision value changes to increment 1
+
+  @12.1 @done
+  Scenario: 12.1 Delete OCDC charges, MYC, SCC, RAC, etc
+    Given user login SSO for one record
+    And user transform xfwb
+    And user success create LO
+    And user success get LO
+    When user delete OCDC charges, MYC, SCC, RAC, etc
+    Then success update "OCDC charges, MYC, SCC, RAC, etc"
+    And the OCDC charges, MYC, SCC, RAC, etc value deleted in the latest get lo
+    And the revision value changes to increment 1
+
+  @12.2 @done
+  Scenario: 12.2 Add OCDC charges, MYC, SCC, RAC, etc
+    Given user login SSO for one record
+    And user transform xfwb
+    And user success create LO for deleted key "otherChargeCode"
+    And user success get LO
+    When user add OCDC charges, MYC, SCC, RAC, etc
+    Then success update "OCDC charges, MYC, SCC, RAC, etc"
+    And the OCDC charges, MYC, SCC, RAC, etc value added in the latest get lo
     And the revision value changes to increment 1

@@ -58,6 +58,18 @@ public class CreateLoAPI {
                 XFWBResponse.removeHeight(customPayload);
                 XFWBResponse.removeWidth(customPayload);
                 break;
+            case "goodsDescriptionForRate":
+                XFWBResponse.removeGoodsDescriptionForRate(customPayload);
+                break;
+            case "hsCodeForRate":
+                XFWBResponse.removeHsCodeForRate(customPayload);
+                break;
+            case "specialHandlingCode":
+                XFWBResponse.removeSpecialHandlingCodes(customPayload);
+                break;
+            case "otherChargeCode":
+                XFWBResponse.removeOtherChargeCode(customPayload);
+                break;
         }
 
         String url = internalUrl +"/service/" + serviceId + "/OneRecord/1/CreateLogisticObject";
