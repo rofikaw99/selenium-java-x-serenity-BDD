@@ -1,0 +1,197 @@
+{
+  "@context": {
+    "cargo": "https://onerecord.iata.org/ns/cargo#",
+    "api": "https://onerecord.iata.org/ns/api#"
+  },
+  "@type": "api:Change",
+  "api:hasLogisticsObject": {
+    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6c8"
+  },
+  "api:hasDescription": "Update Dimensions",
+  "api:hasOperation": [
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6fd",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "CMT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6fd",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "MT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ed",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "api:hasValue": "11"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ed",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "api:hasValue": "20"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6fe",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "CMT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6fe",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "MT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ee",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "api:hasValue": "56"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ee",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "api:hasValue": "70"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ff",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "CMT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ff",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "MT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ef",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "api:hasValue": "29"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6ef",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
+          "api:hasValue": "35"
+        }
+      ]
+    }
+  ],
+  "api:hasRevision": {
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+    "@value": "0"
+  }
+}

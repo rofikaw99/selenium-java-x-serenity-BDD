@@ -16,7 +16,7 @@
         </ram:RecipientParty>
     </rsm:MessageHeaderDocument>
     <rsm:BusinessHeaderDocument>
-        <ram:ID>618-67009950</ram:ID>
+        <ram:ID>618-67009720</ram:ID>
         <ram:SenderAssignedID>A736463</ram:SenderAssignedID>
         <ram:IncludedHeaderNote>
             <ram:ContentCode>D</ram:ContentCode>
@@ -278,11 +278,11 @@
             <ram:ActualAmount currencyID="SGD">10</ram:ActualAmount>
         </ram:ApplicableLogisticsAllowanceCharge>
         <ram:ApplicableRating>
-            <ram:TypeCode>F</ram:TypeCode>
             <ram:IncludedMasterConsignmentItem>
                 <ram:SequenceNumeric>1</ram:SequenceNumeric>
                 <ram:GrossWeightMeasure unitCode="KGM">1.8</ram:GrossWeightMeasure>
                 <ram:PieceQuantity>1</ram:PieceQuantity>
+                <ram:TypeCode listAgencyID="1">F</ram:TypeCode>
                 <ram:NatureIdentificationTransportCargo>
                     <ram:Identification>CONSOLIDATION AS PER</ram:Identification>
                 </ram:NatureIdentificationTransportCargo>
@@ -313,6 +313,13 @@
                         <ram:HeightMeasure unitCode="CMT">11</ram:HeightMeasure>
                     </ram:LinearSpatialDimension>
                 </ram:TransportLogisticsPackage>
+            </ram:IncludedMasterConsignmentItem>
+            <ram:IncludedMasterConsignmentItem>
+                <ram:AssociatedUnitLoadTransportEquipment>
+                    <ram:ID>1</ram:ID>
+                    <ram:TareWeightMeasure unitCode="KGM">190</ram:TareWeightMeasure>
+                    <ram:LoadedPackageQuantity>10</ram:LoadedPackageQuantity>
+                </ram:AssociatedUnitLoadTransportEquipment>
             </ram:IncludedMasterConsignmentItem>
         </ram:ApplicableRating>
         <ram:ApplicableTotalRating>

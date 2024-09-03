@@ -67,7 +67,7 @@ public class DashboardPage extends PageObject {
     public void createDocumentShipping(){
         String url = boxUrl + "/document";
 
-        awbNo = Constants.validAwbNo.get(new Random().nextInt(Constants.validAwbNo.size()));
+        awbNo = Constants.VALID_AWB_NO.get(new Random().nextInt(Constants.VALID_AWB_NO.size()));
         String payload = "{\n" +
                 "    \"contentName\": \"Booking-King\",\n" +
                 "    \"tags\": [\n" +

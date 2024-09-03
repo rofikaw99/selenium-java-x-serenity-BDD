@@ -6,7 +6,6 @@ import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Assert;
 import starter.pages.*;
-import starter.utlis.Common;
 import starter.utlis.Constants;
 
 import java.util.*;
@@ -20,7 +19,7 @@ public class PaymentMethodStep {
     CompanyPage companyPage;
 
     @Steps
-    PaymentMethodPage paymentMethodPage;
+    PaymentSettingsPage paymentMethodPage;
 
     @Steps
     GoToUrl goToUrl;
@@ -37,7 +36,7 @@ public class PaymentMethodStep {
     private int emailLength = 0;
 
     public void goToPayment() throws Exception {
-        companyPage.myMenuAccount("My Payment Methods");
+        companyPage.myMenuAccount("Payment Settings");
         paymentMethodPage.goToPayment();
     }
     public void createAuthorizedUser() throws Exception {
@@ -139,7 +138,6 @@ public class PaymentMethodStep {
 
         loginPage.goToMainWeb();
         loginPage.pressBtnLoginInit();
-        loginPage.changeSigninWindow();
         Thread.sleep(2500);
         loginPage.inputEmailLogin(email);
         loginPage.inputPasswordLogin(Constants.PASSWORD);
@@ -443,7 +441,6 @@ public class PaymentMethodStep {
         //login
         loginPage.goToMainWeb();
         loginPage.pressBtnLoginInit();
-        loginPage.changeSigninWindow();
         loginPage.inputEmailLogin(Constants.EMAIL_AUTHORIZED_USER);
         loginPage.inputPasswordLogin(Constants.PASSWORD);
         loginPage.pressSignIn();

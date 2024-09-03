@@ -1,0 +1,47 @@
+{
+  "@context": {
+    "cargo": "https://onerecord.iata.org/ns/cargo#",
+    "api": "https://onerecord.iata.org/ns/api#"
+  },
+  "@type": "api:Change",
+  "api:hasLogisticsObject": {
+    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6c8"
+  },
+  "api:hasDescription": "Update slacForRate",
+  "api:hasOperation": [
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6c8",
+      "api:p": "https://onerecord.iata.org/ns/cargo#slacForRate",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "212"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc97588366ab67171fb6c8",
+      "api:p": "https://onerecord.iata.org/ns/cargo#slacForRate",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "300"
+        }
+      ]
+    }
+  ],
+  "api:hasRevision": {
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+    "@value": "1"
+  }
+}

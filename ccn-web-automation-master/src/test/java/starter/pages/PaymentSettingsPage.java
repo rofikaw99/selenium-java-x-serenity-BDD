@@ -1,8 +1,9 @@
 package starter.pages;
 
+import com.google.common.collect.Ordering;
+import io.cucumber.java.zh_cn.假如;
 import net.serenitybdd.core.pages.ListOfWebElementFacades;
 import net.serenitybdd.core.pages.WebElementFacade;
-import net.serenitybdd.screenplay.actions.SendKeys;
 import net.thucydides.core.pages.PageObject;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -11,16 +12,11 @@ import org.openqa.selenium.WebElement;
 import starter.utlis.Common;
 import starter.utlis.Constants;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
-import static net.serenitybdd.rest.SerenityRest.*;
+public class PaymentSettingsPage extends PageObject {
 
-public class PaymentMethodPage extends PageObject {
-
-    private By headerMyMethods = By.xpath("//*[text() = 'My Payment Methods']");
+    private By headerMyMethods = By.xpath("//*[text() = 'Payment Settings']");
 
     //Payment Method Page
     private By setupCardHeader = By.xpath("//div[text() = 'Set up Commercial Card']");
@@ -70,6 +66,7 @@ public class PaymentMethodPage extends PageObject {
     //SI Table
     private By txtSINo = By.xpath("//*[@id = 'si-number']/p");
     private By txtSIManageBy = By.xpath("//tr//*[@class = 'manage-by-column']");
+    private By txtProductService = By.xpath("//tr//*[@class = 'manage-by-column']"); //TODO
     private By txtSupplier = By.xpath("//*[@id = 'cube-table-standing-instructions']//*[@class = 'row-label'][2]");
     private By actionBtn = By.id("si-delete");
     private By confirmRemoveSIBtn = By.id("cube-columns-apply");
@@ -93,6 +90,61 @@ public class PaymentMethodPage extends PageObject {
     private By btnSaveSI = By.id("si-add-new");
     private By btnSaveSIUpdate = By.id("si-update");
     private By btnOk = By.xpath("//*[contains(@class, 'si-modal-confirm')]//button[text() = 'OK']");
+
+    //side menu
+    private By managePaymentMenu = By.xpath("");
+    private By manageCardMenu = By.xpath("");
+    private By standingInstructionsMenu = By.xpath("//div[text() = 'Standing Instructions']");
+    private By paymentDelegationMenu = By.xpath("//div[text() = 'Payment Delegation']");
+
+    //added standing instruction menu
+    private By myPaymentsTab = By.xpath("");
+    private By receivedPaymentsTab = By.xpath("");
+    private By paymentOwnerField = By.xpath("");
+
+    //payment delegation menu
+    private By delegatedToTab = By.xpath("//div[text() = 'Delegated To']");
+    private By delegatedFromTab = By.xpath("//div[text() = 'Delegated From']");
+
+    //add payment delegation request form
+    private By addNewButton = By.xpath("//button[text () = 'Add New']");
+    private By productServiceField = By.id("selected-delegated-to-productServiceId");
+    private By productServiceItem = By.id("delegated-to-productServiceId-item");
+    private By supplierField = By.id("selected-delegated-to-productServiceId");
+    private By supplierItem = By.id("delegated-to-productServiceId-item");
+    private By delegatePaymentToField = By.id("selected-delegated-to-delegateTo");
+    private By delegatePaymentToItem = By.id("delegated-to-delegateTo-item");
+    private By requestButton = By.xpath("//button[text () = 'Request']");
+
+    //payment delegation table
+    private By delegatedToColName = By.id("cube-sort-delegateTo.companyName");
+    private By delegatedFromColName = By.id("cube-sort-delegatedFrom");
+    private By productServiceColName = By.id("cube-sort-productData.name");
+    private By supplierColName = By.id("cube-sort-supplierData.name");
+    private By requestDateColName = By.id("cube-sort-requestDate");
+    private By activeDateColName = By.id("cube-sort-activeDate");
+    private By paymentAuthColName = By.id("cube-sort-paymentAuth");
+    private By statusColName = By.id("cube-sort-status");
+    private By delegatedToTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[1]");
+    private By delegatedFromTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[1]");
+    private By productServiceTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[2]");
+    private By supplierTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[3]");
+    private By requestDateTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[4]/div");
+    private By activeDateTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[5]/div");
+    private By paymentAuthTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[6]/div");
+    private By statusTable = By.xpath("(//*[@id = 'cube-payment-delegation-table']//tbody/tr)/td[7]/div");
+    private By deleteBtn = By.xpath("//*[contains(@id, 'deleted')]");
+    private By cancelBtn = By.xpath("//*[contains(@id, 'cancelled')]");
+    private By approveBtn = By.xpath("//*[contains(@id, 'approve')]");
+    private By rejectBtn = By.xpath("//*[contains(@id, 'reject')]");
+    private By oneTimePaymentRef = By.xpath("");
+    private By resultPerPage = By.id("selected-");
+    private By resultPerPageItem = By.id("-item");
+    private By nextPage = By.xpath("//*[contains(@class, 'cube-navigation']//*[local-name() = 'svg'][2]");
+    private By previousPage = By.xpath("//*[contains(@class, 'cube-navigation']//*[local-name() = 'svg'][1]");
+    private By specificPage(int page) {
+        return By.xpath("//*[contains(@class, 'cube-navigation']//*[text() = '"+page+"']");
+    }
 
     private By specEmail(String email){
         return By.xpath("//div[//*[text() = 'List of Authorized Users:']]//*[text()='"+ email+"']" );
@@ -373,11 +425,15 @@ public class PaymentMethodPage extends PageObject {
         }
     }
 
-    public void inputProduct(int index) throws InterruptedException {
+    public String inputProduct(int index) throws InterruptedException {
+        String result = "";
         Thread.sleep(3000);
         $(fieldProduct).waitUntilPresent();
         evaluateJavascript("arguments[0].click();", $(fieldProduct));
-        evaluateJavascript("arguments[0].click();", $$(productNameItem).get(index));
+        WebElement e = $$(productNameItem).get(index);
+        result = e.getText();
+        evaluateJavascript("arguments[0].click();", e);
+        return result;
     }
 
     public void inputCurrency(String currency) {
@@ -553,6 +609,19 @@ public class PaymentMethodPage extends PageObject {
         Thread.sleep(3000); //wait for UI loading
     }
 
+    public String createNewSI() throws InterruptedException {
+        String result = "";
+        clickAddNewSIBtn();
+        inputSupplier(0);
+        result = inputProduct(0);
+        inputStartDate(4);
+        inputCurrency(0);
+        inputThreshold("900");
+        clickSaveSIBtn();
+        Thread.sleep(3000); //wait for UI loading
+        return result;
+    }
+
     public void selectTransferManageBy(String email){
         By emailTransfer = By.xpath("//*[contains(@class, 'cube-dropdown-item') and text() = '" + email + "']");
         evaluateJavascript("arguments[0].click();", $(emailTransfer));
@@ -562,5 +631,417 @@ public class PaymentMethodPage extends PageObject {
         clickAddUserBtn();
         chooseEmailUser(email);
         clickConfirmAddUserBtn();
+    }
+
+    public void clickPaymentDelegationMenu(){
+        $(paymentDelegationMenu).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(paymentDelegationMenu));
+    }
+
+    public void clickDelegatedToTab(){
+        $(delegatedToTab).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(delegatedToTab));
+    }
+
+    public void clickDelegatedFromTab(){
+        $(delegatedFromTab).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(delegatedFromTab));
+    }
+
+    public void verifyAllProductServiceAppears(Boolean all){
+        ListOfWebElementFacades productServices = $$(productServiceTable);
+        Set<String> productText = new HashSet<>();
+        for (WebElementFacade productService: productServices){
+            productText.add(productService.getText());
+        }
+        if (all) Assert.assertTrue(productText.size() >= 1);
+        else Assert.assertEquals(1, productText.size());
+    }
+
+    public void verifyDelegatedToAppears(){
+        Assert.assertFalse($$(delegatedToTable).isEmpty());
+    }
+
+    public void verifyDelegatedFromAppears(){
+        Assert.assertFalse($$(delegatedFromTable).isEmpty());
+    }
+
+    public void verifyProductServiceAppears(){
+        Assert.assertFalse($$(productServiceTable).isEmpty());
+    }
+
+    public void verifySupplierAppears(){
+        Assert.assertFalse($$(supplierTable).isEmpty());
+    }
+
+    public void verifyRequestDateAppears(){
+        Assert.assertFalse($$(requestDateTable).isEmpty());
+    }
+
+    public void verifyActiveDateAppears(){
+        Assert.assertFalse($$(activeDateTable).isEmpty());
+    }
+
+    public void verifyPaymentAuthAppears(){
+        Assert.assertFalse($$(paymentAuthTable).isEmpty());
+    }
+
+    public void verifyStatusAppears(){
+        Assert.assertFalse($$(statusTable).isEmpty());
+    }
+
+    public void clickDelegatedToColName(){
+        $(delegatedToColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(delegatedToColName));
+    }
+
+    public void clickDelegatedFromColName(){
+        $(delegatedFromColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(delegatedToColName));
+    }
+
+    public void clickProductServiceColName(){
+        $(productServiceColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(productServiceColName));
+    }
+
+    public void clickSupplierColName(){
+        $(supplierColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(supplierColName));
+    }
+
+    public void clickRequestDateColName(){
+        $(requestDateColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(requestDateColName));
+    }
+
+    public void clickActiveDateColName(){
+        $(activeDateColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(activeDateColName));
+    }
+
+    public void clickPaymentAuthColName(){
+        $(paymentAuthColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(paymentAuthColName));
+    }
+
+    public void clickStatusColName(){
+        $(statusColName).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(statusColName));
+    }
+
+    public void verifySortedData(String column){
+        ListOfWebElementFacades webElementFacades = null;
+        switch (column){
+            case "Delegated To":
+                webElementFacades = $$(delegatedToTable);
+                break;
+            case "Product / Service":
+                webElementFacades = $$(productServiceTable);
+                break;
+            case "Supplier":
+                webElementFacades = $$(supplierTable);
+                break;
+            case "Request Date":
+                webElementFacades = $$(requestDateTable);
+                break;
+            case "Active Date":
+                webElementFacades = $$(activeDateTable);
+                break;
+            case "Payment Authorization":
+                webElementFacades = $$(paymentAuthTable);
+                break;
+            case "Status":
+                webElementFacades = $$(statusTable);
+                break;
+        }
+        List<String> result = new ArrayList<>();
+        for (WebElementFacade e : webElementFacades){
+            result.add(e.getText());
+            System.out.println(e.getText());
+        }
+        Assert.assertTrue(Ordering.natural().isOrdered(result));
+//        Assert.assertTrue(Ordering.natural().reverse().isOrdered(result)); //for the reverse order
+    }
+
+    public void clickNextPage(){
+        $(nextPage).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(nextPage));
+    }
+
+    public void clickPreviousPage(){
+        $(previousPage).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(previousPage));
+    }
+
+    public void clickSpecificPage(int page){
+        $(specificPage(page)).waitUntilVisible(); //page 2
+        evaluateJavascript("arguments[0].click();", $(specificPage(page)));
+    }
+
+    public void verifyGoToSpecificPage(int page){
+        Assert.assertTrue($(specificPage(page)).isEnabled());
+    }
+
+    public void clickResultPerPage(){
+        $(resultPerPage).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(resultPerPage));
+    }
+
+    public void verifyNumberOfDataAppears(int number){
+        ListOfWebElementFacades productServices = $$(productServiceTable);
+        List<String> productText = new ArrayList<>();
+        for (WebElementFacade productService: productServices){
+            productText.add(productService.getText());
+        }
+        Assert.assertTrue(productText.size() <= number);
+    }
+
+    public void deleteButtonFutureInStatusAppears(String status, Boolean condition){
+        ListOfWebElementFacades futures = $$(paymentAuthTable);
+        ListOfWebElementFacades statuses = $$(statusTable);
+        ListOfWebElementFacades delete = $$(deleteBtn);
+        Set<Boolean> result = new HashSet<>();
+        for (int i = 0; i < futures.size(); i++){
+            if (futures.get(i).getText().contains("Future")){
+                if (statuses.get(i).getText().equals(status)){
+                    result.add(delete.get(i).isDisplayed());
+                }
+            }
+        }
+        Assert.assertEquals(1, result.size());
+        Assert.assertTrue(result.contains(condition));
+    }
+
+    public int deleteButtonFutureInStatus(String status){
+        ListOfWebElementFacades futures = $$(paymentAuthTable);
+        ListOfWebElementFacades statuses = $$(statusTable);
+        ListOfWebElementFacades delete = $$(deleteBtn);
+        int index = 0;
+        for (int i = 0; i < futures.size(); i++){
+            if (futures.get(i).getText().contains("Future")){
+                if (statuses.get(i).getText().equals(status)){
+                    delete.get(i).waitUntilVisible();
+                    evaluateJavascript("arguments[0].click();", delete.get(i));
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
+    }
+
+    public Map<String, String> detailDelegationRequest(int index){
+        Map<String, String> a = new HashMap<>();
+        a.put("Supplier", $$(supplierTable).get(index).getText());
+        a.put("Request Date", $$(requestDateTable).get(index).getText());
+        a.put("Company", $$(delegatedToTable).get(index).getText());
+        return a;
+    }
+
+    public void clickAddNewDelegationBtn(){
+        $(addNewButton).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(addNewButton));
+    }
+
+    public String chooseProductDelegation(){
+        $(productServiceField).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(productServiceField));
+        WebElement e = $$(productServiceItem).get(0);
+        evaluateJavascript("arguments[0].click();", e);
+        return e.getText();
+    }
+
+    public void chooseProductDelegation(String product){
+        $(productServiceField).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(productServiceField));
+        ListOfWebElementFacades products = $$(productServiceItem);
+        for (WebElementFacade e: products){
+            if (e.getText().equals(product)) {
+                evaluateJavascript("arguments[0].click();", e);
+                break;
+            }
+        }
+    }
+
+    public String chooseSupplierDelegation() throws InterruptedException {
+        WebElementFacade e = $$(supplierField).get(1);
+        e.waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", e);
+        Thread.sleep(2000);
+        e = $$(supplierItem).get(1);
+        evaluateJavascript("arguments[0].click();", e);
+        return e.getText();
+    }
+
+    public String chooseCompanyDelegation(String name){
+        $(delegatePaymentToField).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(delegatePaymentToField));
+        $(delegatePaymentToField).sendKeys(name);
+        WebElement e = $$(delegatePaymentToItem).get(0);
+        evaluateJavascript("arguments[0].click();", e);
+        return e.getText();
+    }
+
+    public void clickRequestBtn(){
+        $(requestButton).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(requestButton));
+    }
+
+    public void verifySuccessAddDelegation(){
+        Assert.assertTrue(getErrorMsgText("Request Payment delegation send."));
+    }
+
+    public void verifySuccessDeleteDelegation(){
+        Assert.assertTrue(getErrorMsgText("Payment delegation deleted."));
+    }
+
+    public void verifySuccessCreateFutureDelegation(String company, String product, String supplier){
+        company = List.of(company.split("-")).get(1).replaceFirst(" ", "");
+        Assert.assertEquals($$(delegatedToTable).get(0).getText(), company);
+        Assert.assertEquals($$(productServiceTable).get(0).getText(), product);
+        Assert.assertEquals($$(supplierTable).get(0).getText(), supplier);
+    }
+
+    public void verifyStatusDelegationRequestAppears(int index, String status){
+        Assert.assertEquals($$(statusTable).get(index).getText(), status);
+    }
+
+    public void verifyPaymentAuthDelegationAppears(int index, String type){
+        Assert.assertEquals($$(paymentAuthTable).get(index).getText(), type);
+    }
+
+    public void verifyRequestDateToday(int index){
+        Assert.assertEquals(List.of($$(requestDateTable).get(index).getText().split(" ")).get(0), Common.todayDate());
+    }
+
+    public void verifyActiveDateNull(int index){
+        Assert.assertEquals($$(activeDateTable).get(index).getText(), "-");
+    }
+
+    public void verifyActiveDateToday(int index){
+        Assert.assertEquals(List.of($$(activeDateTable).get(index).getText().split(" ")).get(0), Common.todayDate());
+    }
+
+    public void verifyRequestBtnDisabled(){
+        Assert.assertTrue($(requestButton).isDisabled());
+    }
+
+    public String activePendingProduct(){
+        ListOfWebElementFacades statuses = $$(statusTable);
+        String result = "";
+        for (int i = 0; i < statuses.size(); i++){
+            if (statuses.get(i).getText().equals("PENDING") || statuses.get(i).getText().equals("ACTIVE")){
+                result = $$(productServiceTable).get(i).getText();
+            }
+        }
+        return result;
+    }
+
+    public void verifyProductDisappearFromField(String productName){
+        ListOfWebElementFacades productItem = $$(productServiceItem);
+        boolean exist = false;
+        for (WebElementFacade e : productItem){
+            if (e.getText().equals(productName)) exist = true;
+            break;
+        }
+        Assert.assertFalse(exist);
+    }
+
+    public void clickSIMenu(){
+        $(standingInstructionsMenu).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(standingInstructionsMenu));
+    }
+
+    public String productWithSI() throws InterruptedException {
+        String product = "";
+        ListOfWebElementFacades productSI = $$(txtProductService);
+        if (productSI.isEmpty()) product = createNewSI();
+        else product = productSI.get(0).getText();
+        return product;
+    }
+
+    public void verifyErrorCantCreateRequest(){
+        Assert.assertTrue(getErrorMsgText(""));
+    }
+
+    public int cancelButtonFutureInStatus(String status){
+        ListOfWebElementFacades futures = $$(paymentAuthTable);
+        ListOfWebElementFacades statuses = $$(statusTable);
+        ListOfWebElementFacades cancel = $$(cancelBtn);
+        int index = 0;
+        for (int i = 0; i < futures.size(); i++){
+            if (futures.get(i).getText().contains("Future")){
+                if (statuses.get(i).getText().equals(status)){
+                    cancel.get(i).waitUntilVisible();
+                    evaluateJavascript("arguments[0].click();", cancel.get(i));
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
+    }
+
+    public int approveButtonInTypePayment(String type){
+        ListOfWebElementFacades types = $$(paymentAuthTable);
+        ListOfWebElementFacades approves = $$(approveBtn);
+        ListOfWebElementFacades statuses = $$(statusTable);
+        int index = 0;
+        for (int i = 0; i < types.size(); i++){
+            if (types.get(i).getText().contains(type)){
+                if (statuses.get(i).getText().equals("PENDING")){
+                    approves.get(i).waitUntilVisible();
+                    evaluateJavascript("arguments[0].click();", approves.get(i));
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
+    }
+
+    public void verifyRefPaymentClickable(){
+        Assert.assertTrue($(oneTimePaymentRef).isClickable());
+    }
+
+    public void verifyRefPaymentDisabled(){
+        Assert.assertTrue($(oneTimePaymentRef).isDisabled());
+    }
+
+    public int rejectButtonInTypePayment(String type){
+        ListOfWebElementFacades types = $$(paymentAuthTable);
+        ListOfWebElementFacades rejects = $$(rejectBtn);
+        ListOfWebElementFacades statuses = $$(statusTable);
+        int index = 0;
+        for (int i = 0; i < types.size(); i++){
+            if (types.get(i).getText().contains(type)){
+                if (statuses.get(i).getText().equals("PENDING")){
+                    rejects.get(i).waitUntilVisible();
+                    evaluateJavascript("arguments[0].click();", rejects.get(i));
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
+    }
+
+    public int cancelButtonInTypePayment(String type){
+        ListOfWebElementFacades types = $$(paymentAuthTable);
+        ListOfWebElementFacades cancels = $$(rejectBtn);
+        ListOfWebElementFacades statuses = $$(statusTable);
+        int index = 0;
+        for (int i = 0; i < types.size(); i++){
+            if (types.get(i).getText().contains(type)){
+                if (statuses.get(i).getText().equals("ACTIVE")){
+                    cancels.get(i).waitUntilVisible();
+                    evaluateJavascript("arguments[0].click();", cancels.get(i));
+                    index = i;
+                    break;
+                }
+            }
+        }
+        return index;
     }
 }
