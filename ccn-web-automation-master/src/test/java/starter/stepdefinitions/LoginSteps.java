@@ -33,7 +33,6 @@ public class LoginSteps {
     public void clickInitialSignInButton() throws InterruptedException {
         loginPage.pressBtnLoginInit();
         Thread.sleep(waitResponse);
-        loginPage.changeSigninWindow();
     }
 
     @And("input initial email sign in")

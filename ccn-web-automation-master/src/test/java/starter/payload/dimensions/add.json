@@ -1,0 +1,197 @@
+{
+  "@context": {
+    "cargo": "https://onerecord.iata.org/ns/cargo#",
+    "api": "https://onerecord.iata.org/ns/api#"
+  },
+  "@type": "api:Change",
+  "api:hasLogisticsObject": {
+    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cc91ec8366ab67171fb631"
+  },
+  "api:hasDescription": "Add dimensions",
+  "api:hasOperation": [
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66d6da15b024076db974980b",
+      "api:p": "https://onerecord.iata.org/ns/cargo#heigth",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "https://onerecord.iata.org/ns/cargo#Value",
+          "api:hasValue": "_:b0"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b0",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#double",
+          "api:hasValue": "18.87"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b0",
+      "api:p": "https://onerecord.iata.org/ns/cargo#unit",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "https://onerecord.iata.org/ns/ccodes#MeasurementUnitCode",
+          "api:hasValue": "_:b1"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b1",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "CMT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66d6da15b024076db974980b",
+      "api:p": "https://onerecord.iata.org/ns/cargo#length",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "https://onerecord.iata.org/ns/cargo#Value",
+          "api:hasValue": "_:b4"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b4",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#double",
+          "api:hasValue": "30"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b4",
+      "api:p": "https://onerecord.iata.org/ns/cargo#unit",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "https://onerecord.iata.org/ns/ccodes#MeasurementUnitCode",
+          "api:hasValue": "_:b5"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b5",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "CMT"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66d6da15b024076db974980b",
+      "api:p": "https://onerecord.iata.org/ns/cargo#width",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "https://onerecord.iata.org/ns/cargo#Value",
+          "api:hasValue": "_:b2"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b2",
+      "api:p": "https://onerecord.iata.org/ns/cargo#numericalValue",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#double",
+          "api:hasValue": "20"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b2",
+      "api:p": "https://onerecord.iata.org/ns/cargo#unit",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "https://onerecord.iata.org/ns/ccodes#MeasurementUnitCode",
+          "api:hasValue": "_:b3"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "_:b3",
+      "api:p": "https://onerecord.iata.org/ns/cargo#code",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "CMT"
+        }
+      ]
+    }
+  ],
+  "api:hasRevision": {
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+    "@value": "2"
+  }
+}

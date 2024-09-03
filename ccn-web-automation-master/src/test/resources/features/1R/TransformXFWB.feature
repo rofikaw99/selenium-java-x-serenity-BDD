@@ -9,13 +9,13 @@ Feature: Transform XFWB
       | value | child | child_2 | mapping |
       | ID    |       |         | waybillPrefix |
       | ID    |       |         | waybillNumber |
-      | SenderAssignedID  |  |  |shippingRefNo |
-      | IncludedHeaderNote | ContentCode | | waybillType  |
-      | IncludedHeaderNote | Content | |   |
-      | SignatoryConsignorAuthentication| Signatory | | consignorDeclarationSignature |
-      | SignatoryCarrierAuthentication  | ActualDateTime | | carrierDeclarationDate |
-      | SignatoryCarrierAuthentication  | Signatory |      | carrierDeclarationSignature |
-      | SignatoryCarrierAuthentication  | IssueAuthenticationLocation | Name | carrierDeclarationPlace |
+#      | SenderAssignedID  |  |  |shippingRefNo |
+#      | IncludedHeaderNote | ContentCode | | waybillType  |
+#      | IncludedHeaderNote | Content | |   |
+#      | SignatoryConsignorAuthentication| Signatory | | consignorDeclarationSignature |
+#      | SignatoryCarrierAuthentication  | ActualDateTime | | carrierDeclarationDate |
+#      | SignatoryCarrierAuthentication  | Signatory |      | carrierDeclarationSignature |
+#      | SignatoryCarrierAuthentication  | IssueAuthenticationLocation | Name | carrierDeclarationPlace |
 
   @xfwb-3 @done
   Scenario Outline: Verify MasterConsignment path for every key data

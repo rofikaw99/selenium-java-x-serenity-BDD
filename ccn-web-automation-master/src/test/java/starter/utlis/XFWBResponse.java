@@ -136,6 +136,10 @@ public class XFWBResponse {
         return waybillLineItems(jsonObject)
                 .getInt("cargo:pieceCountForRate");
     }
+    public static void removePieceCountForRate(JSONObject jsonObject){
+        waybillLineItems(jsonObject)
+                .remove("cargo:pieceCountForRate");
+    }
     public static JSONObject involvedParties(JSONObject jsonObject, String partyType){
         JSONArray involvedParties =  jsonObject
                 .getJSONArray("cargo:involvedParties");
@@ -505,6 +509,10 @@ public class XFWBResponse {
         }
         return Map.of("content", content, "currencyID", currencyID);
     }
+    public static void removeGrossWeightForRate(JSONObject jsonObject){
+        waybillLineItems(jsonObject)
+                .remove("cargo:grossWeightForRate");
+    }
     public static Map<String, List<Object>> WaybillLineItems_GrossWeightForRate(JSONObject jsonObject){
         JSONObject gwfr = waybillLineItems(jsonObject).getJSONObject("cargo:grossWeightForRate");
         return Map.of("content", List.of(gwfr.getInt("cargo:numericalValue")),
@@ -524,20 +532,36 @@ public class XFWBResponse {
         return Map.of("content", List.of(dfr.getInt("cargo:numericalValue")),
                 "unitCode", List.of(dfr.getJSONObject("cargo:unit").getString("cargo:code")));
     }
+    public static void removeWidth(JSONObject jsonObject){
+        WaybillLineItems_DimensionsForRate(jsonObject)
+                .remove("cargo:width");
+    }
     public static Map<String, List<Object>> WLI_DimensionsForRate_Height(JSONObject jsonObject){
         JSONObject dfr = WaybillLineItems_DimensionsForRate(jsonObject).getJSONObject("cargo:height");
         return Map.of("content", List.of(dfr.getInt("cargo:numericalValue")),
                 "unitCode", List.of(dfr.getJSONObject("cargo:unit").getString("cargo:code")));
+    }
+    public static void removeHeight(JSONObject jsonObject){
+        WaybillLineItems_DimensionsForRate(jsonObject)
+                .remove("cargo:height");
     }
     public static Map<String, List<Object>> WLI_DimensionsForRate_Length(JSONObject jsonObject){
         JSONObject dfr = WaybillLineItems_DimensionsForRate(jsonObject).getJSONObject("cargo:length");
         return Map.of("content", List.of(dfr.getInt("cargo:numericalValue")),
                 "unitCode", List.of(dfr.getJSONObject("cargo:unit").getString("cargo:code")));
     }
+    public static void removeLength(JSONObject jsonObject){
+        WaybillLineItems_DimensionsForRate(jsonObject)
+                .remove("cargo:length");
+    }
     public static Map<String, List<Object>> WLI_DimensionsForRate_Volume(JSONObject jsonObject){
         JSONObject dfr = WaybillLineItems_DimensionsForRate(jsonObject).getJSONObject("cargo:volume");
         return Map.of("content", List.of(dfr.getInt("cargo:numericalValue")),
                 "unitCode", List.of(dfr.getJSONObject("cargo:unit").getString("cargo:code")));
+    }
+    public static void removeVolume(JSONObject jsonObject){
+        WaybillLineItems_DimensionsForRate(jsonObject)
+                .remove("cargo:volume");
     }
     public static List<Object> WLI_RateClassCode(JSONObject jsonObject){
         return List.of(waybillLineItems(jsonObject).getJSONObject("cargo:rateClassCode").getString("cargo:code"));

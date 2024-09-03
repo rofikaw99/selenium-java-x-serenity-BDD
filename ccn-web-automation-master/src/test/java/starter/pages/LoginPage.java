@@ -148,12 +148,6 @@ public class LoginPage extends PageObject {
     public void pressBtnLoginInit() throws InterruptedException {
         Thread.sleep(2000);
         clickOKSession();
-//        if (isCookieDisplayed()) {
-//            $(cookieElement).isDisplayed();
-//            $(cookieElement).click();
-//        } else {
-//            System.out.println("Cookie is not displayed. Skip click cookie.");
-//        }
         $(btnSignInOnTheHomepage).isDisplayed();
         $(btnSignInOnTheHomepage).click();
     }
@@ -206,7 +200,6 @@ public class LoginPage extends PageObject {
     public void login(String email) throws InterruptedException {
         goToMainWeb();
         pressBtnLoginInit();
-        changeSigninWindow();
         inputEmailLogin(email);
         inputPasswordLogin(Constants.PASSWORD);
         Thread.sleep(3000);
@@ -218,7 +211,6 @@ public class LoginPage extends PageObject {
     public void login(String email, String password) throws InterruptedException {
         goToMainWeb();
         pressBtnLoginInit();
-        changeSigninWindow();
         inputEmailLogin(email);
         inputPasswordLogin(password);
         Thread.sleep(3000);
