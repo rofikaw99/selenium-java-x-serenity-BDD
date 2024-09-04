@@ -108,7 +108,7 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType  | contentName                  | via                                    | contact                                   |
-      | MAWBRequest  | test-monday-30-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | MAWBRequest  | test-monday-04-sept-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
   @FWB_R_13
   Scenario Outline:  Create DockShipment Document then Perform Share Via Coloader
