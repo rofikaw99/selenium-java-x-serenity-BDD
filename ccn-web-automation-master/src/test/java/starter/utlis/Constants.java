@@ -78,6 +78,7 @@ public class Constants {
     public static String EMAIL_AU_DELETED = "co-sg-004@yopmail.com";
     public static String PUBLIC_SERVICE_GATEWAY = "https://cubedev.ccnexchange.com";
     public static String PRIVATE_SERVICE_GATEWAY = "http://cube.dev.ccn";
+    public static String DELEGATED_COMPANY = "SG Auto QA";
 
 
     //CARD NUMBER FOR PAYMENT
@@ -87,7 +88,7 @@ public class Constants {
     public static String CARD_TO_BE_DELETED = "4000007020000003"; //ECUADOR
     public static String CARD_CVC = "123";
     public static String CARD_EXP_DATE = Common.createExpDate(3);
-    public static List<String> validAwbNo = List.of(
+    public static List<String> VALID_AWB_NO = List.of(
             "618-24708552",
             "618-61898200",
             "176-45677892",

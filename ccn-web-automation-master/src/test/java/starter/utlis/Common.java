@@ -18,6 +18,10 @@ public class Common {
         return formatDate(addToCurrentDate(Calendar.MONTH, numberOfMonthsToAdd), "dd/MM/yyyy");
     }
 
+    public static String todayDate(){
+        return formatDate(addToCurrentDate(Calendar.MONTH, 0), "dd-MMM-yyyy");
+    }
+
     public static String addDate(int numberOfDaysToAdd){
         String date = formatDate(addToCurrentDate(Calendar.DAY_OF_MONTH, numberOfDaysToAdd), "dd");
         if (date.startsWith("0")) date = date.replaceFirst("0", "");

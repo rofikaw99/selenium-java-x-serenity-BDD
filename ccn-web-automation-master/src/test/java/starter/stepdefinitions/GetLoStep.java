@@ -33,7 +33,7 @@ public class GetLoStep {
     }
 
     @When("get logistic objects using ID of response")
-    public void getLogisticObjectsUsingIDOfResponse() {
+    public void getLogisticObjectsUsingIDOfResponse() throws IOException {
         jsonXml = XML.toJSONObject(XFWBXml.xmlPayload);
         responseJson = getLoAPI.getLORequest(id);
     }

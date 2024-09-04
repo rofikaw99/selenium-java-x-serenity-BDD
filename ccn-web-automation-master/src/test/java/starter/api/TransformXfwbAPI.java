@@ -1,6 +1,7 @@
 package starter.api;
 
 import net.serenitybdd.core.SkipStepException;
+import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.json.XML;
 import org.junit.Assert;
@@ -20,15 +21,19 @@ import static net.serenitybdd.rest.SerenityRest.*;
 public class TransformXfwbAPI {
     String response;
 
+    String internalUrl = "http://cube.dev.ccn/a0c7324c2d9644dd8b0986d9791c1e88";
+    String serviceId = "71b83c4d-3cf7-46d5-af72-ce0f4b5666f7";
+
     public String transformXfwb(String payload) throws IOException {
-        String url = "https://onerecordppd.cubeforall.com/6b0b831ee6b546f4b4ac0eab642874c6/transformXFWB3";
-        String accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZmFmMDVlYmUtYzNkYy00NDM3LWJjMmQtMmE4MTU2NTNmNzVjL3YyLjAiLCJpYXQiOjE3MTU4MTgxNTIsIm5iZiI6MTcxNTgxODE1MiwiZXhwIjoxNzE1ODIyMDUyLCJhaW8iOiJBU1FBMi84V0FBQUFuUXhVSG9WQVBwUzErMjdjcGxMbnRKS1RONm0vQWFCNWdObU9VekpIazd3PSIsImF6cCI6ImNiZmM2ODkzLTNjMTMtNDJjMi1hMzFlLTg3NGMxNWQ2ZmVhYyIsImF6cGFjciI6IjEiLCJyaCI6IjAuQVQ4QXZsN3ctdHpETjBTOExTcUJWbFAzWEZvQWtxcHdZeHRJcWhlN3ozakFnNmRBQUFBLiIsInRpZCI6ImZhZjA1ZWJlLWMzZGMtNDQzNy1iYzJkLTJhODE1NjUzZjc1YyIsInV0aSI6Im5mWVN1dDRadmtHSzd4NWVPMlFhQUEiLCJ2ZXIiOiIyLjAifQ.Fycbt6eI8nQgoR3nE5X259kOuEO6SpZi1DxAKv19P_VMfqhoCFo_0azOGb7s5Lq9qcAQ1eBqJlv4jscYG-DUbdVGfzN8BRlc6-H1fs1yNJUYZvRnyW1ZR8jF82ghwkhgb8A3stQ3SV0XOWRRyXw1iXuLSJgZf7VKbcQQrFjixDfkTJkUg14B7Dl3fKQwJVdt5CYnJDRGpnwQv7635JQDRmFNv1RNmhk7VpqWYrL2lndCltec_acpbkCq-shW23Al-UwWGafpXsBc_CO7l65juHuXXRHh2xb3GKO2iqAijb5VV0oGz25Iun7EHGVa1E7Zw9Mxr_rz-haun5iTe98mow";
+        String url = internalUrl +"/service/" + serviceId + "/OneRecord/1/transformXFWB3";
+//        String url = "https://onerecordppd.cubeforall.com/b0dcda17075048e2a3c5f996cd704c60/transformXFWB3?embeded=true";
+        String accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
 
         response = given()
                 .headers(
                         "Authorization", "Bearer " + accessToken,
                         "Content-Type", "application/xml",
-                        "Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000")
+                        "x-api-key", "5dfcf3da-8863-407b-89f1-8f12b08d2b33")
                 .body(payload)
                 .post(url)
                 .then()
