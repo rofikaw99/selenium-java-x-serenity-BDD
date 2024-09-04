@@ -88,7 +88,7 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType      | contentName                  | via                                    | contact                                   |
-      | BookingRequest   | test-monday-16-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgagt86cts_sha01@ccnexchange.com  |
+      | BookingRequest   | test-monday-16-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
   @FWB_R_8
   Scenario Outline:  Create BC Document then Perform Share Via non Coloader
@@ -98,7 +98,7 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType      | contentName                  | via                                        | contact                            |
-      | BookingRequest   | test-monday-16-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
+      | BookingRequest   | test-monday-30-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
   @FWB_R_9
   Scenario Outline:  Create AWB C Document then Perform Share Via Coloader
@@ -108,7 +108,37 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType  | contentName                  | via                                    | contact                                   |
-      | MAWBRequest  | test-monday-16-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgagt86cts_sha01@ccnexchange.com  |
+      | MAWBRequest  | test-monday-04-sept-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+
+  @FWB_R_13
+  Scenario Outline:  Create DockShipment Document then Perform Share Via Coloader
+    Given create "<contentType>" doc with "<contentName>" for share via
+    When share "<via>" "<contact>" to airline
+    Then verify document succeed share to airline
+
+    Examples:
+      | contentType  | contentName                  | via                                    | contact                                   |
+      | DockShipment  | test-monday-27-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+
+  @FWB_R_15
+  Scenario Outline:  Create DockShipment Document then Perform Share Via Coloader Ordinary User
+    Given create "<contentType>" doc with "<contentName>"
+    When share "<via>" "<contact>" to airline
+    Then verify document succeed share to airline
+
+    Examples:
+      | contentType  | contentName                  | via                                    | contact                                   |
+      | DockShipment  | test-monday-27-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+
+  @FWB_R_14
+  Scenario Outline:  Create DockBookingUpdate Document then Perform Share Via Coloader
+    Given create "<contentType>" doc with "<contentName>" for share via
+    When share "<via>" "<contact>" to airline
+    Then verify document succeed share to airline
+
+    Examples:
+      | contentType  | contentName                  | via                                    | contact                                   |
+      | DockBookingUpdate  | test-monday-27-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
   @FWB_R_10
   Scenario Outline:  Create AWB C Document then Perform Share Via non Coloader

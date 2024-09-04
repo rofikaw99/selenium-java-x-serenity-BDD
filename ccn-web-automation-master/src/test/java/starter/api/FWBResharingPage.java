@@ -225,7 +225,14 @@ public class FWBResharingPage {
         String requestBody = "{\n" +
                 "  \"documentID\": \"" + documentID + "\",\n" +
                 "  \"contacts\": [\n" +
-                "    \"" + contact + "\"\n" +
+                "    \"" + contact + "\",\n" +
+                "    \"system.csggha01singsxh@ccnexchange.com\",\n" +
+                "    \"system.csgagt86abc_han01@ccnexchange.com\",\n" +
+                "    \"system.csgagt86eas_szx81@ccnexchange.com\",\n" +
+                "    \"system.csgagt86cts_sha01@ccnexchange.com\",\n" +
+                "    \"system.csgagt01xsplcsq_sin01@ccnexchange.com\",\n" +
+                "    \"system.csgagt01xspbcsq_sin81@ccnexchange.com\",\n" +
+                "    \"system.csgagt86cts_sha01@ccnexchange.com\"\n" +
                 "  ],\n" +
                 "  \"via\": \"" + via + "\"\n" +
                 "}";
