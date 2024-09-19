@@ -187,7 +187,7 @@ public class LoginPage extends PageObject {
         inputUserId(userID);
         inputBasicPassword(password);
         System.out.println("button submit is displaying : "+$(btnSubmit).isDisplayed()+" and enabled : "+$(btnSubmit).isEnabled());
-        Thread.sleep(waitResponse);
+        Thread.sleep(2000);
         $(btnSubmit).click();
     }
 

@@ -1,5 +1,6 @@
 package starter.pages;
 
+import io.cucumber.java.en.Given;
 import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -8,9 +9,22 @@ import starter.utlis.Constants;
 
 public class SupportAppPage extends PageObject {
     private int waitResponse =15000;
+
     //supportAppDiscount
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
+    private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[12]");
+    private By companyName = By.xpath("//th[text()='Company Name']");
+    private By CompanyCubeID = By.xpath("//th[text()='Company Cube ID']");
+    private By CompanySystemCube = By.xpath("//th[text()='Company System Cube']");
+    private By CompanyPIMA = By.xpath("//th[text()='Company PIMA']");
+    private By GHA = By.xpath("//th[text()='GHA']");
+    private By GHACode = By.xpath("//th[text()='GHA Code']");
+    private By UEN = By.xpath("//th[text()='UEN']");
+    private By CompanyCountry = By.xpath("//th[text()='Company Country']");
+    private By CompanyMembers = By.xpath("//th[text()='Company Members']");
     private By createDiscountSubMenu = By.xpath("//span[text()='Create Discount']");
+    private By companyInfoInputField = By.xpath("//input[@type='text' and @class='form-control']");
+    private By companyInfoSubMenu = By.xpath("//span[contains(text(), 'Company Info')]");
     private By couponName = By.xpath("//input[@placeholder='Coupon Name']");
     private By amountOfCoupon = By.xpath("//input[@placeholder='1000']");
     private By currencyCoupon = By.xpath("(//input[@placeholder='USD'])[1]");
@@ -41,8 +55,10 @@ public class SupportAppPage extends PageObject {
     private By startDatePick = By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='8']");
     private By validityEndDatePick = By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='8']");
     private By submitDiscount = By.xpath("(//button[@type='submit'])[2]");
+    private By companySystemAddressOption = By.xpath("//a[text()='Company System Address']\n");
+    private By checkButton = By.xpath("//button[contains(@class, 'btn btn-primary') and text()='Check']");
     private By createDiscountSuccessMessage = By.xpath("//p[@class='cube-tracking cube-message']");
-
+    private By typeOfSearch = By.xpath("//button[@id='dropdown-basic-button' and text()='Choose Type of Search']");
     //supportAppPlan
     private By subscribtionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']/span[@class='ps-menu-label css-12w9als'])[27]");
     private By productSubMenu = By.xpath("//span[text()='Product']");
@@ -75,6 +91,27 @@ public class SupportAppPage extends PageObject {
     public void pressSubscribtionMenu(){
         $(subscribtionMenu).isDisplayed();
         $(subscribtionMenu).click();
+    }
+
+    public void pressSCheckButton(){
+        $(checkButton).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(checkButton));
+    }
+    public void pressTypeofSearch(String condition){
+        $(typeOfSearch).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(typeOfSearch));
+        evaluateJavascript("arguments[0].click();", $(By.xpath("//*[contains(text(), '" + condition +  "')]")));
+    }
+
+    public void companySystemAddressOption(){
+        $(checkButton).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(checkButton));
+    }
+
+    public void inputCompany(String input){
+        $(companyInfoInputField).waitUntilVisible();
+        $(companyInfoInputField).clear();
+        $(companyInfoInputField).sendKeys(input);
     }
 
     public void pressProductSubMenu(){
@@ -135,10 +172,48 @@ public class SupportAppPage extends PageObject {
         $(discountMenu).isDisplayed();
         $(discountMenu).click();
     }
+    public void pressGroupMenu() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(groupMenu).isDisplayed()+" also enabled: "+$(groupMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(groupMenu));
+//        Thread.sleep(3000);
+    }
 
+    public boolean CompanyName(){
+        return $(companyName).isDisplayed();
+    }
+    public boolean CompanyCubeID(){
+        return $(CompanyCubeID).isDisplayed();
+    }
+    public boolean CompanySystemCube(){
+        return $(CompanyCubeID).isDisplayed();
+    }
+    public boolean CompanyPIMA(){
+        return $(CompanyPIMA).isDisplayed();
+    }
+    public boolean GHA(){
+        return $(GHA).isDisplayed();
+    }
+    public boolean GHACode(){
+        return $(GHACode).isDisplayed();
+    }
+    public boolean UEN(){
+        return $(UEN).isDisplayed();
+    }
+    public boolean CompanyCountry(){
+        return $(CompanyCountry).isDisplayed();
+    }
+    public boolean CompanyMembers(){
+        return $(CompanyMembers).isDisplayed();
+    }
     public void createDiscountSubMenu(){
-        $(createDiscountSubMenu).isDisplayed();
-        $(createDiscountSubMenu).click();
+        System.out.println("btnSubmit company is displaying: "+$(createDiscountSubMenu).isDisplayed()+" also enabled: "+$(createDiscountSubMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(createDiscountSubMenu));
+    }
+    public void companyInfoSubMenu() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("company info submenu is displaying: "+$(companyInfoSubMenu).isDisplayed()+" also enabled: "+$(companyInfoSubMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(companyInfoSubMenu));
     }
 
     public void createDiscount(String couponNameFill, String amount,

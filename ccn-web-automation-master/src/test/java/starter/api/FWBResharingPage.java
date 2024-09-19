@@ -1,8 +1,12 @@
 package starter.api;
 
 import io.restassured.RestAssured;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
+import io.restassured.specification.ResponseSpecification;
 import org.junit.Assert;
 
 import java.util.HashMap;
@@ -111,6 +115,162 @@ public class FWBResharingPage {
                 "  \"contentMIME\": \""+contentName+"\",\n" +
                 "  \"tags\": [\n" +
                 "    \"awbNo:681-11112222\"\n" +
+                "  ],\n" +
+                "  \"encodedContent\": \"eyJhaXJXYXliaWxsTnVtYmVyIjoiNTU1NDIzMjEyMjYiLCJyb3V0aW5nIjp7ImJvb2tpbmdSZXF1ZXN0TnVtYmVyIjoiIiwiYm9va2luZ0RhdGUiOiIyMi81LzIwMjMgMzo1MTo0NyBQTSIsImJvb2tpbmdTdGF0dXMiOiJDb25maXJtZWQiLCJzZWdtZW50RGV0YWlsIjp7InRyYW5zcG9ydC1zZWdtZW50IjpbeyJ0cmFuc3BvcnRDb21wYW55IjoiU1EiLCJ0cmFuc3BvcnRJZGVudGlmaWVyIjoiU1EwMjMzIiwidHJhbnNwb3J0RGF0ZSI6IjIwMjMtMDUtMjMiLCJkZXBhcnR1cmVMb2NhdGlvbiI6IlNJTiIsImFycml2YWxMb2NhdGlvbiI6IkRYQiIsImJvb2tpbmdUeXBlIjoiIiwiYm9va2luZ1N0YXR1cyI6IktLIn1dfX0sInJlbWFya3MiOlt7ImlkIjoiOWRlZjAxMDQtM2E0Yy00Y2U3LTk1OWUtMzkxYTBlM2I1ZmE0IiwidGV4dCI6InRlc3QiLCJkYXRlX0NyZWF0ZWQiOiIyMDIzLTA1LTIyVDA3OjUxOjQ3LjUwOTU2MDNaIiwiaXNfU2VudCI6dHJ1ZSwiYXV0aG9yIjp7Im5hbWUiOiJUVC1TSU4iLCJlbWFpbCI6Im5lbWVzaW9fZ0BjY24uY29tLnNnIn19XSwiYm9va2luZ0ZpbGVzIjpbXX0=\"\n" +
+                "}";
+
+        // Sending PUT request
+        Response response = RestAssured.given()
+                .header("serviceId", serviceId)
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .put(endpoint);
+
+        // Extracting documentID from response
+        documentID = response.jsonPath().getString("documentID");
+        documentRefID = response.jsonPath().getString("documentRefID");
+
+        // Printing response
+        System.out.println("Response status code: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody().asString());
+        System.out.println("documentID: " + documentID);
+        System.out.println("documentRefID: " + documentRefID);
+    }
+
+    public void awb1000times() {
+
+        // Base URL and headers setup
+        String baseUrl = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
+        RequestSpecification requestSpec = new RequestSpecBuilder()
+                .setBaseUri(baseUrl)
+                .addHeader("serviceId", "4e6ae0d1-320a-4565-867e-778f939a58ab")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000")
+                .build();
+
+        ResponseSpecification responseSpec = new ResponseSpecBuilder()
+                .expectStatusCode(200) // Assuming a 200 status code is expected
+                .build();
+
+        // Loop to send 1000 requests
+        for (int i = 1; i <= 1000; i++) {
+            String awbNo = "618-" + (32789454 + i); // Generate dynamic AWB number
+
+            String requestBody = String.format(
+                    "{\n" +
+                            "    \"contentName\": \"%s\",\n" +
+                            "    \"contentType\": \"Booking\",\n" +
+                            "    \"contentMIME\": null,\n" +
+                            "    \"tags\": [\n" +
+                            "        \"origin:CGK\",\n" +
+                            "        \"destination:KUL\",\n" +
+                            "        \"agentName:DHL GLOBAL FORWARDING SINGAPORE PT\",\n" +
+                            "        \"shipperName:FAST GROUP SG\",\n" +
+                            "        \"consigneeName:FAST GROUP THAILAND\",\n" +
+                            "        \"isMasterAgent:no\",\n" +
+                            "        \"status:Sent\",\n" +
+                            "        \"from:testuser_charlie@yopmail.com\",\n" +
+                            "        \"awbNo:%s\",\n" +
+                            "        \"referenceId:1718260139115x116769264577019900\",\n" +
+                            "        \"flightNumber:2222Z\",\n" +
+                            "        \"departureDate:19SEP\",\n" +
+                            "        \"carrierCode:QZ\"\n" +
+                            "    ],\n" +
+                            "    \"encodedContent\": \"ewogICJEb\"\n" +
+                            "}", awbNo, awbNo);
+
+            // Make the PUT request
+            Response response = RestAssured
+                    .given()
+                    .spec(requestSpec)
+                    .body(requestBody)
+                    .when()
+                    .put()
+                    .then()
+                    .spec(responseSpec)
+                    .extract()
+                    .response();
+
+            // Print response status and details
+            System.out.println("Iteration " + i + ": Status Code " + response.getStatusCode() +
+                    ", Response: " + response.getBody().asString());
+        }
+
+//        // Base URL and headers setup
+//        String baseUrl = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
+//        RequestSpecification requestSpec = new RequestSpecBuilder()
+//                .setBaseUri(baseUrl)
+//                .addHeader("serviceId", "4e6ae0d1-320a-4565-867e-778f939a58ab")
+//                .addHeader("Content-Type", "application/json")
+//                .addHeader("Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000")
+//                .build();
+//
+//        ResponseSpecification responseSpec = new ResponseSpecBuilder()
+//                .expectStatusCode(200) // Assuming a 200 status code is expected
+//                .build();
+//
+//        // Loop to send 1000 requests
+//        for (int i = 1; i <= 2000; i++) {
+//            String awbNo = "618-" + (62787454 + i); // Generate dynamic AWB number
+//
+//            String requestBody = String.format(
+//                    "{\n" +
+//                            "    \"contentName\": \"%s\",\n" +
+//                            "    \"contentType\": \"Booking\",\n" +
+//                            "    \"contentMIME\": null,\n" +
+//                            "    \"tags\": [\n" +
+////                            "        \"status:Confirmed\"\n" +
+//                            "        \"awbNo:618-62788453\"\n" +
+////                            "        \"owner:headquarter_sq@yopmail.com\",\n" +
+////                            "        \"forwarderEmail:headquarter_sq@yopmail.com\",\n" +
+////                            "        \"origin:CMB\",\n" +
+////                            "        \"awbPrefix:618\",\n" +
+////                            "        \"destination:BNE\",\n" +
+////                            "        \"jobID:4fd4cb8a-5fea-4e4f-b1f3-74011b389917\",\n" +
+////                            "        \"isAllowSendFFR:False\"\n" +
+////                            "        \"awbNo:%s\",\n" +
+////                            "        \"referenceId:1718260139115x116769264577019900\",\n" +
+////                            "        \"flightNumber:2222Z\",\n" +
+////                            "        \"departureDate:12SEP\"\n" +
+//                            "    ],\n" +
+//                            "    \"encodedContent\": \"ewogICJEb\"\n" +
+//                            "}", awbNo, awbNo);
+//
+//            // Make the PUT request
+//            Response response = RestAssured
+//                    .given()
+//                    .spec(requestSpec)
+//                    .body(requestBody)
+//                    .when()
+//                    .put()
+//                    .then()
+//                    .spec(responseSpec)
+//                    .extract()
+//                    .response();
+//
+//            // Print response status and details
+//            System.out.println("Iteration " + i + ": Status Code " + response.getStatusCode() +
+//                    ", Response: " + response.getBody().asString());
+//        }
+    }
+
+    public void createDocShipmentStatusForShareVia(String contentType, String contentName) {
+
+        // API endpoint
+        String endpoint = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
+        String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
+
+        // Request body
+        String requestBody = "{\n" +
+                "  \"contentName\": \""+contentName+"\",\n" +
+                "  \"contentType\": \""+contentType+"\",\n" +
+                "  \"contentMIME\": \""+contentName+"\",\n" +
+                "  \"tags\": [\n" +
+                "    \"awbNo:681-11112222\",\n" +
+                "    \"origin:SIN\",\n" +
+                "    \"destination:CAN\",\n" +
+                "    \"statusCode:FOH\"\n" +
                 "  ],\n" +
                 "  \"encodedContent\": \"eyJhaXJXYXliaWxsTnVtYmVyIjoiNTU1NDIzMjEyMjYiLCJyb3V0aW5nIjp7ImJvb2tpbmdSZXF1ZXN0TnVtYmVyIjoiIiwiYm9va2luZ0RhdGUiOiIyMi81LzIwMjMgMzo1MTo0NyBQTSIsImJvb2tpbmdTdGF0dXMiOiJDb25maXJtZWQiLCJzZWdtZW50RGV0YWlsIjp7InRyYW5zcG9ydC1zZWdtZW50IjpbeyJ0cmFuc3BvcnRDb21wYW55IjoiU1EiLCJ0cmFuc3BvcnRJZGVudGlmaWVyIjoiU1EwMjMzIiwidHJhbnNwb3J0RGF0ZSI6IjIwMjMtMDUtMjMiLCJkZXBhcnR1cmVMb2NhdGlvbiI6IlNJTiIsImFycml2YWxMb2NhdGlvbiI6IkRYQiIsImJvb2tpbmdUeXBlIjoiIiwiYm9va2luZ1N0YXR1cyI6IktLIn1dfX0sInJlbWFya3MiOlt7ImlkIjoiOWRlZjAxMDQtM2E0Yy00Y2U3LTk1OWUtMzkxYTBlM2I1ZmE0IiwidGV4dCI6InRlc3QiLCJkYXRlX0NyZWF0ZWQiOiIyMDIzLTA1LTIyVDA3OjUxOjQ3LjUwOTU2MDNaIiwiaXNfU2VudCI6dHJ1ZSwiYXV0aG9yIjp7Im5hbWUiOiJUVC1TSU4iLCJlbWFpbCI6Im5lbWVzaW9fZ0BjY24uY29tLnNnIn19XSwiYm9va2luZ0ZpbGVzIjpbXX0=\"\n" +
                 "}";
