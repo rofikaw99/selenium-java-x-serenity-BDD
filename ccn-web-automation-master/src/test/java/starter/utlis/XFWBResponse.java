@@ -4,6 +4,7 @@ import net.serenitybdd.core.SkipStepException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,11 @@ public class XFWBResponse {
     }
     public static String waybillNumber(JSONObject jsonObject){
         return jsonObject.getString("cargo:waybillNumber");
+    }
+    public static void changeWaybillNumber(JSONObject jsonObject){
+        Long waybillNumber = Long.valueOf(jsonObject.getString("cargo:waybillNumber"));
+        waybillNumber = waybillNumber + 1;
+        jsonObject.put("cargo:waybillNumber", String.valueOf(waybillNumber));
     }
     public static Map<String, Object> declaredValueForCarriage(JSONObject jsonObject){
         String key = "cargo:declaredValueForCarriage";
@@ -384,6 +390,10 @@ public class XFWBResponse {
             return ServedActivity(jsonObject).getString(key);
         else throw new SkipStepException("there is no value of " + key + " in response body");
     }
+    public static void removeSpecialHandlingCodes(JSONObject jsonObject){
+        shipment(jsonObject)
+                .remove("cargo:specialHandlingCodes");
+    }
     public static List<String> SpecialHandlingCodes(JSONObject jsonObject){
         JSONArray arr = shipment(jsonObject)
                 .getJSONArray("cargo:specialHandlingCodes");
@@ -482,6 +492,10 @@ public class XFWBResponse {
         }
         return result;
     }
+    public static void removeOtherChargeCode(JSONObject jsonObject){
+        OtherCharges(jsonObject).getJSONObject(0)
+                .remove("cargo:otherChargeCode");
+    }
     public static List<String> OC_ChargePaymentType(JSONObject jsonObject){
         JSONArray arr = OtherCharges(jsonObject);
         List<String> result = new ArrayList<>();
@@ -523,6 +537,20 @@ public class XFWBResponse {
     }
     public static List<Object> WaybillLineItems_GoodsDescriptionForRate(JSONObject jsonObject){
         return List.of(waybillLineItems(jsonObject).getString("cargo:goodsDescriptionForRate"));
+    }
+    public static void removeGoodsDescriptionForRate(JSONObject jsonObject){
+        waybillLineItems(jsonObject)
+                .remove("cargo:goodsDescriptionForRate");
+    }
+    public static JSONObject WaybillLineItems_HsCodeForRate(JSONObject jsonObject){
+        return waybillLineItems(jsonObject).getJSONObject("cargo:hsCodeForRate");
+    }
+    public static String WaybillLineItems_HsCodeForRate_code(JSONObject jsonObject){
+        return WaybillLineItems_HsCodeForRate(jsonObject).getString("cargo:code");
+    }
+    public static void removeHsCodeForRate(JSONObject jsonObject){
+        waybillLineItems(jsonObject)
+                .remove("cargo:hsCodeForRate");
     }
     public static JSONObject WaybillLineItems_DimensionsForRate(JSONObject jsonObject){
         return waybillLineItems(jsonObject).getJSONObject("cargo:dimensionsForRate");

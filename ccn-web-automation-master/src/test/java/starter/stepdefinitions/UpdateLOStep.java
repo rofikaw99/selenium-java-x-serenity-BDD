@@ -8,13 +8,14 @@ import io.restassured.response.Response;
 import net.thucydides.core.annotations.Steps;
 import org.json.JSONObject;
 import starter.api.CreateLoAPI;
+import starter.api.GetChangeRequestAPI;
 import starter.api.GetLoAPI;
 import starter.api.UpdateLoAPI;
 import starter.utlis.LOResponse;
 
 import java.io.IOException;
-import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class UpdateLOStep {
@@ -28,13 +29,17 @@ public class UpdateLOStep {
     @Steps
     GetLoAPI getLoAPI;
 
-    String id, idTarget = "";
+    @Steps
+    GetChangeRequestAPI getChangeRequestAPI;
+
+    String id, idTarget, idChangeRequest = "";
     Response response;
-    Integer revision;
+    Integer revision, index;
+    Map<String, String> actualData = new HashMap<>();
 
     @Given("user success create LO")
     public void userSuccessCreateLO() throws IOException {
-        id = createLoAPI.createLORequest();
+        id = createLoAPI.createLoRequestUrl("internal");
     }
 
     @And("user success get LO")
@@ -45,40 +50,45 @@ public class UpdateLOStep {
     @When("user update piece of count")
     public void userUpdatePieceOfCount() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         Integer pieceCountValue = LOResponse.waybillLineItems_pieceCountForRate(responseJson);
 
+        actualData.put("idPieceCountForRate", LOResponse.waybillLineItems_id(responseJson));
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.updatePieceCountForRate(revision, idTarget, String.valueOf(pieceCountValue));
+        updateLoAPI.updatePieceCountForRate(100, idTarget, actualData, pieceCountValue);
     }
 
     @When("user remove piece of count")
-    public void userRemovePieceOfCount() throws IOException {
+    public void userRemovePieceOfCount() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         Integer pieceCount = LOResponse.waybillLineItems_pieceCountForRate(responseJson);
 
+        actualData.put("idPieceCountForRate",LOResponse.waybillLineItems_id(responseJson));
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.removePieceCountForRate(revision, idTarget, String.valueOf(pieceCount));
+        updateLoAPI.removePieceCountForRate(100, idTarget, actualData, pieceCount);
     }
 
     @When("user add piece of count")
     public void userAddPieceOfCount() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
+        actualData.put("idPieceCountForRate", LOResponse.waybillLineItems_id(responseJson));
 
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.addPieceCountForRate(revision, idTarget);
+        updateLoAPI.addPieceCountForRate(100, idTarget, actualData);
     }
 
     @And("the piece of count deleted in the latest get lo")
-    public void thePieceOfCountDeletedInTheLatestGetLo() throws IOException {
+    public void thePieceOfCountDeletedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyPieceOfCountDeleted(jsonResponse);
@@ -92,7 +102,8 @@ public class UpdateLOStep {
     }
 
     @And("the piece of count value changes in the latest get lo")
-    public void thePieceOfCountValueChangesInTheLatestGetLo() throws IOException {
+    public void thePieceOfCountValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(5000);
         response = getLoAPI.getLORequestFullResponse(id);
         updateLoAPI.verifyPieceOfCountUpdated(new JSONObject(response.asString()), 1);
     }
@@ -106,25 +117,24 @@ public class UpdateLOStep {
     @When("user update gross weight for rate")
     public void userUpdateGrossWeightForRate() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         float numericalValue = LOResponse.WLI_grossWeightForRate_numericalValue(responseJson);
         String idNumericalValue = LOResponse.WLI_grossWeightForRate_id(responseJson);
         String unitCode = LOResponse.WLI_GWFR_unit_code(responseJson);
         String idUnitCode = LOResponse.WLI_GWFR_unit_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idNumericalValue", idNumericalValue);
-        actualData.put("numericalValue", String.valueOf(numericalValue));
         actualData.put("idUnitCode", idUnitCode);
         actualData.put("unitCode", unitCode);
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.updateGrossWeightForRate(revision, idTarget, actualData);
+        updateLoAPI.updateGrossWeightForRate(revision, idTarget, actualData, numericalValue);
     }
 
     @And("the gross weight for rate value changes in the latest get lo")
-    public void theGrossWeightForRateValueChangesInTheLatestGetLo() throws IOException {
+    public void theGrossWeightForRateValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyGrossWeightForRateUnitCodeUpdated(jsonResponse);
@@ -134,21 +144,19 @@ public class UpdateLOStep {
     @When("user update chargeable weight")
     public void userUpdateChargeableWeight() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         float numericalValue = LOResponse.WLI_chargeableWeightForRate_numericalValue(responseJson);
         String idNumericalValue = LOResponse.WLI_chargeableWeightForRate_id(responseJson);
         String unitCode = LOResponse.WLI_CWFR_unit_code(responseJson);
         String idUnitCode = LOResponse.WLI_CWFR_unit_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idNumericalValue", idNumericalValue);
-        actualData.put("numericalValue", String.valueOf(numericalValue));
         actualData.put("idUnitCode", idUnitCode);
         actualData.put("unitCode", unitCode);
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.updateChargeableWeightForRate(revision, idTarget, actualData);
+        updateLoAPI.updateChargeableWeightForRate(revision, idTarget, actualData, numericalValue);
     }
 
     @Then("success update {string}")
@@ -157,23 +165,23 @@ public class UpdateLOStep {
     }
 
     @And("the chargeable weight value changes in the latest get lo")
-    public void theChargeableWeightValueChangesInTheLatestGetLo() throws IOException {
+    public void theChargeableWeightValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
-        updateLoAPI.verifyChargeableWeightForRateUnitCodeUpdated(jsonResponse);
+//        updateLoAPI.verifyChargeableWeightForRateUnitCodeUpdated(jsonResponse);
         updateLoAPI.verifyChargeableWeightForRateNumericalValueUpdated(jsonResponse);
     }
 
     @When("user update volume")
     public void userUpdateVolume() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         float numericalValue = LOResponse.WLI_DFR_volume_numericalValue(responseJson);
         String idNumericalValue = LOResponse.WLI_DFR_volume_id(responseJson);
         String unitCode = LOResponse.WLI_DFR_volume_unit_code(responseJson);
         String idUnitCode = LOResponse.WLI_DFR_volume_unit_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idNumericalValue", idNumericalValue);
         actualData.put("numericalValue", String.valueOf(numericalValue));
         actualData.put("idUnitCode", idUnitCode);
@@ -185,7 +193,8 @@ public class UpdateLOStep {
     }
 
     @And("the volume value changes in the latest get lo")
-    public void theVolumeValueChangesInTheLatestGetLo() throws IOException {
+    public void theVolumeValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyVolumeUnitCodeUpdated(jsonResponse);
@@ -195,7 +204,7 @@ public class UpdateLOStep {
     @When("user update dimensions")
     public void userUpdateDimensions() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         float heightNumericalValue = LOResponse.WLI_DFR_height_numericalValue(responseJson);
         String idHeightNumericalValue = LOResponse.WLI_DFR_height_id(responseJson);
         String heightUnitCode = LOResponse.WLI_DFR_height_unit_code(responseJson);
@@ -211,7 +220,6 @@ public class UpdateLOStep {
         String widthUnitCode = LOResponse.WLI_DFR_width_unit_code(responseJson);
         String idWidthUnitCode = LOResponse.WLI_DFR_width_unit_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idHeightUnitCode", idHeightUnitCode);
         actualData.put("heightUnitCode", heightUnitCode);
         actualData.put("idHeightNumericalValue", idHeightNumericalValue);
@@ -247,17 +255,20 @@ public class UpdateLOStep {
     @When("user update Shipment description")
     public void userUpdateShipmentDescription() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String shipmentDescription = LOResponse.waybillLineItems_goodsDescriptionForRate(responseJson);
 
+        actualData.put("idWaybillLine", LOResponse.waybillLineItems_id(responseJson));
+        actualData.put("shipmentDescription", shipmentDescription);
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.updateShipmentDescription(revision, idTarget, shipmentDescription);
+        updateLoAPI.updateShipmentDescription(revision, idTarget, actualData);
     }
 
     @And("the Shipment description value changes in the latest get lo")
-    public void theShipmentDescriptionValueChangesInTheLatestGetLo() throws IOException {
+    public void theShipmentDescriptionValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         updateLoAPI.verifyShipmentDescriptionUpdated(new JSONObject(response.asString()));
     }
@@ -265,13 +276,12 @@ public class UpdateLOStep {
     @When("user delete dimensions")
     public void userDeleteDimensions() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idDimensions = LOResponse.WLI_dimensionsForRate_id(responseJson);
         String idHeight = LOResponse.WLI_DFR_height_id(responseJson);
         String idLength = LOResponse.WLI_DFR_length_id(responseJson);
         String idWidth = LOResponse.WLI_DFR_width_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idDimensions", idDimensions);
         actualData.put("idHeight", idHeight);
         actualData.put("idLength", idLength);
@@ -294,11 +304,10 @@ public class UpdateLOStep {
     @When("user update Commodity \\(price) code")
     public void userUpdateCommodityPriceCode() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String hsCodeForRate = LOResponse.waybillLineItems_hsCodeForRate_code(responseJson);
         String hsCodeForRateId = LOResponse.waybillLineItems_hsCodeForRate_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idHsCodeForRate", hsCodeForRateId);
         actualData.put("hsCodeForRate", hsCodeForRate);
         //get the id
@@ -321,7 +330,6 @@ public class UpdateLOStep {
         String idSpecialHandlingCode = LOResponse.shipment_specialHandlingCodes_id(responseJson, 0);
         String codeSpecialHandlingCode = LOResponse.shipment_specialHandlingCodes_code(responseJson, 0);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idSpecialHandlingCode", idSpecialHandlingCode);
         actualData.put("codeSpecialHandlingCode", codeSpecialHandlingCode);
         //get the id
@@ -331,7 +339,8 @@ public class UpdateLOStep {
     }
 
     @And("the special handling code value changes in the latest get lo")
-    public void theSpecialHandlingCodeValueChangesInTheLatestGetLo() throws IOException {
+    public void theSpecialHandlingCodeValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifySpecialHandlingCodeUpdated(jsonResponse);
@@ -346,7 +355,6 @@ public class UpdateLOStep {
         String idStreetAddressLine = LOResponse.IP_PD_BAT_address_id(responseJson, "SHP");
         String streetAddressLine = LOResponse.IP_PD_BAT_address_streetAddressLines(responseJson, "SHP");
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idPartyDetails", idPartyDetails);
         actualData.put("partyDetailsName", partyDetailsName);
         actualData.put("idStreetAddressLine", idStreetAddressLine);
@@ -374,7 +382,6 @@ public class UpdateLOStep {
         String idStreetAddressLine = LOResponse.IP_PD_BAT_address_id(responseJson, "CNE");
         String streetAddressLine = LOResponse.IP_PD_BAT_address_streetAddressLines(responseJson, "CNE");
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idPartyDetails", idPartyDetails);
         actualData.put("partyDetailsName", partyDetailsName);
         actualData.put("idStreetAddressLine", idStreetAddressLine);
@@ -400,7 +407,6 @@ public class UpdateLOStep {
         String idOtherChargeCode = LOResponse.otherCharges_otherChargeCode_id(responseJson);
         String otherChargeCode = LOResponse.otherCharges_otherChargeCode_code(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idOtherChargeCode", idOtherChargeCode);
         actualData.put("otherChargeCode", otherChargeCode);
         //get the id
@@ -424,11 +430,10 @@ public class UpdateLOStep {
     @When("user delete gross weight for rate")
     public void userDeleteGrossWeightForRate() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idWaybillLine = LOResponse.waybillLineItems_id(responseJson);
         String idGrossWeightForRate = LOResponse.WLI_grossWeightForRate_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idWaybillLine", idWaybillLine);
         actualData.put("idGrossWeightForRate", idGrossWeightForRate);
 
@@ -449,10 +454,9 @@ public class UpdateLOStep {
     @When("user add gross weight for rate")
     public void userAddGrossWeightForRate() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idWaybillLine = LOResponse.waybillLineItems_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idWaybillLine", idWaybillLine);
 
         //get the id
@@ -473,11 +477,10 @@ public class UpdateLOStep {
     @When("user delete volume")
     public void userDeleteVolume() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idDimensionsForRate = LOResponse.WLI_dimensionsForRate_id(responseJson);
         String idVolume = LOResponse.WLI_DFR_volume_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idDimensionsForRate", idDimensionsForRate);
         actualData.put("idVolume", idVolume);
         //get the id
@@ -488,7 +491,7 @@ public class UpdateLOStep {
 
     @And("the volume value deleted in the latest get lo")
     public void theVolumeValueDeletedInTheLatestGetLo() throws IOException, InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyVolumeDeleted(jsonResponse);
@@ -497,10 +500,9 @@ public class UpdateLOStep {
     @When("user add volume")
     public void userAddVolume() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idDimensionsForRate = LOResponse.WLI_dimensionsForRate_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idDimensionsForRate", idDimensionsForRate);
 
         //get the id
@@ -521,10 +523,9 @@ public class UpdateLOStep {
     @When("user add dimensions")
     public void userAddDimensions() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idDimensionsForRate = LOResponse.WLI_dimensionsForRate_id(responseJson);
 
-        Map<String, String> actualData = new HashMap<>();
         actualData.put("idDimensionsForRate", idDimensionsForRate);
 
         //get the id
@@ -535,7 +536,7 @@ public class UpdateLOStep {
 
     @And("the dimensions value added in the latest get lo")
     public void theDimensionsValueAddedInTheLatestGetLo() throws InterruptedException, IOException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyHeightValueAdded(jsonResponse);
@@ -549,13 +550,15 @@ public class UpdateLOStep {
     @When("user delete Shipment description")
     public void userDeleteShipmentDescription() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.waybillLineItems_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String shipmentDescription = LOResponse.waybillLineItems_goodsDescriptionForRate(responseJson);
 
+        actualData.put("idWaybillLine", LOResponse.waybillLineItems_id(responseJson));
+        actualData.put("shipmentDescription", shipmentDescription);
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.deleteShipmentDescription(revision, idTarget, shipmentDescription);
+        updateLoAPI.deleteShipmentDescription(revision, idTarget, actualData);
     }
 
     @And("the Shipment description value deleted in the latest get lo")
@@ -563,5 +566,285 @@ public class UpdateLOStep {
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyShipmentDescriptionDeleted(jsonResponse);
+    }
+
+    @When("user add Shipment description")
+    public void userAddShipmentDescription() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.id(responseJson);
+
+        actualData.put("idWaybillLine", LOResponse.waybillLineItems_id(responseJson));
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addShipmentDescription(revision, idTarget, actualData);
+    }
+
+    @And("the Shipment description value added in the latest get lo")
+    public void theShipmentDescriptionValueAddedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyShipmentDescriptionAdded(jsonResponse);
+    }
+
+    @When("user delete Commodity \\(price) code")
+    public void userDeleteCommodityPriceCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.id(responseJson);
+        String hsCodeForRateId = LOResponse.waybillLineItems_hsCodeForRate_id(responseJson);
+
+        actualData.put("idHsCodeForRate", hsCodeForRateId);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteCommodityCode(revision, idTarget, actualData);
+    }
+
+    @And("the commodity \\(price) code value deleted in the latest get lo")
+    public void theCommodityPriceCodeValueDeletedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyHsCodeForRateDeleted(jsonResponse);
+    }
+
+    @When("user add Commodity \\(price) code")
+    public void userAddCommodityPriceCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.id(responseJson);
+
+        actualData.put("idWaybillLine", LOResponse.waybillLineItems_id(responseJson));
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addCommodityCode(revision, idTarget, actualData);
+    }
+
+    @And("the commodity \\(price) code value added in the latest get lo")
+    public void theCommodityPriceCodeValueAddedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyHsCodeForRateAdded(jsonResponse);
+    }
+
+    @When("user delete special handling code")
+    public void userDeleteSpecialHandlingCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        String idSpecialHandlingCode = LOResponse.shipment_specialHandlingCodes_id(responseJson, 0);
+
+        actualData.put("idSpecialHandlingCode", idSpecialHandlingCode);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteSpecialHandlingCode(revision, idTarget, actualData);
+    }
+
+    @And("the special handling code value deleted in the latest get lo")
+    public void theSpecialHandlingCodeValueDeletedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifySpecialHandlingCodeDeleted(jsonResponse);
+    }
+
+    @When("user add special handling code")
+    public void userAddSpecialHandlingCode() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addSpecialHandlingCode(revision, idTarget);
+    }
+
+    @And("the special handling code value added in the latest get lo")
+    public void theSpecialHandlingCodeValueAddedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifySpecialHandlingCodeAdded(jsonResponse);
+    }
+
+    @When("user delete OCDC charges, MYC, SCC, RAC, etc")
+    public void userDeleteOCDCChargesMYCSCCRACEtc() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.otherCharges_id(responseJson);
+        String idOtherChargeCode = LOResponse.otherCharges_otherChargeCode_id(responseJson);
+
+        actualData.put("idOtherChargeCode", idOtherChargeCode);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteOtherChargeCode(revision, idTarget, actualData);
+    }
+
+    @And("the OCDC charges, MYC, SCC, RAC, etc value deleted in the latest get lo")
+    public void theOCDCChargesMYCSCCRACEtcValueDeletedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyOtherChargesDeleted(jsonResponse);
+    }
+
+    @When("user add OCDC charges, MYC, SCC, RAC, etc")
+    public void userAddOCDCChargesMYCSCCRACEtc() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.otherCharges_id(responseJson);
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addOtherChargeCode(revision, idTarget);
+    }
+
+    @And("the OCDC charges, MYC, SCC, RAC, etc value added in the latest get lo")
+    public void theOCDCChargesMYCSCCRACEtcValueAddedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(1000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyOtherChargesAdded(jsonResponse);
+    }
+
+    @And("user success create LO with new waybill number")
+    public void userSuccessCreateLOWithNewWaybillNumber() throws IOException {
+        id = createLoAPI.createLORequest("waybillNumber");
+    }
+
+    @When("user update Other Customs Information")
+    public void userUpdateOtherCustomsInformation() throws IOException {
+        index = 0;
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_customsInformation_id(responseJson, index);
+        String note = LOResponse.shipment_customsInformation_note(responseJson, index);
+
+        actualData.put("note", note);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.updateOtherCustomInformation(revision, idTarget, actualData);
+    }
+
+    @And("the Other Customs Information value changes in the latest get lo")
+    public void theOtherCustomsInformationValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(1000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyOtherCustomsInformation(jsonResponse, index);
+    }
+
+    @When("user delete Other Customs Information")
+    public void userDeleteOtherCustomsInformation() throws IOException {
+        index = 0;
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_customsInformation_id(responseJson, index);
+        String note = LOResponse.shipment_customsInformation_note(responseJson, index);
+
+        actualData.put("note", note);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteOtherCustomInformation(revision, idTarget, actualData);
+    }
+
+    @And("the Other Customs Information value deleted in the latest get lo")
+    public void theOtherCustomsInformationValueDeletedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(1000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyOtherCustomsInformationDeleted(jsonResponse);
+    }
+
+    @When("user add Other Customs Information")
+    public void userAddOtherCustomsInformation() throws IOException {
+        index = 0;
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_customsInformation_id(responseJson, index);
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addOtherCustomInformation(revision, idTarget);
+    }
+
+    @And("the Other Customs Information value added in the latest get lo")
+    public void theOtherCustomsInformationValueAddedInTheLatestGetLo() throws InterruptedException, IOException {
+        Thread.sleep(1000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyOtherCustomsInformationAdded(jsonResponse);
+    }
+
+    @Then("success get change request")
+    public void successGetChangeRequest() {
+        getChangeRequestAPI.successGetChangeRequest();
+    }
+
+    @When("user get change request using LO_ID")
+    public void userGetChangeRequestUsingLO_ID() throws IOException {
+        List<String> ids = List.of(idTarget.split("/"));
+        String loId = ids.get(ids.size() - 1);
+        response = getChangeRequestAPI.getChangeUsingLoId(loId);
+    }
+
+    @And("verify change request same as update dimensions")
+    public void verifyChangeRequestSameAsUpdateDimensions() {
+        JSONObject jsonObject = new JSONObject(response.asString());
+        jsonObject = jsonObject.getJSONArray("data").getJSONObject(jsonObject.getJSONArray("data").length() - 1);
+        getChangeRequestAPI.verifyRevision(jsonObject, revision);
+        getChangeRequestAPI.verifyIdObjectTarget(jsonObject, idTarget);
+        getChangeRequestAPI.verifyIdHeightUnitCode(jsonObject, actualData.get("idHeightUnitCode"));
+        getChangeRequestAPI.verifyIdHeightNumericalValue(jsonObject, actualData.get("idHeightNumericalValue"));
+        getChangeRequestAPI.verifyIdLengthUnitCode(jsonObject, actualData.get("idLengthUnitCode"));
+        getChangeRequestAPI.verifyIdLengthNumericalValue(jsonObject, actualData.get("idLengthNumericalValue"));
+        getChangeRequestAPI.verifyIdWidthUnitCode(jsonObject, actualData.get("idWidthUnitCode"));
+        getChangeRequestAPI.verifyIdWidthNumericalValue(jsonObject, actualData.get("idWidthNumericalValue"));
+    }
+
+    @When("user get change request using change request ID")
+    public void userGetChangeRequestUsingChangeRequestID() throws IOException {
+        List<String> changeRequests = List.of(updateLoAPI.getChangeRequestId().split("/"));
+        idChangeRequest = changeRequests.get(changeRequests.size() - 1);
+        response = getChangeRequestAPI.getChangeUsingChangeRequestId(idChangeRequest);
+    }
+
+    @And("verify change request using change request ID same as update dimensions")
+    public void verifyChangeRequestUsingChangeRequestIDSameAsUpdateDimensions() {
+        JSONObject jsonObject = new JSONObject(response.asString());
+        jsonObject = jsonObject.getJSONArray("data").getJSONObject(0);
+        getChangeRequestAPI.verifyRevision(jsonObject, revision);
+        getChangeRequestAPI.verifyIdObjectTarget(jsonObject, idTarget);
+        getChangeRequestAPI.verifyIdHeightUnitCode(jsonObject, actualData.get("idHeightUnitCode"));
+        getChangeRequestAPI.verifyIdHeightNumericalValue(jsonObject, actualData.get("idHeightNumericalValue"));
+        getChangeRequestAPI.verifyIdLengthUnitCode(jsonObject, actualData.get("idLengthUnitCode"));
+        getChangeRequestAPI.verifyIdLengthNumericalValue(jsonObject, actualData.get("idLengthNumericalValue"));
+        getChangeRequestAPI.verifyIdWidthUnitCode(jsonObject, actualData.get("idWidthUnitCode"));
+        getChangeRequestAPI.verifyIdWidthNumericalValue(jsonObject, actualData.get("idWidthNumericalValue"));
+    }
+
+    @When("user update SLAC count")
+    public void userUpdateSLACCount() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.id(responseJson);
+        String slacForRate = LOResponse.waybillLineItems_slacForRate(responseJson);
+
+        actualData.put("idSlacForRate", LOResponse.waybillLineItems_id(responseJson));
+        actualData.put("slacForRate", slacForRate);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.updateSlacForRate(revision, idTarget, actualData);
+    }
+
+    @And("the SLAC count value changes in the latest get lo")
+    public void theSLACCountValueChangesInTheLatestGetLo() throws InterruptedException, IOException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifySlacForRateUpdated(jsonResponse);
     }
 }

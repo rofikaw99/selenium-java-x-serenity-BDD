@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "cargo": "https://onerecord.iata.org/ns/cargo#",
+    "api": "https://onerecord.iata.org/ns/api#"
+  },
+  "@type": "api:Change",
+  "api:hasLogisticsObject": {
+    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cbe8998366ab67171fb379"
+  },
+  "api:hasDescription": "Delete Other Charge Code",
+  "api:hasOperation": [
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:s": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66d7261fb024076db974a301",
+      "api:p": "https://onerecord.iata.org/ns/cargo#otherChargeCode",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "https://onerecord.iata.org/ns/ccodes#OtherChargeCode",
+          "api:hasValue": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66d7261fb024076db974a31e"
+        }
+      ]
+    }
+  ],
+  "api:hasRevision": {
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+    "@value": "0"
+  }
+}

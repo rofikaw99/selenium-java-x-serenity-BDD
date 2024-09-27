@@ -3,9 +3,12 @@ package starter.utlis;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class UpdateLoPayload {
 
-    public static void updateActualData(JSONObject payload, String actualData, int index) {
+    public static void updateActualData(JSONObject payload, Object actualData, int index) {
         JSONArray operations = payload.optJSONArray("api:hasOperation");
         if (operations != null && operations.length() > 0) {
             JSONObject firstOperation = operations.getJSONObject(index);
@@ -51,18 +54,42 @@ public class UpdateLoPayload {
         }
     }
 
-    public static String getHasValueOfHasOperation(JSONObject payload, int index){
-        String result = "";
+    public static Object getOperationIds(JSONObject payload, int index){
+        Object result = "";
+        JSONArray operations = payload.optJSONArray("api:hasOperation");
+        if (operations != null) {
+            result = operations.getJSONObject(index).get("api:s");
+        }
+        return result;
+    }
+
+    public static List<Object> getOperationIds(JSONObject payload, int startIndex, int endIndex){
+        List<Object> result = new ArrayList<>();
+        JSONArray operations = payload.getJSONObject("changeObject").optJSONArray("api:hasOperation");
+        if (operations != null) {
+            for (int i = startIndex; i < endIndex; i++){
+                result.add(operations.getJSONObject(i).get("api:s"));
+            }
+        }
+        return result;
+    }
+
+    public static Object getHasValueOfHasOperation(JSONObject payload, int index){
+        Object result = "";
         JSONArray operations = payload.optJSONArray("api:hasOperation");
         if (operations != null && operations.length() > 0) {
             JSONObject firstOperation = operations.getJSONObject(index);
             JSONArray operationObjects = firstOperation.optJSONArray("api:o");
             if (operationObjects != null && operationObjects.length() > 0) {
                 JSONObject operationObject = operationObjects.getJSONObject(0);
-                result = operationObject.getString("api:hasValue");
+                result = operationObject.get("api:hasValue");
             }
         }
         return result;
+    }
+
+    public static String getDescription(JSONObject payload){
+        return payload.getString("api:hasDescription");
     }
 
     public static void updateLogisticsObjectId(JSONObject payload, String id) {
