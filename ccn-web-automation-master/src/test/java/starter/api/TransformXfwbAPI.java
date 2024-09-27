@@ -1,10 +1,12 @@
 package starter.api;
 
+import io.restassured.specification.RequestSpecification;
 import net.serenitybdd.core.SkipStepException;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.json.XML;
 import org.junit.Assert;
+import starter.utlis.ApiProperties;
 import starter.utlis.XFWBRequest;
 import starter.utlis.XFWBResponse;
 import starter.utlis.XFWBXml;
@@ -19,21 +21,25 @@ import java.util.List;
 import static net.serenitybdd.rest.SerenityRest.*;
 
 public class TransformXfwbAPI {
-    String response;
+    String response, url, accessToken;
+    RequestSpecification requestSpecification;
 
-    String internalUrl = "http://cube.dev.ccn/a0c7324c2d9644dd8b0986d9791c1e88";
-    String serviceId = "71b83c4d-3cf7-46d5-af72-ce0f4b5666f7";
+    public void setupApi(String typeUrl) throws IOException {
+        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
+        requestSpecification = given()
+                .headers("Authorization", "Bearer " + accessToken,
+                "Content-Type", "application/xml");
 
-    public String transformXfwb(String payload) throws IOException {
-        String url = internalUrl +"/service/" + serviceId + "/OneRecord/1/transformXFWB3";
-//        String url = "https://onerecordppd.cubeforall.com/b0dcda17075048e2a3c5f996cd704c60/transformXFWB3?embeded=true";
-        String accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
-
-        response = given()
-                .headers(
-                        "Authorization", "Bearer " + accessToken,
-                        "Content-Type", "application/xml",
-                        "x-api-key", "5dfcf3da-8863-407b-89f1-8f12b08d2b33")
+        if (typeUrl.equals("internal")){
+            url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/transformXFWB3";
+            requestSpecification.headers("x-api-key", ApiProperties.apiKey());
+        } else if (typeUrl.equals("external")){
+            url = ApiProperties.baseUrl() + "/transformXFWB3";
+        }
+    }
+    public String transformXfwb(String payload, String typeUrl) throws IOException {
+        setupApi(typeUrl);
+        response = requestSpecification
                 .body(payload)
                 .post(url)
                 .then()
@@ -44,7 +50,8 @@ public class TransformXfwbAPI {
         FileWriter file = new FileWriter("src/test/java/starter/utlis/outputJson.json");
         file.write(response);
         file.close();
-        then().statusCode(200);
+        if (typeUrl.equals("internal")) then().statusCode(200);
+        else if (typeUrl.equals("external")) then().statusCode(201);
         return response;
     }
 

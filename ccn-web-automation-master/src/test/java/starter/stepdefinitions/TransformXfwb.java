@@ -7,6 +7,7 @@ import net.thucydides.core.annotations.Steps;
 import org.json.JSONObject;
 import org.json.XML;
 import starter.api.TransformXfwbAPI;
+import starter.utlis.ApiProperties;
 import starter.utlis.XFWBXml;
 
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class TransformXfwb {
     public void userTransformXfwb() throws IOException {
         String xmlPayload = XFWBXml.xmlPayload;
         jsonRequest = XML.toJSONObject(xmlPayload);
-        response = transformXfwbPage.transformXfwb(xmlPayload);
+        response = transformXfwbPage.transformXfwb(xmlPayload, "internal");
         jsonResponse = new JSONObject(response);
     }
 
@@ -616,5 +617,13 @@ public class TransformXfwb {
         } else {
             throw new SkipStepException("there is no searched key");
         }
+    }
+
+    @Given("user transform xfwb using {string} url")
+    public void userTransformXfwbUsingUrl(String url) throws IOException {
+        String xmlPayload = XFWBXml.xmlPayload;
+        jsonRequest = XML.toJSONObject(xmlPayload);
+        response = transformXfwbPage.transformXfwb(xmlPayload, url);
+        jsonResponse = new JSONObject(response);
     }
 }

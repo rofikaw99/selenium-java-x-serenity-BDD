@@ -1,10 +1,12 @@
-@update-lo
+@lo @update-lo
 Feature: Update LO
 
-  @1.1 @done
-  Scenario: 1.1 Piece count (line item)
+  Background: Login and transform
     Given user login SSO for one record
-    And user transform xfwb
+    And user transform xfwb using "internal" url
+
+  @1.1 @done @pieceCountForRate
+  Scenario: 1.1 Piece count (line item)
     And user success create LO
     And user success get LO
     When user update piece of count
@@ -12,10 +14,8 @@ Feature: Update LO
     And the piece of count value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @1.1.1 @done
+  @1.1.1 @done @pieceCountForRate
   Scenario: 1.1.1 Remove Piece count (line item)
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO
     And user success get LO
     When user remove piece of count
@@ -23,10 +23,8 @@ Feature: Update LO
     And the piece of count deleted in the latest get lo
     And the revision value changes to increment 1
 
-  @1.1.2 @done
+  @1.1.2 @done @pieceCountForRate
   Scenario: 1.1.2 Add Piece count (line item)
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO for deleted key "pieceCountForRate"
     And user success get LO
     When user add piece of count
@@ -34,10 +32,8 @@ Feature: Update LO
     And the piece of count added in the latest get lo
     And the revision value changes to increment 1
 
-  @2 @done
+  @2 @done @grossWeight
   Scenario: 2. Gross weight
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO
     And user success get LO
     When user update gross weight for rate
@@ -45,10 +41,8 @@ Feature: Update LO
     And the gross weight for rate value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @2.1 @done
+  @2.1 @done @grossWeight
   Scenario: 2.1 Delete Gross weight
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO
     And user success get LO
     When user delete gross weight for rate
@@ -56,10 +50,8 @@ Feature: Update LO
     And the gross weight for rate deleted in the latest get lo
     And the revision value changes to increment 1
 
-  @2.2
+  @2.2 @grossWeight
   Scenario: 2.2 Add Gross weight
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO for deleted key "grossWeightForRate"
     And user success get LO
     When user add gross weight for rate
@@ -69,8 +61,6 @@ Feature: Update LO
 
   @3 @done
   Scenario: 3. Chargeable weight
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO
     And user success get LO
     When user update chargeable weight
@@ -78,32 +68,26 @@ Feature: Update LO
     And the chargeable weight value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @4 @done
+  @4 @done @volume
   Scenario: 4. Update Volume
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user update volume
     Then success update "volume"
     And the volume value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @4.1 @done
+  @4.1 @done @volume
   Scenario: 4.1 Delete Volume
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user delete volume
     Then success update "volume"
     And the volume value deleted in the latest get lo
     And the revision value changes to increment 1
 
-  @4.2
+  @4.2 @volume
   Scenario: 4.2 Add Volume
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO for deleted key "volume"
     And user success get LO
     When user add volume
@@ -111,32 +95,26 @@ Feature: Update LO
     And the volume value added in the latest get lo
     And the revision value changes to increment 1
 
-  @5
+  @5 @dims
   Scenario: 5. Dims
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user update dimensions
     Then success update "dimensions"
     And the dimensions value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @5.1 @done
+  @5.1 @done @dims
   Scenario: 5.1 Delete Dims
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user delete dimensions
     Then success update "dimensions"
     And the dimensions value deleted in the latest get lo
     And the revision value changes to increment 1
 
-  @5.2
+  @5.2 @dims
   Scenario: 5.2 Add Dims
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO for deleted key "dimensions"
     And user success get LO
     When user add dimensions
@@ -146,19 +124,15 @@ Feature: Update LO
 
   @6
   Scenario: 6. SLAC count
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user update SLAC count
     Then success update "SLAC count"
     And the SLAC count value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @7 @done
+  @7 @done @shipmentDesc
   Scenario: 7. Update Shipment description
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO
     And user success get LO
     When user update Shipment description
@@ -166,21 +140,26 @@ Feature: Update LO
     And the Shipment description value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @7.1 @done
+  @7.1 @done @shipmentDesc
   Scenario: 7.1 Delete Shipment description
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user delete Shipment description
     Then success update "Shipment description"
     And the Shipment description value deleted in the latest get lo
     And the revision value changes to increment 1
 
+  @7.2 @done @shipmentDesc
+  Scenario: 7.2 Add Shipment description
+    And user success create LO for deleted key "goodsDescriptionForRate"
+    And user success get LO
+    When user add Shipment description
+    Then success update "Shipment description"
+    And the Shipment description value added in the latest get lo
+    And the revision value changes to increment 1
+
   @8
-  Scenario: 8. Commodity (price) code
-    Given user login SSO for one record
-    And user transform xfwb
+  Scenario: 8. Update Commodity (price) code
     And user success create LO
     And user success get LO
     When user update Commodity (price) code
@@ -188,10 +167,26 @@ Feature: Update LO
     And the commodity (price) code value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @9
+  @8.1 @done
+  Scenario: 8.1 Delete Commodity (price) code
+    And user success create LO
+    And user success get LO
+    When user delete Commodity (price) code
+    Then success update "Commodity (price) code"
+    And the commodity (price) code value deleted in the latest get lo
+    And the revision value changes to increment 1
+
+  @8.2 @done
+  Scenario: 8.2 Add Commodity (price) code
+    And user success create LO for deleted key "hsCodeForRate"
+    And user success get LO
+    When user add Commodity (price) code
+    Then success update "Commodity (price) code"
+    And the commodity (price) code value added in the latest get lo
+    And the revision value changes to increment 1
+
+  @9 @done
   Scenario: 9. Special handling code
-    Given user login SSO for one record
-    And user transform xfwb
     And user success create LO
     And user success get LO
     When user update special handling code
@@ -199,11 +194,27 @@ Feature: Update LO
     And the special handling code value changes in the latest get lo
     And the revision value changes to increment 1
 
+  @9.1 @done
+  Scenario: 9.1 Delete Special handling code
+    And user success create LO
+    And user success get LO
+    When user delete special handling code
+    Then success update "special handling code"
+    And the special handling code value deleted in the latest get lo
+    And the revision value changes to increment 1
+
+  @9.2
+  Scenario: 9.2 Add Special handling code
+    And user success create LO
+    And user success get LO
+    When user add special handling code
+    Then success update "special handling code"
+    And the special handling code value added in the latest get lo
+    And the revision value changes to increment 1
+
   @10
   Scenario: 10. Shipper name, address
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user update shipper name, address
     Then success update "shipper name, address"
@@ -212,22 +223,64 @@ Feature: Update LO
 
   @11
   Scenario: 11. Consignee name, address
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user update consignee name, address
     Then success update "consignee name, address"
     And the consignee name, address value changes in the latest get lo
     And the revision value changes to increment 1
 
-  @12
+  @12 @done
   Scenario: 12. OCDC charges, MYC, SCC, RAC, etc
-    Given user login SSO for one record
-    And user transform xfwb
-    And user success create LO
+    And user success create LO with new waybill number
     And user success get LO
     When user update OCDC charges, MYC, SCC, RAC, etc
     Then success update "OCDC charges, MYC, SCC, RAC, etc"
     And the OCDC charges, MYC, SCC, RAC, etc value changes in the latest get lo
     And the revision value changes to increment 1
+
+  @12.1 @done
+  Scenario: 12.1 Delete OCDC charges, MYC, SCC, RAC, etc
+    And user success create LO
+    And user success get LO
+    When user delete OCDC charges, MYC, SCC, RAC, etc
+    Then success update "OCDC charges, MYC, SCC, RAC, etc"
+    And the OCDC charges, MYC, SCC, RAC, etc value deleted in the latest get lo
+    And the revision value changes to increment 1
+
+  @12.2 @done
+  Scenario: 12.2 Add OCDC charges, MYC, SCC, RAC, etc
+    And user success create LO
+    And user success get LO
+    When user add OCDC charges, MYC, SCC, RAC, etc
+    Then success update "OCDC charges, MYC, SCC, RAC, etc"
+    And the OCDC charges, MYC, SCC, RAC, etc value added in the latest get lo
+    And the revision value changes to increment 1
+
+  @13 @done
+  Scenario: 13. Other Customs Information
+    And user success create LO
+    And user success get LO
+    When user update Other Customs Information
+    Then success update "Other Customs Information"
+    And the Other Customs Information value changes in the latest get lo
+    And the revision value changes to increment 1
+
+  @13.1
+  Scenario: 13.1 Delete Other Customs Information
+    And user success create LO
+    And user success get LO
+    When user delete Other Customs Information
+    Then success update "Other Customs Information"
+    And the Other Customs Information value deleted in the latest get lo
+    And the revision value changes to increment 1
+
+  @13.2 @done
+  Scenario: 13.2 Add Other Customs Information
+    And user success create LO
+    And user success get LO
+    When user add Other Customs Information
+    Then success update "Other Customs Information"
+    And the Other Customs Information value added in the latest get lo
+    And the revision value changes to increment 1
+

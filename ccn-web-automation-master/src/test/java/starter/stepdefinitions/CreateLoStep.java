@@ -26,4 +26,9 @@ public class CreateLoStep {
     public void verifyTheTypeValueIs(String arg0) {
         createLoAPI.verifyTheTypeIsWaybill();
     }
+
+    @Then("Success create using {string} url")
+    public void successCreateUsingUrl(String typeUrl) {
+        createLoAPI.verifySuccessCreateLO(typeUrl);
+    }
 }

@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "api": "https://onerecord.iata.org/ns/api#",
+    "cargo": "https://onerecord.iata.org/ns/cargo#"
+  },
+  "@type": "api:Change",
+  "api:hasLogisticsObject": {
+    "@id": "https://onerecordppd.cubeforall.com/a4c30908a8a6424dba821ef72e7860f4/logistics-objects/66d945f0625b7b5e7b1fb22f"
+  },
+  "api:hasDescription": "Delete Commodity Price Code",
+  "api:hasOperation": [
+    {
+      "api:op": {
+        "@id": "api:DELETE"
+      },
+      "api:o": [
+        {
+          "api:hasDatatype": "https://onerecord.iata.org/ns/cargo#CodeListElement",
+          "@type": "api:OperationObject",
+          "api:hasValue": "internal:a4c30908a8a6424dba821ef72e7860f4/logistics-objects/66d945f0625b7b5e7b1fb249"
+        }
+      ],
+      "@type": "api:Operation",
+      "api:s": "https://onerecordppd.cubeforall.com/a4c30908a8a6424dba821ef72e7860f4/logistics-objects/66d945f0625b7b5e7b1fb22f",
+      "api:p": "https://onerecord.iata.org/ns/cargo#hsCodeForRate"
+    }
+  ],
+  "api:hasRevision": {
+    "@value": "0",
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger"
+  }
+}
