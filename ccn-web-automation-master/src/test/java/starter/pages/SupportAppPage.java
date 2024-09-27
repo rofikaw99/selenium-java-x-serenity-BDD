@@ -13,6 +13,7 @@ public class SupportAppPage extends PageObject {
     //supportAppDiscount
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[12]");
+    private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[8]");
     private By companyName = By.xpath("//th[text()='Company Name']");
     private By CompanyCubeID = By.xpath("//th[text()='Company Cube ID']");
     private By CompanySystemCube = By.xpath("//th[text()='Company System Cube']");
@@ -176,6 +177,13 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(groupMenu).isDisplayed()+" also enabled: "+$(groupMenu).isEnabled());
         evaluateJavascript("arguments[0].click();", $(groupMenu));
+//        Thread.sleep(3000);
+    }
+
+    public void pressNotificationMonitoringMenu() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(notificationMonitoringMenu).isDisplayed()+" also enabled: "+$(notificationMonitoringMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(notificationMonitoringMenu));
 //        Thread.sleep(3000);
     }
 

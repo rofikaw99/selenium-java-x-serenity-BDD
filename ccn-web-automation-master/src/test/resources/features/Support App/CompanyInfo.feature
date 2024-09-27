@@ -47,3 +47,14 @@ Feature: Company Info in Support App
     Examples:
       | userID   | password | condition    |
       | helpdesk | password | Member Email |
+
+  @notificationMonitoring
+  Scenario Outline: display notification monitoring
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    When user go to notification menu
+#    And Input "<condition>" the display more info
+
+    Examples:
+      | userID   | password | condition    |
+      | helpdesk | password | Member Email |

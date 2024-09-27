@@ -140,63 +140,6 @@ public class FWBResharingPage {
 
     public void awb1000times() {
 
-        // Base URL and headers setup
-        String baseUrl = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
-        RequestSpecification requestSpec = new RequestSpecBuilder()
-                .setBaseUri(baseUrl)
-                .addHeader("serviceId", "4e6ae0d1-320a-4565-867e-778f939a58ab")
-                .addHeader("Content-Type", "application/json")
-                .addHeader("Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000")
-                .build();
-
-        ResponseSpecification responseSpec = new ResponseSpecBuilder()
-                .expectStatusCode(200) // Assuming a 200 status code is expected
-                .build();
-
-        // Loop to send 1000 requests
-        for (int i = 1; i <= 1000; i++) {
-            String awbNo = "618-" + (32789454 + i); // Generate dynamic AWB number
-
-            String requestBody = String.format(
-                    "{\n" +
-                            "    \"contentName\": \"%s\",\n" +
-                            "    \"contentType\": \"Booking\",\n" +
-                            "    \"contentMIME\": null,\n" +
-                            "    \"tags\": [\n" +
-                            "        \"origin:CGK\",\n" +
-                            "        \"destination:KUL\",\n" +
-                            "        \"agentName:DHL GLOBAL FORWARDING SINGAPORE PT\",\n" +
-                            "        \"shipperName:FAST GROUP SG\",\n" +
-                            "        \"consigneeName:FAST GROUP THAILAND\",\n" +
-                            "        \"isMasterAgent:no\",\n" +
-                            "        \"status:Sent\",\n" +
-                            "        \"from:testuser_charlie@yopmail.com\",\n" +
-                            "        \"awbNo:%s\",\n" +
-                            "        \"referenceId:1718260139115x116769264577019900\",\n" +
-                            "        \"flightNumber:2222Z\",\n" +
-                            "        \"departureDate:19SEP\",\n" +
-                            "        \"carrierCode:QZ\"\n" +
-                            "    ],\n" +
-                            "    \"encodedContent\": \"ewogICJEb\"\n" +
-                            "}", awbNo, awbNo);
-
-            // Make the PUT request
-            Response response = RestAssured
-                    .given()
-                    .spec(requestSpec)
-                    .body(requestBody)
-                    .when()
-                    .put()
-                    .then()
-                    .spec(responseSpec)
-                    .extract()
-                    .response();
-
-            // Print response status and details
-            System.out.println("Iteration " + i + ": Status Code " + response.getStatusCode() +
-                    ", Response: " + response.getBody().asString());
-        }
-
 //        // Base URL and headers setup
 //        String baseUrl = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
 //        RequestSpecification requestSpec = new RequestSpecBuilder()
@@ -211,8 +154,8 @@ public class FWBResharingPage {
 //                .build();
 //
 //        // Loop to send 1000 requests
-//        for (int i = 1; i <= 2000; i++) {
-//            String awbNo = "618-" + (62787454 + i); // Generate dynamic AWB number
+//        for (int i = 1; i <= 1; i++) {
+//            String awbNo = "618-" + (32789454 + i); // Generate dynamic AWB number
 //
 //            String requestBody = String.format(
 //                    "{\n" +
@@ -220,19 +163,22 @@ public class FWBResharingPage {
 //                            "    \"contentType\": \"Booking\",\n" +
 //                            "    \"contentMIME\": null,\n" +
 //                            "    \"tags\": [\n" +
-////                            "        \"status:Confirmed\"\n" +
-//                            "        \"awbNo:618-62788453\"\n" +
-////                            "        \"owner:headquarter_sq@yopmail.com\",\n" +
-////                            "        \"forwarderEmail:headquarter_sq@yopmail.com\",\n" +
-////                            "        \"origin:CMB\",\n" +
-////                            "        \"awbPrefix:618\",\n" +
-////                            "        \"destination:BNE\",\n" +
-////                            "        \"jobID:4fd4cb8a-5fea-4e4f-b1f3-74011b389917\",\n" +
-////                            "        \"isAllowSendFFR:False\"\n" +
-////                            "        \"awbNo:%s\",\n" +
-////                            "        \"referenceId:1718260139115x116769264577019900\",\n" +
-////                            "        \"flightNumber:2222Z\",\n" +
-////                            "        \"departureDate:12SEP\"\n" +
+//                            "        \"status:Confirmed\",\n" +
+//                            "        \"awbNo:%s\",\n" +
+//                            "        \"owner:batiktrimulyo@gmail.com\",\n" +
+//                            "        \"forwarderEmail:batiktrimulyo@gmail.com\",\n" +
+//                            "        \"origin:CMB\",\n" +
+//                            "        \"awbPrefix:618\",\n" +
+//                            "        \"destination:BNE\",\n" +
+//                            "        \"jobID:4fd4cb8a-5fea-4e4f-b1f3-74011b389917\",\n" +
+//                            "        \"isAllowSendFFR:False\",\n" +
+//                            "        \"companyName:CEF LOGISTICS (PVT) LTD\",\n" +
+//                            "        \"isFromBC:True\",\n" +
+//                            "        \"isDGRCommodity:False\",\n" +
+//                            "        \"specialHandlingCodes:EAW\",\n" +
+//                            "        \"flightNo:0469\",\n" +
+//                            "        \"flightDate:25/09/2024 00:00:00 AM\",\n" +
+//                            "        \"carrierCode:SQ\"\n" +
 //                            "    ],\n" +
 //                            "    \"encodedContent\": \"ewogICJEb\"\n" +
 //                            "}", awbNo, awbNo);
@@ -253,6 +199,67 @@ public class FWBResharingPage {
 //            System.out.println("Iteration " + i + ": Status Code " + response.getStatusCode() +
 //                    ", Response: " + response.getBody().asString());
 //        }
+
+        // Base URL and headers setup
+        String baseUrl = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
+//        String baseUrl = "https://cube.ccnexchange.com/c8083437160b40bf9349cc782733e548/document";
+        RequestSpecification requestSpec = new RequestSpecBuilder()
+                .setBaseUri(baseUrl)
+                .addHeader("serviceId", "4e6ae0d1-320a-4565-867e-778f939a58ab")
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000")
+                .build();
+
+        ResponseSpecification responseSpec = new ResponseSpecBuilder()
+                .expectStatusCode(200) // Assuming a 200 status code is expected
+                .build();
+
+        // Loop to send 1000 requests
+        for (int i = 1; i <= 1; i++) {
+            String awbNo = "618-" + (62787454 + i); // Generate dynamic AWB number
+
+            String requestBody = String.format(
+                    "{\n" +
+                            "    \"contentName\": \"%s\",\n" +
+                            "    \"contentType\": \"Booking\",\n" +
+                            "    \"contentMIME\": null,\n" +
+                            "    \"tags\": [\n" +
+                            "        \"status:Confirmed\",\n" +
+                            "        \"awbNo:%s\",\n" +
+                            "        \"owner:batiktrimulyo@gmail.com\",\n" +
+                            "        \"forwarderEmail:batiktrimulyo@gmail.com\",\n" +
+                            "        \"origin:CMB\",\n" +
+                            "        \"awbPrefix:618\",\n" +
+                            "        \"destination:BNE\",\n" +
+                            "        \"jobID:4fd4cb8a-5fea-4e4f-b1f3-74011b389917\",\n" +
+                            "        \"isAllowSendFFR:False\",\n" +
+                            "        \"companyName:CEF LOGISTICS (PVT) LTD\",\n" +
+                            "        \"isFromBC:True\",\n" +
+                            "        \"isDGRCommodity:False\",\n" +
+                            "        \"specialHandlingCodes:EAW\",\n" +
+                            "        \"flightNo:0469\",\n" +
+                            "        \"flightDate:25/09/2024 00:00:00 AM\",\n" +
+                            "        \"carrierCode:SQ\"\n" +
+                            "    ],\n" +
+                            "    \"encodedContent\": \"ewogICJEb\"\n" +
+                            "}", awbNo, awbNo);
+
+            // Make the PUT request
+            Response response = RestAssured
+                    .given()
+                    .spec(requestSpec)
+                    .body(requestBody)
+                    .when()
+                    .put()
+                    .then()
+                    .spec(responseSpec)
+                    .extract()
+                    .response();
+
+            // Print response status and details
+            System.out.println("Iteration " + i + ": Status Code " + response.getStatusCode() +
+                    ", Response: " + response.getBody().asString());
+        }
     }
 
     public void createDocShipmentStatusForShareVia(String contentType, String contentName) {

@@ -47,6 +47,11 @@ public class SupportAppStep {
         supportAppPage.pressGroupMenu();
     }
 
+    @When("user go to notification menu")
+    public void userGoToNotificationMenu() throws InterruptedException {
+        supportAppPage.pressNotificationMonitoringMenu();
+    }
+
     @When("user go to company info sub menu")
     public void userGoToCompanyInfoSubMenu() throws InterruptedException {
         supportAppPage.companyInfoSubMenu();
