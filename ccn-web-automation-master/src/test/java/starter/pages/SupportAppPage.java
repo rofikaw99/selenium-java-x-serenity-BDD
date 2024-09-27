@@ -184,7 +184,7 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(notificationMonitoringMenu).isDisplayed()+" also enabled: "+$(notificationMonitoringMenu).isEnabled());
         evaluateJavascript("arguments[0].click();", $(notificationMonitoringMenu));
-        Thread.sleep(3000);
+//        Thread.sleep(3000);
     }
 
     public boolean CompanyName(){
