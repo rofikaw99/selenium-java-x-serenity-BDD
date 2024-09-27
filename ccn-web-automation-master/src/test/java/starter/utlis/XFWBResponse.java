@@ -4,6 +4,7 @@ import net.serenitybdd.core.SkipStepException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,11 @@ public class XFWBResponse {
     }
     public static String waybillNumber(JSONObject jsonObject){
         return jsonObject.getString("cargo:waybillNumber");
+    }
+    public static void changeWaybillNumber(JSONObject jsonObject){
+        Long waybillNumber = Long.valueOf(jsonObject.getString("cargo:waybillNumber"));
+        waybillNumber = waybillNumber + 1;
+        jsonObject.put("cargo:waybillNumber", String.valueOf(waybillNumber));
     }
     public static Map<String, Object> declaredValueForCarriage(JSONObject jsonObject){
         String key = "cargo:declaredValueForCarriage";

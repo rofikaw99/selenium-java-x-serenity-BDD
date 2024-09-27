@@ -7,7 +7,7 @@
   "api:hasLogisticsObject": {
     "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cbe8998366ab67171fb37a"
   },
-  "api:hasDescription": "Add Special Handling Codes",
+  "api:hasDescription": "Add Commodity Price Code",
   "api:hasOperation": [
     {
       "@type": "api:Operation",

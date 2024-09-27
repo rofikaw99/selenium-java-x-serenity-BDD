@@ -2,6 +2,7 @@ package starter.api;
 
 import io.restassured.response.Response;
 import org.json.JSONObject;
+import starter.utlis.ApiProperties;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -13,8 +14,8 @@ public class LoginAPI {
 
     public void loginRequest() throws IOException {
         String url = "https://login.microsoftonline.com/ccnssoppd.onmicrosoft.com/oauth2/v2.0/token";
-        String clientID = "a9366fac-bdeb-4c5f-85dd-d4fcb5989cbc";
-        String clientSecret = "HB08Q~qI09SysrjCCaW9JwMgH~YqiWlXXhDaUaDv";
+        String clientID = ApiProperties.clientIdOneRecord();
+        String clientSecret = ApiProperties.clientSecretOneRecord();
         Response response =
                 given()
                         .auth().preemptive().basic(clientID, clientSecret)

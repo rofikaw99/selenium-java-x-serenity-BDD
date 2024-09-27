@@ -1,32 +1,32 @@
 {
   "@context": {
-    "cargo": "https://onerecord.iata.org/ns/cargo#",
-    "api": "https://onerecord.iata.org/ns/api#"
+    "api": "https://onerecord.iata.org/ns/api#",
+    "cargo": "https://onerecord.iata.org/ns/cargo#"
   },
   "@type": "api:Change",
   "api:hasLogisticsObject": {
-    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cbe8998366ab67171fb37a"
+    "@id": "https://onerecordppd.cubeforall.com/a4c30908a8a6424dba821ef72e7860f4/logistics-objects/66d945f0625b7b5e7b1fb22f"
   },
-  "api:hasDescription": "Delete Special Handling Codes",
+  "api:hasDescription": "Delete Commodity Price Code",
   "api:hasOperation": [
     {
-      "@type": "api:Operation",
       "api:op": {
         "@id": "api:DELETE"
       },
-      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cbe90c8b37723fc1877652",
-      "api:p": "https://onerecord.iata.org/ns/cargo#hsCodeForRate",
       "api:o": [
         {
-          "@type": "api:OperationObject",
           "api:hasDatatype": "https://onerecord.iata.org/ns/cargo#CodeListElement",
-          "api:hasValue": "NSC"
+          "@type": "api:OperationObject",
+          "api:hasValue": "internal:a4c30908a8a6424dba821ef72e7860f4/logistics-objects/66d945f0625b7b5e7b1fb249"
         }
-      ]
+      ],
+      "@type": "api:Operation",
+      "api:s": "https://onerecordppd.cubeforall.com/a4c30908a8a6424dba821ef72e7860f4/logistics-objects/66d945f0625b7b5e7b1fb22f",
+      "api:p": "https://onerecord.iata.org/ns/cargo#hsCodeForRate"
     }
   ],
   "api:hasRevision": {
-    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger",
-    "@value": "1"
+    "@value": "0",
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger"
   }
 }

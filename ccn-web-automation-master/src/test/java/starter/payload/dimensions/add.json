@@ -15,7 +15,7 @@
         "@id": "api:ADD"
       },
       "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66d6da15b024076db974980b",
-      "api:p": "https://onerecord.iata.org/ns/cargo#heigth",
+      "api:p": "https://onerecord.iata.org/ns/cargo#height",
       "api:o": [
         {
           "@type": "api:OperationObject",

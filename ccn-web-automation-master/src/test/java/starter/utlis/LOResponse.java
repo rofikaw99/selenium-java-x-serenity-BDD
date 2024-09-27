@@ -193,6 +193,10 @@ public class LOResponse {
     public static String waybillLineItems_id(JSONObject jsonObject){
         return waybillLineItems(jsonObject).getString("@id");
     }
+    public static String waybillLineItems_slacForRate(JSONObject jsonObject){
+        if (waybillLineItems(jsonObject).has("cargo:slacForRate")) return waybillLineItems(jsonObject).getString("cargo:slacForRate");
+        else return null;
+    }
     public static JSONObject waybillLineItems_chargeableWeightForRate(JSONObject jsonObject){
         return waybillLineItems(jsonObject).getJSONObject("cargo:chargeableWeightForRate");
     }
@@ -239,13 +243,16 @@ public class LOResponse {
     }
     public static JSONObject WLI_dimensionsForRate_height(JSONObject jsonObject){
         JSONObject result = null;
-        if (waybillLineItems_dimensionsForRate(jsonObject).has("cargo:height")) result = waybillLineItems_dimensionsForRate(jsonObject).getJSONObject("cargo:height");
+        if (waybillLineItems_dimensionsForRate(jsonObject).has("cargo:height")){
+            result = waybillLineItems_dimensionsForRate(jsonObject).getJSONObject("cargo:height");
+        }
         return result;
     }
     public static String WLI_DFR_height_id(JSONObject jsonObject){
         return WLI_dimensionsForRate_height(jsonObject).getString("@id");
     }
     public static float WLI_DFR_height_numericalValue(JSONObject jsonObject){
+        System.out.println("height: " + WLI_dimensionsForRate_height(jsonObject));
         return WLI_dimensionsForRate_height(jsonObject).getFloat("cargo:numericalValue");
     }
     public static JSONObject WLI_DFR_height_unit(JSONObject jsonObject){
@@ -429,11 +436,16 @@ public class LOResponse {
     public static JSONObject shipment_customsInformation(JSONObject jsonObject, int index){
         return shipment(jsonObject).getJSONArray("cargo:customsInformation").getJSONObject(index);
     }
+    public static JSONArray shipment_customsInformation(JSONObject jsonObject){
+        return shipment(jsonObject).getJSONArray("cargo:customsInformation");
+    }
     public static String shipment_customsInformation_id(JSONObject jsonObject, int index){
         return shipment_customsInformation(jsonObject, index).getString("@id");
     }
     public static String shipment_customsInformation_note(JSONObject jsonObject, int index){
-        return shipment_customsInformation(jsonObject, index).getString("cargo:note");
+        String result = null;
+        if (shipment_customsInformation(jsonObject, index).has("cargo:note")) result = shipment_customsInformation(jsonObject, index).getString("cargo:note");
+        return result;
     }
     public static JSONObject shipment_customsInformation_contentCode(JSONObject jsonObject, int index){
         return shipment_customsInformation(jsonObject, index).getJSONObject("cargo:contentCode");
@@ -613,7 +625,8 @@ public class LOResponse {
         return S_pieces_involvedInActions_loadingType(jsonObject).getString("cargo:code");
     }
     public static JSONArray shipment_specialHandlingCodes(JSONObject jsonObject){
-        return shipment(jsonObject).getJSONArray("cargo:specialHandlingCodes");
+        if (shipment(jsonObject).has("cargo:specialHandlingCodes")) return shipment(jsonObject).getJSONArray("cargo:specialHandlingCodes");
+        else return null;
     }
     public static JSONObject shipment_specialHandlingCodes(JSONObject jsonObject, int index){
         return shipment(jsonObject).getJSONArray("cargo:specialHandlingCodes").getJSONObject(index);

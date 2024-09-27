@@ -20,7 +20,7 @@
         {
           "@type": "api:OperationObject",
           "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
-          "api:hasValue": "2"
+          "api:hasValue": 2
         }
       ]
     }

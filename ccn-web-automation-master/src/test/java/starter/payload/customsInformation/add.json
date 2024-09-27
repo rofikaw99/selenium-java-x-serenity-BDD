@@ -5,22 +5,22 @@
   },
   "@type": "api:Change",
   "api:hasLogisticsObject": {
-    "@id": "https://onerecorddev.cubeforall.com/cd213881a8d848b5803619711fdf660d/logistics-objects/66c54dc7cbb4a405329697e3"
+    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cbe8998366ab67171fb392"
   },
-  "api:hasDescription": "Add Piece Count for Rate",
+  "api:hasDescription": "Add Other Customs Information",
   "api:hasOperation": [
     {
       "@type": "api:Operation",
       "api:op": {
         "@id": "api:ADD"
       },
-      "api:s": "https://onerecorddev.cubeforall.com/cd213881a8d848b5803619711fdf660d/logistics-objects/66c54dc7cbb4a405329697e3",
-      "api:p": "https://onerecord.iata.org/ns/cargo#pieceCountForRate",
+      "api:s": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/66cbe8998366ab67171fb392",
+      "api:p": "https://onerecord.iata.org/ns/cargo#note",
       "api:o": [
         {
           "@type": "api:OperationObject",
-          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#integer",
-          "api:hasValue": 10
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "6597424229"
         }
       ]
     }

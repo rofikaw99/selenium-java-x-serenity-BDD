@@ -23,47 +23,47 @@ public class XFWBRequest {
         return Waybill(jsonXml).getJSONObject("rsm:BusinessHeaderDocument");
     }
     public static String BHD_ID(JSONObject jsonXML) {
-        key = "ram:ID";
+        String key = "ram:ID";
         if (BusinessHeaderDocument(jsonXML).has(key)) return BusinessHeaderDocument(jsonXML).getString(key);
         else throw new SkipStepException("there is no "+ key +" in request");
     }
     public static String BHD_SenderAssignedID(JSONObject jsonXML) {
-        key = "ram:SenderAssignedID";
+        String key = "ram:SenderAssignedID";
         if (BusinessHeaderDocument(jsonXML).has(key)) return BusinessHeaderDocument(jsonXML).getString(key);
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
     public static JSONObject BHD_IncludedHeaderNote(JSONObject jsonXML){
-        key = "ram:IncludedHeaderNote";
+        String key = "ram:IncludedHeaderNote";
         if (BusinessHeaderDocument(jsonXML).has(key)) return BusinessHeaderDocument(jsonXML).getJSONObject(key);
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
     public static String IHN_ContentCode(JSONObject jsonObject){
-        key = "ram:ContentCode";
+        String key = "ram:ContentCode";
         if (BHD_IncludedHeaderNote(jsonObject).has(key)) return BHD_IncludedHeaderNote(jsonObject).getString("ram:ContentCode");
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
     public static String SCoA_Signatory(JSONObject jsonObject){
-        key = "ram:Signatory";
+        String key = "ram:Signatory";
         if (BusinessHeaderDocument(jsonObject).getJSONObject("ram:SignatoryConsignorAuthentication").has(key)) return BusinessHeaderDocument(jsonObject).getJSONObject("ram:SignatoryConsignorAuthentication").getString(key);
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
     public static JSONObject BHD_SCaA(JSONObject jsonObject){
-        key = "ram:SignatoryCarrierAuthentication";
+        String key = "ram:SignatoryCarrierAuthentication";
         if (BusinessHeaderDocument(jsonObject).has(key)) return BusinessHeaderDocument(jsonObject).getJSONObject(key);
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
     public static String BHD_SCaA_ActualDateTime(JSONObject jsonObject){
-        key = "ram:ActualDateTime";
+        String key = "ram:ActualDateTime";
         if (BHD_SCaA(jsonObject).has(key)) return BHD_SCaA(jsonObject).getString(key) + ".000Z";
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
     public static String BHD_SCaA_Signatory(JSONObject jsonObject){
-        key = "ram:Signatory";
+        String key = "ram:Signatory";
         if (BHD_SCaA(jsonObject).has(key)) return BHD_SCaA(jsonObject).getString(key);
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
     public static String IAL_Name(JSONObject jsonObject){
-        key = "ram:Name";
+        String key = "ram:Name";
         if (BHD_SCaA(jsonObject).getJSONObject("ram:IssueAuthenticationLocation").has(key)) return BHD_SCaA(jsonObject).getJSONObject("ram:IssueAuthenticationLocation").getString(key);
         else throw new SkipStepException("there is no  "+ key +" in request");
     }
@@ -793,7 +793,7 @@ public class XFWBRequest {
     public static String IncludedAccountingNote(JSONObject jsonObject){
         String key = "ram:IncludedAccountingNote";
         if (MasterConsignment(jsonObject).has(key)) {
-            JSONObject includedAccountingNote = MasterConsignment(jsonObject).getJSONObject(key);
+            JSONObject includedAccountingNote = MasterConsignment(jsonObject).getJSONArray(key).getJSONObject(0);
             return includedAccountingNote.getString("ram:ContentCode") + "-" + includedAccountingNote.getString("ram:Content");
         } else throw new SkipStepException("there is no  "+ key +" in request");
     }

@@ -50,7 +50,7 @@
         {
           "@type": "api:OperationObject",
           "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#double",
-          "api:hasValue": "1510"
+          "api:hasValue": 1510
         }
       ]
     },
@@ -65,7 +65,7 @@
         {
           "@type": "api:OperationObject",
           "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#double",
-          "api:hasValue": "9090"
+          "api:hasValue": 9090
         }
       ]
     }
