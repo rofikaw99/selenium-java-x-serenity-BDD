@@ -294,15 +294,15 @@ Feature: PCN
       | indoqa-ccn-47591568@yopmail.com | CCNPegasus123 | Test BC-Premium Multicurrency#Sandbox | qa-ccn-75754@mailinator.com  | test awbconcierge premium multicurrencysandbox | Bundle BC AWB | 5         |
 
 
-  @PCNS2_1 @PCNS2 @PCN
+  @PCNS2_1_BCP @PCNS2 @PCN
   Scenario Outline: [OFFLINE] Subscription of the first month with different PM. PCN Configuration:  set to 20% of each subscription, PCN applies to all products, countries, cities, companies.
     Given go to main web
     When click initial sign in button
     When input email "<email>" and password "<password>" and press sign in to continue login
-#    And back to the main tab browser
-#    When "PM 1 Company A" click product tab to subscribe to product
-#    And Select plan Test BC-Premium Multicurrency#Sandbox
-#    And Subscribe plan "<product>"
+    And back to the main tab browser
+    When "PM 1 Company A" click product tab to subscribe to product
+    And Select plan Test BC-Premium Multicurrency#Sandbox
+    And Subscribe plan "<product>"
 
     Examples:
       | email                          | password      | product                              | email2                         | productB                                       | inputSubs |

@@ -4,7 +4,9 @@ import io.cucumber.java.en.Given;
 import net.thucydides.core.pages.PageObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import starter.utlis.Constants;
 
 public class SupportAppPage extends PageObject {
@@ -13,7 +15,14 @@ public class SupportAppPage extends PageObject {
     //supportAppDiscount
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[12]");
-    private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[8]");
+    private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
+
+    private By currentTotalCount = By.xpath("(//p[text()])[2]");
+    private By previousTotalCount = By.xpath("(//p[text()])[3]");
+    private By currentTotalFailedProcess = By.xpath("(//p[text()])[4]");
+    private By previousTotalFailedProcess = By.xpath("(//p[text()])[5]");
+    private By currentCountAt = By.xpath("(//h6[text()])[1]");
+    private By previousCountAt = By.xpath("(//h6[text()])[2]");
     private By companyName = By.xpath("//th[text()='Company Name']");
     private By CompanyCubeID = By.xpath("//th[text()='Company Cube ID']");
     private By CompanySystemCube = By.xpath("//th[text()='Company System Cube']");
@@ -80,7 +89,6 @@ public class SupportAppPage extends PageObject {
     private By unitAmountInput = By.xpath("//input[@placeholder='Unit Amount']");
     private By memberLimitInput = By.xpath("//input[@placeholder='Member Limit']");
     private By submitPrice = By.xpath("(//button[@type='button'])[4]");
-
 
     public void addNewPrice(){
         $(newPlanCreated).isDisplayed();
@@ -184,7 +192,22 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(notificationMonitoringMenu).isDisplayed()+" also enabled: "+$(notificationMonitoringMenu).isEnabled());
         evaluateJavascript("arguments[0].click();", $(notificationMonitoringMenu));
-//        Thread.sleep(3000);
+        Thread.sleep(3000);
+    }
+
+    public void verifyNotificationMonitoringMenuInfo() {
+        String currentTotalCountValue = $(currentTotalCount).getText();
+        String previousTotalCountValue = $(previousTotalCount).getText();
+        String currentTotalFailedProcessValue = $(currentTotalFailedProcess).getText();
+        String previousTotalFailedProcessValue = $(previousTotalFailedProcess).getText();
+        String currentCountAtValue = $(currentCountAt).getText();
+        String previousCountAtValue = $(previousCountAt).getText();
+        System.out.println("the Current Total Notification Monitoring Count is: " + currentTotalCountValue);
+        System.out.println("the Previous Total Notification Monitoring Count is: " + previousTotalCountValue);
+        System.out.println("the Current Total Failed Notification Monitoring Count is: " + currentTotalFailedProcessValue);
+        System.out.println("the Previous Total Failed Notification Monitoring Count is: " + previousTotalFailedProcessValue);
+        System.out.println(currentCountAtValue);
+        System.out.println(previousCountAtValue);
     }
 
     public boolean CompanyName(){
