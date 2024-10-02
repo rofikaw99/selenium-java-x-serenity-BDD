@@ -87,8 +87,12 @@ public class LoginPage extends PageObject {
 
     public void selectTestBCPremiumMulticurrencySandbox(){
         getDriver().get("https://sandbox.cubeforall.com/products/forwarders-shippers/test-iata-tact-rate-premium-multicurrencysandbox/");
-
     }
+
+    public void selectTDSB(){
+        getDriver().get("https://sandbox.cubeforall.com/products/forwarders-shippers/tdsb/");
+    }
+
 
     public void selectplanbundleBCAWB(){
         getDriver().get("https://sandbox.cubeforall.com/products/forwarders-shippers/bundle-awb-bc/");

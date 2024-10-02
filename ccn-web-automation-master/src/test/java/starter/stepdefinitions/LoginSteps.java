@@ -75,6 +75,12 @@ public class LoginSteps {
         Thread.sleep(9000);
     }
 
+    @And("Select plan TDSB")
+    public void selectPlanTDSB() throws Exception {
+        loginPage.selectTDSB();
+        Thread.sleep(8000);
+    }
+
     @And("select plan bundle BC AWB")
     public void selectplanbundleBCAWB() throws Exception {
         loginPage.selectplanbundleBCAWB();

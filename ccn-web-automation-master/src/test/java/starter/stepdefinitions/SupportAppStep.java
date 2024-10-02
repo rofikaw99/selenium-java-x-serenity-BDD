@@ -2,6 +2,7 @@ package starter.stepdefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Assert;
@@ -50,6 +51,11 @@ public class SupportAppStep {
     @When("user go to notification menu")
     public void userGoToNotificationMenu() throws InterruptedException {
         supportAppPage.pressNotificationMonitoringMenu();
+    }
+
+    @Then("verify notification monitoring information")
+    public void verifyNotificationMonitoringInformation() throws InterruptedException {
+        supportAppPage.verifyNotificationMonitoringMenuInfo();
     }
 
     @When("user go to company info sub menu")
