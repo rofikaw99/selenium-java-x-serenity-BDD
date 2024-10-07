@@ -393,7 +393,8 @@ public class UpdateLOStep {
     }
 
     @And("the consignee name, address value changes in the latest get lo")
-    public void theConsigneeNameAddressValueChangesInTheLatestGetLo() throws IOException {
+    public void theConsigneeNameAddressValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyPartyName(jsonResponse, "CNE");
@@ -403,7 +404,7 @@ public class UpdateLOStep {
     @When("user update OCDC charges, MYC, SCC, RAC, etc")
     public void userUpdateOCDCChargesMYCSCCRACEtc() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.otherCharges_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idOtherChargeCode = LOResponse.otherCharges_otherChargeCode_id(responseJson);
         String otherChargeCode = LOResponse.otherCharges_otherChargeCode_code(responseJson);
 
@@ -673,10 +674,12 @@ public class UpdateLOStep {
     @When("user delete OCDC charges, MYC, SCC, RAC, etc")
     public void userDeleteOCDCChargesMYCSCCRACEtc() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.otherCharges_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
+        String idOtherCharge = LOResponse.otherCharges_id(responseJson);
         String idOtherChargeCode = LOResponse.otherCharges_otherChargeCode_id(responseJson);
 
         actualData.put("idOtherChargeCode", idOtherChargeCode);
+        actualData.put("idOtherCharge", idOtherCharge);
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
@@ -694,17 +697,19 @@ public class UpdateLOStep {
     @When("user add OCDC charges, MYC, SCC, RAC, etc")
     public void userAddOCDCChargesMYCSCCRACEtc() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.otherCharges_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
+
+        actualData.put("idOtherCharge", LOResponse.otherCharges_id(responseJson));
 
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.addOtherChargeCode(revision, idTarget);
+        updateLoAPI.addOtherChargeCode(revision, idTarget, actualData);
     }
 
     @And("the OCDC charges, MYC, SCC, RAC, etc value added in the latest get lo")
     public void theOCDCChargesMYCSCCRACEtcValueAddedInTheLatestGetLo() throws IOException, InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyOtherChargesAdded(jsonResponse);

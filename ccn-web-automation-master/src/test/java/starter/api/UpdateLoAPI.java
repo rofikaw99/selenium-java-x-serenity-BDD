@@ -202,7 +202,7 @@ public class UpdateLoAPI {
 //        UpdateLoPayload.updateOperationIds(payload, actualData.get("idUnitCode"), 0, 2);
         UpdateLoPayload.updateOperationIds(payload, actualData.get("idNumericalValue"), 0, 2);
 //        UpdateLoPayload.updateActualData(payload, actualData.get("unitCode"), 0);
-        UpdateLoPayload.updateActualData(payload, numericalValue, 0);
+        UpdateLoPayload.updateActualData(payload, String.valueOf(Float.valueOf(numericalValue)), 0);
         UpdateLoPayload.updateRevision(payload, revision);
 
         // Send the update request
@@ -689,7 +689,7 @@ public class UpdateLoAPI {
 
         // Update the payload with the extracted details
         UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
-        UpdateLoPayload.updateOperationIds(payload, idObjectTarget);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idOtherCharge"));
         UpdateLoPayload.updateActualData(payload, actualData.get("idOtherChargeCode"), 0);
         UpdateLoPayload.updateRevision(payload, revision);
 
@@ -697,7 +697,7 @@ public class UpdateLoAPI {
         updateLOReq(payload, idObjectTarget);
     }
 
-    public void addOtherChargeCode(Integer revision, String idObjectTarget) throws IOException {
+    public void addOtherChargeCode(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
         // Load the JSON payload from the file
         payload = new JSONObject(FileUtils.readFileToString(
                 new File("src/test/java/starter/payload/otherChargeCode/add.json"),
@@ -705,7 +705,7 @@ public class UpdateLoAPI {
         );
 
         UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
-        UpdateLoPayload.updateOperationIds(payload, idObjectTarget, 0, 1);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idOtherCharge"), 0, 1);
         UpdateLoPayload.updateRevision(payload, revision);
 
         // Send the update request
