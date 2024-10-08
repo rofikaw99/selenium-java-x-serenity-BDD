@@ -58,3 +58,15 @@ Feature: Company Info in Support App
     Examples:
       | userID   | password |
       | helpdesk | password |
+
+  @updatePlanManagerSupportApp
+  Scenario Outline: update plan manager
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    When user go to update plan manager menu
+    And input "<planManagerMail>" to display update plan manager function
+    Then update new plan manager in support app
+
+    Examples:
+      | userID   | password | planManagerMail |
+      | helpdesk | password | HQ              |

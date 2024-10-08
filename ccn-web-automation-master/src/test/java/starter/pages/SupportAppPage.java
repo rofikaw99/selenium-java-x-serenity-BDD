@@ -16,6 +16,7 @@ public class SupportAppPage extends PageObject {
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[12]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
+    private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
 
     private By currentTotalCount = By.xpath("(//p[text()])[2]");
     private By previousTotalCount = By.xpath("(//p[text()])[3]");
@@ -24,6 +25,7 @@ public class SupportAppPage extends PageObject {
     private By currentCountAt = By.xpath("(//h6[text()])[1]");
     private By previousCountAt = By.xpath("(//h6[text()])[2]");
     private By companyName = By.xpath("//th[text()='Company Name']");
+    private By currentPlanManager = By.xpath("//th[text()='Current Plan Manager']");
     private By CompanyCubeID = By.xpath("//th[text()='Company Cube ID']");
     private By CompanySystemCube = By.xpath("//th[text()='Company System Cube']");
     private By CompanyPIMA = By.xpath("//th[text()='Company PIMA']");
@@ -122,7 +124,6 @@ public class SupportAppPage extends PageObject {
         $(companyInfoInputField).clear();
         $(companyInfoInputField).sendKeys(input);
     }
-
     public void pressProductSubMenu(){
         $(productSubMenu).isDisplayed();
         $(productSubMenu).click();
@@ -195,6 +196,13 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(3000);
     }
 
+    public void pressUpdatePlanManager() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(updatePlanManager).isDisplayed()+" also enabled: "+$(updatePlanManager).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(updatePlanManager));
+        Thread.sleep(3000);
+    }
+
     public void verifyNotificationMonitoringMenuInfo() {
         String currentTotalCountValue = $(currentTotalCount).getText();
         String previousTotalCountValue = $(previousTotalCount).getText();
@@ -212,6 +220,9 @@ public class SupportAppPage extends PageObject {
 
     public boolean CompanyName(){
         return $(companyName).isDisplayed();
+    }
+    public boolean currentPlanManager(){
+        return $(currentPlanManager).isDisplayed();
     }
     public boolean CompanyCubeID(){
         return $(CompanyCubeID).isDisplayed();

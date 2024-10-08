@@ -399,6 +399,7 @@ public class FWBResharingPage {
                 "    \"system.csgagt86cts_sha01@ccnexchange.com\",\n" +
                 "    \"system.csgagt01xsplcsq_sin01@ccnexchange.com\",\n" +
                 "    \"system.csgagt01xspbcsq_sin81@ccnexchange.com\",\n" +
+                "    \"system.csgagt99kiex637nu459et1po_aae@ccnexchange.com\",\n" +
                 "    \"system.csgagt86cts_sha01@ccnexchange.com\"\n" +
                 "  ],\n" +
                 "  \"via\": \"" + via + "\"\n" +
