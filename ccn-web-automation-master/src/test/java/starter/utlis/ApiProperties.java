@@ -41,5 +41,31 @@ public class ApiProperties {
     public static String baseUrl(){
         return load().getProperty("base_url");
     }
-
+    public static String sourceServiceId(){
+        return load().getProperty("source-service-id");
+    }
+    public static String paymentServiceId(){
+        return load().getProperty("payment-service_id");
+    }
+    public static String associateServiceId(){
+        return load().getProperty("associate-service-id");
+    }
+    public static String emailCompany1(){
+        return load().getProperty("email-company-1");
+    }
+    public static String emailCompany2(){
+        return load().getProperty("email-company-2");
+    }
+    public static String cubeId1(){
+        return load().getProperty("cube-id-1");
+    }
+    public static String cubeId2(){
+        return load().getProperty("cube-id-2");
+    }
+    public static String baseUrlExternal(){
+        return load().getProperty("base-url-external");
+    }
+    public static String baseUrlPayment(){
+        return load().getProperty("base-url-payment");
+    }
 }
