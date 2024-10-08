@@ -36,7 +36,11 @@ public class SupportAppStep {
         Thread.sleep(waitResponse);
         loginPage.inputSigninSupportApp(userID,password);
     }
-
+    @Then("update new plan manager in support app")
+    public void updateNewPlanManageriInSupportApp() throws Exception {
+        Thread.sleep(waitResponse);
+        loginPage.inputPlanManagerSupportApp();
+    }
     @When("user go to create discount menu")
     public void userGoToCreateDiscountMenu() {
         supportAppPage.pressDiscountMenu();
@@ -51,6 +55,11 @@ public class SupportAppStep {
     @When("user go to notification menu")
     public void userGoToNotificationMenu() throws InterruptedException {
         supportAppPage.pressNotificationMonitoringMenu();
+    }
+
+    @When("user go to update plan manager menu")
+    public void userGoToUpdatePlanManagerMenu() throws InterruptedException {
+        supportAppPage.pressUpdatePlanManager();
     }
 
     @Then("verify notification monitoring information")
@@ -104,6 +113,22 @@ public class SupportAppStep {
         Assert.assertTrue(supportAppPage.UEN());
         Assert.assertTrue(supportAppPage.CompanyCountry());
         Assert.assertTrue(supportAppPage.CompanyMembers());
+    }
+
+    @And("input {string} to display update plan manager function")
+    public void InputPlanManagerMail(String planManagerMail) throws Exception {
+        Thread.sleep(2000);
+        switch (planManagerMail) {
+            case "HQ":
+                input = Constants.HQ;
+                break;
+            default:
+                input = Constants.EMAIL_WITHOUT_COMPANY;
+        }
+        supportAppPage.inputCompany(input);
+        supportAppPage.pressSCheckButton();
+        Thread.sleep(3000);
+        Assert.assertTrue(supportAppPage.currentPlanManager());
     }
 
     @When("user go to create plan support web app menu")

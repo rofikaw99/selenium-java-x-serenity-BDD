@@ -103,6 +103,26 @@ public class SecurityServiceGatewayPage {
         System.out.println("Response Body: " + responseBody);
     }
 
+    public void validatePimaChexs(String pima) {
+
+        // API endpoint
+        String baseUrl = "http://chexsconfigurationapi.ppd.ccn/CHEXS/ValidatePima";
+        String bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNVQkVGT1JBTEwiLCJuYW1laWQiOiJDVUJFRk9SQUxMIiwibmJmIjoxNzI3NzYzOTM3LCJleHAiOjE3Mjc3ODU1MzcsImlhdCI6MTcyNzc2MzkzNywiaXNzIjoiQ0NOIn0.N1MbmsmCdSqMXMlhfEAAQSijMc9jcCzs5vhwIdY8qPk";
+
+        // Sending PUT request
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .queryParam("pimaAddress", pima)
+                .header("Authorization", "Bearer " + bearerToken)
+                .when()
+                .get()
+                .then()
+                .statusCode(200) // Check for a successful response
+                .extract().response();
+        // Print response for debugging purposes
+        System.out.println("Response: " + response.asString());
+    }
+
     public void assertFailed401(){
         then().statusCode(401);
     }

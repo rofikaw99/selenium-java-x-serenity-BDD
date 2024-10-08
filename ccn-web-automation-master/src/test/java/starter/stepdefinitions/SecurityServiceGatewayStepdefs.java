@@ -52,6 +52,11 @@ public class SecurityServiceGatewayStepdefs {
         securityServiceGatewayStepdefsPage.Check_status_with_private_service_gateway_with_modified_host(serviceGatewayType);
     }
 
+    @Given("validate {string} chexs")
+    public void validate_pima_chexs(String pima) throws Exception {
+        securityServiceGatewayStepdefsPage.validatePimaChexs(pima);
+    }
+
     @Then("verify the response is unauthorized")
     public void verify_the_response_is_unauthorized() throws Exception {
         securityServiceGatewayStepdefsPage.assertFailed401();

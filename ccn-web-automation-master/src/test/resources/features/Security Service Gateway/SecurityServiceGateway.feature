@@ -20,3 +20,10 @@ Feature: Security Service Gateway
   Scenario: Check status with private service gateway with modified host
     Given  Check status with "private" service gateway with modified host
     Then verify the response is succeed
+
+  @ValidatePimaChexs
+  Scenario Outline: Validate Pima Chexs
+    Given  validate "<pima>" chexs
+  Examples:
+    | pima                    |
+    | CSGAGT9166FF5124/SIN01  |

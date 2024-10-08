@@ -20,6 +20,8 @@ public class LoginPage extends PageObject {
     private By formUserid = By.id("formUserId");
     private By formBasicPassword = By.id("formBasicPassword");
     private By btnSubmit = By.xpath( "//button[text()='Submit']");
+    private By selectNewPlanManager = By.xpath("(//button[@id='dropdown-basic-button'])[1]");
+    private By clickFirstNewPlanManager = By.xpath("(//a[contains(@class, 'dropdown-item')])[1]");
     private By btnAcceptCookie = By.xpath("(//button[normalize-space()='Accept'])[1]");
     private By bcCNmarket = By.xpath("//a[@class='btn-1' and contains(@href, '#interest')]");
     private By btnSignInOnTheHomepage = By.xpath("//button[@class='login-btn']");
@@ -193,6 +195,14 @@ public class LoginPage extends PageObject {
         System.out.println("button submit is displaying : "+$(btnSubmit).isDisplayed()+" and enabled : "+$(btnSubmit).isEnabled());
         Thread.sleep(2000);
         $(btnSubmit).click();
+    }
+
+    public void inputPlanManagerSupportApp() throws Exception {
+        System.out.println("button submit is displaying : "+$(selectNewPlanManager).isDisplayed()+" and enabled : "+$(selectNewPlanManager).isEnabled());
+        Thread.sleep(2000);
+        $(selectNewPlanManager).click();
+        Thread.sleep(1000);
+        $(clickFirstNewPlanManager).click();
     }
 
     public void validateInMainWeb(){

@@ -83,6 +83,8 @@ public class Constants {
     public static String COMPANY_PIMA = "csgagt99KIEX637nU459et1Po/AAE";
     public static String CUBE_ID = "559cdc3d065b434baa0fd5f6e3ab8f76";
 
+    public static String HQ = "headquarter_sq@yopmail.com";
+
 
     //CARD NUMBER FOR PAYMENT
     public static String CARD_NON_VISA_SINGAPORE = "4000002180000000"; //ECUADOR
