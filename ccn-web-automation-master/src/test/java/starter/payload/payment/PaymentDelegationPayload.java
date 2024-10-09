@@ -5,10 +5,25 @@ import org.json.JSONObject;
 public class PaymentDelegationPayload {
     public static JSONObject payload;
 
-    public static JSONObject retrievePaymentDelegation(){
+    public static JSONObject retrievePaymentDelegation(int pagination, int page){
         JSONObject sortBy = new JSONObject();
         sortBy.put("column", "reference");
         sortBy.put("order", "asc");
+
+        payload = new JSONObject();
+        payload.put("delegateTo", true);
+        payload.put("delegateFrom", false);
+        payload.put("pagination", pagination);
+        payload.put("page", page);
+        payload.put("search", "");
+        payload.put("sortBy", sortBy);
+        return payload;
+    }
+
+    public static JSONObject retrievePaymentDelegation(String column, String order){
+        JSONObject sortBy = new JSONObject();
+        sortBy.put("column", column);
+        sortBy.put("order", order);
 
         payload = new JSONObject();
         payload.put("delegateTo", true);

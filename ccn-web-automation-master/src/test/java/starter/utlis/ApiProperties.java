@@ -47,6 +47,9 @@ public class ApiProperties {
     public static String paymentServiceId(){
         return load().getProperty("payment-service_id");
     }
+    public static String companyServiceId(){
+        return load().getProperty("company-service-id");
+    }
     public static String associateServiceId(){
         return load().getProperty("associate-service-id");
     }
