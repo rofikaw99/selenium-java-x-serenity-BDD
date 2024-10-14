@@ -6,9 +6,10 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 import starter.utlis.Constants;
+import org.openqa.selenium.WebElement;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,12 @@ public class CompanyPage extends PageObject {
     //Information section
     private By btnInformationOnMyCompany = By.id("cube-information");
     private By btnLeaveCompany = By.id("cube-leave-company"); //admin & user
+    private By btnSureWantToLeaveCompany = By.id("cube-confirm-leave-confirmation");
+    private By verifyRemovePM = By.id("cube-confirm-remove-confirmation");
+    private By changeRoleToUser = By.xpath("//div[@class='cube-action-list']/p[@class='active' and text()='User']");
     private By btnYes = By.id("cube-confirm-leave-confirmation"); //admin & user
     private By btnSetupPayment = By.id("cube-setup-payment"); //admin from SG country & not setup payment yet, can see this
-
+    private By updatePlanManagerPopUp = By.xpath("//p[contains(@class, 'cube-tracking') and contains(@class, 'cube-title') and contains(@class, 'undefined') and text()='Update Plan Manager']");
     //Members section
     private By btnMembersOnMyCompany = By.id("cube-members");
     private By btnInviteUserToCompany = By.id("cube-invite-users"); //admin
@@ -34,7 +38,7 @@ public class CompanyPage extends PageObject {
     private By btnAcceptPendingApprovalPerUsers = By.id("cube-accept-request-["+index+"]"); //Conditionally
     private By btnRemovePerUsers = By.id("cube-remove-user-["+index+"]"); //Conditionally
     private By checkboxUsersOnMembers = By.id("checkbox-["+index+"]"); //Conditionally
-    private By txtSearchUser = By.xpath("//*[@id=\"toppage\"]/main/div[3]/wc-company/div/div[1]/div[4]/div[2]/div/div/div/input");
+    private By txtSearchUser = By.xpath("//input[@placeholder='Search by Members, Roles or Status.']");
     private	By dropdownFilterUsersOnMembers = By.id("cube-filter-users");
 
     private By tblMember = By.xpath("//*[@id=\"cube-members\"]/tbody/tr/td[4]");
@@ -50,11 +54,14 @@ public class CompanyPage extends PageObject {
     private By btnValidateNotYetInCompany = By.xpath("//button[@id=\"cube-confirm-add-users\"]");
     private By txtValidateNotYetInCompanyAndSuccesAddMember = By.xpath("//*[@id=\"toppage\"]/main/div[3]/wc-company/div/div[1]/div[2]/div/div/div[1]/p");
     private By lsthreedoteoptionmembermostleftside = By.xpath("//*[@id=\"cube-members\"]/tbody/tr/td[5]");
+    private By removePM =By.xpath("(//div[@class='cube-action-list cube-d-flex'])[2]");
     private By btnRemoveUserConfirmMember = By.id("cube-confirm-remove");
     private By lsThreeDotsOptionAdminOnMember = By.xpath("//*[@id=\\\"cube-members\\\"]/tbody/tr[1]/td[5]/div/div/div[2]/div");
+//    private By customChangeRoleOption = By.xpath("(//*[@id=\"cube-members\"]/tbody/tr/td[5])[18]");
+    private By customChangeRoleOption = By.xpath("(//div[@class='cube-action-list cube-d-flex'])[1]");
     private By btnConfirmRemoveMember = By.id("cube-confirm-remove-confirmation");
     private By btnConfirmCancelRemoveMember = By.id("cube-later");
-    private By lsOptionChangeRole = By.xpath("//*[@id=\"cube-members\"]/tbody/tr[1]/td[5]/div/div/div[2]/div[1]/div[2]/div");
+    private By lsOptionChangeRole = By.xpath("//*[@id=\\\"cube-members\\\"]/tbody/tr[1]/td[5]/div/div/div[2]/div[1]/div[2]/div");
     private By btnErrorChangeRole = By.id("cube-confirm-error");
     private By txtErrorChangeRole = By.xpath("//*[@id=\"toppage\"]/main/div[3]/wc-company/div/div[2]/div/div/div[1]/p");
     private By btnConfirmChangeRoleSucces = By.id("cube-confirm-change-status");
@@ -151,6 +158,31 @@ public class CompanyPage extends PageObject {
         evaluateJavascript("arguments[0].click();", $(btnLeaveCompany));
     }
 
+    public void pressSureWantToLeaveCompany(){
+        $(btnSureWantToLeaveCompany).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(btnSureWantToLeaveCompany));
+    }
+    public void pressRemovePMVerification(){
+        $(verifyRemovePM).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(verifyRemovePM));
+    }
+
+    public void pressChangeRoleToUser() throws InterruptedException {
+        Actions act = new Actions(getDriver());
+        $(customChangeRoleOption).waitUntilVisible();
+        List<WebElement> customChangeRoleOptionWE = getDriver().findElements(customChangeRoleOption);
+        act.moveToElement(customChangeRoleOptionWE.get(0)).perform();
+//        evaluateJavascript("arguments[0].click();", $(customChangeRoleOption));
+        $(changeRoleToUser).waitUntilVisible();
+        evaluateJavascript("arguments[0].click();", $(changeRoleToUser));
+        Thread.sleep(4000);
+    }
+
+    public void verifyUpdatePMPopUpAvailable(){
+        $(updatePlanManagerPopUp).waitUntilVisible();
+        $(updatePlanManagerPopUp).isDisplayed();
+    }
+
     public void pressYesBtn(){
         $(btnLeaveCompany).waitUntilVisible();
         evaluateJavascript("arguments[0].click();", $(btnYes));
@@ -236,6 +268,13 @@ public class CompanyPage extends PageObject {
         lsthreedoteoptionmembermostleftsides.get(0).click();
     }
 
+    public void pressRemovePM() {
+        List<WebElement> lsthreedoteoptionmembermostleftsides = getDriver().findElements(removePM);
+        System.out.println("remove field display: "+lsthreedoteoptionmembermostleftsides.get(0).isDisplayed());
+        System.out.println("remove field enabled: "+lsthreedoteoptionmembermostleftsides.get(0).isEnabled());
+        lsthreedoteoptionmembermostleftsides.get(0).click();
+    }
+
     //TODO fixing
     public void changeRolePerUserOnMemberByAdmin(String role) throws Exception{
         Actions act = new Actions(getDriver());
@@ -279,6 +318,22 @@ public class CompanyPage extends PageObject {
 
         //		index = indexing;
         //		return driver.findElement(btnChangeRolePerUsers);
+    }
+
+    public void customChangeRolePerUserOnMemberByAdmin(String role) throws Exception{
+        Actions act = new Actions(getDriver());
+        List<WebElement> lsOptionChangeRoles = getDriver().findElements(lsOptionChangeRole);
+        //list option change role
+        switch (role) {
+            case "admin":
+                act.moveToElement(lsOptionChangeRoles.get(0)).click().perform();
+                break;
+            case "user":
+                act.moveToElement(lsOptionChangeRoles.get(1)).click().perform();
+                break;
+            default:
+                break;
+        }
     }
 
     public void pressAcceptRequestPerUserOnMemberByAdmin() throws Exception{
