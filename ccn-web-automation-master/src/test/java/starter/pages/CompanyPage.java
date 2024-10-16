@@ -54,6 +54,8 @@ public class CompanyPage extends PageObject {
     private By btnValidateNotYetInCompany = By.xpath("//button[@id=\"cube-confirm-add-users\"]");
     private By txtValidateNotYetInCompanyAndSuccesAddMember = By.xpath("//*[@id=\"toppage\"]/main/div[3]/wc-company/div/div[1]/div[2]/div/div/div[1]/p");
     private By lsthreedoteoptionmembermostleftside = By.xpath("//*[@id=\"cube-members\"]/tbody/tr/td[5]");
+    private By ThreeDotLeftSidePortal = By.xpath("(//td[contains(@class, ' !pl-0') and contains(@class, 'bg-white')])");
+    private By GeneratePouchAndOther = By.xpath("(//div[@class='flex py-2 w-full left-0 items-center px-3 ccn-font-size-normal transition-all hover:!bg-ccn-blue-light'])");
     private By removePM =By.xpath("(//div[@class='cube-action-list cube-d-flex'])[2]");
     private By btnRemoveUserConfirmMember = By.id("cube-confirm-remove");
     private By lsThreeDotsOptionAdminOnMember = By.xpath("//*[@id=\\\"cube-members\\\"]/tbody/tr[1]/td[5]/div/div/div[2]/div");
@@ -266,6 +268,20 @@ public class CompanyPage extends PageObject {
         System.out.println("lsthreedoteoptionmembermostleftside display: "+lsthreedoteoptionmembermostleftsides.get(0).isDisplayed());
         System.out.println("lsthreedoteoptionmembermostleftside enabled: "+lsthreedoteoptionmembermostleftsides.get(0).isEnabled());
         lsthreedoteoptionmembermostleftsides.get(0).click();
+    }
+
+    public void pressthreedotsInThePortalDashboard() {
+        List<WebElement> lsthreedoteoptionmembermostleftsides = getDriver().findElements(ThreeDotLeftSidePortal);
+        System.out.println("lsthreedoteoptionmembermostleftside display: "+lsthreedoteoptionmembermostleftsides.get(0).isDisplayed());
+        System.out.println("lsthreedoteoptionmembermostleftside enabled: "+lsthreedoteoptionmembermostleftsides.get(0).isEnabled());
+        lsthreedoteoptionmembermostleftsides.get(0).click();
+    }
+
+    public void pressGeneratePouch() {
+        List<WebElement> lsthreedoteoptionmembermostleftsides = getDriver().findElements(GeneratePouchAndOther);
+        System.out.println("lsthreedoteoptionmembermostleftside display: "+lsthreedoteoptionmembermostleftsides.get(2).isDisplayed());
+        System.out.println("lsthreedoteoptionmembermostleftside enabled: "+lsthreedoteoptionmembermostleftsides.get(2).isEnabled());
+        lsthreedoteoptionmembermostleftsides.get(2).click();
     }
 
     public void pressRemovePM() {
