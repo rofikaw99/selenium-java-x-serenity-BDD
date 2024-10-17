@@ -163,6 +163,13 @@ public class PaymentMethodStep {
         Thread.sleep(2500);
     }
 
+    @When("press to Open with Electronic Airwaybill Print")
+    public void pressOpenwithElectronicAirwaybillPrint() throws InterruptedException {
+        Thread.sleep(1500);
+        companyPage.pressOpenwithElectronicAirwaybillPrint();
+        Thread.sleep(2500);
+    }
+
     @Then("can't setup commercial card")
     public void canTSetupCommercialCard() {
         Assert.assertTrue(paymentMethodPage.cardInfoHeaderDisplayed());

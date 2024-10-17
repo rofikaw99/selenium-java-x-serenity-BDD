@@ -26,3 +26,9 @@ Feature: Dashboard
     When press dot on the left side user in the portal dashboard page
     Then press to generate epouch
 
+  @open-electronic-airwaybill
+  Scenario: Open with Electronic Airwaybill Print
+    Given "Epouch Bundle User" login to the web
+    When press dot on the left side user in the portal dashboard page
+    Then press to Open with Electronic Airwaybill Print
+
