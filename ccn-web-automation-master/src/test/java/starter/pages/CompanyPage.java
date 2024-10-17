@@ -284,6 +284,13 @@ public class CompanyPage extends PageObject {
         lsthreedoteoptionmembermostleftsides.get(2).click();
     }
 
+    public void pressOpenwithElectronicAirwaybillPrint() {
+        List<WebElement> lsthreedoteoptionmembermostleftsides = getDriver().findElements(GeneratePouchAndOther);
+        System.out.println("lsthreedoteoptionmembermostleftside display: "+lsthreedoteoptionmembermostleftsides.get(0).isDisplayed());
+        System.out.println("lsthreedoteoptionmembermostleftside enabled: "+lsthreedoteoptionmembermostleftsides.get(0).isEnabled());
+        lsthreedoteoptionmembermostleftsides.get(0).click();
+    }
+
     public void pressRemovePM() {
         List<WebElement> lsthreedoteoptionmembermostleftsides = getDriver().findElements(removePM);
         System.out.println("remove field display: "+lsthreedoteoptionmembermostleftsides.get(0).isDisplayed());
