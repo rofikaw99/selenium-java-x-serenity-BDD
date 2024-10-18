@@ -1625,3 +1625,19 @@ Feature: My Company
     Examples:
       | email                         |password | iconaccountmenu | otheruseremail            |
       | headquarter_sq02@yopmail.com  |P@55w0rd | My Company      | test_300323_a@yopmail.com |
+
+  @ValidatePimaToSyncWithChexs
+  Scenario Outline:  Validate the pima to sync with chexs
+    Given validate the pima "<pima>" to sync with chexs
+
+    Examples:
+      | pima                    |
+      | CSGAGT9166FF5124/SIN01  |
+
+  @companyGroupCheck
+  Scenario Outline:  verify company group information
+    Given verify company group "<cubeID>" information
+
+    Examples:
+      | cubeID                            |
+      | 01a93955724546398511f5dd0a271998  |

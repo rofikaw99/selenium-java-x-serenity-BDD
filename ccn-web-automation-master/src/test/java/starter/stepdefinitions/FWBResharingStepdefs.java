@@ -33,6 +33,16 @@ public class FWBResharingStepdefs {
         fwbResharingPage.createDocForShareVia(contentType, contentName);
     }
 
+    @Given("validate the pima {string} to sync with chexs")
+    public void validateThePimaSyncwithChexs(String pima) throws Exception {
+        fwbResharingPage.validatePima(pima);
+    }
+
+    @Given("verify company group {string} information")
+    public void verifyCompanyGroupInformation(String cubeID) throws Exception {
+        fwbResharingPage.companyGroupInformation(cubeID);
+    }
+
     @Given("create awbNo 1000 times")
     public void create_awb_1000() throws Exception {
         fwbResharingPage.awb1000times();
