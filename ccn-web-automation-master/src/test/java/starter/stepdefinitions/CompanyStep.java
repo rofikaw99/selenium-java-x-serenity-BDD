@@ -123,6 +123,21 @@ public class CompanyStep {
         companyPage.verifyUpdatePMPopUpAvailable();
     }
 
+    @Then("verify the pop up message when change the role for another PM to ordinary user")
+    public void verify_the_pop_up_message_when_change_the_role_for_another_PM_to_ordinary_user(){
+        companyPage.verifyChangeRoleMessage();
+    }
+
+    @Then("verify the pop up message when leave from the company")
+    public void verify_the_pop_up_message_when_leave_from_the_company(){
+        companyPage.verifyLeaveFromTheCompanyMessage();
+    }
+
+    @Then("verify the pop up message when try to remove another PM")
+    public void verify_the_pop_up_message_when_remove_pm(){
+        companyPage.verifyRemoveAnotherPMmessage();
+    }
+
     @Then("pop up that said the last admin cant leave company")
     public void popUpThatSaidTheLastAdminCantLeaveCompany() {
         //TODO Fill
