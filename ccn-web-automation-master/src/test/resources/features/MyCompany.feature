@@ -1587,6 +1587,7 @@ Feature: My Company
     And click leave company
     And click sure want to leave
     Then verify update plan manager pop up available
+    And verify the pop up message when leave from the company
 
     Examples:
       | email                             |password | iconaccountmenu |
@@ -1604,6 +1605,7 @@ Feature: My Company
     And press dot on the left side user
     And click change role to user
     Then verify update plan manager pop up available
+    And verify the pop up message when change the role for another PM to ordinary user
 
     Examples:
       | email                         |password | iconaccountmenu | toroles | otheruseremail            |
@@ -1621,6 +1623,7 @@ Feature: My Company
     And press dot on the left side user
     And press remove PM or User
     Then verify update plan manager pop up available
+    And verify the pop up message when try to remove another PM
 
     Examples:
       | email                         |password | iconaccountmenu | otheruseremail            |

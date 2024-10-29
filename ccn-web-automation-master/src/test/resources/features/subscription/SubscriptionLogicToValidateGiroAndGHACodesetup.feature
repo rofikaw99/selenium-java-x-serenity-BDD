@@ -1,6 +1,6 @@
 Feature: Enhance Subscription logic to validate Giro & GHA Code setup
 
-  @GHACodeValidationMessage @GHAGiro
+  @GiroCodeValidationMessage @GHAGiro
   Scenario Outline: Enhance Subscription logic to validate GHA Code setup
     Given go to main web
     When click initial sign in button
@@ -14,7 +14,7 @@ Feature: Enhance Subscription logic to validate Giro & GHA Code setup
       | email              | password      | product                              |
       | sripcn@yopmail.com | CCNPegasus123 | test bc premium multicurrencysandbox |
 
-  @GiroValidationMessage @GHAGiro
+  @GHAValidationMessage @GHAGiro
   Scenario Outline: Enhance Subscription logic to validate Giro setup
     Given go to main web
     When click initial sign in button
@@ -23,6 +23,7 @@ Feature: Enhance Subscription logic to validate Giro & GHA Code setup
     When "PM 1 Company A" click product tab to subscribe to product
     And Select plan TDSB
     And Subscribe plan "<product>"
+#    Then verify the pop up GHA validation message
 
     Examples:
       | email              | password      | product  |

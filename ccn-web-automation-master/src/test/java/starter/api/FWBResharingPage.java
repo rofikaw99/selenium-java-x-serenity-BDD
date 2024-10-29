@@ -253,8 +253,9 @@ public class FWBResharingPage {
 //        }
 
         // Base URL and headers setup
-        String baseUrl = "https://cubesandbox.ccnexchange.com/b0dcda17075048e2a3c5f996cd704c60/document";
+//        String baseUrl = "https://cubesandbox.ccnexchange.com/b0dcda17075048e2a3c5f996cd704c60/document";
 //        String baseUrl = "https://cube.ccnexchange.com/c8083437160b40bf9349cc782733e548/document";
+        String baseUrl = "https://cubedev.ccnexchange.com/7d102148f14c41b891f38d85744aa429//document";
         RequestSpecification requestSpec = new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
                 .addHeader("serviceId", "4e6ae0d1-320a-4565-867e-778f939a58ab")

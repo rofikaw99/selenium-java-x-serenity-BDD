@@ -30,6 +30,10 @@ public class CompanyPage extends PageObject {
     private By updatePlanManagerPopUp = By.xpath("//p[contains(@class, 'cube-tracking') and contains(@class, 'cube-title') and contains(@class, 'undefined') and text()='Update Plan Manager']");
     //Members section
     private By btnMembersOnMyCompany = By.id("cube-members");
+    private By removeAnotherPMmessage = By.xpath("//i[contains(text(), 'Please assign a new plan manager for the below subscriptions before removing')]");
+    private By PMleaveCompanyMessage = By.xpath("//i[contains(text(), 'Please assign a new plan manager for the below subscriptions before leaving the company.')]");
+    private By changeRoleMessage = By.xpath("//i[contains(text(), 'Please assign a new plan manager for the below subscriptions before changing role for')]");
+    private By GHAValidationMessage = By.xpath("//p[contains(text(), 'You were unable to subscribe to this product as you do not have a GHA code present in your company profile.')]");
     private By btnInviteUserToCompany = By.id("cube-invite-users"); //admin
     private By btnRemoveUsersFromAdmin = By.xpath("//*[@id=\"cube-members\"]/tbody/tr[1]/td[5]/div/div/div[2]/div[3]/p"); //admin
     private By btnApproveUsersFromAdmin = By.id("cube-approve"); //admin
@@ -183,6 +187,34 @@ public class CompanyPage extends PageObject {
     public void verifyUpdatePMPopUpAvailable(){
         $(updatePlanManagerPopUp).waitUntilVisible();
         $(updatePlanManagerPopUp).isDisplayed();
+    }
+
+    public void verifyChangeRoleMessage(){
+        $(changeRoleMessage).waitUntilVisible();
+        $(changeRoleMessage).isDisplayed();
+        String text = $(changeRoleMessage).getText();
+        System.out.println(text);
+    }
+
+    public void verifyGHAValidationMessage(){
+        $(GHAValidationMessage).waitUntilVisible();
+        $(GHAValidationMessage).isDisplayed();
+        String text = $(GHAValidationMessage).getText();
+        System.out.println(text);
+    }
+
+    public void verifyLeaveFromTheCompanyMessage(){
+        $(PMleaveCompanyMessage).waitUntilVisible();
+        $(PMleaveCompanyMessage).isDisplayed();
+        String text = $(PMleaveCompanyMessage).getText();
+        System.out.println(text);
+    }
+
+    public void verifyRemoveAnotherPMmessage(){
+        $(removeAnotherPMmessage).waitUntilVisible();
+        $(removeAnotherPMmessage).isDisplayed();
+        String text = $(removeAnotherPMmessage).getText();
+        System.out.println(text);
     }
 
     public void pressYesBtn(){

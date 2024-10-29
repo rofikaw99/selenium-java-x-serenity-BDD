@@ -34,6 +34,11 @@ public class SubscribeStep {
         subscriptionPage.subscribeplan(product);
     }
 
+    @Then("verify the pop up GHA validation message")
+    public void verify_the_pop_up_message_GHA_validation(){
+        companyPage.verifyGHAValidationMessage();
+    }
+
     @And("Subscribe plan {string} and input coupon {string}")
     public void subscribePlan(String product, String coupon) throws Exception {
         subscriptionPage.subscribeCoupon(product, coupon);
