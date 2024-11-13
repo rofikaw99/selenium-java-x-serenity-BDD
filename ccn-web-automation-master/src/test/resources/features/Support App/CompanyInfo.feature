@@ -70,3 +70,16 @@ Feature: Company Info in Support App
     Examples:
       | userID   | password | planManagerMail |
       | helpdesk | password | HQ              |
+
+  @actionLog
+  Scenario Outline: action log
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    When user go to action log
+    And user click action log dropDown
+    And select user to export action log
+    And input start date "<startDate>" and end date "<endDate>" to export action log
+
+    Examples:
+      | userID    | password     | startDate  | endDate    |
+      | RAwaludin | spdoRed230C$ | 11/01/2024 | 11/20/2024 |

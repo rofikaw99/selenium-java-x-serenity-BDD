@@ -20,6 +20,12 @@ Feature: Dashboard
     When adding awb number to be tracked
     Then success add awb number to watchlist
 
+#  @remove-from-watchlist
+#  Scenario: Add to Watchlist
+#    Given "Card User" login to the web
+#    When adding awb number to be tracked
+#    Then success add awb number to watchlist
+
   @generate-epouch
   Scenario: Generate e pouch document
     Given "Epouch Bundle User" login to the web
