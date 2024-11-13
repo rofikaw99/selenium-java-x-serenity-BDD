@@ -61,6 +61,22 @@ public class SupportAppStep {
     public void userGoToUpdatePlanManagerMenu() throws InterruptedException {
         supportAppPage.pressUpdatePlanManager();
     }
+    @When("user go to action log")
+    public void userGoToActionLog() throws InterruptedException {
+        supportAppPage.actionLog();
+    }
+    @When("user click action log dropDown")
+    public void userClickActionLogDropDown() throws InterruptedException {
+        supportAppPage.clickActionLogDropDown();
+    }
+    @And("select user to export action log")
+    public void selectUserToExportActionLog() throws InterruptedException {
+        supportAppPage.selectUserToExportActionLog();
+    }
+    @And("input start date {string} and end date {string} to export action log")
+    public void selectStartEndActionLog(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.selectStartEndDateActionLog(startDate, endDate);
+    }
 
     @Then("verify notification monitoring information")
     public void verifyNotificationMonitoringInformation() throws InterruptedException {

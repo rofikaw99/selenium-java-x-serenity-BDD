@@ -253,9 +253,9 @@ public class FWBResharingPage {
 //        }
 
         // Base URL and headers setup
-//        String baseUrl = "https://cubesandbox.ccnexchange.com/b0dcda17075048e2a3c5f996cd704c60/document";
+        String baseUrl = "https://cubesandbox.ccnexchange.com/363b527ca33941d7acfafec6012ce4ca/document";
 //        String baseUrl = "https://cube.ccnexchange.com/c8083437160b40bf9349cc782733e548/document";
-        String baseUrl = "https://cubedev.ccnexchange.com/7d102148f14c41b891f38d85744aa429//document";
+//        String baseUrl = "https://cubedev.ccnexchange.com/7d102148f14c41b891f38d85744aa429//document";
         RequestSpecification requestSpec = new RequestSpecBuilder()
                 .setBaseUri(baseUrl)
                 .addHeader("serviceId", "4e6ae0d1-320a-4565-867e-778f939a58ab")
@@ -279,8 +279,8 @@ public class FWBResharingPage {
                             "    \"tags\": [\n" +
                             "        \"status:Confirmed\",\n" +
                             "        \"awbNo:%s\",\n" +
-                            "        \"owner:headquarter_sq@yopmail.com\",\n" +
-                            "        \"forwarderEmail:headquarter_sq@yopmail.com\",\n" +
+                            "        \"owner:au-auto-001@yopmail.com\",\n" +
+                            "        \"forwarderEmail:au-auto-001@yopmail.com\",\n" +
                             "        \"origin:CMB\",\n" +
                             "        \"awbPrefix:618\",\n" +
                             "        \"destination:BNE\",\n" +

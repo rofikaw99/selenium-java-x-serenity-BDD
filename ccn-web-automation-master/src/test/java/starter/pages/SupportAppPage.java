@@ -17,7 +17,12 @@ public class SupportAppPage extends PageObject {
     private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[12]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
-
+    private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
+    private By actionLogDropDown = By.xpath("//button[@id='dropdown-basic-button']");
+    private By selectUserToExportActionLog = By.xpath("(//a[@class='dropdown-item'])[1]");
+    private By startDateActionLog = By.xpath("//input[@placeholder='Start Date']");
+    private By endDateActionLog = By.xpath("//input[@placeholder='End Date']");
+    private By submitActionLog = By.xpath("//button[@type='submit']");
     private By currentTotalCount = By.xpath("(//p[text()])[2]");
     private By previousTotalCount = By.xpath("(//p[text()])[3]");
     private By currentTotalFailedProcess = By.xpath("(//p[text()])[4]");
@@ -202,6 +207,35 @@ public class SupportAppPage extends PageObject {
         evaluateJavascript("arguments[0].click();", $(updatePlanManager));
         Thread.sleep(3000);
     }
+
+    public void actionLog() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(actionLog).isDisplayed()+" also enabled: "+$(actionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(actionLog));
+    }
+
+    public void clickActionLogDropDown() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(actionLogDropDown).isDisplayed()+" also enabled: "+$(actionLogDropDown).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(actionLogDropDown));
+    }
+    public void selectUserToExportActionLog() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(selectUserToExportActionLog).isDisplayed()+" also enabled: "+$(selectUserToExportActionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(selectUserToExportActionLog));
+    }
+
+    public void selectStartEndDateActionLog(String startDate, String endDate) throws InterruptedException {
+        Thread.sleep(1000);
+        $(startDateActionLog).sendKeys(startDate);
+        Thread.sleep(1000);
+        $(endDateActionLog).sendKeys(endDate);
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(submitActionLog).isDisplayed()+" also enabled: "+$(submitActionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(submitActionLog));
+        Thread.sleep(7000);
+    }
+
 
     public void verifyNotificationMonitoringMenuInfo() {
         String currentTotalCountValue = $(currentTotalCount).getText();
