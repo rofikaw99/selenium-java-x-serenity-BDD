@@ -47,6 +47,18 @@ public class SupportAppStep {
         supportAppPage.createDiscountSubMenu();
     }
 
+    @When("user go to subscription menu")
+    public void userGoToSubscriptionMenu() {
+        supportAppPage.pressSubscriptionMenu();
+    }
+    @And("user go to upload file onboard submenu")
+    public void userGoToUploadFileOnboardSubMenu() throws InterruptedException {
+        supportAppPage.pressOnboardFileSubMenu();
+    }
+    @And("user select an excel file to upload file onboard in the support app then populate and submit")
+    public void userSelectAnExcelFileToUploadFileOnboardInTheSupportApp() throws InterruptedException {
+        supportAppPage.uploadOnboardFileSubMenu();
+    }
     @When("user go to group menu")
     public void userGoToGroupMenu() throws InterruptedException {
         supportAppPage.pressGroupMenu();

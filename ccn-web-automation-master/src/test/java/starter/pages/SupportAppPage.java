@@ -14,6 +14,11 @@ public class SupportAppPage extends PageObject {
 
     //supportAppDiscount
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
+    private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
+    private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
+    private By uploadExcelOnboardFile = By.id("formFile");
+    private By populateOnboardFile = By.xpath("//button[@class='btn btn-primary']");
+    private By submitToOnboard = By.xpath("//button[@class='mt-3 btn btn-primary']");
     private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[12]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
@@ -186,6 +191,25 @@ public class SupportAppPage extends PageObject {
     public void pressDiscountMenu(){
         $(discountMenu).isDisplayed();
         $(discountMenu).click();
+    }
+
+    public void pressSubscriptionMenu(){
+        $(subscriptionMenu).isDisplayed();
+        $(subscriptionMenu).click();
+    }
+    public void pressOnboardFileSubMenu() throws InterruptedException {
+        $(uploadOnboardFileSubMenu).isDisplayed();
+        $(uploadOnboardFileSubMenu).click();
+        Thread.sleep(2000);
+    }
+    public void uploadOnboardFileSubMenu() throws InterruptedException {
+        String filePath = "C:/Users/rofik/IdeaProjects/CCNRepoTest/cubeforall.test/ccn-web-automation-master/src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
+        $(uploadExcelOnboardFile).sendKeys(filePath);
+        Thread.sleep(1000);
+        $(populateOnboardFile).click();
+        Thread.sleep(2000);
+        $(submitToOnboard).click();
+        Thread.sleep(1000);
     }
     public void pressGroupMenu() throws InterruptedException {
         Thread.sleep(3000);

@@ -51,7 +51,7 @@ public class DashboardStep {
     }
 
     @Then("success add awb number to watchlist")
-    public void successAddToWatchlist() {
+    public void successAddToWatchlist() throws InterruptedException {
         dashboardPage.checkedAwbTrack();
     }
 
