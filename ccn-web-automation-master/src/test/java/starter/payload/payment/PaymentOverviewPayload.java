@@ -1,14 +1,34 @@
 package starter.payload.payment;
 
 import org.json.JSONObject;
+import starter.utlis.ApiProperties;
+import starter.utlis.Common;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class PaymentOverviewPayload {
 
     public static JSONObject payload;
+
+    public static JSONObject retrievePaymentOverview(String type, int pagination){
+        JSONObject sortBy = new JSONObject();
+        sortBy.put("column", "reference");
+        sortBy.put("order", "asc");
+
+        List<String> filterSearch = new ArrayList<>();
+
+        payload = new JSONObject();
+        payload.put("pagination", pagination);
+        payload.put("page", 1);
+        payload.put("search", "");
+        payload.put("sortBy", sortBy);
+        payload.put("type", type);
+        payload.put("filterSearch", filterSearch);
+        return payload;
+    }
 
     public static JSONObject retrievePaymentOverview(String type){
         JSONObject sortBy = new JSONObject();
@@ -51,41 +71,125 @@ public class PaymentOverviewPayload {
         return payload;
     }
 
-    public static JSONObject createPaymentRequest(){
+    public static JSONObject createPaymentRequest(String product){
         JSONObject meta = new JSONObject();
 
         List<JSONObject> list = new ArrayList<>();
         JSONObject items = new JSONObject();
         items.put("description", "item 1 description");
-        items.put("amount", "1000");
+        items.put("amount", 1000);
         list.add(items);
         meta.put("items", list);
 
         payload = new JSONObject();
         payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
-        payload.put("reference", "TEST-PAYMENT, REF-1259, 1146, 4567, ABC");
+        payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01");
         payload.put("totalChargeAmount", 1000);
         payload.put("currency", "USD");
-        payload.put("status", "READY");
-        payload.put("chargeDateTime", "2024-09-24");
+        payload.put("status", "UPCOMING");
+        payload.put("chargeDateTime", Common.chargeDateTimePayment("MINUTES", 0));
         payload.put("meta", meta);
         return payload;
     }
 
-    public static JSONObject delegatePaymentRequest(String payId, String emailCompany){
+    public static JSONObject createPaymentRequest(String product, int amount, String chargeDateTime, String deductionDate, String expiredDate, String notes){
+        JSONObject meta = new JSONObject();
+
+        List<JSONObject> list = new ArrayList<>();
+        JSONObject items = new JSONObject();
+        items.put("description", "item 1 description");
+        items.put("amount", amount);
+        list.add(items);
+        meta.put("items", list);
+
+        payload = new JSONObject();
+        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
+        payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01");
+        payload.put("totalChargeAmount", amount);
+        payload.put("currency", "USD");
+        payload.put("status", "UPCOMING");
+        payload.put("chargeDateTime", chargeDateTime);
+        payload.put("deductionDateTime", deductionDate);
+        payload.put("expiredDateTime", expiredDate);
+        payload.put("dueDate", expiredDate);
+        payload.put("meta", meta);
+
+        if (chargeDateTime.isEmpty()) {
+            payload.put("status", "READY");
+            payload.put("chargeDateTime", Common.chargeDateTimePayment("MINUTES", 0));
+        }
+        if (expiredDate.isEmpty()) payload.remove("expiredDateTime");
+        if (deductionDate.isEmpty()) payload.remove("deductionDateTime");
+        if (!notes.isEmpty()){
+            List<String> notesList = List.of(notes);
+            payload.put("notes", notesList);
+        }
+        return payload;
+    }
+
+    public static JSONObject updatePaymentRequest(String payId, String status){
+        payload = new JSONObject();
+        payload.put("paymentRequestId", payId);
+        payload.put("status", status);
+        return payload;
+    }
+
+    public static JSONObject updatePaymentRequest(String payId, String status, String notes){
+        payload = new JSONObject();
+        payload.put("paymentRequestId", payId);
+        payload.put("status", status);
+        payload.put("notes", List.of(notes, notes));
+        if (status.isEmpty()) payload.remove("status");
+        return payload;
+    }
+
+    public static JSONObject delegatePaymentRequest(String payId, String emailCompany, String companyName){
         List<JSONObject> paymentRequest = new ArrayList<>();
         JSONObject paymentRequests = new JSONObject();
         paymentRequests.put("paymentRequestId", payId);
 
         JSONObject delegateTo = new JSONObject();
         delegateTo.put("companyEmail", emailCompany);
-        delegateTo.put("companyName", "SG Auto QA");
+        delegateTo.put("companyName", companyName);
 
         paymentRequests.put("delegateTo", delegateTo);
         paymentRequest.add(paymentRequests);
 
         payload = new JSONObject();
         payload.put("delegatePaymentRequest", paymentRequest);
+        return payload;
+    }
+
+    public static JSONObject createCheckoutSession(List<JSONObject> paymentReq){
+        List<JSONObject> payment_requests = new ArrayList<>();
+        for (JSONObject pr : paymentReq){
+
+            JSONObject payment_request = new JSONObject();
+            payment_request.put("amount", pr.get("amount"));
+            payment_request.put("id", pr.get("id"));
+            payment_request.put("supplier", pr.get("suppId"));
+            payment_requests.add(payment_request);
+        }
+
+        payload = new JSONObject();
+        payload.put("email", ApiProperties.emailCompany1());
+        payload.put("payment_type", "card");
+        payload.put("payment_requests", payment_requests);
+        return payload;
+    }
+
+    public static JSONObject createPaymentRequestRecord(String payId, Object amount){
+        payload = new JSONObject();
+
+        payload.put("paymentRequestId", payId);
+        payload.put("amount", amount);
+        return payload;
+    }
+
+    public static JSONObject removePaymentDelegation(List<String> paymentRequestIds){
+        payload = new JSONObject();
+
+        payload.put("paymentRequestIds", paymentRequestIds);
         return payload;
     }
 }

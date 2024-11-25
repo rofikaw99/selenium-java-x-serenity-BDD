@@ -1,22 +1,38 @@
 Feature: Payment Overview
 
-  Scenario Outline: User able to view the detail payment of Outstanding, Upcoming, Paid, and Expired status
+  @PO-API-1 @done
+  Scenario Outline: User able to view the detail payment of Outstanding, Upcoming, Paid, and Expired status in My Payment
     Given user login as card admin or card user or user
-    When user view detail of my payment with status: "<status>"
+    When user view detail of "MY_PAYMENT" with status: "<status>"
     Then payment detail page with selected id appears
     Examples:
     | status |
     | Upcoming       |
+    | Outstanding |
     | Paid       |
     | Expired       |
 
+  @PO-API-2
+  Scenario Outline: User able to pay my payment of Outstanding, Upcoming status
+    Given user login as card admin or card user or user
+    When user pay <number> of Outstanding my payments
+    Then payment status changes to "PAID" in My Payment tab menu
+    Examples:
+    |number|
+    | 1    |
+    | 2    |
+
+
+
+  @PO-API-4 @failed
   Scenario: My payment successfully auto-deducted when SI for the product has been setup in the company
     Given user login as card admin or card user
     And there is SI for service A in the company
     When there is payment for service A
-    Then payment for service A of company will be auto-deducted
-    And payment status changes to Paid
+    Then payment has been Paid
+    And the payment by will be "auto_deduct" and autoDeduct is "true"
 
+  @PO-API-5 @done
   Scenario: User able to delegate the specific company payment
     Given user login as card admin or card user
     And there is no Active payment delegation for service A
@@ -25,30 +41,194 @@ Feature: Payment Overview
     Then the payment will be delegated to company X (will appears in the Received Payment menu)
     And company X able to pay the payment
 
-  Scenario: User able to re-assigned Active future payment delegation of specific company payment
-    Given user login as card admin or card user
-    And there is Active future payment delegation for service A to company X
-    And there is payment Z for service A with Outstanding and Upcoming status
-    When user delegate payment Z of service A to company Y
-    Then payment request Z sent to company Y with Outstanding / Upcoming status
-    And payment request Z status in company X changes to Withdrawn
-    And value of Delegated To changes to company Y
-
 #DELEGATED PAYMENT
-  Scenario Outline: User able to view the detail payment of Outstanding, Upcoming, Paid, and Expired status
+  @PD-API-33 @done
+  Scenario Outline: User able to view the detail payment of Outstanding, Upcoming, Paid, and Expired status in Delegated Payment
     Given user login as card admin or card user or user
-    When user view detail of my payment with status: "<status>"
+    When user view detail of "DELEGATED_PAYMENT" with status: "<status>"
     Then payment detail page with selected id appears
     Examples:
       | status |
       | Upcoming       |
+      | Outstanding     |
       | Paid       |
       | Expired       |
 
+  @pay-record.1 @failed
+  Scenario: Success add payment record to specific payment
+    Given supplier create payment request to a user
+    When payment has been Paid
+    And supplier add payment record to the payment
+    Then success add payment record
+    And verify the record appears in report excel merchant
+
+  @pay-record.2 @failed
+  Scenario: Failed add payment record to specific payment
+    Given supplier create payment request to a user
+    When payment has been Paid
+    And supplier add payment record to the payment with string value
+    Then failed add payment record
+
+  @deduct-date.1.1 @failed
+  Scenario: Success deduct payment based on deductionDate which is 2 minutes later
+    Given user has SI for service A
+    When supplier create payment request with deductionDate in 2 minutes
+    Then payment will automatically changes to "OUTSTANDING"
+    And the payment by will be "" and autoDeduct is "false"
+    And in 2 minutes later
+    Then payment will automatically changes to "PAID"
+    And the payment by will be "auto_deduct" and autoDeduct is "true"
+
+  @deduct-date.1 @failed
+  Scenario: Immediately deduct payment when deductionDate is not set
+    Given user has SI for service A
+    When supplier create payment request without deductionDate
+    Then payment will immediately changes to PAID
+    And the payment by will be "auto_deduct" and autoDeduct is "true"
+
+  @deduct-date.1 @done
+  Scenario: Deduction does not work when SI not achieved
+    Given user has SI for service A
+    When supplier create payment request with amount greater than SI
+    Then payment will remain in Outstanding status
+    And the payment by will be "" and autoDeduct is "false"
+
+  @expired-date @exp-date @done
+  Scenario: Success set expired date of payment for 2 minutes later
+    When supplier create payment request with expired date in 2 minutes
+    Then payment will automatically changes to "OUTSTANDING"
+    And in 2 minutes later
+    And payment will automatically changes to "EXPIRED"
+
+  @expired-date.4 @exp-date @done
+  Scenario: Success verify the expired date is in 21 days if the field is not set
+    When supplier create payment request without expired date
+    Then payment will changes to Expired in 21 days
+
+  @update-pay.1 @update-pay @done
+  Scenario: Success update payment to ready
+    Given supplier create payment request for "Upcoming" status
+    When supplier update payment request to "READY" status
+    Then payment will automatically changes to "OUTSTANDING"
+
+  @update-pay.2 @update-pay @failed
+  Scenario: Success update payment to ready with achieved SI
+    Given supplier create payment request for "Upcoming" status and achieved amount SI
+    When supplier update payment request to "READY" status
+    Then payment will automatically changes to "PAID"
+    And the payment by will be "auto_deduct" and autoDeduct is "true"
+
+  @update-pay.3 @update-pay @done
+  Scenario: Success update payment to canceled from upcoming status
+    Given supplier create payment request for "Upcoming" status
+    When supplier update payment request to "CANCELED" status
+    Then payment will automatically changes to "CANCELED"
+
+  @update-notes.1 @done
+  Scenario: Success update OUTSTANDING payment with notes
+    Given supplier create payment request for "Upcoming" status
+    And supplier update payment request to "READY" status
+    And payment will automatically changes to "OUTSTANDING"
+    When supplier update payment request with notes
+    Then payment will have notes
+
+  @update-notes.2 @done
+  Scenario: Success update UPCOMING payment with notes
+    Given supplier create payment request for "Upcoming" status
+    When supplier update payment request with notes
+    Then payment will have notes
+
+  @update-notes.3 @failed
+  Scenario: Success update PAID payment with notes
+    Given supplier create payment request for "Upcoming" status and achieved amount SI
+    And supplier update payment request to "READY" status
+    And payment will automatically changes to "PAID"
+    When supplier update payment request with notes
+    Then payment will have notes
+
+  @update-notes.4 @done
+  Scenario: Success update CANCELED payment with notes
+    Given supplier create payment request for "Upcoming" status
+    And supplier update payment request to "CANCELED" status
+    And payment will automatically changes to "CANCELED"
+    When supplier update payment request with notes
+    Then payment will have notes
+
+  @update-notes.5 @done
+  Scenario: Success update CANCELED payment with notes that previously has notes
+    Given supplier create payment request for "Upcoming" status with notes
+    And supplier update payment request to "CANCELED" status
+    And payment will automatically changes to "CANCELED"
+    When supplier update payment request with notes
+    Then payment will have notes
+
+  @update-pay.4 @done
+  Scenario: Success update payment to canceled from outstanding status
+    Given supplier create payment request for "Outstanding" status
+    When supplier update payment request to "CANCELED" status
+    Then payment will automatically changes to "CANCELED"
+
+  @update-pay.5 @done
+  Scenario Outline: Error message appears when updating "CANCELED" payment
+    Given supplier create payment request for "Outstanding" status
+    And supplier update payment request to "CANCELED" status
+    When supplier failed update payment request to "<status>" status
+    Then error message can't update "CANCELED" payment appears
+    Examples:
+    |status|
+    |READY |
+    |CANCELED|
+
+  @update-pay.5 @failed
+  Scenario Outline: Error message appears when updating "PAID" payment
+    Given supplier create payment request for "Upcoming" status and achieved amount SI
+    And supplier update payment request to "READY" status
+    When supplier failed update payment request to "<status>" status
+    Then error message can't update "PAID" payment appears
+    Examples:
+      |status|
+      |READY |
+      |CANCELED|
+
+  ##USING COMPANY 2
+  @PD-API-46 @done
+  Scenario: User able to re-assigned Active future payment delegation of specific company payment
+    Given user login as card admin or card user from company 2
+    And there is Active future payment delegation for service A to company X
+    And there is payment Z for service A with Outstanding and Upcoming status
+    Then value of Delegated To is company X
+    And payment request Z sent to company 1 with Outstanding or Upcoming status
+    When user delegate payment Z of service A to company Y
+    Then value of Delegated To changes to company Y
+    And payment request Z sent to company 3 with Outstanding or Upcoming status
+    And payment request Z status in company 1 changes to Withdrawn
+
+  @PD-API-43 @done
   Scenario: Delegated payment successfully auto-deducted when SI has been setup in the company
-    Given user login as card admin or card user
+    Given user login as card admin or card user from company 2
     And payment delegation request for service A from company X to company Y has Active status
     And there is SI for service A in company Y
-    When there is payment for service A
+    When there is payment for service A from company 2
     Then payment for service A of company X will be auto-deducted in company Y
-    And payment status changes to Paid
+    And payment will automatically changes to "PAID"
+
+  @PD-API-43.1 @done
+  Scenario: Delegated payment successfully auto-deducted when SI has been setup in the company
+    Given user login as card admin or card user from company 2
+    And payment delegation request for service A from company X to company Y has Active status
+    And there is SI for service A in company Y
+    When there is payment for service A from company 2 with deductionTime in 2 minutes
+    Then payment will automatically changes to "OUTSTANDING"
+    And in 2 minutes later
+    And payment for service A of company X will be auto-deducted in company Y
+    And payment will automatically changes to "PAID"
+
+  @PD-API-66 @done
+  Scenario: Remove payment delegation from delegated party
+    Given user login as card admin or card user from company 2
+    And payment delegation request for service A from company X to company Y has Active status
+    When there is payment for service A from company 2
+    And value of Delegated To is company X
+    And company 1 remove payment delegation of that payment
+    Then payment will be deleted from company 1
+    And value of Delegated To changes to null in company 2

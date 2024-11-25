@@ -81,8 +81,8 @@ Feature: Payment Delegation API
     Then success request api
     And verify success delete "RECEIVED_PAYMENT" si
 
-  @create-payment-req
-  Scenario: Success Create Payment Request
+  @create-payment-req.1
+  Scenario: Success Create Payment Request 1
     When create payment request
     Then success request api
     And verify success create payment request
@@ -90,6 +90,12 @@ Feature: Payment Delegation API
   @create-payment-req
   Scenario: Success Create Payment Request
     When create payment request
+    Then success request api
+    And verify success create payment request
+
+  @create-payment-req-tdsb
+  Scenario: Success Create Payment Request TDSB
+    When create payment request tdsb
     Then success request api
     And verify success create payment request
 

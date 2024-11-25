@@ -26,7 +26,7 @@ public class PaymentApiSteps {
 
     @Then("success request api")
     public void successRequestApi() {
-        paymentApi.verifyStatusCode(200);
+        paymentApi.verifyStatusCode(201);
     }
 
     @And("verify the data")
@@ -273,5 +273,12 @@ public class PaymentApiSteps {
         paymentApi.setHeader();
         paymentApi.baseUrl("main");
         paymentApi.retrievePaymentOverview("DELEGATED_PAYMENT");
+    }
+
+    @When("create payment request tdsb")
+    public void createPaymentRequestTdsb() throws IOException {
+        paymentApi.setHeaderPayReq("tdsb");
+        paymentApi.createPaymentRequest("tdsb");
+        paymentId = paymentApi.paymentId();
     }
 }

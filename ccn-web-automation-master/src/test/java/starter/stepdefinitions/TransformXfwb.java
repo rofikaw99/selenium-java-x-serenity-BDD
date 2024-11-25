@@ -17,8 +17,7 @@ public class TransformXfwb {
     @Steps
     TransformXfwbAPI transformXfwbPage;
     String response;
-    JSONObject jsonRequest, jsonResponse
-;
+    JSONObject jsonRequest, jsonResponse;
 
     @Given("user transform xfwb")
     public void userTransformXfwb() throws IOException {

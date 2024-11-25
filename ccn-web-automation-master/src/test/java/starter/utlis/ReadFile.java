@@ -17,4 +17,8 @@ public class ReadFile {
     public static String tokenCompany2() throws IOException {
         return FileUtils.readFileToString(new File(basePath + "payment/tokenCompany2.json"), StandardCharsets.UTF_8);
     }
+
+    public static String tokenCompany3() throws IOException {
+        return FileUtils.readFileToString(new File(basePath + "payment/tokenCompany3.json"), StandardCharsets.UTF_8);
+    }
 }

@@ -27,6 +27,15 @@ public class Common {
     public static String todayDate(){
         return formatDate(addToCurrentDate(Calendar.MONTH, 0), "dd-MMM-yyyy");
     }
+    public static String idForPayment(){
+        return formatDate(addToCurrentDate(Calendar.MONTH, 0), "ddMMMHHmm");
+    }
+    public static String addedDatePayment(int amount){
+        return formatDate(addToCurrentDate(Calendar.DATE, amount), "yyyy-MM-dd");
+    }
+    public static String todayDatePayment(){
+        return formatDate(addToCurrentDate(Calendar.MONTH, 0), "YYYY-MM-dd HH:mm:ss");
+    }
 
     public static String activeDate(){
         Instant now = Instant.now();
@@ -52,6 +61,25 @@ public class Common {
         Calendar calendar = Calendar.getInstance();
         calendar.add(field, amount);
         return calendar.getTime();
+    }
+
+    public static String chargeDateTimePayment(String field, int amount){
+        // Get current UTC time
+        ZonedDateTime utcNow = ZonedDateTime.now(ZoneOffset.UTC);
+
+        ZonedDateTime adjustedTime = null;
+        // Add hours (e.g., add 5 hours)
+        if (field.equals("HOURS"))
+            adjustedTime = utcNow.plusHours(amount);
+        else if (field.equals("DAYS"))
+            adjustedTime = utcNow.plusDays(amount);
+        else if (field.equals("MINUTES"))
+            adjustedTime = utcNow.plusMinutes(amount);
+
+        // Define the desired format
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        return adjustedTime.format(formatter);
     }
 
     private static String formatDate(Date date, String format){

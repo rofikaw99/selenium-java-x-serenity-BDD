@@ -49,4 +49,12 @@ public class StandingInstructionPayload {
         payload.put("paymentOwner", emailCompany);
         return payload;
     }
+
+    public static JSONObject deleteSI(String id, String productId){
+        payload = new JSONObject();
+
+        payload.put("standingInstructionId", id);
+        payload.put("supplierProductServiceId", productId);
+        return payload;
+    }
 }

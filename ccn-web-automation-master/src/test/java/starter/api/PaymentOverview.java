@@ -11,6 +11,7 @@ import starter.utlis.ReadFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static net.serenitybdd.rest.SerenityRest.*;
@@ -27,6 +28,9 @@ public class PaymentOverview {
         } else if (company == 2) {
             token = ReadFile.tokenCompany2();
             cubeId = ApiProperties.cubeId2();
+        } else if (company == 3){
+            token = ReadFile.tokenCompany3();
+            cubeId = ApiProperties.cubeId3();
         }
         emailCompany = ApiProperties.emailCompany1();
         emailCompany2 = ApiProperties.emailCompany2();
@@ -46,6 +50,18 @@ public class PaymentOverview {
         then().statusCode(200);
     }
 
+    public void retrievePaymentOverview(String type, int pagination) {
+        String url = baseUrl + "/Payment/1/PaymentRequestOverview";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.retrievePaymentOverview(type, pagination).toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
     public void retrievePaymentOverview(String type, String status) {
         String url = baseUrl + "/Payment/1/PaymentRequestOverview";
 
@@ -58,9 +74,25 @@ public class PaymentOverview {
         then().statusCode(200);
     }
 
+    public int payIdNumber(){
+        return lastResponse().jsonPath().getList("data.paymentRequestId").size();
+    }
+
     public List<String> payIds(int indexStart, int indexEnd) {
-        List<String> resp = lastResponse().jsonPath().getList("");
+        List<String> resp = lastResponse().jsonPath().getList("data.paymentRequestId");
         return resp.subList(indexStart, indexEnd);
+    }
+
+    public int amount(){
+        return lastResponse().jsonPath().getInt("totalChargeAmount");
+    }
+
+    public String payId(){
+        return lastResponse().jsonPath().getString("paymentRequestId");
+    }
+
+    public String suppId(){
+        return lastResponse().jsonPath().getString("supplier.id");
     }
 
     public void retrievePaymentRequest(List<String> payIds) {
@@ -75,6 +107,10 @@ public class PaymentOverview {
         then().statusCode(200);
     }
 
+    public void verifyNotesAppears(){
+        Assert.assertTrue(lastResponse().jsonPath().getString("notes").contains("AWB Number: 909090"));
+    }
+
     public void verifySelectedPaymentAppears(List<String> payIds){
         Assert.assertTrue(lastResponse().jsonPath().getList("data.paymentRequestId").containsAll(payIds));
     }
@@ -83,16 +119,54 @@ public class PaymentOverview {
         Assert.assertTrue(lastResponse().jsonPath().getList("data.paymentRequestId").contains(payId));
     }
 
-    public void createPaymentRequest(int statusCode){
+    public void createPaymentRequest(String product, int statusCode){
         String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
 
         response = given()
                 .header("Authorization", "Bearer " + token)
-                .header("associate-service-id", ApiProperties.associateServiceId())
+                .header("associate-service-id", ApiProperties.associateServiceId(product))
+                .header("supplier-id", ApiProperties.supplierId(product))
                 .contentType("application/json")
-                .body(PaymentOverviewPayload.createPaymentRequest().toString())
+                .body(PaymentOverviewPayload.createPaymentRequest(product).toString())
                 .post(url);
         then().statusCode(statusCode);
+    }
+
+    public void createPaymentRequest(int amount, String chargeDateTime, String deductionDate, String expiredDate, String notes, int statusCode){
+        String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("associate-service-id", ApiProperties.associateServiceId("svs"))
+                .header("supplier-id", ApiProperties.supplierId("svs"))
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.createPaymentRequest("svs", amount, chargeDateTime, deductionDate, expiredDate, notes).toString())
+                .post(url);
+        then().statusCode(statusCode);
+    }
+
+    public void updatePaymentRequest(String payId, String status, int statusCode){
+        String url = baseUrlPayReq + "/Payment/1/UpdatePaymentRequest";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("associate-service-id", ApiProperties.associateServiceIdSvs())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.updatePaymentRequest(payId, status).toString())
+                .patch(url);
+        then().statusCode(statusCode);
+    }
+
+    public void updatePaymentRequest(String payId, String notes){
+        String url = baseUrlPayReq + "/Payment/1/UpdatePaymentRequest";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("associate-service-id", ApiProperties.associateServiceIdSvs())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.updatePaymentRequest(payId, "", notes).toString())
+                .patch(url);
+        then().statusCode(200);
     }
 
     public void verifySuccessAutoDeduct(){
@@ -100,17 +174,49 @@ public class PaymentOverview {
     }
 
     public void verifyPaymentStatus(String status){
-        Assert.assertEquals(status, lastResponse().jsonPath().getString("data.status[0]"));
+        Assert.assertEquals(status, lastResponse().jsonPath().getList("data.status").get(0));
     }
 
-    public void delegatePaymentRequest(String payId, String emailCompany){
+    public void verifyPaymentStatusInPaymentRequest(String status){
+        Assert.assertEquals(status.toLowerCase(), String.valueOf(lastResponse().jsonPath().getList("status").get(0)).toLowerCase());
+    }
+
+    public void verifyPaymentStatusInPaymentRequest(String status, int index){
+        Assert.assertEquals(status.toLowerCase(), String.valueOf(lastResponse().jsonPath().getList("status").get(index)).toLowerCase());
+    }
+
+    public void verifyPaymentRequestNull(){
+        Assert.assertTrue(lastResponse().jsonPath().getList("status").isEmpty());
+    }
+
+    public void verifyPaymentByInPaymentRequest(String paymentBy){
+        Assert.assertEquals(paymentBy, lastResponse().jsonPath().getList("paymentBy").get(0));
+    }
+
+    public void verifyIsAutoDeductInPaymentRequest(String isAutoDeduct){
+        Assert.assertEquals(Boolean.parseBoolean(isAutoDeduct), lastResponse().jsonPath().getList("isAutoDeduct").get(0));
+    }
+
+    public void verifyPaymentExpiredDate(String expDate){
+        Assert.assertTrue(lastResponse().jsonPath().getString("data.expiredDate[0]").contains(expDate));
+    }
+
+    public void verifyPaymentStatusInRetrievePayReq(String status){
+        Assert.assertEquals(status, lastResponse().jsonPath().getString("status"));
+    }
+
+    public String paymentStatus(){
+        return lastResponse().jsonPath().getString("status");
+    }
+
+    public void delegatePaymentRequest(String payId, String emailCompany, String companyName){
         String url = baseUrl + "/Payment/1/delegatePaymentRequest";
 
         response = given()
                 .header("Authorization", "Bearer " + token)
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
-                .body(PaymentOverviewPayload.delegatePaymentRequest(payId, emailCompany).toString())
+                .body(PaymentOverviewPayload.delegatePaymentRequest(payId, emailCompany, companyName).toString())
                 .post(url);
         then().statusCode(200);
     }
@@ -124,6 +230,73 @@ public class PaymentOverview {
     }
 
     public void verifyDelegateToCompany(){
-        Assert.assertEquals(lastResponse().jsonPath().getString("data.delegateTo.email"),  emailCompany2);
+        Assert.assertEquals(lastResponse().jsonPath().getList("paymentDelegation.delegateTo.companyEmail"),  List.of(ApiProperties.emailCompany3()));
+    }
+
+    public void verifyDelegateToCompany(String companyEmail){
+        System.out.println("response:" + lastResponse().jsonPath().getString("paymentDelegation.delegateTo.companyEmail"));
+        System.out.println("expected: " + List.of(companyEmail));
+        if (companyEmail.isEmpty()) {
+            Assert.assertNull(lastResponse().jsonPath().getList("paymentDelegation.delegateTo.companyEmail").get(0));
+        } else {
+            Assert.assertTrue(lastResponse().jsonPath().getString("paymentDelegation.delegateTo.companyEmail").contains(String.valueOf(List.of(companyEmail))));
+        }
+    }
+
+    public void createCheckoutSession(List<JSONObject> paymentRequests){
+        String url = baseUrl + "/Payment/1/createCheckoutSession";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.createCheckoutSession(paymentRequests).toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
+    public void createPaymentRecord(String payId, Object amount, int statusCode){
+        String url = baseUrl + "/Payment/1/createPaymentRequestRecord";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("associate-service-id", ApiProperties.associateServiceIdSvs())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.createPaymentRequestRecord(payId, amount).toString())
+                .post(url);
+        then().statusCode(statusCode);
+    }
+
+    public void verifyMessageBody(String message){
+        Assert.assertEquals(message, lastResponse().jsonPath().getString("message"));
+    }
+
+    public void verifyErrorMessageBody(String message){
+        Assert.assertEquals(message, lastResponse().jsonPath().getString("error.message"));
+    }
+
+    public void verifyExpiredDate(String date){
+        System.out.println(lastResponse().jsonPath().getList("expiredDateTime"));
+        Assert.assertTrue(String.valueOf(lastResponse().jsonPath().getList("expiredDateTime").get(0)).contains(date));
+    }
+
+    public void verifyErrorMessageContains(String message){
+        Assert.assertTrue(lastResponse().jsonPath().getString("error.message").contains(message));
+    }
+
+    public void verifyPaymentReqIdInCreatePayRecord(String payId){
+        Assert.assertEquals(payId, lastResponse().jsonPath().getString("data.paymentRequestId"));
+    }
+
+    public void removePaymentDelegationRequest(List<String> paymentReqIds){
+        String url = baseUrl + "/Payment/1/deleteDelegatePaymentRequest";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.removePaymentDelegation(paymentReqIds).toString())
+                .post(url);
+        then().statusCode(200);
     }
 }

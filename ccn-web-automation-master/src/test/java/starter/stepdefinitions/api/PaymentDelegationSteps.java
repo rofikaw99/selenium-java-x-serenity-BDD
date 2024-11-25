@@ -6,10 +6,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import starter.api.PaymentDelegation;
+import starter.api.PaymentOverview;
 import starter.api.StandingInstruction;
+import starter.utlis.ApiProperties;
 import starter.utlis.Common;
 
 import java.io.IOException;
+import java.util.List;
 
 public class PaymentDelegationSteps {
     @Steps
@@ -18,8 +21,11 @@ public class PaymentDelegationSteps {
     @Steps
     StandingInstruction standingInstruction;
 
-    private String productId, suppId, delegationId, order, keySort;
-    private int page, pagination;
+    @Steps
+    PaymentOverview paymentOverview;
+
+    private String productId, suppId, delegationId, order, keySort, payId;
+    private int page, pagination, index;
 
     @Given("{string} login to the api")
     public void loginToTheApi(String arg0) throws IOException {
@@ -33,15 +39,25 @@ public class PaymentDelegationSteps {
 
     @Then("{string} can view all payment delegation request")
     public void canViewAllPaymentDelegationRequest(String arg0) {
+        if (paymentDelegation.thereIsNoDelegationSetting()){
+            String product = ApiProperties.productName("tdsb");
+            paymentDelegation.getAllSupplier();
+            int index = paymentDelegation.indexOfProduct(List.of(product));
+            suppId = paymentDelegation.supplierId(index);
+            productId = paymentDelegation.productId(index);
+            paymentDelegation.createPaymentDelegation(productId, suppId, 200);
+            paymentDelegation.retrievePaymentDelegationSetting();
+        }
         paymentDelegation.verifyMessageResponse("Success retrieve payment delegation settings");
     }
 
     @When("create new payment delegation request with valid data")
     public void createNewPaymentDelegationRequestWithValidData() {
         paymentDelegation.getAllSupplier();
+        index = paymentDelegation.indexOfProduct(List.of(ApiProperties.productName("tdsb")));
 
-        productId = paymentDelegation.productId(0);
-        suppId = paymentDelegation.supplierId(0);
+        productId = paymentDelegation.productId(index);
+        suppId = paymentDelegation.supplierId(index);
 
         paymentDelegation.createPaymentDelegation(productId, suppId, 200);
         delegationId = paymentDelegation.paymentDelegationIdCreate();
@@ -108,38 +124,49 @@ public class PaymentDelegationSteps {
 
             paymentDelegation.setToken(1);
             paymentDelegation.getAllSupplier();
-            suppId = paymentDelegation.supplierId(1);
-            productId = paymentDelegation.productId(1);
-            String suppName = paymentDelegation.supplierName(1);
-            String productName = paymentDelegation.productName(1);
+            String product = ApiProperties.productName("svs");
+            int index = paymentDelegation.indexOfProduct(List.of(product));
+            suppId = paymentDelegation.supplierId(index);
+            productId = paymentDelegation.productId(index);
+            String suppName = paymentDelegation.supplierName(index);
+            String productName = paymentDelegation.productName(index);
 
             standingInstruction.setToken(1);
             standingInstruction.createStandingInstruction(productId, productName, suppId, suppName, cardToken,"MY_PAYMENT", 1, 200);
+        } else {
+            suppId = paymentDelegation.supplierIdFromSi(0);
+            productId = paymentDelegation.productIdFromSi(0);
         }
     }
 
     @When("create new payment delegation request with product or service A for error message")
     public void createNewPaymentDelegationRequestWithProductOrServiceAForErrorMessage() {
-        paymentDelegation.getAllSupplier();
-        suppId = paymentDelegation.supplierId(1);
-        productId = paymentDelegation.productId(1);
         paymentDelegation.createPaymentDelegation(productId, suppId, 400);
     }
 
     @Then("error message can't create payment delegation appears")
     public void errorMessageCanTCreatePaymentDelegationAppears() {
-        paymentDelegation.verifyMessageResponse("");
+        paymentDelegation.verifyMessageResponse("There is active MY_PAYMENT Standing Instruction for supplierId "+ suppId + " and productServiceId " + productId);
     }
 
     @When("user delete Active payment delegation request with future payment type \\(note: user only can delete the product that they subscribe)")
-    public void userDeleteActivePaymentDelegationRequestWithFuturePaymentTypeNoteUserOnlyCanDeleteTheProductThatTheySubscribe() {
+    public void userDeleteActivePaymentDelegationRequestWithFuturePaymentTypeNoteUserOnlyCanDeleteTheProductThatTheySubscribe() throws IOException {
         if (paymentDelegation.thereIsNoDelegationSetting()){
+            String product = ApiProperties.productName("tdsb");
             paymentDelegation.getAllSupplier();
-            suppId = paymentDelegation.supplierId(0);
-            productId = paymentDelegation.productId(0);
+            int index = paymentDelegation.indexOfProduct(List.of(product));
+            suppId = paymentDelegation.supplierId(index);
+            productId = paymentDelegation.productId(index);
             paymentDelegation.createPaymentDelegation(productId, suppId, 200);
             paymentDelegation.retrievePaymentDelegationSetting();
         }
+        //create payment request
+        paymentOverview.setToken(1);
+        paymentOverview.createPaymentRequest("tdsb", 201);
+        payId = paymentOverview.payId();
+        paymentOverview.retrievePaymentRequest(List.of(payId));
+        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany2());
+
         delegationId = paymentDelegation.paymentDelegationId(0);
         paymentDelegation.deletePaymentDelegation(delegationId, 200);
     }
@@ -175,7 +202,7 @@ public class PaymentDelegationSteps {
 
     @When("go to previous page")
     public void goToPreviousPage() {
-        paymentDelegation.retrievePaymentDelegationSetting(pagination, page);
+        paymentDelegation.retrievePaymentDelegationSetting(pagination, page - 1);
     }
 
     @When("sort payment delegation data based on {string} column in {string} tab")
@@ -211,5 +238,19 @@ public class PaymentDelegationSteps {
     @And("user that subscribe into the product or service can view their own payment delegation request of the product or service")
     public void userThatSubscribeIntoTheProductOrServiceCanViewTheirOwnPaymentDelegationRequestOfTheProductOrService() {
         paymentDelegation.verifyMessageResponse("Success retrieve payment delegation settings");
+    }
+
+    @And("the payment will not being delegated to the delegated company in the future")
+    public void thePaymentWillNotBeingDelegatedToTheDelegatedCompanyInTheFuture() throws IOException {
+        paymentOverview.setToken(1);
+        paymentOverview.createPaymentRequest("tdsb", 201);
+        paymentOverview.retrievePaymentRequest(List.of(paymentOverview.payId()));
+        paymentOverview.verifyDelegateToCompany("");
+    }
+
+    @And("the previous payment that has been delegated to company X still can be accessed in company X")
+    public void thePreviousPaymentThatHasBeenDelegatedToCompanyXStillCanBeAccessedInCompanyX() {
+        paymentOverview.retrievePaymentRequest(List.of(payId));
+        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany2());
     }
 }

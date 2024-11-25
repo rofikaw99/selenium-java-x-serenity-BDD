@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rsm:HouseWaybill xmlns:rsm="iata:housewaybill:1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:8" xmlns:ram="iata:datamodel:3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:local="urn:local">
+    <rsm:MessageHeaderDocument>
+        <ram:ID>SIN2501227</ram:ID>
+        <ram:Name>House waybill</ram:Name>
+        <ram:TypeCode>703</ram:TypeCode>
+        <ram:IssueDateTime>2024-10-17T12:41:41</ram:IssueDateTime>
+        <ram:PurposeCode>Creation</ram:PurposeCode>
+        <ram:VersionID>3.00</ram:VersionID>
+        <ram:ConversationID>
+            XFZB20241017124141300</ram:ConversationID>
+        <ram:SenderParty>
+            <ram:PrimaryID schemeID="P">CSGAGT01XSPKJSQ/SIN01</ram:PrimaryID>
+        </ram:SenderParty>
+        <ram:RecipientParty>
+            <ram:PrimaryID schemeID="P">CSGAIR01SINFMSQ</ram:PrimaryID>
+        </ram:RecipientParty>
+    </rsm:MessageHeaderDocument>
+    <rsm:BusinessHeaderDocument>
+        <ram:ID>SIN2501227</ram:ID>
+        <ram:SignatoryConsignorAuthentication>
+            <ram:Signatory>XXX</ram:Signatory>
+        </ram:SignatoryConsignorAuthentication>
+        <ram:SignatoryCarrierAuthentication>
+            <ram:ActualDateTime>2002-07-01T05:10:10</ram:ActualDateTime>
+            <ram:Signatory>XXX</ram:Signatory>
+            <ram:IssueAuthenticationLocation>
+                <ram:Name>XXX</ram:Name>
+            </ram:IssueAuthenticationLocation>
+        </ram:SignatoryCarrierAuthentication>
+    </rsm:BusinessHeaderDocument>
+    <rsm:MasterConsignment>
+        <ram:IncludedTareGrossWeightMeasure unitCode="KGM">3270.2</ram:IncludedTareGrossWeightMeasure>
+        <ram:TotalPieceQuantity>2</ram:TotalPieceQuantity>
+        <ram:TransportContractDocument>
+            <ram:ID>618-36944062</ram:ID>
+        </ram:TransportContractDocument>
+        <ram:OriginLocation>
+            <ram:ID>SIN</ram:ID>
+        </ram:OriginLocation>
+        <ram:FinalDestinationLocation>
+            <ram:ID>BKK</ram:ID>
+        </ram:FinalDestinationLocation>
+        <ram:IncludedHouseConsignment>
+            <ram:NilCarriageValueIndicator>true</ram:NilCarriageValueIndicator>
+            <ram:NilCustomsValueIndicator>true</ram:NilCustomsValueIndicator>
+            <ram:NilInsuranceValueIndicator>true</ram:NilInsuranceValueIndicator>
+            <ram:TotalChargePrepaidIndicator>true</ram:TotalChargePrepaidIndicator>
+            <ram:TotalDisbursementPrepaidIndicator>true</ram:TotalDisbursementPrepaidIndicator>
+            <ram:IncludedTareGrossWeightMeasure unitCode="KGM">11.2</ram:IncludedTareGrossWeightMeasure>
+            <ram:PackageQuantity>1</ram:PackageQuantity>
+            <ram:TotalPieceQuantity>1</ram:TotalPieceQuantity>
+            <ram:SummaryDescription>ELECTRONICS COM</ram:SummaryDescription>
+            <ram:ConsignorParty>
+                <ram:Name>STMICROELECTRONICS ASIA PAC</ram:Name>
+                <ram:PostalStructuredAddress>
+                    <ram:PostcodeCode>508938</ram:PostcodeCode>
+                    <ram:StreetName>NO 7 LOYANG DRIVE LOYANG INDUSTRIAL</ram:StreetName>
+                    <ram:CityName>SINGAPORE</ram:CityName>
+                    <ram:CountryID>SG</ram:CountryID>
+                </ram:PostalStructuredAddress>
+            </ram:ConsignorParty>
+            <ram:ConsigneeParty>
+                <ram:Name>DELTA ELECTRONICS THAILAND PUBLIC</ram:Name>
+                <ram:PostalStructuredAddress>
+                    <ram:PostcodeCode>24180</ram:PostcodeCode>
+                    <ram:StreetName>COMPANY LIMITED 111 MOO 9 WELLGROW</ram:StreetName>
+                    <ram:CityName>BANGPAKONG</ram:CityName>
+                    <ram:CountryID>TH</ram:CountryID>
+                    <ram:CountrySubDivisionName>CHACHOENG</ram:CountrySubDivisionName>
+                </ram:PostalStructuredAddress>
+            </ram:ConsigneeParty>
+            <ram:OriginLocation>
+                <ram:ID>SIN</ram:ID>
+            </ram:OriginLocation>
+            <ram:FinalDestinationLocation>
+                <ram:ID>BKK</ram:ID>
+            </ram:FinalDestinationLocation>
+            <ram:ApplicableOriginCurrencyExchange>
+                <ram:SourceCurrencyCode>SGD</ram:SourceCurrencyCode>
+            </ram:ApplicableOriginCurrencyExchange>
+        </ram:IncludedHouseConsignment>
+    </rsm:MasterConsignment>
+</rsm:HouseWaybill>

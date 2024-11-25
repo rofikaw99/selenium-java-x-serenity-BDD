@@ -10,6 +10,7 @@ import starter.utlis.ApiProperties;
 import starter.utlis.ReadFile;
 
 import java.io.IOException;
+import java.util.List;
 
 import static net.serenitybdd.rest.SerenityRest.*;
 
@@ -45,8 +46,38 @@ public class StandingInstruction {
         then().statusCode(200);
     }
 
+    public void retrieveLastNumber(){
+        String url = baseUrl + "/Payment/1/retrieveCardDetail";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(StandingInstructionPayload.retrieveCardToken().toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
     public String cardToken(){
         return lastResponse().jsonPath().getString("data.token");
+    }
+
+    public void thereIsNoDetailCard(){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        Assert.assertFalse(jsonObject.getJSONObject("data").getJSONObject("card").has("last4"));
+        Assert.assertFalse(jsonObject.getJSONObject("data").getJSONObject("card").has("country"));
+        Assert.assertFalse(jsonObject.getJSONObject("data").getJSONObject("card").has("exp_year"));
+        Assert.assertFalse(jsonObject.getJSONObject("data").getJSONObject("card").has("exp_month"));
+        Assert.assertTrue(jsonObject.getJSONObject("data").getJSONObject("card").has("brand"));
+    }
+
+    public void thereIsDetailCard(){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        Assert.assertTrue(jsonObject.getJSONObject("data").getJSONObject("card").has("last4"));
+        Assert.assertTrue(jsonObject.getJSONObject("data").getJSONObject("card").has("country"));
+        Assert.assertTrue(jsonObject.getJSONObject("data").getJSONObject("card").has("exp_year"));
+        Assert.assertTrue(jsonObject.getJSONObject("data").getJSONObject("card").has("exp_month"));
+        Assert.assertTrue(jsonObject.getJSONObject("data").getJSONObject("card").has("brand"));
     }
 
     public void retrieveStandingInstruction(String type){
@@ -87,7 +118,19 @@ public class StandingInstruction {
     }
 
     public boolean thereIsSI(){
-        return !lastResponse().jsonPath().getList("datas.id").isEmpty();
+        return !lastResponse().jsonPath().getList("datas.standingInstructionId").isEmpty();
+    }
+
+    public boolean thereIsSIForCompany(String companyEmail){
+        return lastResponse().jsonPath().getList("datas.paymentOwner.companyEmail").contains(companyEmail);
+    }
+
+    public List<String> listOfSiId(){
+        return lastResponse().jsonPath().getList("datas.standingInstructionId");
+    }
+
+    public List<String> listOfProductIdSi(){
+        return lastResponse().jsonPath().getList("datas.productServiceId");
     }
 
     public void createStandingInstruction(String productId, String productName, String suppId, String suppName, String cardToken,
@@ -147,5 +190,37 @@ public class StandingInstruction {
 
     public void verifyMessageAppears(String message){
         Assert.assertEquals(message, lastResponse().jsonPath().getString("message"));
+    }
+
+    public String supplierIdFromSi(int index){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        return jsonObject.getJSONArray("datas").getJSONObject(index).getString("supplierId");
+    }
+
+    public String productIdFromSi(int index){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        return jsonObject.getJSONArray("datas").getJSONObject(index).getString("productServiceId");
+    }
+
+    public String supplierNameFromSi(int index){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        return jsonObject.getJSONArray("datas").getJSONObject(index).getString("supplierName");
+    }
+
+    public String productNameFromSi(int index){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        return jsonObject.getJSONArray("datas").getJSONObject(index).getString("productName");
+    }
+
+    public void deleteStandingInstruction(String id, String productId){
+        String url = baseUrl + "/Payment/1/deleteStandingInstruction";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(StandingInstructionPayload.deleteSI(id, productId).toString())
+                .post(url);
+        then().statusCode(200);
     }
 }

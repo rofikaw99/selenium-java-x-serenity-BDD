@@ -10,6 +10,7 @@ import starter.utlis.Common;
 import starter.utlis.ReadFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 import static net.serenitybdd.rest.SerenityRest.*;
@@ -78,7 +79,7 @@ public class PaymentDelegation {
         Assert.assertTrue(resp.getJSONObject("delegateTo").has("companyName"));
         Assert.assertTrue(resp.getJSONObject("productData").has("name"));
         Assert.assertTrue(resp.getJSONObject("supplierData").has("name"));
-        Assert.assertTrue(resp.has("requestDate"));
+        Assert.assertTrue(resp.has("activeDate"));
         Assert.assertTrue(resp.has("paymentAuth"));
         Assert.assertTrue(resp.has("status"));
     }
@@ -139,6 +140,10 @@ public class PaymentDelegation {
         then().statusCode(200);
     }
 
+    public int indexOfProduct(List<String> productName){
+        System.out.println(lastResponse().jsonPath().getList("products.name"));
+        return lastResponse().jsonPath().getList("products.name").indexOf(productName);
+    }
     public String productId(int index){
         JSONArray jsonObject = new JSONArray(response.asString());
         return jsonObject.getJSONObject(index).getJSONArray("products").getJSONObject(0).getString("serviceId");
@@ -147,6 +152,16 @@ public class PaymentDelegation {
     public String supplierId(int index){
         JSONArray jsonObject = new JSONArray(response.asString());
         return jsonObject.getJSONObject(index).getString("_id");
+    }
+
+    public String supplierIdFromSi(int index){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        return jsonObject.getJSONArray("datas").getJSONObject(index).getString("supplierId");
+    }
+
+    public String productIdFromSi(int index){
+        JSONObject jsonObject = new JSONObject(lastResponse().asString());
+        return jsonObject.getJSONArray("datas").getJSONObject(index).getString("productServiceId");
     }
 
     public String productIdListDelegation(int index){
@@ -169,6 +184,16 @@ public class PaymentDelegation {
         return jsonObject.getJSONObject(index).getString("name");
     }
 
+    public String productNameListDelegation(int index){
+        JSONObject jsonObject = new JSONObject(response.asString());
+        return jsonObject.getJSONArray("data").getJSONObject(index).getJSONObject("productData").getString("name");
+    }
+
+    public String supplierNameListDelegation(int index){
+        JSONObject jsonObject = new JSONObject(response.asString());
+        return jsonObject.getJSONArray("data").getJSONObject(index).getJSONObject("supplierData").getString("name");
+    }
+
     public void createPaymentDelegation(String productId, String suppId, int statusCode){
         String url = baseUrl + "/Payment/1/createPaymentDelegationSetting";
 
@@ -184,6 +209,10 @@ public class PaymentDelegation {
     public String paymentDelegationId(int index){
         JSONObject resp = new JSONObject(response.asString());
         return resp.getJSONArray("data").getJSONObject(index).getString("id");
+    }
+
+    public List<String> paymentDelegationId(){
+        return response.jsonPath().getList("data.id");
     }
 
     public String paymentDelegationIdCreate(){

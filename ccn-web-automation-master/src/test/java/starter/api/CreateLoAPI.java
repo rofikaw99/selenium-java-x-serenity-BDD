@@ -25,7 +25,7 @@ public class CreateLoAPI {
         payload = FileUtils.readFileToString(new File("src/test/java/starter/utlis/outputJson.json"), StandardCharsets.UTF_8);
         accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given().headers(
-                "Authorization", "Bearer " + accessToken,
+//                "Authorization", "Bearer " + accessToken,
                 "Content-Type", "application/json",
                 "Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000");
 

@@ -6,6 +6,8 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
+import starter.utlis.ApiProperties;
+import starter.utlis.Common;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +28,11 @@ public class PaymentApi {
     RequestSpecification requestSpecification;
 
 //    String paymentCubeId = "89d6540f08a64e3180a4591d9b5ddc25";
-    String paymentCubeId = "64194bcfcedc4c4983b9b23684f608e1"; //Auto QA
+//    String paymentCubeId = "64194bcfcedc4c4983b9b23684f608e1"; //Auto QA
+//    String paymentCubeId = "1dfd2534aec14cc0be7823fafa78c4f7"; //Auto QA
+//    String paymentCubeId = "f6625cf44a3d4fadae35a16a7a66c875"; //Company Login
+    String paymentCubeId = "404c1b00b82046b38d9f821ac95fc8dd"; //SG Auto QA
+//    String paymentCubeId = "588979e28f814004bc77ce7a2db26057"; //SG Payment
     String paymentCubeId2 = "404c1b00b82046b38d9f821ac95fc8dd"; //SG Auto QA
     String baseUrl = "https://cubedev.ccnexchange.com/" + paymentCubeId + "/service/251e8baa-c4fc-455a-9d0c-7ad18d627ce9";
     String baseUrlPayReq = "http://172.16.200.158:6969/" + paymentCubeId + "/service/251e8baa-c4fc-455a-9d0c-7ad18d627ce9";
@@ -44,7 +50,7 @@ public class PaymentApi {
     }
 
     public void setHeader() throws IOException {
-        String token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenPayment.json"), StandardCharsets.UTF_8);
+        String token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/payment/tokenCompany1.json"), StandardCharsets.UTF_8);
         requestSpecification = given()
                 .headers("Authorization", "Bearer " + token,
                         "source-service-id", sourceServiceId);
@@ -52,8 +58,8 @@ public class PaymentApi {
 
     public void setHeader(String type) throws IOException {
         String token = "";
-        if (type.equals("main")) token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenPayment.json"), StandardCharsets.UTF_8);
-        else if (type.equals("secondary")) token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenPayment2.json"), StandardCharsets.UTF_8);
+        if (type.equals("main")) token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/payment/tokenCompany1.json"), StandardCharsets.UTF_8);
+        else if (type.equals("secondary")) token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/payment/tokenCompany2.json"), StandardCharsets.UTF_8);
 
         requestSpecification = given()
                 .headers("Authorization", "Bearer " + token,
@@ -61,10 +67,19 @@ public class PaymentApi {
     }
 
     public void setHeaderPayReq() throws IOException {
-        String token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenPayment.json"), StandardCharsets.UTF_8);;
+        String token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/payment/tokenCompany1.json"), StandardCharsets.UTF_8);;
         requestSpecification = given()
                 .headers("Authorization", "Bearer " + token,
                         "associate-service-id", "6f1943cd-5743-4ee7-bc8c-9c9435e39036");
+    }
+
+    public void setHeaderPayReq(String product) throws IOException {
+        String serviceId = ApiProperties.associateServiceIdSvs();
+        if (product.equals("tdsb")) serviceId = ApiProperties.associateServiceId("tdsb");
+        String token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/payment/tokenCompany1.json"), StandardCharsets.UTF_8);;
+        requestSpecification = given()
+                .headers("Authorization", "Bearer " + token,
+                        "associate-service-id", serviceId);
     }
 
     public void retrievePaymentDelegation(){
@@ -352,7 +367,7 @@ public class PaymentApi {
 
         payload = new JSONObject();
         payload.put("type", type);
-        payload.put("pagination", 10);
+        payload.put("pagination", 100);
         payload.put("page", 1);
         payload.put("search", "");
         payload.put("sortBy", sortBy);
@@ -372,17 +387,47 @@ public class PaymentApi {
         List<JSONObject> list = new ArrayList<>();
         JSONObject items = new JSONObject();
         items.put("description", "item 1 description");
-        items.put("amount", "1000");
+        items.put("amount", 50);
         list.add(items);
         meta.put("items", list);
 
         payload = new JSONObject();
-        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
-        payload.put("reference", "TEST-PAYMENT, REF-1259, 1146, 4567, ABC");
-        payload.put("totalChargeAmount", 1000);
+        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(10000));
+        payload.put("reference", "SVS" + Common.idForPayment() + ", ABC");
+        payload.put("totalChargeAmount", 50);
         payload.put("currency", "USD");
-        payload.put("status", "READY");
-        payload.put("chargeDateTime", "2024-09-24");
+        payload.put("status", "UPCOMING");
+        payload.put("chargeDateTime", Common.addedDatePayment(0));
+        payload.put("meta", meta);
+
+
+        response = requestSpecification
+                .contentType("application/json")
+                .body(payload.toString())
+                .post(url);
+    }
+
+    public void createPaymentRequest(String product){
+        String currency = "USD";
+        if (product.equals("tdsb")) currency = "SGD";
+        String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
+
+        JSONObject meta = new JSONObject();
+
+        List<JSONObject> list = new ArrayList<>();
+        JSONObject items = new JSONObject();
+        items.put("description", "item 1 description");
+        items.put("amount", 50);
+        list.add(items);
+        meta.put("items", list);
+
+        payload = new JSONObject();
+        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(10000));
+        payload.put("reference", "TDSB" + Common.idForPayment() + ", ABC");
+        payload.put("totalChargeAmount", 50);
+        payload.put("currency", currency);
+        payload.put("status", "UPCOMING");
+        payload.put("chargeDateTime", Common.addedDatePayment(0));
         payload.put("meta", meta);
 
 
@@ -409,8 +454,8 @@ public class PaymentApi {
         payload.put("reference", "TEST-PAYMENT, REF-1259, 1146, 4567, ABC");
         payload.put("totalChargeAmount", amount);
         payload.put("currency", "USD");
-        payload.put("status", "READY");
-        payload.put("chargeDateTime", "2024-09-24");
+        payload.put("status", "UPCOMING");
+        payload.put("chargeDateTime", Common.addedDatePayment(0));
         payload.put("meta", meta);
 
 
