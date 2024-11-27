@@ -5,7 +5,7 @@ Feature: Update House LO
     Given user login SSO for one record
     And user transform xfzb using "internal" url
 
-  @1.1 @done @pieceCountForRate @passed
+  @house-1.1
   Scenario: 1.1 Piece count (line item)
     And user success create LO
     And user success get LO
@@ -17,7 +17,7 @@ Feature: Update House LO
     Then success get change request
     And verify change request same as update dimensions
 
-  @house-2 @done @grossWeight
+  @house-2
   Scenario: 2. Gross weight
     And user success create LO
     And user success get LO

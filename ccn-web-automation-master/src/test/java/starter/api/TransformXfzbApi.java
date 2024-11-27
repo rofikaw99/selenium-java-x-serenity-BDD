@@ -30,10 +30,10 @@ public class TransformXfzbApi {
                 .headers("Content-Type", "application/xml");
 
         if (typeUrl.equals("internal")){
-            url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/transformXFZB";
+            url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/transformXFZB3";
             requestSpecification.headers("x-api-key", ApiProperties.apiKey());
         } else if (typeUrl.equals("external")){
-            url = ApiProperties.baseUrl() + "/transformXFZB";
+            url = ApiProperties.baseUrl() + "/transformXFZB3";
         }
     }
 
