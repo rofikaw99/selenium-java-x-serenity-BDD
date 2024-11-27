@@ -57,7 +57,7 @@ public class UpdateLOStep {
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.updatePieceCountForRate(100, idTarget, actualData, pieceCountValue);
+        updateLoAPI.updatePieceCountForRate(revision, idTarget, actualData, pieceCountValue);
     }
 
     @When("user remove piece of count")
@@ -71,7 +71,7 @@ public class UpdateLOStep {
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.removePieceCountForRate(100, idTarget, actualData, pieceCount);
+        updateLoAPI.removePieceCountForRate(revision, idTarget, actualData, pieceCount);
     }
 
     @When("user add piece of count")
@@ -83,7 +83,7 @@ public class UpdateLOStep {
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.addPieceCountForRate(100, idTarget, actualData);
+        updateLoAPI.addPieceCountForRate(revision, idTarget, actualData);
     }
 
     @And("the piece of count deleted in the latest get lo")
@@ -851,5 +851,23 @@ public class UpdateLOStep {
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifySlacForRateUpdated(jsonResponse);
+    }
+
+    @When("user update gross weight for rate in house LO")
+    public void userUpdateGrossWeightForRateInHouseLO() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        float numericalValue = LOResponse.WLI_grossWeightForRate_numericalValue(responseJson);
+        String idNumericalValue = LOResponse.WLI_grossWeightForRate_id(responseJson);
+        String unitCode = LOResponse.WLI_GWFR_unit_code(responseJson);
+        String idUnitCode = LOResponse.WLI_GWFR_unit_id(responseJson);
+
+        actualData.put("idNumericalValue", idNumericalValue);
+        actualData.put("idUnitCode", idUnitCode);
+        actualData.put("unitCode", unitCode);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.updateGrossWeightForRate(revision, idTarget, actualData, numericalValue);
     }
 }

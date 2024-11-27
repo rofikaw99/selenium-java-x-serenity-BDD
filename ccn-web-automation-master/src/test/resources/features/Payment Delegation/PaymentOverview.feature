@@ -12,7 +12,7 @@ Feature: Payment Overview
     | Paid       |
     | Expired       |
 
-  @PO-API-2
+  @PO-API-2 @done
   Scenario Outline: User able to pay my payment of Outstanding, Upcoming status
     Given user login as card admin or card user or user
     When user pay <number> of Outstanding my payments
@@ -22,7 +22,16 @@ Feature: Payment Overview
     | 1    |
     | 2    |
 
-
+  @PO-API-3 @done
+  Scenario Outline: User able to pay Outstanding payment that has been delegated
+    Given user login as card admin or card user or user
+    When user pay <number> of Outstanding my payments that has been delegated to other company
+    Then payment status changes to "PAID" in My Payment tab menu
+    And payment status changes to "PAID" in delegated payment
+    Examples:
+      |number|
+      | 1    |
+      | 2    |
 
   @PO-API-4 @failed
   Scenario: My payment successfully auto-deducted when SI for the product has been setup in the company
@@ -41,8 +50,21 @@ Feature: Payment Overview
     Then the payment will be delegated to company X (will appears in the Received Payment menu)
     And company X able to pay the payment
 
+    ##USING COMPANY 2
+  @PO-API-6 @done
+  Scenario: User able to re-assigned Active future payment delegation of specific company payment
+    Given user login as card admin or card user from company 2
+    And there is Active future payment delegation for service A to company X
+    And there is payment Z for service A with Outstanding and Upcoming status
+    Then value of Delegated To is company X
+    And payment request Z sent to company 1 with Outstanding or Upcoming status
+    When user delegate payment Z of service A to company Y
+    Then value of Delegated To changes to company Y
+    And payment request Z sent to company 3 with Outstanding or Upcoming status
+    And payment request Z status in company 1 changes to Withdrawn
+
 #DELEGATED PAYMENT
-  @PD-API-33 @done
+  @PO-API-7 @done
   Scenario Outline: User able to view the detail payment of Outstanding, Upcoming, Paid, and Expired status in Delegated Payment
     Given user login as card admin or card user or user
     When user view detail of "DELEGATED_PAYMENT" with status: "<status>"
@@ -53,6 +75,91 @@ Feature: Payment Overview
       | Outstanding     |
       | Paid       |
       | Expired       |
+
+  @PO-API-8 @done
+  Scenario: User unable to view the detail payment of Withdrawn status
+    Given user login as card admin or card user
+    When user view detail of delegated payment with status: Withdrawn
+    Then payment id disabled
+
+  @PO-API-9
+  Scenario Outline: User able to pay the delegated payment of Outstanding, Upcoming status
+    Given user login as card admin or card user or user
+    When user pay <number> of Outstanding delegated payments
+    Then payment status changes to "PAID" in Delegated Payment tab menu
+    And payment status changes to "PAID" in My Payment of delegatee company
+    Examples:
+    | number |
+    | 1      |
+    | 2      |
+
+  @PO-API-10
+  Scenario: User unable to pay the delegated payment of Withdraw status
+    Given user login as card admin or card user or user
+    When user checkout 1 of "WITHDRAW" delegated payments
+    Then there is no checkout button
+
+  @PO-API-11 @done
+  Scenario: Delegated payment successfully auto-deducted when SI has been setup in the company
+    Given user login as card admin or card user from company 2
+    And payment delegation request for service A from company X to company Y has Active status
+    And there is SI for service A in company Y
+    When there is payment for service A from company 2
+    Then payment for service A of company X will be auto-deducted in company Y
+    And payment will automatically changes to "PAID"
+
+  @PO-API-11.1 @done
+  Scenario: Delegated payment successfully auto-deducted in 2 minutes when SI has been setup in the company
+    Given user login as card admin or card user from company 2
+    And payment delegation request for service A from company X to company Y has Active status
+    And there is SI for service A in company Y
+    When there is payment for service A from company 2 with deductionTime in 2 minutes
+    Then payment will automatically changes to "OUTSTANDING"
+    And in 2 minutes later
+    And payment for service A of company X will be auto-deducted in company Y
+    And payment will automatically changes to "PAID"
+
+  @PO-API-12 @done
+  Scenario: User able to remove delegated payment from specific company
+    Given user login as card admin or card user from company 2
+    And payment delegation request for service A from company X to company Y has Active status
+    When there is payment for service A from company 2
+    And value of Delegated To is company X
+    And company 1 remove payment delegation of that payment
+    Then payment will be deleted from company 1
+    And value of Delegated To changes to null in company 2
+
+    @PO-API-14
+    Scenario Outline: User able to search filter "MY PAYMENT" based on selected criteria
+      Given user login as card admin or card user or user
+      When search payment with filter "<name>" in "MY_PAYMENT" tab
+      Then payment that contains the keyword and matches filter "<name>" will appears
+      Examples:
+      | name |
+      | reference |
+      | productName |
+      | delegateTo |
+#      | chargeDateTime |
+#      | dueDate |
+      | paymentMethod |
+      | total |
+      | status |
+
+  @PO-API-15
+  Scenario Outline: User able to search filter "MY PAYMENT" based on selected criteria
+    Given user login as card admin or card user or user
+    When search payment with filter "<name>" in "DELEGATED_PAYMENT" tab
+    Then payment that contains the keyword and matches filter "<name>" will appears
+    Examples:
+      | name |
+      | reference |
+      | productName |
+      | delegateFrom |
+#      | chargeDateTime |
+#      | dueDate |
+      | paymentMethod |
+      | total |
+      | status |
 
   @pay-record.1 @failed
   Scenario: Success add payment record to specific payment
@@ -189,46 +296,3 @@ Feature: Payment Overview
       |status|
       |READY |
       |CANCELED|
-
-  ##USING COMPANY 2
-  @PD-API-46 @done
-  Scenario: User able to re-assigned Active future payment delegation of specific company payment
-    Given user login as card admin or card user from company 2
-    And there is Active future payment delegation for service A to company X
-    And there is payment Z for service A with Outstanding and Upcoming status
-    Then value of Delegated To is company X
-    And payment request Z sent to company 1 with Outstanding or Upcoming status
-    When user delegate payment Z of service A to company Y
-    Then value of Delegated To changes to company Y
-    And payment request Z sent to company 3 with Outstanding or Upcoming status
-    And payment request Z status in company 1 changes to Withdrawn
-
-  @PD-API-43 @done
-  Scenario: Delegated payment successfully auto-deducted when SI has been setup in the company
-    Given user login as card admin or card user from company 2
-    And payment delegation request for service A from company X to company Y has Active status
-    And there is SI for service A in company Y
-    When there is payment for service A from company 2
-    Then payment for service A of company X will be auto-deducted in company Y
-    And payment will automatically changes to "PAID"
-
-  @PD-API-43.1 @done
-  Scenario: Delegated payment successfully auto-deducted when SI has been setup in the company
-    Given user login as card admin or card user from company 2
-    And payment delegation request for service A from company X to company Y has Active status
-    And there is SI for service A in company Y
-    When there is payment for service A from company 2 with deductionTime in 2 minutes
-    Then payment will automatically changes to "OUTSTANDING"
-    And in 2 minutes later
-    And payment for service A of company X will be auto-deducted in company Y
-    And payment will automatically changes to "PAID"
-
-  @PD-API-66 @done
-  Scenario: Remove payment delegation from delegated party
-    Given user login as card admin or card user from company 2
-    And payment delegation request for service A from company X to company Y has Active status
-    When there is payment for service A from company 2
-    And value of Delegated To is company X
-    And company 1 remove payment delegation of that payment
-    Then payment will be deleted from company 1
-    And value of Delegated To changes to null in company 2

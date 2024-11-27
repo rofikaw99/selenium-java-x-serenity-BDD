@@ -88,7 +88,7 @@ public class PaymentOverviewSteps {
 
     @When("there is payment for service A")
     public void thereIsPaymentForServiceA() {
-        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("DAYS", 0), "", "", "", 201);
+        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("DAYS", 0), "", "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -107,7 +107,7 @@ public class PaymentOverviewSteps {
 
     @And("there is Outstanding or Upcoming payment request of service A")
     public void thereIsOutstandingOrUpcomingPaymentRequestOfServiceA() {
-        paymentOverview.createPaymentRequest("svs", 201);
+        paymentOverview.createPaymentRequest("svs", 200);
         payId = paymentOverview.payId();
     }
 
@@ -143,13 +143,13 @@ public class PaymentOverviewSteps {
     @Given("supplier create payment request to a user")
     public void supplierCreatePaymentRequestToAUser() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("DAYS", 0), "", "","", 201);
+        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("DAYS", 0), "", "","", 200);
         payId = paymentOverview.payId();
     }
 
     @When("payment has been Paid")
     public void paymentHasBeenPaid() throws InterruptedException {
-        paymentOverview.retrievePaymentOverview("MY_PAYMENT");
+        paymentOverview.retrievePaymentOverview("MY_PAYMENT", 100);
         payIds = List.of(payId);
         int number = 0;
         do {
@@ -208,13 +208,13 @@ public class PaymentOverviewSteps {
     @When("supplier create payment request with deductionDate in {int} minutes")
     public void supplierCreatePaymentRequestWithDeductionDate(int minutes) throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), Common.chargeDateTimePayment("MINUTES", minutes), "", "", 201);
+        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), Common.chargeDateTimePayment("MINUTES", minutes), "", "", 200);
         payId = paymentOverview.payId();
     }
 
     @Then("payment will automatically deducted based on the time")
     public void paymentWillAutomaticallyDeductedBasedOnTheTime() {
-        paymentOverview.retrievePaymentOverview("MY_PAYMENT");
+        paymentOverview.retrievePaymentOverview("MY_PAYMENT", 100);
 //        paymentOverview.verifyPaymentIdAppears(payId);
         paymentOverview.retrievePaymentRequest(List.of(payId));
         paymentOverview.verifyPaymentStatus("OUTSTANDING");
@@ -223,7 +223,7 @@ public class PaymentOverviewSteps {
     @When("supplier create payment request without deductionDate")
     public void supplierCreatePaymentRequestWithoutDeductionDate() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("DAYS", 0), "", "", "", 201);
+        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("DAYS", 0), "", "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -242,7 +242,7 @@ public class PaymentOverviewSteps {
     @When("supplier create payment request with amount greater than SI")
     public void supplierCreatePaymentRequestWithAmountGreaterThanSI() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), Common.chargeDateTimePayment("MINUTES", 0), "", "", 201);
+        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), Common.chargeDateTimePayment("MINUTES", 0), "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -269,21 +269,21 @@ public class PaymentOverviewSteps {
     @When("supplier create payment request with expired date today")
     public void supplierCreatePaymentRequestWithExpiredDateToday() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", -1), "", Common.chargeDateTimePayment("MINUTES", 0), "", 201);
+        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", -1), "", Common.chargeDateTimePayment("MINUTES", 0), "", 200);
         payId = paymentOverview.payId();
     }
 
     @When("supplier create payment request with expired date in {int} minutes")
     public void supplierCreatePaymentRequestWithExpiredDate(int minutes) throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), "", Common.chargeDateTimePayment("MINUTES", minutes), "", 201);
+        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), "", Common.chargeDateTimePayment("MINUTES", minutes), "", 200);
         payId = paymentOverview.payId();
     }
 
     @When("supplier create payment request without expired date")
     public void supplierCreatePaymentRequestWithoutExpiredDate() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 201);
+        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -305,8 +305,8 @@ public class PaymentOverviewSteps {
     @Given("supplier create payment request for {string} status")
     public void supplierCreatePaymentRequestForStatus(String status) throws IOException {
         paymentOverview.setToken(1);
-        if (status.equals("Upcoming")) paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 1), "", "", "", 201);
-        else if (status.equals("Outstanding")) paymentOverview.createPaymentRequest(1000, "", "", "", "", 201);
+        if (status.equals("Upcoming")) paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 1), "", "", "", 200);
+        else if (status.equals("Outstanding")) paymentOverview.createPaymentRequest(1000, "", "", "", "", 200);
         payId = paymentOverview.payId();
         paymentOverview.retrievePaymentRequest(List.of(payId));
     }
@@ -331,8 +331,8 @@ public class PaymentOverviewSteps {
     @Given("supplier create payment request for {string} status and achieved amount SI")
     public void supplierCreatePaymentRequestForStatusAndAchievedAmountSI(String status) throws IOException {
         paymentOverview.setToken(1);
-        if (status.equals("Upcoming")) paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 1), "", "", "", 201);
-        else if (status.equals("Outstanding")) paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 201);
+        if (status.equals("Upcoming")) paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 1), "", "", "", 200);
+        else if (status.equals("Outstanding")) paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -384,7 +384,7 @@ public class PaymentOverviewSteps {
 
     @And("there is payment Z for service A with Outstanding and Upcoming status")
     public void thereIsPaymentZForServiceAWithOutstandingAndUpcomingStatus() {
-        paymentOverview.createPaymentRequest("svs", 201);
+        paymentOverview.createPaymentRequest("svs", 200);
         payId = paymentOverview.payId();
     }
 
@@ -474,7 +474,7 @@ public class PaymentOverviewSteps {
     @When("there is payment for service A from company {int}")
     public void thereIsPaymentForServiceAFromCompany(int company) throws IOException {
         paymentOverview.setToken(company);
-        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 201);
+        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -492,8 +492,8 @@ public class PaymentOverviewSteps {
     @Given("supplier create payment request for {string} status with notes")
     public void supplierCreatePaymentRequestForStatusWithNotes(String status) throws IOException {
         paymentOverview.setToken(1);
-        if (status.equals("Upcoming")) paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 1), "", "", "first notes", 201);
-        else if (status.equals("Outstanding")) paymentOverview.createPaymentRequest(1000, "", "", "", "first notes", 201);
+        if (status.equals("Upcoming")) paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 1), "", "", "first notes", 200);
+        else if (status.equals("Outstanding")) paymentOverview.createPaymentRequest(1000, "", "", "", "first notes", 200);
         payId = paymentOverview.payId();
         paymentOverview.retrievePaymentRequest(List.of(payId));
     }
@@ -514,7 +514,7 @@ public class PaymentOverviewSteps {
     @When("there is payment for service A from company {int} with deductionTime in {int} minutes")
     public void thereIsPaymentForServiceAFromCompanyWithDeductionTimeInMinutes(int company, int minutes) throws IOException {
         paymentOverview.setToken(company);
-        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), Common.chargeDateTimePayment("MINUTES", minutes), "", "", 201);
+        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("MINUTES", 0), Common.chargeDateTimePayment("MINUTES", minutes), "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -532,12 +532,12 @@ public class PaymentOverviewSteps {
     }
 
     @When("user pay {int} of Outstanding my payments")
-    public void userPayOfOutstandingMyPayments(int number) throws InterruptedException {
+    public void userPayOfOutstandingMyPayments(int number) throws InterruptedException, IOException {
         List<JSONObject> paymentRequests = new ArrayList<>(){};
         payIds = new ArrayList<>();
         int amount = 40;
         for (int i = 0; i < number; i++){
-            paymentOverview.createPaymentRequest(amount, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 201);
+            paymentOverview.createPaymentRequest(amount, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
             Thread.sleep(1000);
             payId = paymentOverview.payId();
             payIds.add(payId);
@@ -551,9 +551,154 @@ public class PaymentOverviewSteps {
     }
 
     @Then("payment status changes to {string} in My Payment tab menu")
-    public void paymentStatusChangesToInMyPaymentTabMenu(String status) {
+    public void paymentStatusChangesToInMyPaymentTabMenu(String status) throws InterruptedException {
         paymentOverview.retrievePaymentRequest(payIds);
-        for (int i = 0; i < payIds.size(); i++)
+        for (int i = 0; i < payIds.size(); i++) {
+            int count = 0;
+            payIds = List.of(payId);
+            do {
+                Thread.sleep(10000);
+                paymentOverview.retrievePaymentRequest(payIds);
+                count ++;
+            } while ((!paymentOverview.paymentStatus().equals(List.of(status).toString())) && (count < 5));
             paymentOverview.verifyPaymentStatusInPaymentRequest(status, i);
+        }
+    }
+
+    @When("user pay {int} of Outstanding my payments that has been delegated to other company")
+    public void userPayOfOutstandingMyPaymentsThatHasBeenDelegatedToOtherCompany(int number) {
+        List<JSONObject> paymentRequests = new ArrayList<>(){};
+        List<JSONObject> paymentRequestsCheckout = new ArrayList<>(){};
+        payIds = new ArrayList<>();
+        int amount = 40;
+        for (int i = 0; i < number; i++){
+            paymentOverview.createPaymentRequest(amount, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
+            payId = paymentOverview.payId();
+            payIds.add(payId);
+            JSONObject paymentRequest = new JSONObject();
+            JSONObject delegateTo = new JSONObject();
+            delegateTo.put("companyEmail", ApiProperties.emailCompany2());
+            delegateTo.put("companyName", ApiProperties.companyName2());
+            paymentRequest.put("delegateTo", delegateTo);
+            paymentRequest.put("paymentRequestId", payId);
+            paymentRequests.add(paymentRequest);
+
+            JSONObject paymentRequestCheckout = new JSONObject();
+            paymentRequestCheckout.put("amount", amount);
+            paymentRequestCheckout.put("id", payId);
+            paymentRequestCheckout.put("supplier", ApiProperties.supplierId("svs"));
+            paymentRequestsCheckout.add(paymentRequestCheckout);
+        }
+        paymentOverview.delegatePaymentRequest(paymentRequests);
+        paymentOverview.createCheckoutSession(paymentRequestsCheckout);
+    }
+
+    @And("payment status changes to {string} in delegated payment")
+    public void paymentStatusChangesToInDelegatedPayment(String arg0) throws IOException {
+        paymentOverview.setToken(2);
+        paymentOverview.retrievePaymentOverview("DELEGATED_PAYMENT" ,"PAID");
+        for (String id: payIds){
+            paymentOverview.verifyPaymentIdAppears(id);
+        }
+    }
+
+    @When("user view detail of delegated payment with status: Withdrawn")
+    public void userViewDetailOfDelegatedPaymentWithStatusWithdrawn() {
+        paymentOverview.retrievePaymentOverview("DELEGATED_PAYMENT", "WITHDRAW");
+        payIds = paymentOverview.payIds(0, 1);
+    }
+
+    @Then("payment id disabled")
+    public void paymentIdDisabled() {
+        paymentOverview.retrievePaymentRequest(payIds);
+        paymentOverview.verifyPaymentRequestNull();
+    }
+
+    @When("user pay {int} of Outstanding delegated payments")
+    public void userPayOfOutstandingDelegatedPayments(int number) throws IOException {
+        List<JSONObject> paymentRequests = new ArrayList<>(){};
+        List<JSONObject> paymentRequestsCheckout = new ArrayList<>(){};
+        payIds = new ArrayList<>();
+        int amount = 40;
+        for (int i = 0; i < number; i++){
+            paymentOverview.setToken(2);
+            paymentOverview.createPaymentRequest(amount, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
+            payId = paymentOverview.payId();
+            payIds.add(payId);
+            JSONObject paymentRequest = new JSONObject();
+            JSONObject delegateTo = new JSONObject();
+            delegateTo.put("companyEmail", ApiProperties.emailCompany1());
+            delegateTo.put("companyName", ApiProperties.companyName1());
+            paymentRequest.put("delegateTo", delegateTo);
+            paymentRequest.put("paymentRequestId", payId);
+            paymentRequests.add(paymentRequest);
+
+            JSONObject paymentRequestCheckout = new JSONObject();
+            paymentRequestCheckout.put("amount", amount);
+            paymentRequestCheckout.put("id", payId);
+            paymentRequestCheckout.put("supplier", ApiProperties.supplierId("svs"));
+            paymentRequestsCheckout.add(paymentRequestCheckout);
+        }
+        paymentOverview.delegatePaymentRequest(paymentRequests);
+        paymentOverview.setToken(1);
+        paymentOverview.createCheckoutSession(paymentRequestsCheckout);
+    }
+
+    @Then("payment status changes to {string} in Delegated Payment tab menu")
+    public void paymentStatusChangesToInDelegatedPaymentTabMenu(String arg0) {
+        paymentOverview.retrievePaymentOverview("DELEGATED_PAYMENT", "PAID");
+        for (String id: payIds){
+            paymentOverview.verifyPaymentIdAppears(id);
+        }
+    }
+
+    @And("payment status changes to {string} in My Payment of delegatee company")
+    public void paymentStatusChangesToInMyPaymentOfDelegateeCompany(String arg0) throws IOException {
+        paymentOverview.setToken(2);
+        paymentOverview.retrievePaymentOverview("MY_PAYMENT", "PAID");
+        for (String id: payIds){
+            paymentOverview.verifyPaymentIdAppears(id);
+        }
+    }
+
+    @When("user checkout {int} of {string} delegated payments")
+    public void userCheckoutOfDelegatedPayments(int number, String status) {
+        List<JSONObject> paymentRequestsCheckout = new ArrayList<>();
+        paymentOverview.retrievePaymentOverview("DELEGATED_PAYMENT", status);
+        payIds = paymentOverview.payIds(0, number);
+        paymentOverview.retrievePaymentRequest(payIds);
+    }
+
+    @Then("there is no checkout button")
+    public void thereIsNoCheckoutButton() {
+        paymentOverview.verifyPaymentRequestNull();
+    }
+
+    @When("search payment with filter {string} in {string} tab")
+    public void searchPaymentWithFilter(String name, String tab) {
+        JSONObject filters = new JSONObject();
+        filters.put("filter", name);
+        switch (name){
+            case "reference" :
+                filters.put("keyword", "svs");
+                break;
+            case "productName" :
+                filters.put("keyword", "truck");
+                break;
+            case "delegateTo" :
+                filters.put("keyword", "auto");
+                break;
+            case "total" :
+                filters.put("keyword", "40");
+                break;
+            case "paymentMethod" :
+                filters.put("keyword", "payno");
+                break;
+            case "status" :
+                filters.put("keyword", "cancel");
+                break;
+
+        }
+        paymentOverview.retrievePaymentOverview(tab, filters);
     }
 }

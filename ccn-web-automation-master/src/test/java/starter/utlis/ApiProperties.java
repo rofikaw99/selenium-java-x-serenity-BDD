@@ -56,6 +56,9 @@ public class ApiProperties {
     public static String supplierId(String product){
         return load().getProperty("supplier-id-" + product);
     }
+    public static String xApiKey(String product){
+        return load().getProperty("x-api-key-" + product);
+    }
     public static String associateServiceIdSvs(){
         return load().getProperty("associate-service-id-svs");
     }

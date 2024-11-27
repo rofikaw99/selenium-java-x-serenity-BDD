@@ -27,6 +27,14 @@ public class TransformXFZB {
         jsonResponse = new JSONObject(response);
     }
 
+    @Given("user transform xfzb using {string} url")
+    public void userTransformXfwbUsingUrl(String url) throws IOException {
+        String xmlPayload = XFZBXml.xmlPayload;
+        jsonRequest = XML.toJSONObject(xmlPayload);
+        response = transformXfzbApi.transformXfzb(xmlPayload, url);
+        jsonResponse = new JSONObject(response);
+    }
+
 //    @Then("verify mapping data {string} {string} {string}of BusinessHeaderDocument to data in response of HouseWaybill {string}")
 //    public void verifyMappingDataOfBusinessHeaderDocumentToDataInResponseOfHouseWaybill(String key, String subkey1, String subkey2, String keyResponse) {
 //        switch (keyResponse){

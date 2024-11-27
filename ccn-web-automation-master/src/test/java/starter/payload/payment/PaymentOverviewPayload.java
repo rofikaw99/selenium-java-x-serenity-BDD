@@ -30,17 +30,18 @@ public class PaymentOverviewPayload {
         return payload;
     }
 
-    public static JSONObject retrievePaymentOverview(String type){
+    public static JSONObject retrievePaymentOverview(String type, JSONObject filters){
         JSONObject sortBy = new JSONObject();
         sortBy.put("column", "reference");
         sortBy.put("order", "asc");
 
         List<String> filterSearch = new ArrayList<>();
+        filterSearch.add((String) filters.get("filter"));
 
         payload = new JSONObject();
         payload.put("pagination", 10);
         payload.put("page", 1);
-        payload.put("search", "");
+        payload.put("search", filters.get("keyword"));
         payload.put("sortBy", sortBy);
         payload.put("type", type);
         payload.put("filterSearch", filterSearch);
@@ -94,6 +95,7 @@ public class PaymentOverviewPayload {
 
     public static JSONObject createPaymentRequest(String product, int amount, String chargeDateTime, String deductionDate, String expiredDate, String notes){
         JSONObject meta = new JSONObject();
+        String currency = null;
 
         List<JSONObject> list = new ArrayList<>();
         JSONObject items = new JSONObject();
@@ -102,11 +104,13 @@ public class PaymentOverviewPayload {
         list.add(items);
         meta.put("items", list);
 
+        if (product.equals("tdsb")) currency = "SGD";
+        else if (product.equals("svs")) currency = "USD";
         payload = new JSONObject();
         payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
         payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01");
         payload.put("totalChargeAmount", amount);
-        payload.put("currency", "USD");
+        payload.put("currency", currency);
         payload.put("status", "UPCOMING");
         payload.put("chargeDateTime", chargeDateTime);
         payload.put("deductionDateTime", deductionDate);
@@ -160,21 +164,17 @@ public class PaymentOverviewPayload {
         return payload;
     }
 
+    public static JSONObject delegatePaymentRequest(List<JSONObject> paymentRequests){
+        payload = new JSONObject();
+        payload.put("delegatePaymentRequest", paymentRequests);
+        return payload;
+    }
+
     public static JSONObject createCheckoutSession(List<JSONObject> paymentReq){
-        List<JSONObject> payment_requests = new ArrayList<>();
-        for (JSONObject pr : paymentReq){
-
-            JSONObject payment_request = new JSONObject();
-            payment_request.put("amount", pr.get("amount"));
-            payment_request.put("id", pr.get("id"));
-            payment_request.put("supplier", pr.get("suppId"));
-            payment_requests.add(payment_request);
-        }
-
         payload = new JSONObject();
         payload.put("email", ApiProperties.emailCompany1());
         payload.put("payment_type", "card");
-        payload.put("payment_requests", payment_requests);
+        payload.put("payment_requests", paymentReq);
         return payload;
     }
 

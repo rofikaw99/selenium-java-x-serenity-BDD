@@ -1,4 +1,4 @@
-@lo @update-lo
+@lo @update-master-lo
 Feature: Update LO
 
   Background: Login and transform
@@ -15,7 +15,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @1.1.1 @done @pieceCountForRate
   Scenario: 1.1.1 Remove Piece count (line item)
@@ -27,7 +26,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @1.1.2 @done @pieceCountForRate
   Scenario: 1.1.2 Add Piece count (line item)
@@ -39,7 +37,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @2 @done @grossWeight
   Scenario: 2. Gross weight
@@ -51,7 +48,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @2.1 @done @grossWeight
   Scenario: 2.1 Delete Gross weight
@@ -63,7 +59,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @2.2 @grossWeight
   Scenario: 2.2 Add Gross weight
@@ -75,7 +70,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @3 @done
   Scenario: 3. Chargeable weight
@@ -87,7 +81,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @4 @done @volume
   Scenario: 4. Update Volume
@@ -99,7 +92,6 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
-    And verify change request same as update dimensions
 
   @4.1 @done @volume
   Scenario: 4.1 Delete Volume
@@ -133,6 +125,7 @@ Feature: Update LO
     And the revision value changes to increment 1
     When user get change request using LO_ID
     Then success get change request
+    And verify change request same as update dimensions
 
   @5.1 @done @dims
   Scenario: 5.1 Delete Dims

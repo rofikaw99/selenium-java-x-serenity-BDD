@@ -4,15 +4,11 @@ import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.junit.Assert;
 import starter.payload.payment.PaymentOverviewPayload;
-import starter.payload.payment.StandingInstructionPayload;
 import starter.utlis.ApiProperties;
 import starter.utlis.ReadFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 import static net.serenitybdd.rest.SerenityRest.*;
 
@@ -38,14 +34,14 @@ public class PaymentOverview {
         baseUrlPayReq = ApiProperties.baseUrlPayment() + cubeId + "/service/" + ApiProperties.paymentServiceId();
     }
 
-    public void retrievePaymentOverview(String type) {
+    public void retrievePaymentOverview(String type, JSONObject filters) {
         String url = baseUrl + "/Payment/1/PaymentRequestOverview";
 
         response = given()
                 .header("Authorization", "Bearer " + token)
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
-                .body(PaymentOverviewPayload.retrievePaymentOverview(type).toString())
+                .body(PaymentOverviewPayload.retrievePaymentOverview(type, filters).toString())
                 .post(url);
         then().statusCode(200);
     }
@@ -83,8 +79,8 @@ public class PaymentOverview {
         return resp.subList(indexStart, indexEnd);
     }
 
-    public int amount(){
-        return lastResponse().jsonPath().getInt("totalChargeAmount");
+    public Object amount(){
+        return lastResponse().jsonPath().getList("totalChargeAmount").get(0);
     }
 
     public String payId(){
@@ -92,7 +88,7 @@ public class PaymentOverview {
     }
 
     public String suppId(){
-        return lastResponse().jsonPath().getString("supplier.id");
+        return (String) lastResponse().jsonPath().getList("supplier.id").get(0);
     }
 
     public void retrievePaymentRequest(List<String> payIds) {
@@ -124,8 +120,7 @@ public class PaymentOverview {
 
         response = given()
                 .header("Authorization", "Bearer " + token)
-                .header("associate-service-id", ApiProperties.associateServiceId(product))
-                .header("supplier-id", ApiProperties.supplierId(product))
+                .header("x-api-key", ApiProperties.xApiKey(product))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.createPaymentRequest(product).toString())
                 .post(url);
@@ -134,13 +129,13 @@ public class PaymentOverview {
 
     public void createPaymentRequest(int amount, String chargeDateTime, String deductionDate, String expiredDate, String notes, int statusCode){
         String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
+        String product = "svs";
 
         response = given()
                 .header("Authorization", "Bearer " + token)
-                .header("associate-service-id", ApiProperties.associateServiceId("svs"))
-                .header("supplier-id", ApiProperties.supplierId("svs"))
+                .header("x-api-key", ApiProperties.xApiKey(product))
                 .contentType("application/json")
-                .body(PaymentOverviewPayload.createPaymentRequest("svs", amount, chargeDateTime, deductionDate, expiredDate, notes).toString())
+                .body(PaymentOverviewPayload.createPaymentRequest(product, amount, chargeDateTime, deductionDate, expiredDate, notes).toString())
                 .post(url);
         then().statusCode(statusCode);
     }
@@ -150,10 +145,10 @@ public class PaymentOverview {
 
         response = given()
                 .header("Authorization", "Bearer " + token)
-                .header("associate-service-id", ApiProperties.associateServiceIdSvs())
+                .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.updatePaymentRequest(payId, status).toString())
-                .patch(url);
+                .post(url);
         then().statusCode(statusCode);
     }
 
@@ -162,10 +157,10 @@ public class PaymentOverview {
 
         response = given()
                 .header("Authorization", "Bearer " + token)
-                .header("associate-service-id", ApiProperties.associateServiceIdSvs())
+                .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.updatePaymentRequest(payId, "", notes).toString())
-                .patch(url);
+                .post(url);
         then().statusCode(200);
     }
 
@@ -221,6 +216,18 @@ public class PaymentOverview {
         then().statusCode(200);
     }
 
+    public void delegatePaymentRequest(List<JSONObject> paymentRequests){
+        String url = baseUrl + "/Payment/1/delegatePaymentRequest";
+
+        response = given()
+                .header("Authorization", "Bearer " + token)
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.delegatePaymentRequest(paymentRequests).toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
     public void verifyDelegateFromCompany(){
         Assert.assertTrue(lastResponse().jsonPath().getString("data.delegateFrom.companyName").contains("Auto QA Company"));
     }
@@ -260,7 +267,7 @@ public class PaymentOverview {
 
         response = given()
                 .header("Authorization", "Bearer " + token)
-                .header("associate-service-id", ApiProperties.associateServiceIdSvs())
+                .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.createPaymentRequestRecord(payId, amount).toString())
                 .post(url);
