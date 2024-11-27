@@ -85,107 +85,6 @@ public class LOResponse {
         return declaredValueForCustoms(jsonObject).getString("cargo:currencyUnit");
     }
 
-    public static JSONObject involvedParties(JSONObject jsonObject, String party){
-        JSONArray involvedParties = jsonObject.getJSONArray("cargo:involvedParties");
-        JSONObject result = new JSONObject();
-        for (int i = 0; i < involvedParties.length(); i++){
-            if (involvedParties.getJSONObject(i).getJSONObject("cargo:partyRole").getString("cargo:code").equals(party)){
-                result = involvedParties.getJSONObject(i);
-            }
-        }
-        return result;
-    }
-    public static String involvedParties_id(JSONObject jsonObject, String party){
-        return involvedParties(jsonObject, party).getString("@id");
-    }
-    public static JSONObject involvedParties_partyRole(JSONObject jsonObject, String party){
-        return involvedParties(jsonObject, party).getJSONObject("cargo:partyRole");
-    }
-    public static String IP_partyRole_id(JSONObject jsonObject, String party){
-        return involvedParties_partyRole(jsonObject, party).getString("@id");
-    }
-    public static String IP_partyRole_code(JSONObject jsonObject, String party){
-        return involvedParties_partyRole(jsonObject, party).getString("cargo:code");
-    }
-    public static JSONObject involvedParties_otherIdentifiers(JSONObject jsonObject, String party){
-        return involvedParties(jsonObject, party).getJSONObject("cargo:otherIdentifiers");
-    }
-    public static String IP_otherIdentifiers_id(JSONObject jsonObject, String party){
-        return involvedParties_otherIdentifiers(jsonObject, party).getString("@id");
-    }
-    public static String IP_otherIdentifiers_otherIdentifierType(JSONObject jsonObject, String party){
-        return involvedParties_otherIdentifiers(jsonObject, party).getString("cargo:otherIdentifierType");
-    }
-    public static String IP_otherIdentifiers_textualValue(JSONObject jsonObject, String party){
-        return involvedParties_otherIdentifiers(jsonObject, party).getString("cargo:textualValue");
-    }
-    public static JSONObject involvedParties_partyDetails(JSONObject jsonObject, String party){
-        return involvedParties(jsonObject, party).getJSONObject("cargo:partyDetails");
-    }
-    public static String IP_partyDetails_id(JSONObject jsonObject, String party){
-        return involvedParties_partyDetails(jsonObject, party).getString("@id");
-    }
-    public static String IP_partyDetails_name(JSONObject jsonObject, String party){
-        return involvedParties_partyDetails(jsonObject, party).getString("cargo:name");
-    }
-    public static JSONObject IP_PD_basedAtLocation(JSONObject jsonObject, String party){
-        return involvedParties_partyDetails(jsonObject, party).getJSONObject("cargo:basedAtLocation");
-    }
-    public static String IP_PD_basedAtLocation_id(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation(jsonObject, party).getString("@id");
-    }
-    public static JSONObject IP_PD_basedAtLocation_address(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation(jsonObject, party).getJSONObject("cargo:address");
-    }
-    public static String IP_PD_BAT_address_id(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation_address(jsonObject, party).getString("@id");
-    }
-    public static JSONObject IP_PD_BAT_address_country(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:country");
-    }
-    public static String IP_PD_BAT_address_country_id(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_country(jsonObject, party).getString("@id");
-    }
-    public static String IP_PD_BAT_address_country_code(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_country(jsonObject, party).getString("cargo:code");
-    }
-    public static JSONObject IP_PD_BAT_address_cityCode(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:cityCode");
-    }
-    public static String IP_PD_BAT_address_cityCode_id(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_cityCode(jsonObject, party).getString("@id");
-    }
-    public static String IP_PD_BAT_address_cityCode_codeDescription(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_cityCode(jsonObject, party).getString("cargo:codeDescription");
-    }
-    public static JSONObject IP_PD_BAT_address_postalCode(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:postalCode");
-    }
-    public static String IP_PD_BAT_address_postalCode_id(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_postalCode(jsonObject, party).getString("@id");
-    }
-    public static String IP_PD_BAT_address_postalCode_code(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_postalCode(jsonObject, party).getString("cargo:code");
-    }
-    public static JSONObject IP_PD_BAT_address_regionCode(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:regionCode");
-    }
-    public static String IP_PD_BAT_address_regionCode_id(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_regionCode(jsonObject, party).getString("@id");
-    }
-    public static String IP_PD_BAT_address_regionCode_code(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_regionCode(jsonObject, party).getString("cargo:code");
-    }
-    public static String IP_PD_BAT_address_regionCode_codeDescription(JSONObject jsonObject, String party){
-        return IP_PD_BAT_address_regionCode(jsonObject, party).getString("cargo:codeDescription");
-    }
-    public static String IP_PD_BAT_address_postOfficeBox(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation_address(jsonObject, party).getString("cargo:postOfficeBox");
-    }
-    public static String IP_PD_BAT_address_streetAddressLines(JSONObject jsonObject, String party){
-        return IP_PD_basedAtLocation_address(jsonObject, party).getString("cargo:streetAddressLines");
-    }
-
     public static JSONObject waybillLineItems(JSONObject jsonObject){
         return jsonObject.getJSONArray("cargo:waybillLineItems")
                 .getJSONObject(0);
@@ -193,8 +92,8 @@ public class LOResponse {
     public static String waybillLineItems_id(JSONObject jsonObject){
         return waybillLineItems(jsonObject).getString("@id");
     }
-    public static String waybillLineItems_slacForRate(JSONObject jsonObject){
-        if (waybillLineItems(jsonObject).has("cargo:slacForRate")) return waybillLineItems(jsonObject).getString("cargo:slacForRate");
+    public static Object waybillLineItems_slacForRate(JSONObject jsonObject){
+        if (waybillLineItems(jsonObject).has("cargo:slacForRate")) return waybillLineItems(jsonObject).get("cargo:slacForRate");
         else return null;
     }
     public static JSONObject waybillLineItems_chargeableWeightForRate(JSONObject jsonObject){
@@ -432,6 +331,110 @@ public class LOResponse {
     }
     public static String shipment_id(JSONObject jsonObject){
         return shipment(jsonObject).getString("@id");
+    }
+    public static JSONObject shipment_involvedParties(JSONObject jsonObject, String party){
+        JSONArray involvedParties = shipment(jsonObject).getJSONArray("cargo:involvedParties");
+        JSONObject result = new JSONObject();
+        for (int i = 0; i < involvedParties.length(); i++){
+            if (involvedParties.getJSONObject(i).getJSONObject("cargo:partyRole").getString("cargo:code").equals(party)){
+                result = involvedParties.getJSONObject(i);
+            }
+        }
+        return result;
+    }
+    public static String s_involvedParties_id(JSONObject jsonObject, String party){
+        return shipment_involvedParties(jsonObject, party).getString("@id");
+    }
+    public static JSONObject s_involvedParties_partyRole(JSONObject jsonObject, String party){
+        return shipment_involvedParties(jsonObject, party).getJSONObject("cargo:partyRole");
+    }
+    public static String s_IP_partyRole_id(JSONObject jsonObject, String party){
+        return s_involvedParties_partyRole(jsonObject, party).getString("@id");
+    }
+    public static String s_IP_partyRole_code(JSONObject jsonObject, String party){
+        return s_involvedParties_partyRole(jsonObject, party).getString("cargo:code");
+    }
+    public static JSONObject s_involvedParties_otherIdentifiers(JSONObject jsonObject, String party){
+        return shipment_involvedParties(jsonObject, party).getJSONObject("cargo:otherIdentifiers");
+    }
+    public static String s_IP_otherIdentifiers_id(JSONObject jsonObject, String party){
+        return s_involvedParties_otherIdentifiers(jsonObject, party).getString("@id");
+    }
+    public static String s_IP_otherIdentifiers_otherIdentifierType(JSONObject jsonObject, String party){
+        return s_involvedParties_otherIdentifiers(jsonObject, party).getString("cargo:otherIdentifierType");
+    }
+    public static String s_IP_otherIdentifiers_textualValue(JSONObject jsonObject, String party){
+        return s_involvedParties_otherIdentifiers(jsonObject, party).getString("cargo:textualValue");
+    }
+    public static JSONObject s_involvedParties_partyDetails(JSONObject jsonObject, String party){
+        return shipment_involvedParties(jsonObject, party).getJSONObject("cargo:partyDetails");
+    }
+    public static String s_IP_partyDetails_id(JSONObject jsonObject, String party){
+        return s_involvedParties_partyDetails(jsonObject, party).getString("@id");
+    }
+    public static String s_IP_partyDetails_name(JSONObject jsonObject, String party){
+        String result = null;
+        if (s_involvedParties_partyDetails(jsonObject, party).has("cargo:name")) result = s_involvedParties_partyDetails(jsonObject, party).getString("cargo:name");
+        return result;
+    }
+    public static JSONObject s_IP_PD_basedAtLocation(JSONObject jsonObject, String party){
+        return s_involvedParties_partyDetails(jsonObject, party).getJSONObject("cargo:basedAtLocation");
+    }
+    public static String s_IP_PD_basedAtLocation_id(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation(jsonObject, party).getString("@id");
+    }
+    public static JSONObject s_IP_PD_basedAtLocation_address(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation(jsonObject, party).getJSONObject("cargo:address");
+    }
+    public static String s_IP_PD_BAT_address_id(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation_address(jsonObject, party).getString("@id");
+    }
+    public static JSONObject s_IP_PD_BAT_address_country(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:country");
+    }
+    public static String s_IP_PD_BAT_address_country_id(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_country(jsonObject, party).getString("@id");
+    }
+    public static String s_IP_PD_BAT_address_country_code(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_country(jsonObject, party).getString("cargo:code");
+    }
+    public static JSONObject s_IP_PD_BAT_address_cityCode(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:cityCode");
+    }
+    public static String s_IP_PD_BAT_address_cityCode_id(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_cityCode(jsonObject, party).getString("@id");
+    }
+    public static String s_IP_PD_BAT_address_cityCode_codeDescription(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_cityCode(jsonObject, party).getString("cargo:codeDescription");
+    }
+    public static JSONObject s_IP_PD_BAT_address_postalCode(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:postalCode");
+    }
+    public static String s_IP_PD_BAT_address_postalCode_id(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_postalCode(jsonObject, party).getString("@id");
+    }
+    public static String s_IP_PD_BAT_address_postalCode_code(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_postalCode(jsonObject, party).getString("cargo:code");
+    }
+    public static JSONObject s_IP_PD_BAT_address_regionCode(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation_address(jsonObject, party).getJSONObject("cargo:regionCode");
+    }
+    public static String s_IP_PD_BAT_address_regionCode_id(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_regionCode(jsonObject, party).getString("@id");
+    }
+    public static String s_IP_PD_BAT_address_regionCode_code(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_regionCode(jsonObject, party).getString("cargo:code");
+    }
+    public static String s_IP_PD_BAT_address_regionCode_codeDescription(JSONObject jsonObject, String party){
+        return s_IP_PD_BAT_address_regionCode(jsonObject, party).getString("cargo:codeDescription");
+    }
+    public static String s_IP_PD_BAT_address_postOfficeBox(JSONObject jsonObject, String party){
+        return s_IP_PD_basedAtLocation_address(jsonObject, party).getString("cargo:postOfficeBox");
+    }
+    public static String s_IP_PD_BAT_address_streetAddressLines(JSONObject jsonObject, String party){
+        String result = null;
+        if (s_IP_PD_basedAtLocation_address(jsonObject, party).has("cargo:streetAddressLines")) result = s_IP_PD_basedAtLocation_address(jsonObject, party).getString("cargo:streetAddressLines");
+        return result;
     }
     public static JSONObject shipment_customsInformation(JSONObject jsonObject, int index){
         return shipment(jsonObject).getJSONArray("cargo:customsInformation").getJSONObject(index);

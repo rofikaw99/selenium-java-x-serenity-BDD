@@ -19,13 +19,10 @@ public class PaymentOverview {
 
     public void setToken(int company) throws IOException {
         if (company == 1) {
-            token = ReadFile.tokenCompany1();
             cubeId = ApiProperties.cubeId1();
         } else if (company == 2) {
-            token = ReadFile.tokenCompany2();
             cubeId = ApiProperties.cubeId2();
         } else if (company == 3){
-            token = ReadFile.tokenCompany3();
             cubeId = ApiProperties.cubeId3();
         }
         emailCompany = ApiProperties.emailCompany1();
@@ -35,10 +32,10 @@ public class PaymentOverview {
     }
 
     public void retrievePaymentOverview(String type, JSONObject filters) {
-        String url = baseUrl + "/Payment/1/PaymentRequestOverview";
+        String url = baseUrlPayReq + "/Payment/1/PaymentRequestOverview";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.retrievePaymentOverview(type, filters).toString())
@@ -47,10 +44,10 @@ public class PaymentOverview {
     }
 
     public void retrievePaymentOverview(String type, int pagination) {
-        String url = baseUrl + "/Payment/1/PaymentRequestOverview";
+        String url = baseUrlPayReq + "/Payment/1/PaymentRequestOverview";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.retrievePaymentOverview(type, pagination).toString())
@@ -59,10 +56,10 @@ public class PaymentOverview {
     }
 
     public void retrievePaymentOverview(String type, String status) {
-        String url = baseUrl + "/Payment/1/PaymentRequestOverview";
+        String url = baseUrlPayReq + "/Payment/1/PaymentRequestOverview";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.retrievePaymentOverview(type, status).toString())
@@ -92,10 +89,10 @@ public class PaymentOverview {
     }
 
     public void retrievePaymentRequest(List<String> payIds) {
-        String url = baseUrl + "/Payment/1/RetrievePaymentRequest";
+        String url = baseUrlPayReq + "/Payment/1/RetrievePaymentRequest";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.retrievePaymentRequest(payIds).toString())
@@ -119,7 +116,6 @@ public class PaymentOverview {
         String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
                 .header("x-api-key", ApiProperties.xApiKey(product))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.createPaymentRequest(product).toString())
@@ -132,7 +128,6 @@ public class PaymentOverview {
         String product = "svs";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
                 .header("x-api-key", ApiProperties.xApiKey(product))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.createPaymentRequest(product, amount, chargeDateTime, deductionDate, expiredDate, notes).toString())
@@ -144,7 +139,6 @@ public class PaymentOverview {
         String url = baseUrlPayReq + "/Payment/1/UpdatePaymentRequest";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
                 .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.updatePaymentRequest(payId, status).toString())
@@ -156,7 +150,6 @@ public class PaymentOverview {
         String url = baseUrlPayReq + "/Payment/1/UpdatePaymentRequest";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
                 .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.updatePaymentRequest(payId, "", notes).toString())
@@ -205,10 +198,10 @@ public class PaymentOverview {
     }
 
     public void delegatePaymentRequest(String payId, String emailCompany, String companyName){
-        String url = baseUrl + "/Payment/1/delegatePaymentRequest";
+        String url = baseUrlPayReq + "/Payment/1/delegatePaymentRequest";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.delegatePaymentRequest(payId, emailCompany, companyName).toString())
@@ -217,10 +210,10 @@ public class PaymentOverview {
     }
 
     public void delegatePaymentRequest(List<JSONObject> paymentRequests){
-        String url = baseUrl + "/Payment/1/delegatePaymentRequest";
+        String url = baseUrlPayReq + "/Payment/1/delegatePaymentRequest";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.delegatePaymentRequest(paymentRequests).toString())
@@ -251,10 +244,10 @@ public class PaymentOverview {
     }
 
     public void createCheckoutSession(List<JSONObject> paymentRequests){
-        String url = baseUrl + "/Payment/1/createCheckoutSession";
+        String url = baseUrlPayReq + "/Payment/1/createCheckoutSession";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.createCheckoutSession(paymentRequests).toString())
@@ -263,10 +256,9 @@ public class PaymentOverview {
     }
 
     public void createPaymentRecord(String payId, Object amount, int statusCode){
-        String url = baseUrl + "/Payment/1/createPaymentRequestRecord";
+        String url = baseUrlPayReq + "/Payment/1/createPaymentRequestRecord";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
                 .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.createPaymentRequestRecord(payId, amount).toString())
@@ -296,10 +288,10 @@ public class PaymentOverview {
     }
 
     public void removePaymentDelegationRequest(List<String> paymentReqIds){
-        String url = baseUrl + "/Payment/1/deleteDelegatePaymentRequest";
+        String url = baseUrlPayReq + "/Payment/1/deleteDelegatePaymentRequest";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.removePaymentDelegation(paymentReqIds).toString())

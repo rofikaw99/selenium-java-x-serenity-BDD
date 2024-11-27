@@ -616,7 +616,7 @@ public class UpdateLoAPI {
     public void updateShipperNameAddress(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
         // Load the JSON payload from the file
         payload = new JSONObject(FileUtils.readFileToString(
-                new File("src/test/java/starter/payload/shipperNameAddress.json"),
+                new File("src/test/java/starter/payload/shipperNameAddress/update.json"),
                 StandardCharsets.UTF_8)
         );
 
@@ -632,22 +632,80 @@ public class UpdateLoAPI {
         updateLOReq(payload, idObjectTarget);
     }
 
+    public void deleteShipperNameAddress(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
+        // Load the JSON payload from the file
+        payload = new JSONObject(FileUtils.readFileToString(
+                new File("src/test/java/starter/payload/shipperNameAddress/delete.json"),
+                StandardCharsets.UTF_8)
+        );
+
+        // Update the payload with the extracted details
+        UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idPartyDetails"), 0, 1);
+        UpdateLoPayload.updateActualData(payload, actualData.get("partyDetailsName"), 0);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idStreetAddressLine"), 1, 2);
+        UpdateLoPayload.updateActualData(payload, actualData.get("streetAddressLine"), 1);
+        UpdateLoPayload.updateRevision(payload, revision);
+
+        // Send the update request
+        updateLOReq(payload, idObjectTarget);
+    }
+
+    public void addShipperNameAddress(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
+        // Load the JSON payload from the file
+        payload = new JSONObject(FileUtils.readFileToString(
+                new File("src/test/java/starter/payload/shipperNameAddress/add.json"),
+                StandardCharsets.UTF_8)
+        );
+
+        // Update the payload with the extracted details
+        UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idPartyDetails"), 0, 1);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idStreetAddressLine"), 1, 2);
+        UpdateLoPayload.updateRevision(payload, revision);
+
+        // Send the update request
+        updateLOReq(payload, idObjectTarget);
+    }
+
     public void verifyPartyName(JSONObject response, String party) {
         Object expected = UpdateLoPayload.getHasValueOfHasOperation(payload, 1);;
-        String actual = LOResponse.IP_partyDetails_name(response, party);
+        String actual = LOResponse.s_IP_partyDetails_name(response, party);
         Assert.assertEquals(expected, actual);
     }
 
     public void verifyPartyStressAddress(JSONObject response, String party) {
         Object expected = UpdateLoPayload.getHasValueOfHasOperation(payload, 3);;
-        String actual = LOResponse.IP_PD_BAT_address_streetAddressLines(response, party);
+        String actual = LOResponse.s_IP_PD_BAT_address_streetAddressLines(response, party);
+        Assert.assertEquals(expected, actual);
+    }
+
+    public void verifyPartyNameDeleted(JSONObject response, String party) {
+        String actual = LOResponse.s_IP_partyDetails_name(response, party);
+        Assert.assertNull(actual);
+    }
+
+    public void verifyPartyStreetDeleted(JSONObject response, String party) {
+        String actual = LOResponse.s_IP_PD_BAT_address_streetAddressLines(response, party);
+        Assert.assertNull(actual);
+    }
+
+    public void verifyPartyNameAdded(JSONObject response, String party) {
+        Object expected = UpdateLoPayload.getHasValueOfHasOperation(payload, 0);
+        String actual = LOResponse.s_IP_partyDetails_name(response, party);
+        Assert.assertEquals(expected, actual);
+    }
+
+    public void verifyPartyAddressAdded(JSONObject response, String party) {
+        Object expected = UpdateLoPayload.getHasValueOfHasOperation(payload, 1);
+        String actual = LOResponse.s_IP_PD_BAT_address_streetAddressLines(response, party);
         Assert.assertEquals(expected, actual);
     }
 
     public void updateConsigneeNameAddress(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
         // Load the JSON payload from the file
         payload = new JSONObject(FileUtils.readFileToString(
-                new File("src/test/java/starter/payload/consigneeNameAddress.json"),
+                new File("src/test/java/starter/payload/consigneeNameAddress/update.json"),
                 StandardCharsets.UTF_8)
         );
 
@@ -657,6 +715,42 @@ public class UpdateLoAPI {
         UpdateLoPayload.updateActualData(payload, actualData.get("partyDetailsName"), 0);
         UpdateLoPayload.updateOperationIds(payload, actualData.get("idStreetAddressLine"), 2, 4);
         UpdateLoPayload.updateActualData(payload, actualData.get("streetAddressLine"), 2);
+        UpdateLoPayload.updateRevision(payload, revision);
+
+        // Send the update request
+        updateLOReq(payload, idObjectTarget);
+    }
+
+    public void deleteConsigneeNameAddress(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
+        // Load the JSON payload from the file
+        payload = new JSONObject(FileUtils.readFileToString(
+                new File("src/test/java/starter/payload/consigneeNameAddress/delete.json"),
+                StandardCharsets.UTF_8)
+        );
+
+        // Update the payload with the extracted details
+        UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idPartyDetails"), 0, 1);
+        UpdateLoPayload.updateActualData(payload, actualData.get("partyDetailsName"), 0);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idStreetAddressLine"), 1, 2);
+        UpdateLoPayload.updateActualData(payload, actualData.get("streetAddressLine"), 1);
+        UpdateLoPayload.updateRevision(payload, revision);
+
+        // Send the update request
+        updateLOReq(payload, idObjectTarget);
+    }
+
+    public void addConsigneeNameAddress(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
+        // Load the JSON payload from the file
+        payload = new JSONObject(FileUtils.readFileToString(
+                new File("src/test/java/starter/payload/consigneeNameAddress/add.json"),
+                StandardCharsets.UTF_8)
+        );
+
+        // Update the payload with the extracted details
+        UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idPartyDetails"), 0, 1);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idStreetAddressLine"), 1, 2);
         UpdateLoPayload.updateRevision(payload, revision);
 
         // Send the update request
@@ -880,7 +974,7 @@ public class UpdateLoAPI {
     public void updateSlacForRate(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
         // Load the JSON payload from the file
         payload = new JSONObject(FileUtils.readFileToString(
-                new File("src/test/java/starter/payload/slacForRate.json"),
+                new File("src/test/java/starter/payload/slacForRate/update.json"),
                 StandardCharsets.UTF_8)
         );
 
@@ -894,9 +988,54 @@ public class UpdateLoAPI {
         updateLOReq(payload, idObjectTarget);
     }
 
+    public void deleteSlacForRate(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
+        // Load the JSON payload from the file
+        payload = new JSONObject(FileUtils.readFileToString(
+                new File("src/test/java/starter/payload/slacForRate/delete.json"),
+                StandardCharsets.UTF_8)
+        );
+
+        // Update the payload with the extracted details
+        UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idSlacForRate"));
+        UpdateLoPayload.updateActualData(payload, actualData.get("slacForRate"), 0);
+        UpdateLoPayload.updateRevision(payload, revision);
+
+        // Send the update request
+        updateLOReq(payload, idObjectTarget);
+    }
+
     public void verifySlacForRateUpdated(JSONObject response) {
         Object expected = UpdateLoPayload.getHasValueOfHasOperation(payload, 1);
-        String actual = LOResponse.waybillLineItems_slacForRate(response);
+        Object actual = LOResponse.waybillLineItems_slacForRate(response);
         Assert.assertEquals(expected, actual);
+    }
+
+    public void verifySlacForRateDeleted(JSONObject response) {
+        Object actual = LOResponse.waybillLineItems_slacForRate(response);
+        Assert.assertNull(actual);
+    }
+
+    public void addSlacForRate(Integer revision, String idObjectTarget, Map<String, String> actualData) throws IOException {
+        // Load the JSON payload from the file
+        payload = new JSONObject(FileUtils.readFileToString(
+                new File("src/test/java/starter/payload/slacForRate/add.json"),
+                StandardCharsets.UTF_8)
+        );
+
+        // Update the payload with the extracted details
+        UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
+        UpdateLoPayload.updateOperationIds(payload, actualData.get("idWaybillLine"));
+        UpdateLoPayload.updateRevision(payload, revision);
+
+        // Send the update request
+        updateLOReq(payload, idObjectTarget);
+    }
+
+
+    public void verifySlacForRateAdded(JSONObject response) {
+        Object expected = UpdateLoPayload.getHasValueOfHasOperation(payload, 0);
+        Object actual = LOResponse.waybillLineItems_slacForRate(response);
+        Assert.assertEquals(expected, String.valueOf(actual));
     }
 }

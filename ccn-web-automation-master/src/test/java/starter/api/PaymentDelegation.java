@@ -31,14 +31,14 @@ public class PaymentDelegation {
             cubeId = ApiProperties.cubeId2();
             emailCompany = ApiProperties.emailCompany1();
         }
-        baseUrl = ApiProperties.baseUrlExternal() + cubeId + "/service/" + ApiProperties.paymentServiceId();
+        baseUrl = ApiProperties.baseUrlPayment() + cubeId + "/service/" + ApiProperties.paymentServiceId();
     }
 
     public void retrievePaymentDelegationSetting(int pagination, int page){
         String url = baseUrl + "/Payment/1/retrievePaymentDelegationSetting";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentDelegationPayload.retrievePaymentDelegation(pagination, page).toString())
@@ -51,7 +51,7 @@ public class PaymentDelegation {
         String url = baseUrl + "/Payment/1/retrievePaymentDelegationSetting";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentDelegationPayload.retrievePaymentDelegation(column, order).toString())
@@ -64,7 +64,7 @@ public class PaymentDelegation {
         String url = baseUrl + "/Payment/1/retrievePaymentDelegationSetting";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentDelegationPayload.retrievePaymentDelegation(10, 1).toString())
@@ -132,7 +132,7 @@ public class PaymentDelegation {
         String url = baseUrl + "/Payment/1/get-all-supplier";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body("{}")
@@ -198,7 +198,7 @@ public class PaymentDelegation {
         String url = baseUrl + "/Payment/1/createPaymentDelegationSetting";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentDelegationPayload.createPaymentDelegation(emailCompany, productId, suppId).toString())
@@ -224,7 +224,7 @@ public class PaymentDelegation {
         String url = baseUrl + "/Payment/1/deletePaymentDelegationSetting";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentDelegationPayload.deletePaymentDelegation(id).toString())

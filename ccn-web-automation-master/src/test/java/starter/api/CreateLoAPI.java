@@ -51,7 +51,6 @@ public class CreateLoAPI {
     public String createLORequest(String key) throws IOException {
         setupApi("internal");
         JSONObject customPayload = new JSONObject(payload);
-//        XFWBResponse.changeWaybillNumber(customPayload);
         switch (key){
             case "pieceCountForRate" :
                 XFWBResponse.removePieceCountForRate(customPayload);
@@ -78,6 +77,9 @@ public class CreateLoAPI {
                 break;
             case "otherChargeCode":
                 XFWBResponse.removeOtherChargeCode(customPayload);
+                break;
+            case "waybillNumber":
+                XFWBResponse.changeWaybillNumber(customPayload);
                 break;
         }
 

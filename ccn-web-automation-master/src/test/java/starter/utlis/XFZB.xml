@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rsm:HouseWaybill xmlns:rsm="iata:housewaybill:1" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ccts="urn:un:unece:uncefact:documentation:standard:CoreComponentsTechnicalSpecification:2" xmlns:udt="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:8" xmlns:ram="iata:datamodel:3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:local="urn:local">
     <rsm:MessageHeaderDocument>
-        <ram:ID>SIN2971227</ram:ID>
+        <ram:ID>SIN7071527</ram:ID>
         <ram:Name>House waybill</ram:Name>
         <ram:TypeCode>703</ram:TypeCode>
         <ram:IssueDateTime>2024-10-17T12:41:41</ram:IssueDateTime>
@@ -17,7 +17,7 @@
         </ram:RecipientParty>
     </rsm:MessageHeaderDocument>
     <rsm:BusinessHeaderDocument>
-        <ram:ID>SIN2971227</ram:ID>
+        <ram:ID>SIN7071527</ram:ID>
         <ram:SignatoryConsignorAuthentication>
             <ram:Signatory>XXX</ram:Signatory>
         </ram:SignatoryConsignorAuthentication>
@@ -33,7 +33,7 @@
         <ram:IncludedTareGrossWeightMeasure unitCode="KGM">3270.2</ram:IncludedTareGrossWeightMeasure>
         <ram:TotalPieceQuantity>2</ram:TotalPieceQuantity>
         <ram:TransportContractDocument>
-            <ram:ID>618-38744062</ram:ID>
+            <ram:ID>618-37879062</ram:ID>
         </ram:TransportContractDocument>
         <ram:OriginLocation>
             <ram:ID>SIN</ram:ID>
@@ -41,7 +41,7 @@
         <ram:FinalDestinationLocation>
             <ram:ID>BKK</ram:ID>
         </ram:FinalDestinationLocation>
-        <ram:IncludedHouseConsignmentItem>
+        <ram:IncludedHouseConsignment>
             <ram:NilCarriageValueIndicator>true</ram:NilCarriageValueIndicator>
             <ram:NilCustomsValueIndicator>true</ram:NilCustomsValueIndicator>
             <ram:NilInsuranceValueIndicator>true</ram:NilInsuranceValueIndicator>
@@ -79,9 +79,17 @@
             <ram:ApplicableOriginCurrencyExchange>
                 <ram:SourceCurrencyCode>SGD</ram:SourceCurrencyCode>
             </ram:ApplicableOriginCurrencyExchange>
+            <ram:HandlingSPHInstructions>
+                <ram:Description>Description</ram:Description>
+                <ram:DescriptionCode>NSC</ram:DescriptionCode>
+            </ram:HandlingSPHInstructions>
+            <ram:IncludedCustomsNote>
+                <ram:ContentCode>OCR</ram:ContentCode>
+                <ram:Content>Content</ram:Content>
+            </ram:IncludedCustomsNote>
             <ram:IncludedHouseConsignmentItem>
                 <ram:GrossWeightMeasure unitCode="KGM">100</ram:GrossWeightMeasure>
             </ram:IncludedHouseConsignmentItem>
-        </ram:IncludedHouseConsignmentItem>
+        </ram:IncludedHouseConsignment>
     </rsm:MasterConsignment>
 </rsm:HouseWaybill>

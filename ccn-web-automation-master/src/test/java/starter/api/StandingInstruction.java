@@ -30,7 +30,7 @@ public class StandingInstruction {
         }
         emailCompany = ApiProperties.emailCompany1();
         emailCompany2 = ApiProperties.emailCompany2();
-        baseUrl = ApiProperties.baseUrlExternal() + cubeId + "/service/" + ApiProperties.paymentServiceId();
+        baseUrl = ApiProperties.baseUrlPayment() + cubeId + "/service/" + ApiProperties.paymentServiceId();
         baseUrlCompany = ApiProperties.baseUrlExternal() + cubeId + "/service/" + ApiProperties.companyServiceId();
     }
 
@@ -38,7 +38,7 @@ public class StandingInstruction {
         String url = baseUrl + "/Payment/1/retrieveCardToken";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(StandingInstructionPayload.retrieveCardToken().toString())
@@ -50,7 +50,7 @@ public class StandingInstruction {
         String url = baseUrl + "/Payment/1/retrieveCardDetail";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(StandingInstructionPayload.retrieveCardToken().toString())
@@ -84,7 +84,7 @@ public class StandingInstruction {
         String url = baseUrl + "/Payment/1/retrieveStandingInstruction";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(StandingInstructionPayload.retrieveSI(type).toString())
@@ -139,7 +139,7 @@ public class StandingInstruction {
         String url = baseUrl + "/Payment/1/createStandingInstruction";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(StandingInstructionPayload.createSI(suppId, suppName, productId, productName,
@@ -153,7 +153,7 @@ public class StandingInstruction {
         String url = baseUrl + "/Payment/1/createStandingInstruction";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(StandingInstructionPayload.createSI(suppId, suppName, productId, productName,
@@ -170,7 +170,7 @@ public class StandingInstruction {
         String url = baseUrlCompany + "/Company/1/RetrieveCompanyIdentities";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body("{}")
@@ -216,7 +216,7 @@ public class StandingInstruction {
         String url = baseUrl + "/Payment/1/deleteStandingInstruction";
 
         response = given()
-                .header("Authorization", "Bearer " + token)
+                .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(StandingInstructionPayload.deleteSI(id, productId).toString())

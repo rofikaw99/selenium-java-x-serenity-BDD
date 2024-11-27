@@ -82,7 +82,7 @@ Feature: Payment Overview
     When user view detail of delegated payment with status: Withdrawn
     Then payment id disabled
 
-  @PO-API-9
+  @PO-API-9 @done
   Scenario Outline: User able to pay the delegated payment of Outstanding, Upcoming status
     Given user login as card admin or card user or user
     When user pay <number> of Outstanding delegated payments
@@ -93,7 +93,7 @@ Feature: Payment Overview
     | 1      |
     | 2      |
 
-  @PO-API-10
+  @PO-API-10 @done
   Scenario: User unable to pay the delegated payment of Withdraw status
     Given user login as card admin or card user or user
     When user checkout 1 of "WITHDRAW" delegated payments
@@ -164,7 +164,8 @@ Feature: Payment Overview
   @pay-record.1 @failed
   Scenario: Success add payment record to specific payment
     Given supplier create payment request to a user
-    When payment has been Paid
+#    When payment has been Paid
+    When user pay the payment request
     And supplier add payment record to the payment
     Then success add payment record
     And verify the record appears in report excel merchant

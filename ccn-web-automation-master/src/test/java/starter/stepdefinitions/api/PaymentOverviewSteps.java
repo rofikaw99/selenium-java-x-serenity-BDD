@@ -33,7 +33,7 @@ public class PaymentOverviewSteps {
 
     private List<String> payIds = null;
     private String suppId, suppName, productId, productName, cardToken, companyEmail, delegationId, payId, statuses;
-    private int companyNumber;
+    private int companyNumber, amount;
 
     @When("user view detail of {string} with status: {string}")
     public void userViewDetailOfMyPaymentWithStatus(String type, String status) {
@@ -143,7 +143,8 @@ public class PaymentOverviewSteps {
     @Given("supplier create payment request to a user")
     public void supplierCreatePaymentRequestToAUser() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(400, Common.chargeDateTimePayment("DAYS", 0), "", "","", 200);
+        amount = 400;
+        paymentOverview.createPaymentRequest(amount, Common.chargeDateTimePayment("DAYS", 0), "", "","", 200);
         payId = paymentOverview.payId();
     }
 
@@ -544,7 +545,7 @@ public class PaymentOverviewSteps {
             JSONObject paymentRequest = new JSONObject();
             paymentRequest.put("amount", amount);
             paymentRequest.put("id", payId);
-            paymentRequest.put("suppId", ApiProperties.supplierId("svs"));
+            paymentRequest.put("supplier", ApiProperties.supplierId("svs"));
             paymentRequests.add(paymentRequest);
         }
         paymentOverview.createCheckoutSession(paymentRequests);
@@ -645,8 +646,16 @@ public class PaymentOverviewSteps {
     }
 
     @Then("payment status changes to {string} in Delegated Payment tab menu")
-    public void paymentStatusChangesToInDelegatedPaymentTabMenu(String arg0) {
-        paymentOverview.retrievePaymentOverview("DELEGATED_PAYMENT", "PAID");
+    public void paymentStatusChangesToInDelegatedPaymentTabMenu(String status) throws InterruptedException {
+        int count = 0;
+        payIds = List.of(payId);
+        do {
+            Thread.sleep(10000);
+            paymentOverview.retrievePaymentRequest(payIds);
+            count ++;
+        } while ((!paymentOverview.paymentStatus().equals(List.of(status).toString())) && (count < 5));
+        paymentOverview.verifyPaymentStatusInPaymentRequest(status);
+        paymentOverview.retrievePaymentOverview("DELEGATED_PAYMENT", status);
         for (String id: payIds){
             paymentOverview.verifyPaymentIdAppears(id);
         }
@@ -700,5 +709,18 @@ public class PaymentOverviewSteps {
 
         }
         paymentOverview.retrievePaymentOverview(tab, filters);
+    }
+
+    @When("user pay the payment request")
+    public void userPayThePaymentRequest() {
+        List<JSONObject> paymentRequests = new ArrayList<>(){};
+        payIds = new ArrayList<>();
+        payIds.add(payId);
+        JSONObject paymentRequest = new JSONObject();
+        paymentRequest.put("amount", amount);
+        paymentRequest.put("id", payId);
+        paymentRequest.put("supplier", ApiProperties.supplierId("svs"));
+        paymentRequests.add(paymentRequest);
+        paymentOverview.createCheckoutSession(paymentRequests);
     }
 }
