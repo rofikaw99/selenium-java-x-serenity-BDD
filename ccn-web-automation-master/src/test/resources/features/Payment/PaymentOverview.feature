@@ -163,7 +163,6 @@ Feature: Payment Overview
     And back to the main tab browser
     When User go to "<menu>"
     Then verify field to be display on my payment
-    Then verify field to be display on my payment
     When input filter keyword "<keyword>"
     And verify button checkout enable to click
     And user click pay for CC after checkout

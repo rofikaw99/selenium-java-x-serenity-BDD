@@ -36,6 +36,11 @@ public class SupportAppStep {
         Thread.sleep(waitResponse);
         loginPage.inputSigninSupportApp(userID,password);
     }
+    @When("user input {string} and click search")
+    public void userInputAWBPrefixAndClickSearch(String AirlineSearchBy) throws Exception {
+        Thread.sleep(400);
+        loginPage.inputAwbPrefixToGetAirlinesCompanyIdentity(AirlineSearchBy);
+    }
     @Then("update new plan manager in support app")
     public void updateNewPlanManageriInSupportApp() throws Exception {
         Thread.sleep(waitResponse);
@@ -63,7 +68,18 @@ public class SupportAppStep {
     public void userGoToGroupMenu() throws InterruptedException {
         supportAppPage.pressGroupMenu();
     }
-
+    @When("user go to airlines submenu")
+    public void userGoToAirlineSubMenu() throws InterruptedException {
+        supportAppPage.pressAirlinesSubMenu();
+    }
+    @When("user want to view change log by input filter date {string} and {string}")
+    public void userWantViewChangeLog(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.viewAirlineChangeLog(startDate, endDate);
+    }
+    @When("user select airline company identity by carrier code")
+    public void userSelectAirlineCompanyIdentityByCarrierCode() throws InterruptedException {
+        supportAppPage.selectSearchAirlineCompanyIdentityType();
+    }
     @When("user go to notification menu")
     public void userGoToNotificationMenu() throws InterruptedException {
         supportAppPage.pressNotificationMonitoringMenu();
@@ -93,6 +109,15 @@ public class SupportAppStep {
     @Then("verify notification monitoring information")
     public void verifyNotificationMonitoringInformation() throws InterruptedException {
         supportAppPage.verifyNotificationMonitoringMenuInfo();
+    }
+    @Then("verify airline search validation text display")
+    public void verifyAirlineSearchValidationTextDisplay() throws InterruptedException {
+        supportAppPage.verifyAirlineSearchValidationTextDisplayInformation();
+    }
+    @Then("verify that Airlines Company Identity already cover Airlines Name, Carrier Code, Awb Prefix, Airlines Address, and System Cube Mail Address")
+    public void verifyAirlinesCompanyIdentityCover5Attribute() throws InterruptedException {
+        Thread.sleep(600);
+        Assert.assertTrue(supportAppPage.fiveAttributeIsDisplayed());
     }
 
     @When("user go to company info sub menu")
