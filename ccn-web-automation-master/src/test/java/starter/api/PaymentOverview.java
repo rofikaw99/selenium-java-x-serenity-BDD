@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.junit.Assert;
 import starter.payload.payment.PaymentOverviewPayload;
+import starter.payload.payment.StandingInstructionPayload;
 import starter.utlis.ApiProperties;
 import starter.utlis.ReadFile;
 
@@ -14,7 +15,7 @@ import static net.serenitybdd.rest.SerenityRest.*;
 
 public class PaymentOverview {
 
-    String token, cubeId, baseUrl, baseUrlPayReq, emailCompany, emailCompany2;
+    String token, cubeId, baseUrl, baseUrlPayReq, baseUrlIp, emailCompany, emailCompany2;
     Response response;
 
     public void setToken(int company) throws IOException {
@@ -29,6 +30,7 @@ public class PaymentOverview {
         emailCompany2 = ApiProperties.emailCompany2();
         baseUrl = ApiProperties.baseUrlExternal() + cubeId + "/service/" + ApiProperties.paymentServiceId();
         baseUrlPayReq = ApiProperties.baseUrlPayment() + cubeId + "/service/" + ApiProperties.paymentServiceId();
+        baseUrlIp = "http://172.16.200.158:6969/" + cubeId + "/service/" + ApiProperties.paymentServiceId();
     }
 
     public void retrievePaymentOverview(String type, JSONObject filters) {
@@ -295,6 +297,44 @@ public class PaymentOverview {
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.removePaymentDelegation(paymentReqIds).toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
+    public void createPaymentProcess(String paymentMethodId, String product, Object amount){
+        String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey("svs"))
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.createPaymentProcess(paymentMethodId, product, amount).toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
+    public void retrieveCardDetail(){
+        String url = baseUrlPayReq + "/Payment/1/retrieveCardDetail";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey("token"))
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(StandingInstructionPayload.retrieveCardToken().toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
+    public String paymentMethodId(){
+        return lastResponse().jsonPath().getString("data.payment_method_id");
+    }
+
+    public void refundPaymentRequest(String paymentReqId){
+        String url = baseUrlPayReq + "/Payment/1/refundPaymentRequest";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey("svs"))
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.refundPaymentRequest(paymentReqId).toString())
                 .post(url);
         then().statusCode(200);
     }

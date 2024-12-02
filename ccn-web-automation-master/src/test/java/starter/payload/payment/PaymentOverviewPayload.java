@@ -84,7 +84,8 @@ public class PaymentOverviewPayload {
 
         payload = new JSONObject();
         payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
-        payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01");
+//        payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01, 0001");
+        payload.put("reference", product.toUpperCase() + Common.idForPayment());
         payload.put("totalChargeAmount", 1000);
         payload.put("currency", "USD");
         payload.put("status", "UPCOMING");
@@ -190,6 +191,34 @@ public class PaymentOverviewPayload {
         payload = new JSONObject();
 
         payload.put("paymentRequestIds", paymentRequestIds);
+        return payload;
+    }
+
+    public static JSONObject createPaymentProcess(String paymentMethodId, String product, Object amount){
+        JSONObject meta = new JSONObject();
+
+        List<JSONObject> list = new ArrayList<>();
+        JSONObject items = new JSONObject();
+        items.put("description", "item 1 description");
+        items.put("amount", amount);
+        list.add(items);
+        meta.put("items", list);
+
+        payload = new JSONObject();
+        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
+        payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01");
+        payload.put("totalChargeAmount", amount);
+        payload.put("currency", "USD");
+        payload.put("isPaymentProcess", true);
+        payload.put("paymentMethodId", paymentMethodId);
+        payload.put("meta", meta);
+        return payload;
+    }
+
+    public static JSONObject refundPaymentRequest(String paymentRequestId){
+        payload = new JSONObject();
+
+        payload.put("paymentRequestId", paymentRequestId);
         return payload;
     }
 }

@@ -1,3 +1,4 @@
+@po-api
 Feature: Payment Overview
 
   @PO-API-1 @done
@@ -33,7 +34,7 @@ Feature: Payment Overview
       | 1    |
       | 2    |
 
-  @PO-API-4 @failed
+  @PO-API-4 @done
   Scenario: My payment successfully auto-deducted when SI for the product has been setup in the company
     Given user login as card admin or card user
     And there is SI for service A in the company
@@ -161,23 +162,23 @@ Feature: Payment Overview
       | total |
       | status |
 
-  @pay-record.1 @failed
+  @pay-record.1 @done
   Scenario: Success add payment record to specific payment
     Given supplier create payment request to a user
-#    When payment has been Paid
-    When user pay the payment request
+    When payment has been Paid
+#    When user pay the payment request
     And supplier add payment record to the payment
     Then success add payment record
     And verify the record appears in report excel merchant
 
-  @pay-record.2 @failed
+  @pay-record.2 @done
   Scenario: Failed add payment record to specific payment
     Given supplier create payment request to a user
     When payment has been Paid
     And supplier add payment record to the payment with string value
     Then failed add payment record
 
-  @deduct-date.1.1 @failed
+  @deduct-date.1.1 @done
   Scenario: Success deduct payment based on deductionDate which is 2 minutes later
     Given user has SI for service A
     When supplier create payment request with deductionDate in 2 minutes
@@ -187,7 +188,7 @@ Feature: Payment Overview
     Then payment will automatically changes to "PAID"
     And the payment by will be "auto_deduct" and autoDeduct is "true"
 
-  @deduct-date.1 @failed
+  @deduct-date.1 @done
   Scenario: Immediately deduct payment when deductionDate is not set
     Given user has SI for service A
     When supplier create payment request without deductionDate
@@ -201,14 +202,14 @@ Feature: Payment Overview
     Then payment will remain in Outstanding status
     And the payment by will be "" and autoDeduct is "false"
 
-  @expired-date @exp-date @done
+  @expired-date @exp-date @failed
   Scenario: Success set expired date of payment for 2 minutes later
     When supplier create payment request with expired date in 2 minutes
     Then payment will automatically changes to "OUTSTANDING"
     And in 2 minutes later
     And payment will automatically changes to "EXPIRED"
 
-  @expired-date.4 @exp-date @done
+  @expired-date.4 @exp-date @failed
   Scenario: Success verify the expired date is in 21 days if the field is not set
     When supplier create payment request without expired date
     Then payment will changes to Expired in 21 days
@@ -219,7 +220,7 @@ Feature: Payment Overview
     When supplier update payment request to "READY" status
     Then payment will automatically changes to "OUTSTANDING"
 
-  @update-pay.2 @update-pay @failed
+  @update-pay.2 @update-pay @done
   Scenario: Success update payment to ready with achieved SI
     Given supplier create payment request for "Upcoming" status and achieved amount SI
     When supplier update payment request to "READY" status
@@ -246,7 +247,7 @@ Feature: Payment Overview
     When supplier update payment request with notes
     Then payment will have notes
 
-  @update-notes.3 @failed
+  @update-notes.3 @done
   Scenario: Success update PAID payment with notes
     Given supplier create payment request for "Upcoming" status and achieved amount SI
     And supplier update payment request to "READY" status
@@ -287,7 +288,7 @@ Feature: Payment Overview
     |READY |
     |CANCELED|
 
-  @update-pay.5 @failed
+  @update-pay.5 @done
   Scenario Outline: Error message appears when updating "PAID" payment
     Given supplier create payment request for "Upcoming" status and achieved amount SI
     And supplier update payment request to "READY" status
@@ -297,3 +298,17 @@ Feature: Payment Overview
       |status|
       |READY |
       |CANCELED|
+
+  @process-payment
+  Scenario: BC process the payment from CubeForAll
+    Given BC create payment request for processing payment
+    Then payment will be created
+    And payment will automatically changes to "PAID"
+
+  @refund-payment
+  Scenario: BC process refund of payment from CubeForAll
+    Given BC create payment request for processing payment
+    And payment will automatically changes to "PAID"
+    When BC process refund of the payment
+    Then payment will be refunded
+    And payment will automatically changes to "REFUNDED"

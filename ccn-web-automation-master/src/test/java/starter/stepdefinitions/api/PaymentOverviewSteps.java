@@ -154,7 +154,7 @@ public class PaymentOverviewSteps {
         payIds = List.of(payId);
         int number = 0;
         do {
-            sleep(2000);
+            Thread.sleep(20000);
             paymentOverview.retrievePaymentRequest(payIds);
             number++;
         } while (!paymentOverview.paymentStatus().equals(List.of("PAID").toString()) && (number < 5));
@@ -233,7 +233,7 @@ public class PaymentOverviewSteps {
         int count = 0;
         payIds = List.of(payId);
         do {
-            sleep(10000);
+            Thread.sleep(10000);
             paymentOverview.retrievePaymentRequest(payIds);
             count ++;
         } while ((!paymentOverview.paymentStatus().equals(List.of("PAID").toString())) && (count < 5));
@@ -243,7 +243,7 @@ public class PaymentOverviewSteps {
     @When("supplier create payment request with amount greater than SI")
     public void supplierCreatePaymentRequestWithAmountGreaterThanSI() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), Common.chargeDateTimePayment("MINUTES", 0), "", "", 200);
+        paymentOverview.createPaymentRequest(1000, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
         payId = paymentOverview.payId();
     }
 
@@ -252,7 +252,7 @@ public class PaymentOverviewSteps {
         int count = 0;
         payIds = List.of(payId);
         do {
-            sleep(10000);
+            Thread.sleep(10000);
             paymentOverview.retrievePaymentRequest(payIds);
             count ++;
         } while ((!paymentOverview.paymentStatus().equals(List.of("OUTSTANDING").toString())) && (count < 5));
@@ -290,12 +290,10 @@ public class PaymentOverviewSteps {
 
     @Then("payment will changes to Expired in {int} days")
     public void paymentWillChangesToExpiredInDays(int days) throws InterruptedException {
-//        paymentOverview.retrievePaymentOverview("MY_PAYMENT");
-//        paymentOverview.verifyPaymentIdAppears(payId);
         int count = 0;
         payIds = List.of(payId);
         do {
-            sleep(10000);
+            Thread.sleep(20000);
             paymentOverview.retrievePaymentRequest(payIds);
             count ++;
         } while ((!paymentOverview.paymentStatus().equals(List.of("OUTSTANDING").toString())) && (count < 5));
@@ -322,7 +320,7 @@ public class PaymentOverviewSteps {
         int count = 0;
         payIds = List.of(payId);
         do {
-            sleep(20000);
+            Thread.sleep(20000);
             paymentOverview.retrievePaymentRequest(payIds);
             count ++;
         } while ((!paymentOverview.paymentStatus().equals(List.of(status).toString())) && (count < 5));
@@ -509,7 +507,7 @@ public class PaymentOverviewSteps {
 
     @And("in {int} minutes later")
     public void inMinutesLater(int minutes) throws InterruptedException {
-        Thread.sleep(minutes * 1000);
+        Thread.sleep((minutes + 1) * 1000);
     }
 
     @When("there is payment for service A from company {int} with deductionTime in {int} minutes")
@@ -722,5 +720,29 @@ public class PaymentOverviewSteps {
         paymentRequest.put("supplier", ApiProperties.supplierId("svs"));
         paymentRequests.add(paymentRequest);
         paymentOverview.createCheckoutSession(paymentRequests);
+    }
+
+    @Given("BC create payment request for processing payment")
+    public void bcCreatePaymentRequestForProcessingPayment() throws IOException {
+        paymentOverview.setToken(3);
+        paymentOverview.retrieveCardDetail();
+        String paymentMethodId = paymentOverview.paymentMethodId();
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400);
+        payId = paymentOverview.payId();
+    }
+
+    @Then("payment will be created")
+    public void paymentWillBeCreated() {
+        paymentOverview.verifyMessageBody("Successfully create payment request");
+    }
+
+    @When("BC process refund of the payment")
+    public void bcProcessRefundOfThePayment() throws InterruptedException {
+        paymentOverview.refundPaymentRequest(payId);
+    }
+
+    @Then("payment will be refunded")
+    public void paymentWillBeRefunded() {
+        paymentOverview.verifyMessageBody("Successfully processed your refund request");
     }
 }
