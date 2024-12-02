@@ -1,16 +1,69 @@
 package starter.pages;
 
+import io.cucumber.java.en.Given;
 import net.thucydides.core.pages.PageObject;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import starter.utlis.Constants;
+
+import java.util.List;
 
 public class SupportAppPage extends PageObject {
     private int waitResponse =15000;
+
     //supportAppDiscount
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
+    private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
+    private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
+    private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[19]");
+    private By airlineChangeLogFunction = By.xpath("//button[@type='button' and contains(@class, 'btn btn-link') and text()='logs']");
+    private By airlineChangeLogStartDate = By.xpath("(//input[@type='text' and contains(@class, 'form-control') and @value=''])[1]");
+    private By airlineChangeLogEndDate = By.xpath("(//input[@type='text' and contains(@class, 'form-control')])[3]");
+    private By getAirlineChangeLogSubmitButton = By.xpath("//button[@type='button' and contains(@class, 'btn btn-primary') and text()='Submit']");
+    private By airlineSearchBy = By.id("searchType");
+    private By optionCarrierCode = By.xpath("//option[@value='carrierCode']");
+    private By uploadExcelOnboardFile = By.id("formFile");
+    private By populateOnboardFile = By.xpath("//button[@class='btn btn-primary']");
+    private By submitToOnboard = By.xpath("//button[@class='mt-3 btn btn-primary']");
+    private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[16]");
+    private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
+    private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
+    private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
+    private By actionLogDropDown = By.xpath("//button[@id='dropdown-basic-button']");
+    private By selectUserToExportActionLog = By.xpath("(//a[@class='dropdown-item'])[1]");
+    private By startDateActionLog = By.xpath("//input[@placeholder='Start Date']");
+    private By endDateActionLog = By.xpath("//input[@placeholder='End Date']");
+    private By submitActionLog = By.xpath("//button[@type='submit']");
+    private By currentTotalCount = By.xpath("(//p[text()])[2]");
+    private By previousTotalCount = By.xpath("(//p[text()])[3]");
+    private By currentTotalFailedProcess = By.xpath("(//p[text()])[4]");
+    private By previousTotalFailedProcess = By.xpath("(//p[text()])[5]");
+    private By currentCountAt = By.xpath("(//h6[text()])[1]");
+    private By previousCountAt = By.xpath("(//h6[text()])[2]");
+    private By airlineSearchValidationText = By.xpath("//span[contains(@class, 'text-danger')]");
+    private By companyName = By.xpath("//th[text()='Company Name']");
+    private By airlinesNameTitle = By.xpath("//th[text()='Airline Name']");
+    private By emailTitle = By.xpath("//th[text()='Email']");
+    private By stationTitle = By.xpath("//th[text()='Station']");
+    private By countryTitle = By.xpath("//th[text()='Country']");
+    private By carrierCodeTitle = By.xpath("//th[text()='Carrier Code']");
+    private By awbPrefixTitle = By.xpath("//th[text()='AWB Prefix']");
+    private By currentPlanManager = By.xpath("//th[text()='Current Plan Manager']");
+    private By CompanyCubeID = By.xpath("//th[text()='Company Cube ID']");
+    private By CompanySystemCube = By.xpath("//th[text()='Company System Cube']");
+    private By CompanyPIMA = By.xpath("//th[text()='Company PIMA']");
+    private By GHA = By.xpath("//th[text()='GHA']");
+    private By GHACode = By.xpath("//th[text()='GHA Code']");
+    private By UEN = By.xpath("//th[text()='UEN']");
+    private By CompanyCountry = By.xpath("//th[text()='Company Country']");
+    private By CompanyMembers = By.xpath("//th[text()='Company Members']");
     private By createDiscountSubMenu = By.xpath("//span[text()='Create Discount']");
+    private By companyInfoInputField = By.xpath("//input[@type='text' and @class='form-control']");
+    private By companyInfoSubMenu = By.xpath("//span[contains(text(), 'Company Info')]");
     private By couponName = By.xpath("//input[@placeholder='Coupon Name']");
     private By amountOfCoupon = By.xpath("//input[@placeholder='1000']");
     private By currencyCoupon = By.xpath("(//input[@placeholder='USD'])[1]");
@@ -41,8 +94,10 @@ public class SupportAppPage extends PageObject {
     private By startDatePick = By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='8']");
     private By validityEndDatePick = By.xpath("//div[contains(@class, 'react-datepicker__day') and text()='8']");
     private By submitDiscount = By.xpath("(//button[@type='submit'])[2]");
+    private By companySystemAddressOption = By.xpath("//a[text()='Company System Address']\n");
+    private By checkButton = By.xpath("//button[contains(@class, 'btn btn-primary') and text()='Check']");
     private By createDiscountSuccessMessage = By.xpath("//p[@class='cube-tracking cube-message']");
-
+    private By typeOfSearch = By.xpath("//button[@id='dropdown-basic-button' and text()='Choose Type of Search']");
     //supportAppPlan
     private By subscribtionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']/span[@class='ps-menu-label css-12w9als'])[27]");
     private By productSubMenu = By.xpath("//span[text()='Product']");
@@ -64,7 +119,6 @@ public class SupportAppPage extends PageObject {
     private By memberLimitInput = By.xpath("//input[@placeholder='Member Limit']");
     private By submitPrice = By.xpath("(//button[@type='button'])[4]");
 
-
     public void addNewPrice(){
         $(newPlanCreated).isDisplayed();
         $(newPlanCreated).click();
@@ -77,6 +131,26 @@ public class SupportAppPage extends PageObject {
         $(subscribtionMenu).click();
     }
 
+    public void pressSCheckButton(){
+        $(checkButton).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(checkButton));
+    }
+    public void pressTypeofSearch(String condition){
+        $(typeOfSearch).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(typeOfSearch));
+        evaluateJavascript("arguments[0].click();", $(By.xpath("//*[contains(text(), '" + condition +  "')]")));
+    }
+
+    public void companySystemAddressOption(){
+        $(checkButton).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(checkButton));
+    }
+
+    public void inputCompany(String input){
+        $(companyInfoInputField).waitUntilVisible();
+        $(companyInfoInputField).clear();
+        $(companyInfoInputField).sendKeys(input);
+    }
     public void pressProductSubMenu(){
         $(productSubMenu).isDisplayed();
         $(productSubMenu).click();
@@ -136,9 +210,176 @@ public class SupportAppPage extends PageObject {
         $(discountMenu).click();
     }
 
+    public void pressSubscriptionMenu(){
+        $(subscriptionMenu).isDisplayed();
+        $(subscriptionMenu).click();
+    }
+    public void pressOnboardFileSubMenu() throws InterruptedException {
+        $(uploadOnboardFileSubMenu).isDisplayed();
+        $(uploadOnboardFileSubMenu).click();
+        Thread.sleep(2000);
+    }
+    public void uploadOnboardFileSubMenu() throws InterruptedException {
+        String filePath = "C:/Users/rofik/IdeaProjects/CCNRepoTest/cubeforall.test/ccn-web-automation-master/src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
+        $(uploadExcelOnboardFile).sendKeys(filePath);
+        Thread.sleep(1000);
+        $(populateOnboardFile).click();
+        Thread.sleep(2000);
+        $(submitToOnboard).click();
+        Thread.sleep(1000);
+    }
+    public void pressGroupMenu() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(groupMenu).isDisplayed()+" also enabled: "+$(groupMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(groupMenu));
+//        Thread.sleep(3000);
+    }
+    public void pressAirlinesSubMenu() throws InterruptedException {
+        Thread.sleep(500);
+        System.out.println("btnSubmit company is displaying: "+$(airlines).isDisplayed()+" also enabled: "+$(airlines).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(airlines));
+        Thread.sleep(1000);
+    }
+    public void viewAirlineChangeLog(String startDate, String endDate) throws InterruptedException{
+        Thread.sleep(500);
+        System.out.println("btnSubmit company is displaying: "+$(airlineChangeLogFunction).isDisplayed()+" also enabled: "+$(airlineChangeLogFunction).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(airlineChangeLogFunction));
+        Thread.sleep(500);
+        $(airlineChangeLogStartDate).clear();
+        $(airlineChangeLogStartDate).sendKeys(startDate);
+        $(airlineChangeLogStartDate).sendKeys(Keys.ENTER);
+        Thread.sleep(2500);
+        $(airlineChangeLogEndDate).clear();
+        $(airlineChangeLogEndDate).sendKeys(endDate);
+        $(airlineChangeLogEndDate).sendKeys(Keys.ENTER);
+        Thread.sleep(500);
+        System.out.println("btnSubmit company is displaying: "+$(getAirlineChangeLogSubmitButton).isDisplayed()+" also enabled: "+$(getAirlineChangeLogSubmitButton).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(getAirlineChangeLogSubmitButton));
+        Thread.sleep(2500);
+    }
+
+    public void selectSearchAirlineCompanyIdentityType() throws InterruptedException {
+        Thread.sleep(500);
+//        System.out.println("btnSubmit company is displaying: "+$(airlineSearchBy).isDisplayed()+" also enabled: "+$(airlineSearchBy).isEnabled());
+//        evaluateJavascript("arguments[0].click();", $(airlineSearchBy));
+//        Thread.sleep(2000);
+//        System.out.println("btnSubmit company is displaying: "+$(optionCarrierCode).isDisplayed()+" also enabled: "+$(optionCarrierCode).isEnabled());
+//        evaluateJavascript("arguments[0].click();", $(optionCarrierCode));
+//        Thread.sleep(500);
+        List<WebElement> lsthreedoteoptionmembermostleftsides = getDriver().findElements(airlineSearchBy);
+        System.out.println("search by display: "+lsthreedoteoptionmembermostleftsides.get(0).isDisplayed());
+        System.out.println("search by enabled: "+lsthreedoteoptionmembermostleftsides.get(0).isEnabled());
+        lsthreedoteoptionmembermostleftsides.get(0).click();
+        Thread.sleep(500);
+        List<WebElement> carrierCode = getDriver().findElements(optionCarrierCode);
+        System.out.println("option carrier code display: "+lsthreedoteoptionmembermostleftsides.get(0).isDisplayed());
+        System.out.println("option carrier code enabled: "+lsthreedoteoptionmembermostleftsides.get(0).isEnabled());
+        carrierCode.get(0).click();
+        Thread.sleep(500);
+    }
+
+    public void pressNotificationMonitoringMenu() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(notificationMonitoringMenu).isDisplayed()+" also enabled: "+$(notificationMonitoringMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(notificationMonitoringMenu));
+        Thread.sleep(3000);
+    }
+
+    public void pressUpdatePlanManager() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(updatePlanManager).isDisplayed()+" also enabled: "+$(updatePlanManager).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(updatePlanManager));
+        Thread.sleep(3000);
+    }
+
+    public void actionLog() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(actionLog).isDisplayed()+" also enabled: "+$(actionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(actionLog));
+    }
+
+    public void clickActionLogDropDown() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(actionLogDropDown).isDisplayed()+" also enabled: "+$(actionLogDropDown).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(actionLogDropDown));
+    }
+    public void selectUserToExportActionLog() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(selectUserToExportActionLog).isDisplayed()+" also enabled: "+$(selectUserToExportActionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(selectUserToExportActionLog));
+    }
+
+    public void selectStartEndDateActionLog(String startDate, String endDate) throws InterruptedException {
+        Thread.sleep(1000);
+        $(startDateActionLog).sendKeys(startDate);
+        Thread.sleep(1000);
+        $(endDateActionLog).sendKeys(endDate);
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(submitActionLog).isDisplayed()+" also enabled: "+$(submitActionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(submitActionLog));
+        Thread.sleep(7000);
+    }
+
+    public void verifyAirlineSearchValidationTextDisplayInformation() {
+        String ValidationText = $(airlineSearchValidationText).getText();
+        System.out.println(ValidationText);
+    }
+    public void verifyNotificationMonitoringMenuInfo() {
+        String currentTotalCountValue = $(currentTotalCount).getText();
+        String previousTotalCountValue = $(previousTotalCount).getText();
+        String currentTotalFailedProcessValue = $(currentTotalFailedProcess).getText();
+        String previousTotalFailedProcessValue = $(previousTotalFailedProcess).getText();
+        String currentCountAtValue = $(currentCountAt).getText();
+        String previousCountAtValue = $(previousCountAt).getText();
+        System.out.println("the Current Total Notification Monitoring Count is: " + currentTotalCountValue);
+        System.out.println("the Previous Total Notification Monitoring Count is: " + previousTotalCountValue);
+        System.out.println("the Current Total Failed Notification Monitoring Count is: " + currentTotalFailedProcessValue);
+        System.out.println("the Previous Total Failed Notification Monitoring Count is: " + previousTotalFailedProcessValue);
+        System.out.println(currentCountAtValue);
+        System.out.println(previousCountAtValue);
+    }
+    public boolean fiveAttributeIsDisplayed() {
+        return $(airlinesNameTitle).isDisplayed() && $(emailTitle).isDisplayed() && $(stationTitle).isDisplayed() && $(countryTitle).isDisplayed() && $(carrierCodeTitle).isDisplayed() && $(awbPrefixTitle).isDisplayed();
+    }
+
+    public boolean CompanyName(){
+        return $(companyName).isDisplayed();
+    }
+    public boolean currentPlanManager(){
+        return $(currentPlanManager).isDisplayed();
+    }
+    public boolean CompanyCubeID(){
+        return $(CompanyCubeID).isDisplayed();
+    }
+    public boolean CompanySystemCube(){
+        return $(CompanyCubeID).isDisplayed();
+    }
+    public boolean CompanyPIMA(){
+        return $(CompanyPIMA).isDisplayed();
+    }
+    public boolean GHA(){
+        return $(GHA).isDisplayed();
+    }
+    public boolean GHACode(){
+        return $(GHACode).isDisplayed();
+    }
+    public boolean UEN(){
+        return $(UEN).isDisplayed();
+    }
+    public boolean CompanyCountry(){
+        return $(CompanyCountry).isDisplayed();
+    }
+    public boolean CompanyMembers(){
+        return $(CompanyMembers).isDisplayed();
+    }
     public void createDiscountSubMenu(){
-        $(createDiscountSubMenu).isDisplayed();
-        $(createDiscountSubMenu).click();
+        System.out.println("btnSubmit company is displaying: "+$(createDiscountSubMenu).isDisplayed()+" also enabled: "+$(createDiscountSubMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(createDiscountSubMenu));
+    }
+    public void companyInfoSubMenu() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("company info submenu is displaying: "+$(companyInfoSubMenu).isDisplayed()+" also enabled: "+$(companyInfoSubMenu).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(companyInfoSubMenu));
     }
 
     public void createDiscount(String couponNameFill, String amount,

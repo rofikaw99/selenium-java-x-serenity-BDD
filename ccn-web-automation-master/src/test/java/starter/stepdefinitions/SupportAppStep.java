@@ -2,8 +2,11 @@ package starter.stepdefinitions;
 
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
+import org.junit.Assert;
+import org.openqa.selenium.By;
 import starter.pages.GoToUrl;
 import starter.pages.LoginPage;
 import starter.pages.SupportAppPage;
@@ -21,10 +24,11 @@ public class SupportAppStep {
     SupportAppPage supportAppPage;
 
     private int waitResponse = 3000;
+    private String input = "";
     @Given("go to support app web")
     public void goToSupportAppWeb() throws InterruptedException {
         goToUrl.goToAbsUrl(Constants.URL_SUPPORT_APP_WEB);
-        Thread.sleep(waitResponse);
+        Thread.sleep(3000);
     }
 
     @When("input user ID {string} and password {string} and submit button to continue login")
@@ -32,11 +36,93 @@ public class SupportAppStep {
         Thread.sleep(waitResponse);
         loginPage.inputSigninSupportApp(userID,password);
     }
-
+    @When("user input {string} and click search")
+    public void userInputAWBPrefixAndClickSearch(String AirlineSearchBy) throws Exception {
+        Thread.sleep(400);
+        loginPage.inputAwbPrefixToGetAirlinesCompanyIdentity(AirlineSearchBy);
+    }
+    @Then("update new plan manager in support app")
+    public void updateNewPlanManageriInSupportApp() throws Exception {
+        Thread.sleep(waitResponse);
+        loginPage.inputPlanManagerSupportApp();
+    }
     @When("user go to create discount menu")
     public void userGoToCreateDiscountMenu() {
         supportAppPage.pressDiscountMenu();
         supportAppPage.createDiscountSubMenu();
+    }
+
+    @When("user go to subscription menu")
+    public void userGoToSubscriptionMenu() {
+        supportAppPage.pressSubscriptionMenu();
+    }
+    @And("user go to upload file onboard submenu")
+    public void userGoToUploadFileOnboardSubMenu() throws InterruptedException {
+        supportAppPage.pressOnboardFileSubMenu();
+    }
+    @And("user select an excel file to upload file onboard in the support app then populate and submit")
+    public void userSelectAnExcelFileToUploadFileOnboardInTheSupportApp() throws InterruptedException {
+        supportAppPage.uploadOnboardFileSubMenu();
+    }
+    @When("user go to group menu")
+    public void userGoToGroupMenu() throws InterruptedException {
+        supportAppPage.pressGroupMenu();
+    }
+    @When("user go to airlines submenu")
+    public void userGoToAirlineSubMenu() throws InterruptedException {
+        supportAppPage.pressAirlinesSubMenu();
+    }
+    @When("user want to view change log by input filter date {string} and {string}")
+    public void userWantViewChangeLog(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.viewAirlineChangeLog(startDate, endDate);
+    }
+    @When("user select airline company identity by carrier code")
+    public void userSelectAirlineCompanyIdentityByCarrierCode() throws InterruptedException {
+        supportAppPage.selectSearchAirlineCompanyIdentityType();
+    }
+    @When("user go to notification menu")
+    public void userGoToNotificationMenu() throws InterruptedException {
+        supportAppPage.pressNotificationMonitoringMenu();
+    }
+
+    @When("user go to update plan manager menu")
+    public void userGoToUpdatePlanManagerMenu() throws InterruptedException {
+        supportAppPage.pressUpdatePlanManager();
+    }
+    @When("user go to action log")
+    public void userGoToActionLog() throws InterruptedException {
+        supportAppPage.actionLog();
+    }
+    @When("user click action log dropDown")
+    public void userClickActionLogDropDown() throws InterruptedException {
+        supportAppPage.clickActionLogDropDown();
+    }
+    @And("select user to export action log")
+    public void selectUserToExportActionLog() throws InterruptedException {
+        supportAppPage.selectUserToExportActionLog();
+    }
+    @And("input start date {string} and end date {string} to export action log")
+    public void selectStartEndActionLog(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.selectStartEndDateActionLog(startDate, endDate);
+    }
+
+    @Then("verify notification monitoring information")
+    public void verifyNotificationMonitoringInformation() throws InterruptedException {
+        supportAppPage.verifyNotificationMonitoringMenuInfo();
+    }
+    @Then("verify airline search validation text display")
+    public void verifyAirlineSearchValidationTextDisplay() throws InterruptedException {
+        supportAppPage.verifyAirlineSearchValidationTextDisplayInformation();
+    }
+    @Then("verify that Airlines Company Identity already cover Airlines Name, Carrier Code, Awb Prefix, Airlines Address, and System Cube Mail Address")
+    public void verifyAirlinesCompanyIdentityCover5Attribute() throws InterruptedException {
+        Thread.sleep(600);
+        Assert.assertTrue(supportAppPage.fiveAttributeIsDisplayed());
+    }
+
+    @When("user go to company info sub menu")
+    public void userGoToCompanyInfoSubMenu() throws InterruptedException {
+        supportAppPage.companyInfoSubMenu();
     }
 
     @And("input create discount support web app with {string} and {string} and {string} and {string} and {string} and {string} and {string} and {string}")
@@ -45,6 +131,57 @@ public class SupportAppStep {
                                                                           String country, String city) {
         supportAppPage.createDiscount(couponNameFill, amount, promoCodeFill,
                 companyPromoFill, customer, priceID, country, city);
+    }
+
+    @And("Input {string} the display more info")
+    public void InputCompanyInfo(String condition) throws Exception {
+        Thread.sleep(3000);
+        supportAppPage.pressTypeofSearch(condition);
+        switch (condition) {
+            case "Company System Address":
+                input = Constants.SYSTEM_COMPANY_ADDRESS;
+                break;
+            case "Company Pima Address":
+                input = Constants.COMPANY_PIMA;
+                break;
+            case "Member Email":
+                input = Constants.EMAIL_AUTHORIZED_HAVE_PAYMENT_REQUEST;
+                break;
+            case "Company Cube ID":
+                input = Constants.CUBE_ID;
+                break;
+            default:
+                input = Constants.EMAIL_WITHOUT_COMPANY;
+        }
+        Thread.sleep(2500);
+        supportAppPage.inputCompany(input);
+        supportAppPage.pressSCheckButton();
+        Thread.sleep(7000);
+        Assert.assertTrue(supportAppPage.CompanyName());
+        Assert.assertTrue(supportAppPage.CompanyCubeID());
+        Assert.assertTrue(supportAppPage.CompanySystemCube());
+        Assert.assertTrue(supportAppPage.CompanyPIMA());
+        Assert.assertTrue(supportAppPage.GHA());
+        Assert.assertTrue(supportAppPage.GHACode());
+        Assert.assertTrue(supportAppPage.UEN());
+        Assert.assertTrue(supportAppPage.CompanyCountry());
+        Assert.assertTrue(supportAppPage.CompanyMembers());
+    }
+
+    @And("input {string} to display update plan manager function")
+    public void InputPlanManagerMail(String planManagerMail) throws Exception {
+        Thread.sleep(2000);
+        switch (planManagerMail) {
+            case "HQ":
+                input = Constants.HQ;
+                break;
+            default:
+                input = Constants.EMAIL_WITHOUT_COMPANY;
+        }
+        supportAppPage.inputCompany(input);
+        supportAppPage.pressSCheckButton();
+        Thread.sleep(3000);
+        Assert.assertTrue(supportAppPage.currentPlanManager());
     }
 
     @When("user go to create plan support web app menu")

@@ -1576,3 +1576,71 @@ Feature: My Company
     Examples:
       | companyemail    | email                | password      | companyName  | companyRegis | typeOfCompany | countryB    | city      | name        | designation  | mobileNo     | iataNo  | cassNo | officeAddress       | postCode | mobileNoCompany | product        | cityB           | country |
       | ind@yopmail.com | indbanga@yopmail.com | CCNPegasus123 | Test         | IND          | GSA           | IN - INDIA  | BANGALORE | India Admin | Plan Manager | 081234567891 | 1234567 | 1234   | 101 Cantonment road |   089774 |      43646363464 | AWB Concierge | BLR - BANGALORE | India   |
+
+  @UpdatePMBeforLeaveFromCompany @UpdatePMBeforeLeaveorRemoveorChangeRole
+  Scenario Outline: Update Plan Manager first before leave from a company
+    Given go to main web
+    Given press sign in button
+    And input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    And go to my icon account menu "<iconaccountmenu>"
+    And click leave company
+    And click sure want to leave
+    Then verify update plan manager pop up available
+    And verify the pop up message when leave from the company
+
+    Examples:
+      | email                             |password | iconaccountmenu |
+      | headquarter_sq@yopmail.com        |P@55w0rd | My Company      |
+
+  @UpdatePMWhenChangeRole @UpdatePMBeforeLeaveorRemoveorChangeRole
+  Scenario Outline: Update Plan Manager first before change role
+    Given go to main web
+    Given press sign in button
+    And input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    And go to my icon account menu "<iconaccountmenu>"
+    And press member tab
+    And search email "<otheruseremail>" to be removed from the company
+    And press dot on the left side user
+    And click change role to user
+    Then verify update plan manager pop up available
+    And verify the pop up message when change the role for another PM to ordinary user
+
+    Examples:
+      | email                         |password | iconaccountmenu | toroles | otheruseremail            |
+      | headquarter_sq02@yopmail.com  |P@55w0rd | My Company      | user    | test_300323_a@yopmail.com |
+
+  @UpdatePMRemovePM @UpdatePMBeforeLeaveorRemoveorChangeRole
+  Scenario Outline: Update Plan Manager first before remove PM
+    Given go to main web
+    Given press sign in button
+    And input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    And go to my icon account menu "<iconaccountmenu>"
+    And press member tab
+    And search email "<otheruseremail>" to be removed from the company
+    And press dot on the left side user
+    And press remove PM or User
+    Then verify update plan manager pop up available
+    And verify the pop up message when try to remove another PM
+
+    Examples:
+      | email                         |password | iconaccountmenu | otheruseremail            |
+      | headquarter_sq02@yopmail.com  |P@55w0rd | My Company      | test_300323_a@yopmail.com |
+
+  @ValidatePimaToSyncWithChexs
+  Scenario Outline:  Validate the pima to sync with chexs
+    Given validate the pima "<pima>" to sync with chexs
+
+    Examples:
+      | pima                    |
+      | CSGAGT9166FF5124/SIN01  |
+
+  @companyGroupCheck
+  Scenario Outline:  verify company group information
+    Given verify company group "<cubeID>" information
+
+    Examples:
+      | cubeID                            |
+      | 01a93955724546398511f5dd0a271998  |

@@ -18,8 +18,12 @@ public class LoginPage extends PageObject {
 
     private int waitResponse=30000;
     private By formUserid = By.id("formUserId");
+    private By awbSearchToGetAirlinesCompanyIdentity = By.xpath("//input[@id='searchQuery']");
     private By formBasicPassword = By.id("formBasicPassword");
     private By btnSubmit = By.xpath( "//button[text()='Submit']");
+    private By awbSearchButton = By.xpath( "//button[text()='Search']");
+    private By selectNewPlanManager = By.xpath("(//button[@id='dropdown-basic-button'])[1]");
+    private By clickFirstNewPlanManager = By.xpath("(//a[contains(@class, 'dropdown-item')])[1]");
     private By btnAcceptCookie = By.xpath("(//button[normalize-space()='Accept'])[1]");
     private By bcCNmarket = By.xpath("//a[@class='btn-1' and contains(@href, '#interest')]");
     private By btnSignInOnTheHomepage = By.xpath("//button[@class='login-btn']");
@@ -72,6 +76,10 @@ public class LoginPage extends PageObject {
         $(formUserid).clear();
         $(formUserid).sendKeys(userId);
     }
+    public void inputAwbPrefixToGetAirlinesCompanyIdentityInSupportApp(String AirlineSearchBy){
+        $(awbSearchToGetAirlinesCompanyIdentity).clear();
+        $(awbSearchToGetAirlinesCompanyIdentity).sendKeys(AirlineSearchBy);
+    }
     public void inputBasicPassword(String password){
         $(formBasicPassword).clear();
         $(formBasicPassword).sendKeys(password);
@@ -87,8 +95,12 @@ public class LoginPage extends PageObject {
 
     public void selectTestBCPremiumMulticurrencySandbox(){
         getDriver().get("https://sandbox.cubeforall.com/products/forwarders-shippers/test-iata-tact-rate-premium-multicurrencysandbox/");
-
     }
+
+    public void selectTDSB(){
+        getDriver().get("https://sandbox.cubeforall.com/products/forwarders-shippers/tdsb/");
+    }
+
 
     public void selectplanbundleBCAWB(){
         getDriver().get("https://sandbox.cubeforall.com/products/forwarders-shippers/bundle-awb-bc/");
@@ -187,8 +199,21 @@ public class LoginPage extends PageObject {
         inputUserId(userID);
         inputBasicPassword(password);
         System.out.println("button submit is displaying : "+$(btnSubmit).isDisplayed()+" and enabled : "+$(btnSubmit).isEnabled());
-        Thread.sleep(waitResponse);
+        Thread.sleep(2000);
         $(btnSubmit).click();
+    }
+    public void inputAwbPrefixToGetAirlinesCompanyIdentity(String AirlineSearchBy) throws Exception {
+        inputAwbPrefixToGetAirlinesCompanyIdentityInSupportApp(AirlineSearchBy);
+        System.out.println("button submit is displaying : "+$(awbSearchToGetAirlinesCompanyIdentity).isDisplayed()+" and enabled : "+$(awbSearchToGetAirlinesCompanyIdentity).isEnabled());
+        Thread.sleep(500);
+        $(awbSearchButton).click();
+    }
+    public void inputPlanManagerSupportApp() throws Exception {
+        System.out.println("button submit is displaying : "+$(selectNewPlanManager).isDisplayed()+" and enabled : "+$(selectNewPlanManager).isEnabled());
+        Thread.sleep(2000);
+        $(selectNewPlanManager).click();
+        Thread.sleep(1000);
+        $(clickFirstNewPlanManager).click();
     }
 
     public void validateInMainWeb(){

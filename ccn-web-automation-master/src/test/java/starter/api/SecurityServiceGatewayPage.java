@@ -26,7 +26,7 @@ public class SecurityServiceGatewayPage {
         Response response = given()
                 .contentType("application/json")
                 .when()
-                .post("/5c15c737a0544c08b29d7a9e77898c5e/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/GeneralSubscription/1/CheckStatus")
+                .post("9af033381cea4417af7b0821c82101e5/service/31bbd797-9265-4ea5-8477-ca783b38bd07/GeneralSubscription/1/CheckStatus")
                 .then()
                 .extract().response();
 
@@ -47,7 +47,7 @@ public class SecurityServiceGatewayPage {
         Response response = given()
                 .contentType("application/json")
                 .when()
-                .post("/5c15c737a0544c08b29d7a9e77898c5e/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/GeneralSubscription/1/CheckStatus")
+                .post("9af033381cea4417af7b0821c82101e5/service/31bbd797-9265-4ea5-8477-ca783b38bd07/GeneralSubscription/1/CheckStatus")
                 .then()
                 .extract().response();
 
@@ -69,7 +69,7 @@ public class SecurityServiceGatewayPage {
                 .header("x-api-key", "d367c646-2e75-4029-b858-14111160eaa8")
                 .header("Host", "172.16.200.161:8585")
                 .when()
-                .post("/5c15c737a0544c08b29d7a9e77898c5e/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/GeneralSubscription/1/CheckStatus")
+                .post("9af033381cea4417af7b0821c82101e5/service/31bbd797-9265-4ea5-8477-ca783b38bd07/GeneralSubscription/1/CheckStatus")
                 .then()
                 .extract().response();
 
@@ -90,7 +90,7 @@ public class SecurityServiceGatewayPage {
                 .contentType("application/json")
                 .header("x-api-key", "d367c646-2e75-4029-b858-14111160eaa8")
                 .when()
-                .post("/5c15c737a0544c08b29d7a9e77898c5e/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/GeneralSubscription/1/CheckStatus")
+                .post("9af033381cea4417af7b0821c82101e5/service/31bbd797-9265-4ea5-8477-ca783b38bd07/GeneralSubscription/1/CheckStatus")
                 .then()
                 .extract().response();
 
@@ -101,6 +101,26 @@ public class SecurityServiceGatewayPage {
         // Print response for debugging
         System.out.println("Response Code: " + statusCode);
         System.out.println("Response Body: " + responseBody);
+    }
+
+    public void validatePimaChexs(String pima) {
+
+        // API endpoint
+        String baseUrl = "http://chexsconfigurationapi.ppd.ccn/CHEXS/ValidatePima";
+        String bearerToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNVQkVGT1JBTEwiLCJuYW1laWQiOiJDVUJFRk9SQUxMIiwibmJmIjoxNzI3NzYzOTM3LCJleHAiOjE3Mjc3ODU1MzcsImlhdCI6MTcyNzc2MzkzNywiaXNzIjoiQ0NOIn0.N1MbmsmCdSqMXMlhfEAAQSijMc9jcCzs5vhwIdY8qPk";
+
+        // Sending PUT request
+        Response response = RestAssured.given()
+                .baseUri(baseUrl)
+                .queryParam("pimaAddress", pima)
+                .header("Authorization", "Bearer " + bearerToken)
+                .when()
+                .get()
+                .then()
+                .statusCode(200) // Check for a successful response
+                .extract().response();
+        // Print response for debugging purposes
+        System.out.println("Response: " + response.asString());
     }
 
     public void assertFailed401(){

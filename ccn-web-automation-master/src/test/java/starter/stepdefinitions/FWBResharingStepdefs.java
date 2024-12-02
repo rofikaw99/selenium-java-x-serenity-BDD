@@ -33,6 +33,26 @@ public class FWBResharingStepdefs {
         fwbResharingPage.createDocForShareVia(contentType, contentName);
     }
 
+    @Given("validate the pima {string} to sync with chexs")
+    public void validateThePimaSyncwithChexs(String pima) throws Exception {
+        fwbResharingPage.validatePima(pima);
+    }
+
+    @Given("verify company group {string} information")
+    public void verifyCompanyGroupInformation(String cubeID) throws Exception {
+        fwbResharingPage.companyGroupInformation(cubeID);
+    }
+
+    @Given("create awbNo 1000 times")
+    public void create_awb_1000() throws Exception {
+        fwbResharingPage.awb1000times();
+    }
+
+    @Given("create {string} SS doc with {string} for share via")
+    public void create_SSdoc_for_share_via(String contentType, String contentName) throws Exception {
+        fwbResharingPage.createDocShipmentStatusForShareVia(contentType, contentName);
+    }
+
     @Given("Check that notification already share to the member within company")
     public void Check_that_notification_already_share_to_the_member_within_company() throws Exception {
         fwbResharingPage.testGetDocument();

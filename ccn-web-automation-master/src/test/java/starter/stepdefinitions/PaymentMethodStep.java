@@ -133,6 +133,8 @@ public class PaymentMethodStep {
                 break;
             case "Card User that Leave Company" : email = Constants.EMAIL_AU_DELETED;
                 break;
+            case "Epouch Bundle User" : email = Constants.EPOUCH_BUNDLE_USER;
+                break;
             default: email = Constants.EMAIL_WITHOUT_COMPANY;
         }
 
@@ -146,6 +148,26 @@ public class PaymentMethodStep {
         Thread.sleep(21000);
         loginPage.validateInMainWeb();
         loginPage.clickCookies();
+    }
+
+    @When("press dot on the left side user in the portal dashboard page")
+    public void pressDotOnTheLeftSideUserPortal() throws InterruptedException {
+        Thread.sleep(3000);
+        companyPage.pressthreedotsInThePortalDashboard();
+    }
+
+    @When("press to generate epouch")
+    public void pressGeneratePouch() throws InterruptedException {
+        Thread.sleep(1500);
+        companyPage.pressGeneratePouch();
+        Thread.sleep(2500);
+    }
+
+    @When("press to Open with Electronic Airwaybill Print")
+    public void pressOpenwithElectronicAirwaybillPrint() throws InterruptedException {
+        Thread.sleep(1500);
+        companyPage.pressOpenwithElectronicAirwaybillPrint();
+        Thread.sleep(2500);
     }
 
     @Then("can't setup commercial card")

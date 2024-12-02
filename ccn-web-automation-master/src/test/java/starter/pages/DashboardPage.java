@@ -149,7 +149,8 @@ public class DashboardPage extends PageObject {
         Assert.assertTrue(condition);
     }
 
-    public void checkedAwbTrack(){
+    public void checkedAwbTrack() throws InterruptedException {
+        Thread.sleep(1500);
         ListOfWebElementFacades checkedAwb = $$(trackAwbChecklistSvg);
         Assert.assertTrue(awbTrackChecked(checkedAwb.get(index)));
     }

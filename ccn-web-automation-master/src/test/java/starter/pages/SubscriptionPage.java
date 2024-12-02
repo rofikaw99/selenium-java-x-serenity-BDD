@@ -311,6 +311,15 @@ public class SubscriptionPage extends PageObject {
         chckBoxComplimentarySubscribee.click();
     }
 
+    public void clickchckBoxTDSBplan() throws Exception {
+        Thread.sleep(waitResponse);
+        WebElement chckBoxComplimentarySubscribee = shadowDomcpsubscribe()
+                .findElement(By.cssSelector("input#cube-subscribe-btn-checkbox-65a8bbea6da7bbb4522fdd20"));
+        System.out.println("clickComplimentaryBtnSubsribe is display: " + chckBoxComplimentarySubscribee.isDisplayed());
+        chckBoxComplimentarySubscribee.isDisplayed();
+        chckBoxComplimentarySubscribee.click();
+    }
+
     public void clickchckBoxawbconciergepremiummulticurrencysandbox() throws Exception {
         Thread.sleep(waitResponse);
         WebElement chckBoxComplimentarySubscribee = shadowDomcpsubscribe()
@@ -375,6 +384,16 @@ public class SubscriptionPage extends PageObject {
         Thread.sleep(longwaitResponse);
         String currentUrl = getDriver().getCurrentUrl();
         System.out.println(currentUrl);
+        Thread.sleep(2000);
+    }
+
+    public void clickBtnSubscribeTDSBplan() throws Exception {
+        Thread.sleep(waitResponse);
+        WebElement btnComplimentarySubscribee = shadowDomcpsubscribe()
+                .findElement(By.cssSelector("button#cube-subscribe-btn-65a8bbea6da7bbb4522fdd20"));
+        System.out.println("clickComplimentaryBtnSubsribe is display: " + btnComplimentarySubscribee.isDisplayed());
+        btnComplimentarySubscribee.isDisplayed();
+        btnComplimentarySubscribee.click();
         Thread.sleep(2000);
     }
 
@@ -694,6 +713,16 @@ public class SubscriptionPage extends PageObject {
 
     }
 
+    public void inputtdsb() throws Exception {
+        Thread.sleep(waitResponse);
+        WebElement btnComplimentarySubscribee = shadowDomcpsubscribe()
+                .findElement(By.cssSelector("input#cube-subscribe-btn-input-65a8bbea6da7bbb4522fdd20"));
+        System.out.println("clickComplimentaryBtnSubsribe is display: " + btnComplimentarySubscribee.isDisplayed());
+        btnComplimentarySubscribee.isDisplayed();
+        btnComplimentarySubscribee.sendKeys("5");
+
+    }
+
     //subscribe booking concierge
     private void subscribebookingconcierge() throws Exception {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
@@ -701,6 +730,14 @@ public class SubscriptionPage extends PageObject {
         clickchckBoxbookingconciergeplan();
         clickBtnSubscribebookingconciergeplan();
 //			inputCompleteFillSubscriberPayment();
+    }
+
+    private void subscribetdsb() throws Exception {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("window.scrollBy(0,900)", "");
+        clickchckBoxTDSBplan();
+        inputtdsb();
+        clickBtnSubscribeTDSBplan();
     }
 
     public void clickchckBoxbookingconciergeplan() throws Exception {
@@ -1028,8 +1065,8 @@ public class SubscriptionPage extends PageObject {
             case "Booking Concierge":
                 subscribebookingconcierge();
                 break;
-            case "Test PnCLL ( paid non company level licensed )":
-
+            case "TDSB":
+                subscribetdsb();
                 break;
             case "Cargo Insurance":
 

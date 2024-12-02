@@ -76,9 +76,15 @@ public class Constants {
     public static String EMAIL_CARD_OWNER_DELETED = "co-sg-001@yopmail.com";
 //    public static String EMAIL_CARD_OWNER_DELETED = "co-my-001@yopmail.com";
     public static String EMAIL_AU_DELETED = "co-sg-004@yopmail.com";
-    public static String PUBLIC_SERVICE_GATEWAY = "https://cubedev.ccnexchange.com";
-    public static String PRIVATE_SERVICE_GATEWAY = "http://cube.dev.ccn";
+    public static String EPOUCH_BUNDLE_USER = "koreacity@yopmail.com";
+    public static String PUBLIC_SERVICE_GATEWAY = "https://cubesandbox.ccnexchange.com";
+    public static String PRIVATE_SERVICE_GATEWAY = "http://cube.sandbox.ccn";
     public static String DELEGATED_COMPANY = "SG Auto QA";
+    public static String SYSTEM_COMPANY_ADDRESS = "system.csgagt99kiex637nu459et1po_aae@ccnexchange.com";
+    public static String COMPANY_PIMA = "csgagt99KIEX637nU459et1Po/AAE";
+    public static String CUBE_ID = "559cdc3d065b434baa0fd5f6e3ab8f76";
+
+    public static String HQ = "headquarter_sq@yopmail.com";
 
 
     //CARD NUMBER FOR PAYMENT

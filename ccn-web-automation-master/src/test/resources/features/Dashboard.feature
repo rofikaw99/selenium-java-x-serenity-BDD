@@ -1,3 +1,4 @@
+@dashboard
 Feature: Dashboard
 
   @success-create-document
@@ -18,3 +19,22 @@ Feature: Dashboard
     Given "Card User" login to the web
     When adding awb number to be tracked
     Then success add awb number to watchlist
+
+#  @remove-from-watchlist
+#  Scenario: Add to Watchlist
+#    Given "Card User" login to the web
+#    When adding awb number to be tracked
+#    Then success add awb number to watchlist
+
+  @generate-epouch
+  Scenario: Generate e pouch document
+    Given "Epouch Bundle User" login to the web
+    When press dot on the left side user in the portal dashboard page
+    Then press to generate epouch
+
+  @open-electronic-airwaybill
+  Scenario: Open with Electronic Airwaybill Print
+    Given "Epouch Bundle User" login to the web
+    When press dot on the left side user in the portal dashboard page
+    Then press to Open with Electronic Airwaybill Print
+

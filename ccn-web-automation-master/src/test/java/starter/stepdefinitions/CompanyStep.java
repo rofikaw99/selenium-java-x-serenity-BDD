@@ -108,6 +108,36 @@ public class CompanyStep {
         companyPage.pressLeaveCompany();
     }
 
+    @And("click sure want to leave")
+    public void clickSureWantToLeave() {
+        companyPage.pressSureWantToLeaveCompany();
+    }
+
+    @And("click change role to user")
+    public void clickChangeRoleToUser() throws InterruptedException {
+        companyPage.pressChangeRoleToUser();
+    }
+
+    @Then("verify update plan manager pop up available")
+    public void verifyUpdatePlanManagerPopUpAvailable(){
+        companyPage.verifyUpdatePMPopUpAvailable();
+    }
+
+    @Then("verify the pop up message when change the role for another PM to ordinary user")
+    public void verify_the_pop_up_message_when_change_the_role_for_another_PM_to_ordinary_user(){
+        companyPage.verifyChangeRoleMessage();
+    }
+
+    @Then("verify the pop up message when leave from the company")
+    public void verify_the_pop_up_message_when_leave_from_the_company(){
+        companyPage.verifyLeaveFromTheCompanyMessage();
+    }
+
+    @Then("verify the pop up message when try to remove another PM")
+    public void verify_the_pop_up_message_when_remove_pm(){
+        companyPage.verifyRemoveAnotherPMmessage();
+    }
+
     @Then("pop up that said the last admin cant leave company")
     public void popUpThatSaidTheLastAdminCantLeaveCompany() {
         //TODO Fill
@@ -115,14 +145,21 @@ public class CompanyStep {
 
     @And("press member tab")
     public void pressMemberTab() throws Exception {
-        Thread.sleep(waitResponse);
+        Thread.sleep(5000);
         companyPage.pressMembersOnMyCompany();
     }
 
     @When("press dot on the left side user")
     public void pressDotOnTheLeftSideUser() throws InterruptedException {
-        Thread.sleep(waitResponse);
+        Thread.sleep(6000);
         companyPage.pressthreedotsFromCompanyByAdmin();
+    }
+
+    @And("press remove PM or User")
+    public void pressRemovePm() throws InterruptedException {
+        Thread.sleep(waitResponse);
+        companyPage.pressRemovePM();
+        companyPage.pressRemovePMVerification();
     }
 
     @And("dot cant be click")
@@ -146,6 +183,12 @@ public class CompanyStep {
     public void pressChangeRolesButtonToChangeRoleTo(String role) throws Exception {
         Thread.sleep(waitResponse);
         companyPage.changeRolePerUserOnMemberByAdmin(role);
+    }
+
+    @And("press custom change roles button to change role to {string}")
+    public void pressCustomChangeRolesButtonToChangeRoleTo(String role) throws Exception {
+        Thread.sleep(waitResponse);
+        companyPage.customChangeRolePerUserOnMemberByAdmin(role);
     }
 
     @And("able to change role other user")
@@ -228,7 +271,7 @@ public class CompanyStep {
     public void searchEmailToBeRemovedFromTheCompany(String email) throws Exception {
         Thread.sleep(waitResponse);
         companyPage.inputSearchUsersOnMembers(email);
-        companyPage.pressRemoveUserFromCompanyByAdmin();
+//        companyPage.pressRemoveUserFromCompanyByAdmin();
         //		companyPage.pressRemovePerUserOnMemberByAdmin();
     }
 
