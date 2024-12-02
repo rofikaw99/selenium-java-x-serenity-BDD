@@ -353,11 +353,12 @@ public class PaymentOverviewPage extends PageObject {
             String baseURL = "http://172.16.200.223:6969";
 
             // API endpoint
-            String endpoint = "/5a3d543b1dcc447ca293ee63ef120a8f/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest";
+            String endpoint = "/a66cb16f601b4c9097ab5874b82c3e2f/service/34e0813e-2c7d-4531-9c8b-14e4bdd1ad70/Payment/1/CreatePaymentRequest";
 
             // Set request headers
             Map<String, String> headers = new HashMap<>();
-            headers.put("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e");
+//            headers.put("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e");
+            headers.put("source-service-id", "251e8baa-c4fc-455a-9d0c-7ad18d627ce9");
             headers.put("Authorization", "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkwxS2ZLRklfam5YYndXYzIyeFp4dzFzVUhIMCJ9.eyJhdWQiOiJhYTkyMDA1YS02MzcwLTQ4MWItYWExNy1iYmNmNzhjMDgzYTciLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzL3YyLjAiLCJpYXQiOjE3MTc0ODg1MzYsIm5iZiI6MTcxNzQ4ODUzNiwiZXhwIjoxNzE3NDkyNDM2LCJhaW8iOiJFMk5nWU1pVXZyNWltdmRUc1VmZkZxVnN2WDhsWjNKcTZGd2hoOFc3dW94NExLdkRVeXdBIiwiYXpwIjoiMmYzNWRkNTUtOWVlMS00YTA3LWE4YWYtNzhlMjEzZTFkNjNiIiwiYXpwYWNyIjoiMSIsIm9pZCI6Ijc3NDYwNzQyLTllYTAtNDNiNS1iMTNhLTY0NzJjNWQxYWMxNyIsInJoIjoiMC5BVDhBbWloTDRqc3kzVXFIWmNjYnE0c1lvMW9Ba3Fwd1l4dElxaGU3ejNqQWc2Y19BQUEuIiwic3ViIjoiNzc0NjA3NDItOWVhMC00M2I1LWIxM2EtNjQ3MmM1ZDFhYzE3IiwidGlkIjoiZTI0YjI4OWEtMzIzYi00YWRkLTg3NjUtYzcxYmFiOGIxOGEzIiwidXRpIjoiWTN6TkVMelBjVTJ1YWNzVnd0Z0VBQSIsInZlciI6IjIuMCJ9.NStfu25W7aePHT95zuNEFnHAmahqhSWtyjhE8vMBLXF-VkodAojk9xRjgesh18ionlemz94d-h0rG5Z-Xlb3cz5OSTabauOLQpIXkwPcBPdly0xxUQVBHhEyYT-ne1bszRWcLy-vRD3RIwQ6SRkIIr8AUqhNC0i6pffBtYseMLsP6QEQqAb1z0nE0zu-pWUiGKpvXJjKk8iu1MTscn9DQjH09KZVoaboeAITSn72TkrYUAhT-wu3HzJI7lqY6TFWoZ7XpmX_DzWdH55-TtvBUCykiA3NI32MmUYfz08gLthljqRUgrzY9NjdEMtrVB4kRP8u3ZSqAhDHEchvjwvoow");
             headers.put("Content-Type", "application/json");
 
@@ -401,7 +402,7 @@ public class PaymentOverviewPage extends PageObject {
             String url = baseURL + endpoint;
 
             // Send POST request using REST Assured
-            Response response = RestAssured.given()
+            Response response = given()
                     .headers("source-service-id", "353ca99c-3965-4b4d-92f6-1128d407255e",
                             "Authorization", accessToken,
                             "Content-Type", ContentType.JSON.toString())

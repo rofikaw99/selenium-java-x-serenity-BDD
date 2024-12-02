@@ -27,8 +27,8 @@ public class TransformXfwbAPI {
     public void setupApi(String typeUrl) throws IOException {
         accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given()
-                .headers("Authorization", "Bearer " + accessToken,
-                "Content-Type", "application/xml");
+//                .headers("Authorization", "Bearer " + accessToken,
+                .headers("Content-Type", "application/xml");
 
         if (typeUrl.equals("internal")){
             url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/transformXFWB3";
