@@ -57,7 +57,7 @@ public class UpdateLOStep {
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.updatePieceCountForRate(100, idTarget, actualData, pieceCountValue);
+        updateLoAPI.updatePieceCountForRate(revision, idTarget, actualData, pieceCountValue);
     }
 
     @When("user remove piece of count")
@@ -71,7 +71,7 @@ public class UpdateLOStep {
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.removePieceCountForRate(100, idTarget, actualData, pieceCount);
+        updateLoAPI.removePieceCountForRate(revision, idTarget, actualData, pieceCount);
     }
 
     @When("user add piece of count")
@@ -83,7 +83,7 @@ public class UpdateLOStep {
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.addPieceCountForRate(100, idTarget, actualData);
+        updateLoAPI.addPieceCountForRate(revision, idTarget, actualData);
     }
 
     @And("the piece of count deleted in the latest get lo")
@@ -350,10 +350,10 @@ public class UpdateLOStep {
     public void userUpdateShipperNameAddress() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
         idTarget = LOResponse.shipment_id(responseJson);
-        String idPartyDetails = LOResponse.IP_partyDetails_id(responseJson, "SHP");
-        String partyDetailsName = LOResponse.IP_partyDetails_name(responseJson, "SHP");
-        String idStreetAddressLine = LOResponse.IP_PD_BAT_address_id(responseJson, "SHP");
-        String streetAddressLine = LOResponse.IP_PD_BAT_address_streetAddressLines(responseJson, "SHP");
+        String idPartyDetails = LOResponse.s_IP_partyDetails_id(responseJson, "SHP");
+        String partyDetailsName = LOResponse.s_IP_partyDetails_name(responseJson, "SHP");
+        String idStreetAddressLine = LOResponse.s_IP_PD_BAT_address_id(responseJson, "SHP");
+        String streetAddressLine = LOResponse.s_IP_PD_BAT_address_streetAddressLines(responseJson, "SHP");
 
         actualData.put("idPartyDetails", idPartyDetails);
         actualData.put("partyDetailsName", partyDetailsName);
@@ -377,10 +377,10 @@ public class UpdateLOStep {
     public void userUpdateConsigneeNameAddress() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
         idTarget = LOResponse.shipment_id(responseJson);
-        String idPartyDetails = LOResponse.IP_partyDetails_id(responseJson, "CNE");
-        String partyDetailsName = LOResponse.IP_partyDetails_name(responseJson, "CNE");
-        String idStreetAddressLine = LOResponse.IP_PD_BAT_address_id(responseJson, "CNE");
-        String streetAddressLine = LOResponse.IP_PD_BAT_address_streetAddressLines(responseJson, "CNE");
+        String idPartyDetails = LOResponse.s_IP_partyDetails_id(responseJson, "CNE");
+        String partyDetailsName = LOResponse.s_IP_partyDetails_name(responseJson, "CNE");
+        String idStreetAddressLine = LOResponse.s_IP_PD_BAT_address_id(responseJson, "CNE");
+        String streetAddressLine = LOResponse.s_IP_PD_BAT_address_streetAddressLines(responseJson, "CNE");
 
         actualData.put("idPartyDetails", idPartyDetails);
         actualData.put("partyDetailsName", partyDetailsName);
@@ -393,7 +393,8 @@ public class UpdateLOStep {
     }
 
     @And("the consignee name, address value changes in the latest get lo")
-    public void theConsigneeNameAddressValueChangesInTheLatestGetLo() throws IOException {
+    public void theConsigneeNameAddressValueChangesInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyPartyName(jsonResponse, "CNE");
@@ -403,7 +404,7 @@ public class UpdateLOStep {
     @When("user update OCDC charges, MYC, SCC, RAC, etc")
     public void userUpdateOCDCChargesMYCSCCRACEtc() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.otherCharges_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
         String idOtherChargeCode = LOResponse.otherCharges_otherChargeCode_id(responseJson);
         String otherChargeCode = LOResponse.otherCharges_otherChargeCode_code(responseJson);
 
@@ -673,10 +674,12 @@ public class UpdateLOStep {
     @When("user delete OCDC charges, MYC, SCC, RAC, etc")
     public void userDeleteOCDCChargesMYCSCCRACEtc() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.otherCharges_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
+        String idOtherCharge = LOResponse.otherCharges_id(responseJson);
         String idOtherChargeCode = LOResponse.otherCharges_otherChargeCode_id(responseJson);
 
         actualData.put("idOtherChargeCode", idOtherChargeCode);
+        actualData.put("idOtherCharge", idOtherCharge);
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
@@ -694,17 +697,19 @@ public class UpdateLOStep {
     @When("user add OCDC charges, MYC, SCC, RAC, etc")
     public void userAddOCDCChargesMYCSCCRACEtc() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
-        idTarget = LOResponse.otherCharges_id(responseJson);
+        idTarget = LOResponse.id(responseJson);
+
+        actualData.put("idOtherCharge", LOResponse.otherCharges_id(responseJson));
 
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
-        updateLoAPI.addOtherChargeCode(revision, idTarget);
+        updateLoAPI.addOtherChargeCode(revision, idTarget, actualData);
     }
 
     @And("the OCDC charges, MYC, SCC, RAC, etc value added in the latest get lo")
     public void theOCDCChargesMYCSCCRACEtcValueAddedInTheLatestGetLo() throws IOException, InterruptedException {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyOtherChargesAdded(jsonResponse);
@@ -830,10 +835,10 @@ public class UpdateLOStep {
     public void userUpdateSLACCount() throws IOException {
         JSONObject responseJson = new JSONObject(response.asString());
         idTarget = LOResponse.id(responseJson);
-        String slacForRate = LOResponse.waybillLineItems_slacForRate(responseJson);
+        Object slacForRate = LOResponse.waybillLineItems_slacForRate(responseJson);
 
         actualData.put("idSlacForRate", LOResponse.waybillLineItems_id(responseJson));
-        actualData.put("slacForRate", slacForRate);
+        actualData.put("slacForRate", String.valueOf(slacForRate));
         //get the id
         response = getLoAPI.getLORequestFullResponse(idTarget);
         revision = updateLoAPI.getRevision(response);
@@ -846,5 +851,168 @@ public class UpdateLOStep {
         response = getLoAPI.getLORequestFullResponse(id);
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifySlacForRateUpdated(jsonResponse);
+    }
+
+    @When("user update gross weight for rate in house LO")
+    public void userUpdateGrossWeightForRateInHouseLO() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        float numericalValue = LOResponse.WLI_grossWeightForRate_numericalValue(responseJson);
+        String idNumericalValue = LOResponse.WLI_grossWeightForRate_id(responseJson);
+        String unitCode = LOResponse.WLI_GWFR_unit_code(responseJson);
+        String idUnitCode = LOResponse.WLI_GWFR_unit_id(responseJson);
+
+        actualData.put("idNumericalValue", idNumericalValue);
+        actualData.put("idUnitCode", idUnitCode);
+        actualData.put("unitCode", unitCode);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.updateGrossWeightForRate(revision, idTarget, actualData, numericalValue);
+    }
+
+    @When("user delete SLAC count")
+    public void userDeleteSLACCount() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.id(responseJson);
+        Object slacForRate = LOResponse.waybillLineItems_slacForRate(responseJson);
+
+        actualData.put("idSlacForRate", LOResponse.waybillLineItems_id(responseJson));
+        actualData.put("slacForRate", String.valueOf(slacForRate));
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteSlacForRate(revision, idTarget, actualData);
+    }
+
+    @And("the SLAC count value deleted in the latest get lo")
+    public void theSLACCountValueDeletedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifySlacForRateDeleted(jsonResponse);
+    }
+
+    @When("user add SLAC count")
+    public void userAddSLACCount() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.id(responseJson);
+
+        actualData.put("idWaybillLine", LOResponse.waybillLineItems_id(responseJson));
+
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addSlacForRate(revision, idTarget, actualData);
+    }
+
+    @And("the SLAC count value added in the latest get lo")
+    public void theSLACCountValueAddedInTheLatestGetLo() throws IOException {
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifySlacForRateAdded(jsonResponse);
+    }
+
+    @When("user delete shipper name, address")
+    public void userDeleteShipperNameAddress() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        String idPartyDetails = LOResponse.s_IP_partyDetails_id(responseJson, "SHP");
+        String partyDetailsName = LOResponse.s_IP_partyDetails_name(responseJson, "SHP");
+        String idStreetAddressLine = LOResponse.s_IP_PD_BAT_address_id(responseJson, "SHP");
+        String streetAddressLine = LOResponse.s_IP_PD_BAT_address_streetAddressLines(responseJson, "SHP");
+
+        actualData.put("idPartyDetails", idPartyDetails);
+        actualData.put("partyDetailsName", partyDetailsName);
+        actualData.put("idStreetAddressLine", idStreetAddressLine);
+        actualData.put("streetAddressLine", streetAddressLine);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteShipperNameAddress(revision, idTarget, actualData);
+    }
+
+    @And("the shipper name, address value deleted in the latest get lo")
+    public void theShipperNameAddressValueDeletedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyPartyNameDeleted(jsonResponse, "SHP");
+        updateLoAPI.verifyPartyStreetDeleted(jsonResponse, "SHP");
+    }
+
+    @When("user add shipper name, address")
+    public void userAddShipperNameAddress() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        String idPartyDetails = LOResponse.s_IP_partyDetails_id(responseJson, "SHP");
+        String idStreetAddressLine = LOResponse.s_IP_PD_BAT_address_id(responseJson, "SHP");
+
+        actualData.put("idPartyDetails", idPartyDetails);
+        actualData.put("idStreetAddressLine", idStreetAddressLine);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addShipperNameAddress(revision, idTarget, actualData);
+    }
+
+    @And("the shipper name, address value added in the latest get lo")
+    public void theShipperNameAddressValueAddedInTheLatestGetLo() throws InterruptedException, IOException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyPartyNameAdded(jsonResponse, "SHP");
+        updateLoAPI.verifyPartyAddressAdded(jsonResponse, "SHP");
+    }
+
+    @When("user delete consignee name, address")
+    public void userDeleteConsigneeNameAddress() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        String idPartyDetails = LOResponse.s_IP_partyDetails_id(responseJson, "CNE");
+        String partyDetailsName = LOResponse.s_IP_partyDetails_name(responseJson, "CNE");
+        String idStreetAddressLine = LOResponse.s_IP_PD_BAT_address_id(responseJson, "CNE");
+        String streetAddressLine = LOResponse.s_IP_PD_BAT_address_streetAddressLines(responseJson, "CNE");
+
+        actualData.put("idPartyDetails", idPartyDetails);
+        actualData.put("partyDetailsName", partyDetailsName);
+        actualData.put("idStreetAddressLine", idStreetAddressLine);
+        actualData.put("streetAddressLine", streetAddressLine);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.deleteConsigneeNameAddress(revision, idTarget, actualData);
+    }
+
+    @And("the consignee name, address value deleted in the latest get lo")
+    public void theConsigneeNameAddressValueDeletedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyPartyNameDeleted(jsonResponse, "CNE");
+        updateLoAPI.verifyPartyStreetDeleted(jsonResponse, "CNE");
+    }
+
+    @When("user add consignee name, address")
+    public void userAddConsigneeNameAddress() throws IOException {
+        JSONObject responseJson = new JSONObject(response.asString());
+        idTarget = LOResponse.shipment_id(responseJson);
+        String idPartyDetails = LOResponse.s_IP_partyDetails_id(responseJson, "CNE");
+        String idStreetAddressLine = LOResponse.s_IP_PD_BAT_address_id(responseJson, "CNE");
+
+        actualData.put("idPartyDetails", idPartyDetails);
+        actualData.put("idStreetAddressLine", idStreetAddressLine);
+        //get the id
+        response = getLoAPI.getLORequestFullResponse(idTarget);
+        revision = updateLoAPI.getRevision(response);
+        updateLoAPI.addConsigneeNameAddress(revision, idTarget, actualData);
+    }
+
+    @And("the consignee name, address value added in the latest get lo")
+    public void theConsigneeNameAddressValueAddedInTheLatestGetLo() throws IOException, InterruptedException {
+        Thread.sleep(2000);
+        response = getLoAPI.getLORequestFullResponse(id);
+        JSONObject jsonResponse = new JSONObject(response.asString());
+        updateLoAPI.verifyPartyNameAdded(jsonResponse, "CNE");
+        updateLoAPI.verifyPartyAddressAdded(jsonResponse, "CNE");
     }
 }

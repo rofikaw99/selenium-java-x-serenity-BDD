@@ -1,0 +1,47 @@
+{
+  "@context": {
+    "cargo": "https://onerecord.iata.org/ns/cargo#",
+    "api": "https://onerecord.iata.org/ns/api#"
+  },
+  "@type": "api:Change",
+  "api:hasLogisticsObject": {
+    "@id": "https://onerecorddev.cubeforall.com/a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/673175699b8974d144c61145"
+  },
+  "api:hasDescription": "Add Consignee Name and Address",
+  "api:hasOperation": [
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/673175699b8974d144c61154",
+      "api:p": "https://onerecord.iata.org/ns/cargo#name",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "LOUIS VUITTON THAILAND S.A. HEAD OF"
+        }
+      ]
+    },
+    {
+      "@type": "api:Operation",
+      "api:op": {
+        "@id": "api:ADD"
+      },
+      "api:s": "internal:a0c7324c2d9644dd8b0986d9791c1e88/logistics-objects/673175699b8974d144c61159",
+      "api:p": "https://onerecord.iata.org/ns/cargo#streetAddressLines",
+      "api:o": [
+        {
+          "@type": "api:OperationObject",
+          "api:hasDatatype": "http://www.w3.org/2001/XMLSchema#string",
+          "api:hasValue": "SUKHUMVIT ROAD 689 UPDATED"
+        }
+      ]
+    }
+  ],
+  "api:hasRevision": {
+    "@type": "http://www.w3.org/2001/XMLSchema#positiveInteger",
+    "@value": "0"
+  }
+}

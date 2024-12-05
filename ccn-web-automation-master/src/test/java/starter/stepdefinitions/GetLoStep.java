@@ -1,5 +1,6 @@
 package starter.stepdefinitions;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -10,7 +11,9 @@ import org.json.XML;
 import starter.api.CreateLoAPI;
 import starter.api.GetLoAPI;
 import starter.api.TransformXfwbAPI;
+import starter.api.TransformXfzbApi;
 import starter.utlis.XFWBXml;
+import starter.utlis.XFZBXml;
 
 import java.io.IOException;
 import java.util.List;
@@ -23,6 +26,9 @@ public class GetLoStep {
     GetLoAPI getLoAPI;
     @Steps
     TransformXfwbAPI transformXfwbPage;
+
+    @Steps
+    TransformXfzbApi transformXfzbApi;
 
     String id, waybillNumber, waybillPrefix;
     JSONObject responseJson;
@@ -114,5 +120,81 @@ public class GetLoStep {
         }
         waybillNumber = createLoAPI.getWaybillNumber();
         waybillPrefix = createLoAPI.getWaybillPrefix();
+    }
+
+    @When("Create logistic objects of fhl using predefined json and {string} url")
+    public void createLogisticObjectsOfFhlUsingPredefinedJsonAndUrl(String url) throws IOException {
+        switch (url){
+            case "internal":
+                id = createLoAPI.createLoRequestUrl("internal");
+                break;
+            case "external":
+                id = createLoAPI.createLoRequestUrl("external");
+        }
+    }
+
+    @Then("verify mapping data {string} {string} {string}of BusinessHeaderDocument to data in response of HouseWaybill {string}")
+    public void verifyMappingDataOfBusinessHeaderDocumentToDataInResponseOfHouseWaybill(String key, String subkey1, String subkey2, String keyResponse) {
+        switch (keyResponse){
+            case "waybillNumber":
+                transformXfzbApi.verifyWaybillNumber(jsonXml, responseJson);
+                break;
+            case "consignorDeclarationSignature":
+                transformXfzbApi.verifyConsignorDeclarationSignature(jsonXml, responseJson);
+                break;
+            case "carrierDeclarationDate":
+                transformXfzbApi.verifyCarrierDeclarationDate(jsonXml, responseJson);
+                break;
+            case "carrierDeclarationSignature":
+                transformXfzbApi.verifyCarrierDeclarationSignature(jsonXml, responseJson);
+                break;
+            case "carrierDeclarationPlace":
+                transformXfzbApi.verifyCarrierDeclarationPlace(jsonXml, responseJson);
+                break;
+        }
+    }
+
+    @Then("get logistic objects of FHL using ID of response")
+    public void getLogisticObjectsOfFHLUsingIDOfResponse() throws IOException {
+        jsonXml = XML.toJSONObject(XFZBXml.xmlPayload);
+        responseJson = getLoAPI.getLORequest(id);
+    }
+
+    @Then("verify mapping data {string} {string} {string}of MasterConsignment to data in response of HouseWaybill {string}")
+    public void verifyMappingDataOfMasterConsignmentToDataInResponseOfHouseWaybill(String arg0, String arg1, String arg2, String keyResponse) {
+        switch (keyResponse){
+            case "declaredValueForCarriage":
+                transformXfzbApi.verifyDeclaredValueForCarriage(jsonXml, responseJson);
+                break;
+            case "declaredValueForCustoms":
+                transformXfzbApi.verifyDeclaredValueForCustoms(jsonXml, responseJson);
+                break;
+            case "insuredAmount":
+                transformXfzbApi.verifyInsuredAmount(jsonXml, responseJson);
+                break;
+            case "weightValuationIndicator":
+                transformXfzbApi.verifyWeightValuationIndicator(jsonXml, responseJson);
+                break;
+            case "otherChargesIndicator":
+                transformXfzbApi.verifyOtherChargesIndicator(jsonXml, responseJson);
+                break;
+            case "totalGrossWeight":
+                transformXfzbApi.verifyTotalGrossWeight(jsonXml, responseJson);
+                break;
+            case "slacForRate":
+                transformXfzbApi.verifySlacForRate(jsonXml, responseJson);
+                break;
+            case "Goodsdescriptionforrate":
+                transformXfzbApi.verifyGoodsDescriptionForRate(jsonXml, responseJson);
+                break;
+            case "departureLocation":
+                transformXfzbApi.verifyDepartureLocation(jsonXml, responseJson);
+                break;
+            case "arrivalLocation":
+                transformXfzbApi.verifyArrivalLocation(jsonXml, responseJson);
+                break;
+            default:
+                throw new PendingException("there is no key response");
+        }
     }
 }
