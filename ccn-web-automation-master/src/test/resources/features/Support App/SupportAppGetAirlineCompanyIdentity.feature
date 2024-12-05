@@ -99,9 +99,9 @@ Feature: [CUBEforall - Company] Support to get Airline as company Identity
     When user go to group menu
     When user go to airlines submenu
     And user go to create new airlines function
-#    When user input all data required to create company like "<airlinesName>" and "<email>" and "<compRegNo>" and "<pimaAddress>" and "<country>" and "<city>" and "<address>" and "<address2>" and "<address3>" and "<carrierCode>" and "<awbPrefix>"
-#    And user press submit to create new airlines
-#    Then verify that new Airlines Company created successfully
+    When user input all data required to create company like "<airlinesName>" and "<email>" and "<compRegNo>" and "<pimaAddress>" and "<country>" and "<city>" and "<address>" and "<address2>" and "<address3>" and "<carrierCode>" and "<awbPrefix>"
+    And user press submit to create new airlines
+    Then verify that new Airlines Company created successfully
 
     Examples:
       | userID    | password     | awbPrefix  | airlinesName | email                                    | compRegNo| pimaAddress     | country | city | address | address2 | address3 | carrierCode |
