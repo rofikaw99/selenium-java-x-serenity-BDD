@@ -41,6 +41,16 @@ public class SupportAppStep {
         Thread.sleep(400);
         loginPage.inputAwbPrefixToGetAirlinesCompanyIdentity(AirlineSearchBy);
     }
+    @When("try to edit {string} in airline company identity")
+    public void tryToEditInAirlineCompanyIdentity(String address3) throws Exception {
+        Thread.sleep(400);
+        loginPage.editAirlinesCompanyIdentity(address3);
+    }
+    @When("user input all data required to create company like {string} and {string} and {string} and {string} and {string} and {string} and {string} and {string} and {string} and {string} and {string}")
+    public void user_input_all_data_required_to_create_airline_company_like(String airlineName,String email, String compRegNo, String pimaAddress, String country, String city, String address, String address2, String address3, String carrierCode, String awbPrefix ) throws Exception {
+        Thread.sleep(400);
+        loginPage.editAirlinesCompanyIdentity(address3);
+    }
     @Then("update new plan manager in support app")
     public void updateNewPlanManageriInSupportApp() throws Exception {
         Thread.sleep(waitResponse);
@@ -71,6 +81,18 @@ public class SupportAppStep {
     @When("user go to airlines submenu")
     public void userGoToAirlineSubMenu() throws InterruptedException {
         supportAppPage.pressAirlinesSubMenu();
+    }
+    @When("user go to create new airlines function")
+    public void userGoToCreateNewAirlineFunction() throws InterruptedException {
+        supportAppPage.pressCreateNewAirlines();
+    }
+    @When("user press submit to create new airlines")
+    public void userPressSubmitToCreateNewAirline() throws InterruptedException {
+        supportAppPage.pressSubmitToCreateNewAirlines();
+    }
+    @And("user go to edit airlines company identity function")
+    public void userGoToEditAirline() throws InterruptedException {
+        supportAppPage.pressEditAirlines();
     }
     @When("user want to view change log by input filter date {string} and {string}")
     public void userWantViewChangeLog(String startDate, String endDate) throws InterruptedException {
@@ -116,6 +138,11 @@ public class SupportAppStep {
     }
     @Then("verify that Airlines Company Identity already cover Airlines Name, Carrier Code, Awb Prefix, Airlines Address, and System Cube Mail Address")
     public void verifyAirlinesCompanyIdentityCover5Attribute() throws InterruptedException {
+        Thread.sleep(600);
+        Assert.assertTrue(supportAppPage.fiveAttributeIsDisplayed());
+    }
+    @Then("verify that new Airlines Company created successfully")
+    public void verifyNewAirlinesCompanyIdentityCreated() throws InterruptedException {
         Thread.sleep(600);
         Assert.assertTrue(supportAppPage.fiveAttributeIsDisplayed());
     }

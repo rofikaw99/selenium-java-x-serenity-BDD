@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Assertions;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.then;
+import static org.hamcrest.Matchers.equalTo;
 
 public class SecurityServiceGatewayPage {
 
@@ -121,6 +122,48 @@ public class SecurityServiceGatewayPage {
                 .extract().response();
         // Print response for debugging purposes
         System.out.println("Response: " + response.asString());
+    }
+    public void retrieveAirlineCompanyIdentity(String awbPrefix, String carrierCode) {
+        /// Base URI
+        RestAssured.baseURI = "http://cubecompany.sandbox.ccn";
+        // Request payload
+        String requestBody = "{\n" +
+                "    \"awbPrefix\": \""+awbPrefix+"\",\n" +
+                "    \"carrierCode\": \""+carrierCode+"\"\n" +
+                "}";
+        // Send POST request
+        Response response = given()
+                .header("Content-Type", "application/json")
+                .body(requestBody)
+                .when()
+                .post("/Airline/1/retrieveAirline")
+                .then()
+                .statusCode(200) // Verifies status code
+                .body("message", equalTo("Successfully get company identity")) // Verifies message
+                .extract()
+                .response();
+        // Print full response
+        System.out.println("Response: " + response.asPrettyString());
+        // Extract and print specific fields from the response
+        String email = response.jsonPath().getString("data[0].email");
+        String companyName = response.jsonPath().getString("data[0].companyName");
+        String pimaAddress = response.jsonPath().getString("data[0].pimaAddress");
+        String companyType = response.jsonPath().getString("data[0].companyType");
+        String station = response.jsonPath().getString("data[0].station");
+        String address = response.jsonPath().getString("data[0].address");
+        String awbPrefixR = response.jsonPath().getString("data[0].awbPrefix");
+        String carrierCodeR = response.jsonPath().getString("data[0].carrierCode");
+        String companyRegistrationNo = response.jsonPath().getString("data[0].companyRegistrationNo");
+        // Print extracted fields
+        System.out.println("Email: " + email);
+        System.out.println("Company Name: " + companyName);
+        System.out.println("PIMA Address: " + pimaAddress);
+        System.out.println("Company Type: " + companyType);
+        System.out.println("Station: " + station);
+        System.out.println("Address: " + address);
+        System.out.println("AWB Prefix: " + awbPrefixR);
+        System.out.println("Carrier Code: " + carrierCodeR);
+        System.out.println("Company Registration No: " + companyRegistrationNo);
     }
 
     public void assertFailed401(){

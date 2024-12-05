@@ -19,9 +19,11 @@ public class LoginPage extends PageObject {
     private int waitResponse=30000;
     private By formUserid = By.id("formUserId");
     private By awbSearchToGetAirlinesCompanyIdentity = By.xpath("//input[@id='searchQuery']");
+    private By address3Field = By.xpath("(//button[@type='button' and contains(@class, 'btn btn-link')])[2]");
     private By formBasicPassword = By.id("formBasicPassword");
     private By btnSubmit = By.xpath( "//button[text()='Submit']");
     private By awbSearchButton = By.xpath( "//button[text()='Search']");
+    private By airlineSubmitButton = By.xpath("//button[@type='submit' and contains(@class, 'btn btn-primary') and text()='Submit']");
     private By selectNewPlanManager = By.xpath("(//button[@id='dropdown-basic-button'])[1]");
     private By clickFirstNewPlanManager = By.xpath("(//a[contains(@class, 'dropdown-item')])[1]");
     private By btnAcceptCookie = By.xpath("(//button[normalize-space()='Accept'])[1]");
@@ -207,6 +209,13 @@ public class LoginPage extends PageObject {
         System.out.println("button submit is displaying : "+$(awbSearchToGetAirlinesCompanyIdentity).isDisplayed()+" and enabled : "+$(awbSearchToGetAirlinesCompanyIdentity).isEnabled());
         Thread.sleep(500);
         $(awbSearchButton).click();
+    }
+    public void editAirlinesCompanyIdentity(String address3) throws Exception {
+        inputAwbPrefixToGetAirlinesCompanyIdentityInSupportApp(address3);
+        System.out.println("button submit is displaying : "+$(address3Field).isDisplayed()+" and enabled : "+$(awbSearchToGetAirlinesCompanyIdentity).isEnabled());
+        Thread.sleep(500);
+        $(airlineSubmitButton).click();
+        Thread.sleep(2500);
     }
     public void inputPlanManagerSupportApp() throws Exception {
         System.out.println("button submit is displaying : "+$(selectNewPlanManager).isDisplayed()+" and enabled : "+$(selectNewPlanManager).isEnabled());
