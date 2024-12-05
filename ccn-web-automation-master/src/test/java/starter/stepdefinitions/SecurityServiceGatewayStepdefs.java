@@ -56,7 +56,10 @@ public class SecurityServiceGatewayStepdefs {
     public void validate_pima_chexs(String pima) throws Exception {
         securityServiceGatewayStepdefsPage.validatePimaChexs(pima);
     }
-
+    @Given("retrieve airline company identity information with input {string} and or {string} and verify the data is correct")
+    public void retrieveAirlineCompanyIdentityAPI(String awbPrefix, String carrierCode) throws Exception {
+        securityServiceGatewayStepdefsPage.retrieveAirlineCompanyIdentity(awbPrefix, carrierCode);
+    }
     @Then("verify the response is unauthorized")
     public void verify_the_response_is_unauthorized() throws Exception {
         securityServiceGatewayStepdefsPage.assertFailed401();

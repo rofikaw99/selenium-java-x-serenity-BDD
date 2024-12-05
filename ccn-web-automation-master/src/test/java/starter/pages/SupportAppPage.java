@@ -20,6 +20,9 @@ public class SupportAppPage extends PageObject {
     private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
     private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
     private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[19]");
+    private By createNewAirline = By.xpath("//button[text()='Create New Airline']");
+    private By airlineSubmitButton = By.xpath("//button[@type='submit' and contains(@class, 'btn btn-primary') and text()='Submit']");
+    private By editAirline = By.xpath("(//button[@type='button' and contains(@class, 'btn btn-link')])[2]");
     private By airlineChangeLogFunction = By.xpath("//button[@type='button' and contains(@class, 'btn btn-link') and text()='logs']");
     private By airlineChangeLogStartDate = By.xpath("(//input[@type='text' and contains(@class, 'form-control') and @value=''])[1]");
     private By airlineChangeLogEndDate = By.xpath("(//input[@type='text' and contains(@class, 'form-control')])[3]");
@@ -47,7 +50,7 @@ public class SupportAppPage extends PageObject {
     private By airlineSearchValidationText = By.xpath("//span[contains(@class, 'text-danger')]");
     private By companyName = By.xpath("//th[text()='Company Name']");
     private By airlinesNameTitle = By.xpath("//th[text()='Airline Name']");
-    private By emailTitle = By.xpath("//th[text()='Email']");
+    private By emailTitle = By.xpath("//th[text()='Company System Cube']");
     private By stationTitle = By.xpath("//th[text()='Station']");
     private By countryTitle = By.xpath("//th[text()='Country']");
     private By carrierCodeTitle = By.xpath("//th[text()='Carrier Code']");
@@ -238,6 +241,24 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(500);
         System.out.println("btnSubmit company is displaying: "+$(airlines).isDisplayed()+" also enabled: "+$(airlines).isEnabled());
         evaluateJavascript("arguments[0].click();", $(airlines));
+        Thread.sleep(1000);
+    }
+    public void pressCreateNewAirlines() throws InterruptedException {
+        Thread.sleep(500);
+        System.out.println("btnSubmit company is displaying: "+$(createNewAirline).isDisplayed()+" also enabled: "+$(createNewAirline).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(createNewAirline));
+        Thread.sleep(1000);
+    }
+    public void pressSubmitToCreateNewAirlines() throws InterruptedException {
+        Thread.sleep(500);
+        System.out.println("btnSubmit company is displaying: "+$(airlineSubmitButton).isDisplayed()+" also enabled: "+$(airlineSubmitButton).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(airlineSubmitButton));
+        Thread.sleep(1000);
+    }
+    public void pressEditAirlines() throws InterruptedException {
+        Thread.sleep(500);
+        System.out.println("btnSubmit company is displaying: "+$(editAirline).isDisplayed()+" also enabled: "+$(editAirline).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(editAirline));
         Thread.sleep(1000);
     }
     public void viewAirlineChangeLog(String startDate, String endDate) throws InterruptedException{
