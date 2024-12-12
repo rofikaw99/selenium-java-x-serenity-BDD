@@ -16,8 +16,8 @@ Feature: Email Exchange
   3. Differentiate content types for different types of emails based on keywords in the email subject;
   the content types are configurable using a mapping table.
 
-  Scenario: Send email with keyword "CONSIGMENT" along with attachment to another and explicit share it with the recipient’s company CUBE.
-    Given Send email with keyword "CONSIGMENT" along with attachment to another company CUBE.
+  Scenario: Send email with keyword "Consignment" along with attachment to another and explicit share it with the recipient’s company CUBE.
+    Given Send email with keyword "Consignment" along with attachment to another company CUBE.
     And cc to CUBEexchange@ccnexchange.com
     Then Retrieve emails from the mailbox, convert the email body and attachments to JSON format, save the document in the sender's company CUBE, and explicit share it with the recipient’s company CUBE.
     Then verify JSON format is correct
@@ -34,8 +34,8 @@ Feature: Email Exchange
     Then Retrieve emails from the mailbox, convert the email body and attachments to JSON format, save the document in the sender's company CUBE, and explicit share it with the recipient’s company CUBE.
     Then verify JSON format is correct
 
-  Scenario: Send email with keyword not contain "Notification of Arrival" / "CONSIGMENT" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another and explicit share it with the recipient’s company CUBE.
-    Given Send email with keyword not contain "Notification of Arrival" / "CONSIGMENT" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another company CUBE.
+  Scenario: Send email with keyword not contain "Notification of Arrival" / "Consignment" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another and explicit share it with the recipient’s company CUBE.
+    Given Send email with keyword not contain "Notification of Arrival" / "Consignment" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another company CUBE.
     And cc to CUBEexchange@ccnexchange.com
     Then Retrieve emails from the mailbox, convert the email body and attachments to JSON format, save the document in the sender's company CUBE, and explicit share it with the recipient’s company CUBE.
     Then verify JSON format is correct
