@@ -3,8 +3,7 @@ Feature: Email Exchange
 
   Objective
 
-  Retrieve the email and compress all attachments into a single ZIP file for the CUBE document that was
-  created in CUBE
+  Retrieve the email and compress all attachments into a single ZIP file for the CUBE document that was created in CUBE
 
   Requirements
 
@@ -53,12 +52,10 @@ Feature: Email Exchange
       | keyword                 | recipientMail              | senderMail                 | ccMail                       | senderCompanyCubeID              | recipientCompanyCubeID           | egDocumentID             |
       | Notification of Arrival | autoqa-ccn-001@yopmail.com | rofikawaludin436@gmail.com | CUBEexchange@ccnexchange.com | 45613b04f70c4935988f9421b4e595a4 | b6cfc71d2f4a4cfdb2b846fbf66c8aa7 | 675bee8e1e73cbef818f4957 |
 
-  Scenario Outline : Send email with keyword not contain "Notification of Arrival" / "Consignment" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another and explicit share it with the recipient’s company CUBE.
+  Scenario Outline : Send email with keyword not contain "Notification of Arrival" / "Consignment" / "SHIPMENT ARRIVAL NOTICE".
     Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
     Then retrieve "<recipientMail>" emails from the mailbox
-    And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
-    And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
-    And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
+    Then the email body and attachments to JSON format will not coverted, the document in the sender's company CUBE not saved, and not do explicit share it with the recipient’s company CUBE.
 
     Examples:
       | keyword          | recipientMail              | senderMail                 | ccMail                       | senderCompanyCubeID              | recipientCompanyCubeID           | egDocumentID             |
