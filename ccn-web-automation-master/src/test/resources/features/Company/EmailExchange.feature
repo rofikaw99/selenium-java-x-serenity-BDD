@@ -1,3 +1,4 @@
+@emailExchange
 Feature: Email Exchange
 
   Objective
@@ -16,26 +17,49 @@ Feature: Email Exchange
   3. Differentiate content types for different types of emails based on keywords in the email subject;
   the content types are configurable using a mapping table.
 
-  Scenario: Send email with keyword "Consignment" along with attachment to another and explicit share it with the recipient’s company CUBE.
-    Given Send email with keyword "Consignment" along with attachment to another company CUBE.
-    And cc to CUBEexchange@ccnexchange.com
-    Then Retrieve emails from the mailbox, convert the email body and attachments to JSON format, save the document in the sender's company CUBE, and explicit share it with the recipient’s company CUBE.
-    Then verify JSON format is correct
+  @REBACDC_1
+  Scenario Outline: Send email with keyword "Consignment" along with attachment to another and explicit share it with the recipient’s company CUBE.
+#    Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
+    Then retrieve "<recipientMail>" emails from the mailbox
+    And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
+    And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
+    And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
 
-  Scenario: Send email with keyword "SHIPMENT ARRIVAL NOTICE" along with attachment to another and explicit share it with the recipient’s company CUBE.
-    Given Send email with keyword "SHIPMENT ARRIVAL NOTICE" along with attachment to another company CUBE.
-    And cc to CUBEexchange@ccnexchange.com
-    Then Retrieve emails from the mailbox, convert the email body and attachments to JSON format, save the document in the sender's company CUBE, and explicit share it with the recipient’s company CUBE.
-    Then verify JSON format is correct
+    Examples:
+      | keyword     | recipientMail              | senderMail                 | ccMail                       | senderCompanyCubeID              | recipientCompanyCubeID           | egDocumentID             |
+      | Consignment | autoqa-ccn-001@yopmail.com | rofikawaludin436@gmail.com | CUBEexchange@ccnexchange.com | 45613b04f70c4935988f9421b4e595a4 | b6cfc71d2f4a4cfdb2b846fbf66c8aa7 | 675bee8e1e73cbef818f4957 |
 
-  Scenario: Send email with keyword "Notification of Arrival" along with attachment to another and explicit share it with the recipient’s company CUBE.
-    Given Send email with keyword "Notification of Arrival" along with attachment to another company CUBE.
-    And cc to CUBEexchange@ccnexchange.com
-    Then Retrieve emails from the mailbox, convert the email body and attachments to JSON format, save the document in the sender's company CUBE, and explicit share it with the recipient’s company CUBE.
-    Then verify JSON format is correct
+  @REBACDC_2
+  Scenario Outline : Send email with keyword "SHIPMENT ARRIVAL NOTICE" along with attachment to another and explicit share it with the recipient’s company CUBE.
+    Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
+    Then retrieve "<recipientMail>" emails from the mailbox
+    And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
+    And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
+    And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
 
-  Scenario: Send email with keyword not contain "Notification of Arrival" / "Consignment" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another and explicit share it with the recipient’s company CUBE.
-    Given Send email with keyword not contain "Notification of Arrival" / "Consignment" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another company CUBE.
-    And cc to CUBEexchange@ccnexchange.com
-    Then Retrieve emails from the mailbox, convert the email body and attachments to JSON format, save the document in the sender's company CUBE, and explicit share it with the recipient’s company CUBE.
-    Then verify JSON format is correct
+    Examples:
+      | keyword                 | recipientMail              | senderMail                 | ccMail                       | senderCompanyCubeID              | recipientCompanyCubeID           | egDocumentID             |
+      | SHIPMENT ARRIVAL NOTICE | autoqa-ccn-001@yopmail.com | rofikawaludin436@gmail.com | CUBEexchange@ccnexchange.com | 45613b04f70c4935988f9421b4e595a4 | b6cfc71d2f4a4cfdb2b846fbf66c8aa7 | 675bee8e1e73cbef818f4957 |
+
+  @REBACDC_3
+  Scenario Outline : Send email with keyword "Notification of Arrival" along with attachment to another and explicit share it with the recipient’s company CUBE.
+    Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
+    Then retrieve "<recipientMail>" emails from the mailbox
+    And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
+    And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
+    And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
+
+    Examples:
+      | keyword                 | recipientMail              | senderMail                 | ccMail                       | senderCompanyCubeID              | recipientCompanyCubeID           | egDocumentID             |
+      | Notification of Arrival | autoqa-ccn-001@yopmail.com | rofikawaludin436@gmail.com | CUBEexchange@ccnexchange.com | 45613b04f70c4935988f9421b4e595a4 | b6cfc71d2f4a4cfdb2b846fbf66c8aa7 | 675bee8e1e73cbef818f4957 |
+
+  Scenario Outline : Send email with keyword not contain "Notification of Arrival" / "Consignment" / "SHIPMENT ARRIVAL NOTICE" along with attachment to another and explicit share it with the recipient’s company CUBE.
+    Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
+    Then retrieve "<recipientMail>" emails from the mailbox
+    And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
+    And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
+    And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
+
+    Examples:
+      | keyword          | recipientMail              | senderMail                 | ccMail                       | senderCompanyCubeID              | recipientCompanyCubeID           | egDocumentID             |
+      | Shipment Request | autoqa-ccn-001@yopmail.com | rofikawaludin436@gmail.com | CUBEexchange@ccnexchange.com | 45613b04f70c4935988f9421b4e595a4 | b6cfc71d2f4a4cfdb2b846fbf66c8aa7 | 675bee8e1e73cbef818f4957 |

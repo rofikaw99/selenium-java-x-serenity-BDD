@@ -42,7 +42,18 @@ public class FWBResharingStepdefs {
     public void verifyCompanyGroupInformation(String cubeID) throws Exception {
         fwbResharingPage.companyGroupInformation(cubeID);
     }
-
+    @Given("convert the email body and attachments to JSON format, save the document in the sender's company CUBE {string}")
+    public void convert_the_email_body_and_attachments_to_JSON_format(String senderCompanyCubeID) throws Exception {
+        fwbResharingPage.emailExchangeDocumentChecking(senderCompanyCubeID);
+    }
+    @Given("explicit share it with the recipient’s {string} company CUBE")
+    public void explicit_share_it_with_the_recipient(String recipientCompanyCubeID) throws Exception {
+        fwbResharingPage.emailExchangeDocumentChecking(recipientCompanyCubeID);
+    }
+    @Given("verify encode all attachments {string} into a single ZIP file for CUBE document creation {string}")
+    public void verify_encode_all_attachments_into_a_single_ZIP_file_for_CUBE_document_creation(String recipientCompanyCubeID, String egDocumentID) throws Exception {
+        fwbResharingPage.verifyEncodedContent(recipientCompanyCubeID, egDocumentID);
+    }
     @Given("create awbNo 1000 times")
     public void create_awb_1000() throws Exception {
         fwbResharingPage.awb1000times();

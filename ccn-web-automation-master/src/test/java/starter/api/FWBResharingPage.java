@@ -153,6 +153,61 @@ public class FWBResharingPage {
                 .body("groupName", not(equalTo("COMPANY")));
 
     }
+    public void verifyEncodedContent(String companyCubeID, String egDocumentID) {
+        // Base URI
+        RestAssured.baseURI = "http://cube.sandbox.ccn";
+        // Endpoint
+        String endpoint = "/"+companyCubeID+"/document/content";
+        // JSON request body
+        String requestBody = "{\n" +
+                "  \"documentID\": \""+egDocumentID+"\"\n" +
+                "}";
+        // Perform POST request
+        Response response = RestAssured
+                .given()
+                .contentType(ContentType.JSON)  // Set Content-Type to application/json
+                .body(requestBody)  // Add JSON body
+                .when()
+                .post(endpoint);
+        // Print response details
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+    public void emailExchangeDocumentChecking(String companyCubeID) {
+        RestAssured.baseURI = "https://cubesandbox.ccnexchange.com";
+        // Endpoint
+        String endpoint = "/"+companyCubeID+"/document";
+        // Cookie value
+        String cookie = "BIGipServerPPD_Cube_80=4006088876.20480.0000";
+        // Perform POST request
+        Response response = RestAssured
+                .given()
+                .header("Cookie", cookie) // Add the Cookie header
+                .contentType(ContentType.JSON)
+                .when()
+                .post(endpoint);
+        // Print response details
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+
+    public void emailExchangeDocumentChecking2(String recipientCompanyCubeID) {
+        RestAssured.baseURI = "https://cubesandbox.ccnexchange.com";
+        // Endpoint
+        String endpoint = "/"+recipientCompanyCubeID+"/document";
+        // Cookie value
+        String cookie = "BIGipServerPPD_Cube_80=4006088876.20480.0000";
+        // Perform POST request
+        Response response = RestAssured
+                .given()
+                .header("Cookie", cookie) // Add the Cookie header
+                .contentType(ContentType.JSON)
+                .when()
+                .post(endpoint);
+        // Print response details
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
 
     public void createDocForShareVia(String contentType, String contentName) {
 
