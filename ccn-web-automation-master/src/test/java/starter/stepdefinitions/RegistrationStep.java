@@ -1,12 +1,10 @@
 package starter.stepdefinitions;
 
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
-import starter.pages.GoToUrl;
-import starter.pages.MailServiceMailinatorPage;
-import starter.pages.RegistrationPage;
-import starter.pages.SubscriptionPage;
+import starter.pages.*;
 import starter.utlis.Constants;
 
 public class RegistrationStep {
@@ -19,6 +17,9 @@ public class RegistrationStep {
 
     @Steps
     MailServiceMailinatorPage mailServiceMailinatorPage;
+
+    @Steps
+    MailServiceYopmailPage mailServiceYopmailPage;
 
     @Steps
     GoToUrl goToUrl;
@@ -74,7 +75,18 @@ public class RegistrationStep {
         registrationPage.pressCreateAccountRegister();
         subscriptionPage.switchToWindow(originalWindow);
     }
-
+    @Given("send email from {string} with keyword {string} along with attachment to another company CUBE {string} and cc to {string}")
+    public void send_email_from_with_keyword_along_with_attachment_to_another_company_CUBE(String senderMail, String keyword, String recipientMail, String ccMail) throws Exception {
+        goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);
+        Thread.sleep(1000);
+        mailServiceYopmailPage.emailExchangeSender();
+    }
+    @Given("retrieve {string} emails from the mailbox")
+    public void retrieve_emails_from_the_mailbox(String recipientMail) throws Exception {
+        goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);
+        Thread.sleep(1000);
+        mailServiceYopmailPage.emailExchangeRecipient(recipientMail);
+    }
     @And("registration with new account and try login")
     public void registrationWithNewAccountAndTryLogin() throws Exception {
         registrationPage.pressSignUpNow();

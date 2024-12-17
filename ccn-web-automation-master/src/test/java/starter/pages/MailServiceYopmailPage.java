@@ -206,6 +206,22 @@ public class MailServiceYopmailPage extends PageObject {
         $(emailHeader).click();
     }
 
+    public void emailExchangeSender() throws Exception {
+        // search mail on mailinator
+        $(txtSearch).clear();
+//        $(txtSearch).sendKeys(recipientMail, Keys.ENTER);
+        // press or expand the email
+        $(emailOnLists).isDisplayed();
+        $(emailOnLists).click();
+    }
+    public void emailExchangeRecipient(String recipientMail) throws Exception {
+        // search mail on mailinator
+        $(txtSearch).clear();
+        $(txtSearch).sendKeys(recipientMail, Keys.ENTER);
+        // press or expand the email
+        $(emailOnLists).isDisplayed();
+        $(emailOnLists).click();
+    }
     public void selectemailtoopendetail(String content) throws Exception{
         Thread.sleep(medResponse);
         $(refreshemail).click();
