@@ -41,6 +41,14 @@ Feature: notifying subscribers about Subscription update
     And check in current queue in support app
     Then a few minutes later check on history queue in support app
 
+  Scenario : notifying subscribers about canceled Subscriber
+    Given user want to update the subscription
+    When  trigger canceled subscriber
+    And check the payload is correct
+    Then notifying subscribers about Subscription update
+    And check in current queue in support app
+    Then a few minutes later check on history queue in support app
+
   Scenario : notifying subscribers about company update
     Given user want to update the company
     When  trigger company update
