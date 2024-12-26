@@ -1,21 +1,17 @@
 package starter.api;
 
 import io.restassured.specification.RequestSpecification;
-import net.serenitybdd.core.SkipStepException;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
-import org.json.XML;
 import org.junit.Assert;
 import starter.utlis.ApiProperties;
-import starter.utlis.XFWBRequest;
-import starter.utlis.XFWBResponse;
-import starter.utlis.XFWBXml;
+import starter.utlis.onerecord.XFWBRequest;
+import starter.utlis.onerecord.XFWBResponse;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.List;
 
 import static net.serenitybdd.rest.SerenityRest.*;
@@ -25,9 +21,8 @@ public class TransformXfwbAPI {
     RequestSpecification requestSpecification;
 
     public void setupApi(String typeUrl) throws IOException {
-        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
+//        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given()
-//                .headers("Authorization", "Bearer " + accessToken,
                 .headers("Content-Type", "application/xml");
 
         if (typeUrl.equals("internal")){

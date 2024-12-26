@@ -199,7 +199,7 @@ Feature: Payment Overview
   Scenario: Deduction does not work when SI not achieved
     Given user has SI for service A
     When supplier create payment request with amount greater than SI
-    Then payment will remain in Outstanding status
+    Then payment will remain in "OUTSTANDING" status
     And the payment by will be "" and autoDeduct is "false"
 
   @expired-date @exp-date @failed
@@ -299,16 +299,51 @@ Feature: Payment Overview
       |READY |
       |CANCELED|
 
-  @process-payment
+  @process-payment @re-run
   Scenario: BC process the payment from CubeForAll
     Given BC create payment request for processing payment
     Then payment will be created
     And payment will automatically changes to "PAID"
 
-  @refund-payment
+  @process-payment @re-run
+  Scenario: BC process the payment from CubeForAll with failed card account
+    Given BC create payment request for processing payment with failed card account
+    Then payment will be created
+    And payment will automatically changes to "FAILED"
+
+  @refund-payment @re-run
   Scenario: BC process refund of payment from CubeForAll
     Given BC create payment request for processing payment
     And payment will automatically changes to "PAID"
     When BC process refund of the payment
     Then payment will be refunded
     And payment will automatically changes to "REFUNDED"
+
+  @refund-payment @re-run
+  Scenario: BC process refund of payment from CubeForAll
+    Given BC create payment request for processing payment with failed refund account
+    And payment will automatically changes to "PAID"
+    When BC process refund of the payment
+    Then payment will be refunded
+    And payment will remain in "PAID" status
+
+  @payment-report
+  Scenario: Creating payment request with report reference
+    Given supplier create payment request with report reference
+
+  @exp-date-process
+  Scenario: BC process will not have an expiredDate and it will not be changed to Expired
+    Given BC create payment request for processing payment
+    Then payment will have a null expiredDateTime
+    And the payment will not changes to Expired status
+
+  @cant-process
+  Scenario: Cannot create payment request with wrong paymentMethodId
+    Given BC create payment request for user with different paymentMethodId
+    Then error message can't create payment request appears
+
+  @same-ex-id
+  Scenario: Cannot create payment request with same external reference id
+    Given BC create payment request with "A" external reference id
+    When BC create payment request with "A" external reference id again
+    Then error message can't create payment request with same external ref id appears

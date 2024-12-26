@@ -7,8 +7,7 @@ import net.thucydides.core.annotations.Steps;
 import org.json.JSONObject;
 import org.json.XML;
 import starter.api.TransformXfwbAPI;
-import starter.utlis.ApiProperties;
-import starter.utlis.XFWBXml;
+import starter.utlis.onerecord.XFWBXml;
 
 import java.io.IOException;
 

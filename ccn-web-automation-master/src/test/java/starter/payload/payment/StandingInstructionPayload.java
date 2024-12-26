@@ -8,7 +8,13 @@ public class StandingInstructionPayload {
 
     public static JSONObject retrieveCardToken(){
         payload = new JSONObject();
-        payload.put("email", "autoqa-ccn-001@yopmail.com");
+        return payload;
+    }
+
+    public static JSONObject retrieveCardToken(boolean isDetail){
+        payload = new JSONObject();
+        payload.put("cardDetail", isDetail);
+        payload.put("userList", false);
         return payload;
     }
 
@@ -44,7 +50,7 @@ public class StandingInstructionPayload {
         payload.put("limitInterval", "transaction");
         payload.put("validFrom", "2024-09-23");
         payload.put("validTo", "2024-09-30");
-        payload.put("card_token", cardToken);
+        payload.put("paymentMethodId", cardToken);
         payload.put("type", type);
         payload.put("paymentOwner", emailCompany);
         return payload;

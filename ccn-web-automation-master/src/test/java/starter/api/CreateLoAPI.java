@@ -4,9 +4,8 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
-import org.junit.Assert;
 import starter.utlis.ApiProperties;
-import starter.utlis.XFWBResponse;
+import starter.utlis.onerecord.XFWBResponse;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,14 +17,12 @@ import static org.hamcrest.Matchers.*;
 
 public class CreateLoAPI {
     Response response;
-    String payload, url, accessToken;
+    String payload, url;
     RequestSpecification requestSpecification;
 
     public void setupApi(String typeUrl) throws IOException {
-        payload = FileUtils.readFileToString(new File("src/test/java/starter/utlis/outputJson.json"), StandardCharsets.UTF_8);
-        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
+        payload = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/outputJson.json"), StandardCharsets.UTF_8);
         requestSpecification = given().headers(
-//                "Authorization", "Bearer " + accessToken,
                 "Content-Type", "application/json",
                 "Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000");
 

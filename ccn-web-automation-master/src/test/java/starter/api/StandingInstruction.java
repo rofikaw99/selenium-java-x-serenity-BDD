@@ -4,44 +4,47 @@ import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
-import starter.payload.payment.PaymentDelegationPayload;
 import starter.payload.payment.StandingInstructionPayload;
 import starter.utlis.ApiProperties;
-import starter.utlis.ReadFile;
 
-import java.io.IOException;
 import java.util.List;
 
 import static net.serenitybdd.rest.SerenityRest.*;
 
 public class StandingInstruction {
 
-    String token, cubeId, baseUrl, baseUrlCompany, emailCompany, emailCompany2;
+    String cubeId, baseUrl, baseUrlCompany, emailCompany, cubeIdCompany;
     Response response;
+    Register register = new Register();
 
-    public void setToken(int company) throws IOException {
-        if (company == 1) {
-            token = ReadFile.tokenCompany1();
-            cubeId = ApiProperties.cubeId1();
-        }
-        else if (company == 2) {
-            token = ReadFile.tokenCompany2();
-            cubeId = ApiProperties.cubeId2();
-        }
-        emailCompany = ApiProperties.emailCompany1();
-        emailCompany2 = ApiProperties.emailCompany2();
+    public void setToken(int company) {
+        emailCompany = ApiProperties.emailCompany(company);
+        cubeIdCompany = register.cubeId(emailCompany);
+        cubeId = ApiProperties.cubeId(company);
         baseUrl = ApiProperties.baseUrlPayment() + cubeId + "/service/" + ApiProperties.paymentServiceId();
         baseUrlCompany = ApiProperties.baseUrlExternal() + cubeId + "/service/" + ApiProperties.companyServiceId();
     }
 
     public void retrieveCardToken(){
-        String url = baseUrl + "/Payment/1/retrieveCardToken";
+        String url = baseUrl + "/Payment/1/retrieveCardDetail";
 
         response = given()
                 .header("x-api-key", ApiProperties.xApiKey("token"))
                 .header("source-service-id", ApiProperties.sourceServiceId())
                 .contentType("application/json")
                 .body(StandingInstructionPayload.retrieveCardToken().toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
+    public void retrieveCardToken(boolean isDetail){
+        String url = baseUrl + "/Payment/1/retrieveCardDetail";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey("token"))
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(StandingInstructionPayload.retrieveCardToken(isDetail).toString())
                 .post(url);
         then().statusCode(200);
     }
@@ -59,7 +62,7 @@ public class StandingInstruction {
     }
 
     public String cardToken(){
-        return lastResponse().jsonPath().getString("data.token");
+        return lastResponse().jsonPath().getString("data.payment_method_id");
     }
 
     public void thereIsNoDetailCard(){
@@ -135,7 +138,7 @@ public class StandingInstruction {
 
     public void createStandingInstruction(String productId, String productName, String suppId, String suppName, String cardToken,
                                           String type, int company, int statusCode){
-        if (company == 2) emailCompany = emailCompany2;
+        if (company == 2) emailCompany = ApiProperties.emailCompany(company);
         String url = baseUrl + "/Payment/1/createStandingInstruction";
 
         response = given()
@@ -190,6 +193,10 @@ public class StandingInstruction {
 
     public void verifyMessageAppears(String message){
         Assert.assertEquals(message, lastResponse().jsonPath().getString("message"));
+    }
+
+    public void verifyStatusCodeInBody(int statusCode){
+        Assert.assertEquals(statusCode, lastResponse().jsonPath().getInt("statusCode"));
     }
 
     public String supplierIdFromSi(int index){

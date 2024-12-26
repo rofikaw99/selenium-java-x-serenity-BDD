@@ -103,7 +103,7 @@ public class PaymentMethodStep {
     }
 
     @Given("{string} login to the web")
-    public void loginToTheWeb(String condition) throws Exception {
+    public void voidloginToTheWeb(String condition) throws Exception {
         switch (condition) {
             case "User have company" :
             case "User" :

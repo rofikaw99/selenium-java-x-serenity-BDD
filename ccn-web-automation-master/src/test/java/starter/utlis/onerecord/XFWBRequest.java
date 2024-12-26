@@ -1,12 +1,8 @@
-package starter.utlis;
+package starter.utlis.onerecord;
 
-import io.cucumber.java.pt.Mas;
-import io.cucumber.java.sl.In;
-//import io.cucumber.messages.JSON;
 import net.serenitybdd.core.SkipStepException;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.json.XML;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

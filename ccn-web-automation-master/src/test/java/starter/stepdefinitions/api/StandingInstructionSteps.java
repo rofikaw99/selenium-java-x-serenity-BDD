@@ -62,6 +62,7 @@ public class StandingInstructionSteps {
         suppName = paymentDelegation.supplierName(index);
         standingInstruction.createStandingInstruction(productId, productName, suppId, suppName, cardToken, "MY_PAYMENT", 1, statusCode);
         siId = standingInstruction.siId();
+        standingInstruction.verifyStatusCodeInBody(statusCode);
     }
 
     @Then("error message can't create SI when has payment delegation appears")
@@ -71,7 +72,7 @@ public class StandingInstructionSteps {
 
     @When("user create SI for service A of company X")
     public void userCreateSIForServiceAOfCompanyX() throws IOException {
-        int index = 1;
+        int index = 0;
         paymentDelegation.setToken(companyNumber);
         standingInstruction.setToken(companyNumber);
         standingInstruction.retrieveStandingInstruction("RECEIVED_PAYMENT");
@@ -174,7 +175,7 @@ public class StandingInstructionSteps {
 
     @When("user retrieve card token")
     public void userRetrieveCardToken() {
-        standingInstruction.retrieveCardToken();
+        standingInstruction.retrieveCardToken(false);
     }
 
     @Then("there is no {int} last card number")
@@ -189,7 +190,7 @@ public class StandingInstructionSteps {
 
     @When("user retrieve {int} last card number")
     public void userRetrieveLastCardNumber(int arg0) {
-        standingInstruction.retrieveLastNumber();
+        standingInstruction.retrieveCardToken(true);
     }
 
     @Given("User login as card admin or card user or user from company {int}")
@@ -235,5 +236,21 @@ public class StandingInstructionSteps {
     public void siForServiceASuccessfullyCreated() {
         standingInstruction.retrieveStandingInstruction("MY_PAYMENT");
         standingInstruction.verifySiCreatedInList(siId);
+    }
+
+    @When("user retrieve card detail with isDetail {string}")
+    public void userRetrieveCardDetailWithIsDetail(String isDetail) {
+        if (isDetail.equals("")) standingInstruction.retrieveCardToken();
+        else standingInstruction.retrieveCardToken(Boolean.parseBoolean(isDetail));
+    }
+
+    @Given("User login as user with a card in the company")
+    public void userLoginAsUserWithACardInTheCompany() {
+        standingInstruction.setToken(6);
+    }
+
+    @Then("there is message that the user should contact the card admin")
+    public void thereIsMessageThatTheUserShouldContactTheCardAdmin() {
+        standingInstruction.verifyMessageAppears("Please contact your admin");
     }
 }

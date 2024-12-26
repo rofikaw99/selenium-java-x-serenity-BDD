@@ -17,20 +17,12 @@ import static net.serenitybdd.rest.SerenityRest.*;
 
 public class PaymentDelegation {
 
-    String token, cubeId, baseUrl, emailCompany;
+    String cubeId, baseUrl, emailCompany;
     Response response;
 
-    public void setToken(int company) throws IOException {
-        if (company == 1) {
-            token = ReadFile.tokenCompany1();
-            cubeId = ApiProperties.cubeId1();
-            emailCompany = ApiProperties.emailCompany2();
-        }
-        else if (company == 2) {
-            token = ReadFile.tokenCompany2();
-            cubeId = ApiProperties.cubeId2();
-            emailCompany = ApiProperties.emailCompany1();
-        }
+    public void setToken(int company) {
+        cubeId = ApiProperties.cubeId(company);
+        emailCompany = ApiProperties.emailCompany(company);
         baseUrl = ApiProperties.baseUrlPayment() + cubeId + "/service/" + ApiProperties.paymentServiceId();
     }
 

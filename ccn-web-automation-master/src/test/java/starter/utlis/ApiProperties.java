@@ -62,14 +62,11 @@ public class ApiProperties {
     public static String associateServiceIdSvs(){
         return load().getProperty("associate-service-id-svs");
     }
-    public static String emailCompany1(){
-        return load().getProperty("email-company-1");
+    public static String emailCompany(int number){
+        return load().getProperty("email-company-" + number);
     }
-    public static String emailCompany2(){
-        return load().getProperty("email-company-2");
-    }
-    public static String emailCompany3(){
-        return load().getProperty("email-company-3");
+    public static String emailUser(int number){
+        return load().getProperty("email-user-" + number);
     }
     public static String companyName1(){
         return load().getProperty("company-name-1");
@@ -83,14 +80,8 @@ public class ApiProperties {
     public static String productName(String product){
         return load().getProperty("product-" + product.toLowerCase());
     }
-    public static String cubeId1(){
-        return load().getProperty("cube-id-1");
-    }
-    public static String cubeId2(){
-        return load().getProperty("cube-id-2");
-    }
-    public static String cubeId3(){
-        return load().getProperty("cube-id-3");
+    public static String cubeId(int number){
+        return load().getProperty("cube-id-" + number);
     }
     public static String baseUrlExternal(){
         return load().getProperty("base-url-external");

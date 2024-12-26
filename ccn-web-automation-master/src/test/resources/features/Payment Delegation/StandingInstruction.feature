@@ -37,10 +37,18 @@ Feature: Standing Instruction
   @card-number @done
   Scenario: Success retrieve card of payment
     Given User login as card admin or card user or user
-    When user retrieve card token
+    When user retrieve card detail with isDetail "false"
     Then there is no 4 last card number
-    When user retrieve 4 last card number
+    When user retrieve card detail with isDetail "true"
     Then card number success retrieve
+    When user retrieve card detail with isDetail ""
+    Then there is no 4 last card number
+
+  @card-details @failed
+  Scenario: Retrieve card detail with user card
+    Given User login as user with a card in the company
+    When user retrieve card detail with isDetail "false"
+    Then there is message that the user should contact the card admin
 
   ##USING CUBE ID 1
   @SI-API-2 @done
