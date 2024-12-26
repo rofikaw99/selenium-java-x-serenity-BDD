@@ -11,7 +11,7 @@ import starter.api.CreateLoAPI;
 import starter.api.GetChangeRequestAPI;
 import starter.api.GetLoAPI;
 import starter.api.UpdateLoAPI;
-import starter.utlis.LOResponse;
+import starter.utlis.onerecord.LOResponse;
 
 import java.io.IOException;
 import java.util.HashMap;

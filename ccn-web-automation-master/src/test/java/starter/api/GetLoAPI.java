@@ -6,7 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.Assert;
 import starter.utlis.ApiProperties;
-import starter.utlis.XFWBResponse;
+import starter.utlis.onerecord.XFWBResponse;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +23,7 @@ public class GetLoAPI {
     RequestSpecification requestSpecification;
 
     public void setupApi() throws IOException {
-        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
+        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given() .headers(
                 "Authorization", "Bearer " + accessToken,
                 "Content-Type", "application/json");

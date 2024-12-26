@@ -1,6 +1,5 @@
-package starter.utlis;
+package starter.utlis.onerecord;
 
-//import io.cucumber.messages.JSON;
 import org.json.JSONObject;
 
 public class XFZBRequest {

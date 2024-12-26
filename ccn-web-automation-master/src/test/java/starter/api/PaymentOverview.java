@@ -15,19 +15,15 @@ import static net.serenitybdd.rest.SerenityRest.*;
 
 public class PaymentOverview {
 
-    String token, cubeId, baseUrl, baseUrlPayReq, baseUrlIp, emailCompany, emailCompany2;
+    String cubeId, baseUrl, baseUrlPayReq, baseUrlIp, emailCompany, cubeIdCompany;
     Response response;
+    Register register = new Register();
 
-    public void setToken(int company) throws IOException {
-        if (company == 1) {
-            cubeId = ApiProperties.cubeId1();
-        } else if (company == 2) {
-            cubeId = ApiProperties.cubeId2();
-        } else if (company == 3){
-            cubeId = ApiProperties.cubeId3();
-        }
-        emailCompany = ApiProperties.emailCompany1();
-        emailCompany2 = ApiProperties.emailCompany2();
+    public void setToken(int company) {
+//        cubeId = ApiProperties.cubeId(company);
+        emailCompany = ApiProperties.emailCompany(company);
+        cubeIdCompany = register.cubeId(emailCompany);
+        cubeId = ApiProperties.cubeId(company);
         baseUrl = ApiProperties.baseUrlExternal() + cubeId + "/service/" + ApiProperties.paymentServiceId();
         baseUrlPayReq = ApiProperties.baseUrlPayment() + cubeId + "/service/" + ApiProperties.paymentServiceId();
         baseUrlIp = "http://172.16.200.158:6969/" + cubeId + "/service/" + ApiProperties.paymentServiceId();
@@ -232,7 +228,7 @@ public class PaymentOverview {
     }
 
     public void verifyDelegateToCompany(){
-        Assert.assertEquals(lastResponse().jsonPath().getList("paymentDelegation.delegateTo.companyEmail"),  List.of(ApiProperties.emailCompany3()));
+        Assert.assertEquals(lastResponse().jsonPath().getList("paymentDelegation.delegateTo.companyEmail"),  List.of(ApiProperties.emailCompany(3)));
     }
 
     public void verifyDelegateToCompany(String companyEmail){
@@ -272,6 +268,10 @@ public class PaymentOverview {
         Assert.assertEquals(message, lastResponse().jsonPath().getString("message"));
     }
 
+    public void verifyMessageContains(String message){
+        Assert.assertTrue(lastResponse().jsonPath().getString("message").contains(message));
+    }
+
     public void verifyErrorMessageBody(String message){
         Assert.assertEquals(message, lastResponse().jsonPath().getString("error.message"));
     }
@@ -301,13 +301,35 @@ public class PaymentOverview {
         then().statusCode(200);
     }
 
-    public void createPaymentProcess(String paymentMethodId, String product, Object amount){
+    public void createPaymentProcess(String paymentMethodId, String product, Object amount, int statusCode){
         String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
 
         response = given()
                 .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
                 .body(PaymentOverviewPayload.createPaymentProcess(paymentMethodId, product, amount).toString())
+                .post(url);
+        then().statusCode(statusCode);
+    }
+
+    public void createPaymentProcess(String paymentMethodId, String externalRefId, String product, int statusCode){
+        String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey("svs"))
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.createPaymentProcess(paymentMethodId, externalRefId, product).toString())
+                .post(url);
+        then().statusCode(statusCode);
+    }
+
+    public void createPaymentReqWithReport(String product, int amount, JSONObject reportReference){
+        String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey(product))
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.createPaymentRequest(product, amount, reportReference).toString())
                 .post(url);
         then().statusCode(200);
     }
@@ -325,7 +347,7 @@ public class PaymentOverview {
     }
 
     public String paymentMethodId(){
-        return lastResponse().jsonPath().getString("data.payment_method_id");
+        return lastResponse().jsonPath().getString("data.paymentMethodId");
     }
 
     public void refundPaymentRequest(String paymentReqId){

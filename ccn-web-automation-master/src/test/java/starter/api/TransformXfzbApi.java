@@ -1,14 +1,12 @@
 package starter.api;
 
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.Assert;
 import starter.utlis.ApiProperties;
-import starter.utlis.XFWBRequest;
-import starter.utlis.XFWBResponse;
-import starter.utlis.XFZBRequest;
+import starter.utlis.onerecord.XFWBResponse;
+import starter.utlis.onerecord.XFZBRequest;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -20,13 +18,11 @@ import static net.serenitybdd.rest.SerenityRest.then;
 
 public class TransformXfzbApi {
 
-    private String accessToken, url, response;
+    private String url, response;
     private RequestSpecification requestSpecification;
 
     public void setupApi(String typeUrl) throws IOException {
-        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given()
-//                .headers("Authorization", "Bearer " + accessToken,
                 .headers("Content-Type", "application/xml");
 
         if (typeUrl.equals("internal")){
@@ -47,7 +43,7 @@ public class TransformXfzbApi {
                 .body()
                 .asString();
 
-        FileWriter file = new FileWriter("src/test/java/starter/utlis/outputJson.json");
+        FileWriter file = new FileWriter("src/test/java/starter/utlis/onerecord/outputJson.json");
         file.write(response);
         file.close();
         if (typeUrl.equals("internal")) then().statusCode(200);
