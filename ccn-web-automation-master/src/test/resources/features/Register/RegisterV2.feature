@@ -32,7 +32,7 @@ Feature: Register V2
     And get response all register mail and cubeID
     And get response body cubeID, email, and status
 
-  Scenario: Put Identity LINC
+  Scenario: success to Put Identity LINC
     Given user want to put Identity LINC with input some required data
     And send the request
     Then get response 200
