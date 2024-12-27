@@ -1,14 +1,11 @@
 package starter.stepdefinitions.api;
 
-import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
 import net.thucydides.core.annotations.Steps;
 import org.json.JSONObject;
 import org.json.XML;
 import starter.api.TransformXfzbApi;
-import starter.utlis.XFWBXml;
-import starter.utlis.XFZBXml;
+import starter.utlis.onerecord.XFZBXml;
 
 import java.io.IOException;
 

@@ -162,10 +162,10 @@ public class PaymentDelegationSteps {
         }
         //create payment request
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest("tdsb", 201);
+        paymentOverview.createPaymentRequest("tdsb", 200);
         payId = paymentOverview.payId();
         paymentOverview.retrievePaymentRequest(List.of(payId));
-        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany2());
+        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany(2));
 
         delegationId = paymentDelegation.paymentDelegationId(0);
         paymentDelegation.deletePaymentDelegation(delegationId, 200);
@@ -243,7 +243,7 @@ public class PaymentDelegationSteps {
     @And("the payment will not being delegated to the delegated company in the future")
     public void thePaymentWillNotBeingDelegatedToTheDelegatedCompanyInTheFuture() throws IOException {
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentRequest("tdsb", 201);
+        paymentOverview.createPaymentRequest("tdsb", 200);
         paymentOverview.retrievePaymentRequest(List.of(paymentOverview.payId()));
         paymentOverview.verifyDelegateToCompany("");
     }
@@ -251,6 +251,6 @@ public class PaymentDelegationSteps {
     @And("the previous payment that has been delegated to company X still can be accessed in company X")
     public void thePreviousPaymentThatHasBeenDelegatedToCompanyXStillCanBeAccessedInCompanyX() {
         paymentOverview.retrievePaymentRequest(List.of(payId));
-        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany2());
+        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany(2));
     }
 }

@@ -4,8 +4,8 @@ import io.restassured.response.Response;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.Assert;
-import starter.utlis.LOResponse;
-import starter.utlis.UpdateLoPayload;
+import starter.utlis.onerecord.LOResponse;
+import starter.utlis.onerecord.UpdateLoPayload;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,13 +15,12 @@ import java.util.*;
 import static net.serenitybdd.rest.SerenityRest.*;
 
 public class UpdateLoAPI {
-    GetLoAPI getLoAPI = new GetLoAPI();
 
     Response response;
     JSONObject payload;
 
     public void updateLOReq(JSONObject payload, String id) throws IOException {
-        String accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
+        String accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/tokenOneRecord.json"), StandardCharsets.UTF_8);
 
         response = given()
                 .headers(

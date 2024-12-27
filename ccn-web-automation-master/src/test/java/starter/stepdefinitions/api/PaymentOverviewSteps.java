@@ -13,10 +13,7 @@ import starter.utlis.ApiProperties;
 import starter.utlis.Common;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Thread.sleep;
 
@@ -32,7 +29,7 @@ public class PaymentOverviewSteps {
     PaymentDelegation paymentDelegation;
 
     private List<String> payIds = null;
-    private String suppId, suppName, productId, productName, cardToken, companyEmail, delegationId, payId, statuses;
+    private String suppId, suppName, productId, productName, cardToken, companyEmail, delegationId, payId, statuses, paymentMethodId, externalRefId;
     private int companyNumber, amount;
 
     @When("user view detail of {string} with status: {string}")
@@ -112,7 +109,7 @@ public class PaymentOverviewSteps {
     }
 
     @And("there is no Active payment delegation for service A")
-    public void thereIsNoActivePaymentDelegationForServiceA() throws IOException {
+    public void thereIsNoActivePaymentDelegationForServiceA() {
         paymentDelegation.setToken(1);
         paymentDelegation.retrievePaymentDelegationSetting();
         if (!paymentDelegation.thereIsNoDelegationSetting()){
@@ -123,7 +120,7 @@ public class PaymentOverviewSteps {
 
     @When("user delegate the specific payment request to company X")
     public void userDelegateTheSpecificPaymentRequestToCompanyX() {
-        companyEmail = ApiProperties.emailCompany2();
+        companyEmail = ApiProperties.emailCompany(2);
         paymentOverview.delegatePaymentRequest(payId, companyEmail, ApiProperties.companyName2());
     }
 
@@ -247,16 +244,16 @@ public class PaymentOverviewSteps {
         payId = paymentOverview.payId();
     }
 
-    @Then("payment will remain in Outstanding status")
-    public void paymentWillRemainInOutstandingStatus() throws InterruptedException {
+    @Then("payment will remain in {string} status")
+    public void paymentWillRemainInOutstandingStatus(String status) throws InterruptedException {
         int count = 0;
         payIds = List.of(payId);
         do {
             Thread.sleep(10000);
             paymentOverview.retrievePaymentRequest(payIds);
             count ++;
-        } while ((!paymentOverview.paymentStatus().equals(List.of("OUTSTANDING").toString())) && (count < 5));
-        paymentOverview.verifyPaymentStatusInPaymentRequest("OUTSTANDING");
+        } while ((!paymentOverview.paymentStatus().equals(List.of(status).toString())) && (count < 5));
+        paymentOverview.verifyPaymentStatusInPaymentRequest(status);
     }
 
     @Then("payment will automatically changes to Expired")
@@ -390,13 +387,13 @@ public class PaymentOverviewSteps {
     @Then("value of Delegated To is company X")
     public void valueOfDelegatedToIsCompanyX() {
         paymentOverview.retrievePaymentRequest(List.of(payId));
-        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany1());
+        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany(1));
     }
 
     @When("user delegate payment Z of service A to company Y")
     public void userDelegatePaymentZOfServiceAToCompanyY() throws IOException {
         paymentOverview.setToken(companyNumber);
-        paymentOverview.delegatePaymentRequest(payId, ApiProperties.emailCompany3(), ApiProperties.companyName3());
+        paymentOverview.delegatePaymentRequest(payId, ApiProperties.emailCompany(3), ApiProperties.companyName3());
     }
 
     @And("payment request Z sent to company {int} with Outstanding or Upcoming status")
@@ -446,7 +443,7 @@ public class PaymentOverviewSteps {
     public void thereIsSIForServiceAInCompanyY() throws IOException {
         standingInstruction.setToken(1);
         standingInstruction.retrieveStandingInstruction("RECEIVED_PAYMENT");
-        companyEmail = ApiProperties.emailCompany2();
+        companyEmail = ApiProperties.emailCompany(2);
         if (!standingInstruction.thereIsSIForCompany(companyEmail)){
             standingInstruction.retrieveCardToken();
             cardToken = standingInstruction.cardToken();
@@ -576,7 +573,7 @@ public class PaymentOverviewSteps {
             payIds.add(payId);
             JSONObject paymentRequest = new JSONObject();
             JSONObject delegateTo = new JSONObject();
-            delegateTo.put("companyEmail", ApiProperties.emailCompany2());
+            delegateTo.put("companyEmail", ApiProperties.emailCompany(2));
             delegateTo.put("companyName", ApiProperties.companyName2());
             paymentRequest.put("delegateTo", delegateTo);
             paymentRequest.put("paymentRequestId", payId);
@@ -626,7 +623,7 @@ public class PaymentOverviewSteps {
             payIds.add(payId);
             JSONObject paymentRequest = new JSONObject();
             JSONObject delegateTo = new JSONObject();
-            delegateTo.put("companyEmail", ApiProperties.emailCompany1());
+            delegateTo.put("companyEmail", ApiProperties.emailCompany(1));
             delegateTo.put("companyName", ApiProperties.companyName1());
             paymentRequest.put("delegateTo", delegateTo);
             paymentRequest.put("paymentRequestId", payId);
@@ -723,11 +720,11 @@ public class PaymentOverviewSteps {
     }
 
     @Given("BC create payment request for processing payment")
-    public void bcCreatePaymentRequestForProcessingPayment() throws IOException {
+    public void bcCreatePaymentRequestForProcessingPayment() {
         paymentOverview.setToken(3);
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
-        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400);
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, 200);
         payId = paymentOverview.payId();
     }
 
@@ -744,5 +741,80 @@ public class PaymentOverviewSteps {
     @Then("payment will be refunded")
     public void paymentWillBeRefunded() {
         paymentOverview.verifyMessageBody("Successfully processed your refund request");
+    }
+
+    @Given("BC create payment request for processing payment with failed card account")
+    public void bcCreatePaymentRequestForProcessingPaymentWithFailedCardAccount() {
+        paymentOverview.setToken(4);
+        paymentOverview.retrieveCardDetail();
+        String paymentMethodId = paymentOverview.paymentMethodId();
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, 200);
+        payId = paymentOverview.payId();
+    }
+
+    @Given("BC create payment request for processing payment with failed refund account")
+    public void bcCreatePaymentRequestForProcessingPaymentWithFailedRefundAccount() {
+        paymentOverview.setToken(5);
+        paymentOverview.retrieveCardDetail();
+        String paymentMethodId = paymentOverview.paymentMethodId();
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, 200);
+        payId = paymentOverview.payId();
+    }
+
+    @Given("supplier create payment request with report reference")
+    public void supplierCreatePaymentRequestWithReportReference() {
+        paymentOverview.setToken(2);
+        JSONObject report = new JSONObject();
+        report.put("Flight Date", "22 Dec 2024");
+        report.put("Flight Number", "SQ2343");
+        paymentOverview.createPaymentReqWithReport("svs", 100, report);
+    }
+
+    @Then("payment will have a null expiredDateTime")
+    public void paymentWillHaveANullExpiredDateTime() {
+        paymentOverview.retrievePaymentRequest(List.of(payId));
+        paymentOverview.verifyExpiredDate(null);
+    }
+
+    @And("the payment will not changes to Expired status")
+    public void thePaymentWillNotChangesToExpiredStatus() {
+        paymentOverview.verifyPaymentStatusInRetrievePayReq("EXPIRED");
+    }
+
+    @Given("BC create payment request for user with different paymentMethodId")
+    public void bcCreatePaymentRequestForUserWithDifferentPaymentMethodId() {
+        paymentOverview.setToken(2);
+        paymentOverview.retrieveCardDetail();
+        paymentMethodId = paymentOverview.paymentMethodId();
+        paymentOverview.setToken(1);
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 100, 400);
+    }
+
+    @Then("error message can't create payment request appears")
+    public void errorMessageCanTCreatePaymentRequestAppears() {
+        paymentOverview.verifyMessageContains(paymentMethodId);
+        paymentOverview.verifyMessageContains("is not belongs to company");
+        paymentOverview.verifyMessageContains(ApiProperties.emailCompany(1));
+    }
+
+    @Given("BC create payment request with {string} external reference id")
+    public void bcCreatePaymentRequestWithExternalReferenceId(String arg0) {
+        externalRefId = "618-90021" + new Random().nextInt(100);
+        paymentOverview.setToken(1);
+        paymentOverview.retrieveCardDetail();
+        paymentMethodId = paymentOverview.paymentMethodId();
+        paymentOverview.createPaymentProcess(paymentMethodId, externalRefId, "svs", 200);
+    }
+
+    @When("BC create payment request with {string} external reference id again")
+    public void bcCreatePaymentRequestWithExternalReferenceIdAgain(String arg0) {
+        paymentOverview.createPaymentProcess(paymentMethodId, externalRefId, "svs", 400);
+    }
+
+    @Then("error message can't create payment request with same external ref id appears")
+    public void errorMessageCanTCreatePaymentRequestWithSameExternalRefIdAppears() {
+        paymentOverview.verifyMessageContains(externalRefId);
+        paymentOverview.verifyMessageContains("found in system cube email");
+        paymentOverview.verifyMessageContains(ApiProperties.emailCompany(1));
     }
 }

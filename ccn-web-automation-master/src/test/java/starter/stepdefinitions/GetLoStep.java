@@ -12,8 +12,8 @@ import starter.api.CreateLoAPI;
 import starter.api.GetLoAPI;
 import starter.api.TransformXfwbAPI;
 import starter.api.TransformXfzbApi;
-import starter.utlis.XFWBXml;
-import starter.utlis.XFZBXml;
+import starter.utlis.onerecord.XFWBXml;
+import starter.utlis.onerecord.XFZBXml;
 
 import java.io.IOException;
 import java.util.List;
@@ -111,26 +111,14 @@ public class GetLoStep {
 
     @And("Create logistic objects using predefined json and {string} url")
     public void createLogisticObjectsUsingPredefinedJsonAndUrl(String url) throws IOException {
-        switch (url){
-            case "internal":
-                id = createLoAPI.createLoRequestUrl("internal");
-                break;
-            case "external":
-                id = createLoAPI.createLoRequestUrl("external");
-        }
+        id = createLoAPI.createLoRequestUrl(url);
         waybillNumber = createLoAPI.getWaybillNumber();
         waybillPrefix = createLoAPI.getWaybillPrefix();
     }
 
     @When("Create logistic objects of fhl using predefined json and {string} url")
     public void createLogisticObjectsOfFhlUsingPredefinedJsonAndUrl(String url) throws IOException {
-        switch (url){
-            case "internal":
-                id = createLoAPI.createLoRequestUrl("internal");
-                break;
-            case "external":
-                id = createLoAPI.createLoRequestUrl("external");
-        }
+        id = createLoAPI.createLoRequestUrl(url);
     }
 
     @Then("verify mapping data {string} {string} {string}of BusinessHeaderDocument to data in response of HouseWaybill {string}")

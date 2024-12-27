@@ -6,7 +6,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.Assert;
 import starter.utlis.ApiProperties;
-import starter.utlis.UpdateLoPayload;
+import starter.utlis.onerecord.UpdateLoPayload;
 
 import java.io.File;
 import java.io.IOException;
