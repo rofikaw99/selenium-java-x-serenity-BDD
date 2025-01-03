@@ -5,12 +5,28 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
 import net.thucydides.core.annotations.Steps;
 import starter.pages.*;
+import starter.registerv2.api.CreateRegisterV2;
+import starter.registerv2.api.GetRegisteredAllUsersV2;
+import starter.registerv2.api.GetRegisteredByMailV2;
+import starter.registerv2.api.PUTIdentityLINC;
 import starter.utlis.Constants;
 
 public class RegistrationStep {
 
     @Steps
     RegistrationPage registrationPage;
+
+    @Steps
+    CreateRegisterV2 createRegisterV2;
+
+    @Steps
+    GetRegisteredByMailV2 getRegisteredByMailV2Page;
+
+    @Steps
+    PUTIdentityLINC pUTIdentityLINCPage;
+
+    @Steps
+    GetRegisteredAllUsersV2 getRegisteredAllUsersV2Steps;
 
     @Steps
     SubscriptionPage subscriptionPage;
@@ -220,5 +236,79 @@ public class RegistrationStep {
     @And("select city {string} on register page")
     public void selectCityOnRegisterPage(String city) {
         registrationPage.selectCityRegister(city);
+    }
+
+    @And("get response {string}")
+    public void getSuccessReturnStatusAPI(String responseCode) {
+        registrationPage.getResponseCode(responseCode);
+    }
+    @And("get validation response that the email that email already registered")
+    public void getValidationResponseMessageForAlreadyRegisteredEmail() {
+        createRegisterV2.getValidationResponseMessageForAlreadyRegisteredEmail();
+    }
+    @And("user want to register multiple mail to cube with multiple mail {string} {string} input")
+    public void ggivenUserWantsToRegisterMultipleEmails(String mail1, String mail2) {
+        createRegisterV2.givenUserWantsToRegisterMultipleEmails(mail1, mail2);
+    }
+    @And("send the request for register multiple mail to cube with multiple mail input {string} {string}")
+    public void whenSendRequestForMultipleEmails(String mail1, String mail2) {
+        createRegisterV2.whenSendRequestForMultipleEmails(mail1, mail2);
+    }
+    @And("user want to register new mail to cube with {string} input")
+    public void userWantRegisterNewMailCubeMailInput(String mail) {
+        createRegisterV2.givenUserWantsToRegister(mail);
+    }
+    @And("user want to register existing mail to cube with {string} input")
+    public void userWantRegisterNewMailCubeMailInput2(String mail) {
+        createRegisterV2.givenUserWantsToRegister(mail);
+    }
+    @And("send the request with {string} input")
+    public void sendReqUserWantRegisterNewMailCubeMailInput(String mail) {
+        createRegisterV2.whenSendRequestWithEmail(mail);
+    }
+    @Given("user want to get register by {string}")
+    public void userWantGetRegisterBy(String param) {
+        getRegisteredByMailV2Page.user_want_to_get_register_by(param);
+    }
+
+    @When("send the request to get register by cube ID")
+    public void sendTheRequestGetRegisterByCubeID() {
+        getRegisteredByMailV2Page.send_the_request_by_cubeID();
+    }
+    @And("get response email and status")
+    public void getResponseEmailAndStatus() {
+        getRegisteredByMailV2Page.get_email_and_status_response();
+    }
+    @And("get box url and site response")
+    public void getBoxUrlAndSiteResponse() {
+        getRegisteredByMailV2Page.get_box_url_and_site_response();
+    }
+    @When("send the request to get register by mail")
+    public void sendTheRequestGetRegisterByEmail() {
+        getRegisteredByMailV2Page.send_the_request_by_email();
+    }
+    @Given("user want to get all registered user V2")
+    public void userWantGetAllRegisteredUser() {
+        getRegisteredAllUsersV2Steps.user_want_to_get_all_registered_user();
+    }
+    @Given("send the get all registered user V2 request")
+    public void send_the_get_all_registered_user_V2_request() {
+        getRegisteredAllUsersV2Steps.send_the_request();
+    }
+    @And("get response all register mail and cubeID")
+    public void get_response_all_register_mail_and_cubeID() {
+        getRegisteredAllUsersV2Steps.get_response_all_register_mail_and_cubeID();
+    }
+    @And("get response body cubeID, email, and status")
+    public void get_response_body_cubeID_email_and_status() {
+        getRegisteredAllUsersV2Steps.get_response_body_cubeID_email_and_status();
+    }
+    @Given("user want to put Identity LINC with input some required data")
+    public void userWantPutIdentityLINCwithInputSomeRequiredData() {
+        pUTIdentityLINCPage.user_wants_to_put_identity_linc_with_input_some_required_data();
+    }
+    @And("get response body value message and log id")
+    public void getResponseBodyValueMessageLogId() {
+        PUTIdentityLINC.get_response_body_value_message_and_log_id();
     }
 }
