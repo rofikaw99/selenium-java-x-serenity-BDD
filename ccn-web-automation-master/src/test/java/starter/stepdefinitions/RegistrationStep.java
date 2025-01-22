@@ -97,6 +97,7 @@ public class RegistrationStep {
         Thread.sleep(1000);
         mailServiceYopmailPage.emailExchangeSender();
     }
+
     @Given("retrieve {string} emails from the mailbox")
     public void retrieve_emails_from_the_mailbox(String recipientMail) throws Exception {
         goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);

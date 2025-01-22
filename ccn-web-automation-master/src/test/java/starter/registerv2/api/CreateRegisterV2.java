@@ -41,26 +41,23 @@ public class CreateRegisterV2 {
         // Attach response to a thread-safe context for further validations
         TestContext.setResponse(response);
     }
-
+    @Test(dataProvider = "registrationData")
     public void givenUserWantsToRegisterMultipleEmails( String mail1, String mail2) {
         // Given user wants to register multiple mails to cube with mail inputs
         RestAssured.baseURI = "https://cubedev.ccnexchange.com/v2register/";
         System.out.println("User wants to register with emails: " + mail1 + ", " + mail2);
     }
-
+    @Test(dataProvider = "registrationData")
     public void whenSendRequestForMultipleEmails( String mail1, String mail2) {
         // When sending the request with multiple mail inputs "<mail1>" and "<mail2>"
         RequestSpecification request = RestAssured.given();
         request.header("Content-Type", "application/json");
-
         // Prepare the request body
         String requestBody = String.format("{\"emails\": [\"%s\", \"%s\"]}", mail1, mail2);
         request.body(requestBody);
-
         // Send the PUT request
         Response response = request.put();
         response.then().log().all(); // Log the response for debugging purposes
-
         // Attach response to a thread-safe context for further validations
         TestContext.setResponse(response);
     }
