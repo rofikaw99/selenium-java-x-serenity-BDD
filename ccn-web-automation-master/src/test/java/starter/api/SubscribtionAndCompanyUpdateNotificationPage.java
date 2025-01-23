@@ -22,13 +22,17 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
 
 
     public static final String BEARER_TOKEN = "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlFqZmFl...";
+    public static final String COMPANY_CUBE_ID = "5b11bba54a43425580405245c92cc40b";
+    public static final String MAIL_CUBE_ID = "8123418ce0024e7eae76550216815494";
+    public static final String DEV_UNSUBSCRIBE_SERVICE_PATH = "/"+MAIL_CUBE_ID+"/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/UserPlan/1/UnsubscribeUserPlan";
+    private static final String UPDATE_PROFILE_PATH = "/"+MAIL_CUBE_ID+"/service/72fd1d1f-a23f-4626-8bc5-9ca0ac8ba47f/UserProfile/1/UpdateUserProfile";
 
 
     public void getNotification(String contentType) {
         // Base URI
         RestAssured.baseURI = Constants.PUBLIC_PPD_URL;
         // Endpoint path
-        String endpoint = "/5b11bba54a43425580405245c92cc40b/document/";
+        String endpoint = "/"+COMPANY_CUBE_ID+"/document/";
         // Request body
         String requestBody = "{ \"contentType\": \""+contentType+"\" }";
         // Send POST request
@@ -49,7 +53,7 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
         // Base URI
         RestAssured.baseURI = Constants.PUBLIC_PPD_URL;
         // Endpoint path
-        String endpoint = "/5b11bba54a43425580405245c92cc40b/document/";
+        String endpoint = "/"+COMPANY_CUBE_ID+"/document/";
         // Request body
         String requestBody = "{ \"contentType\": \"" + contentType + "\", \"eventAction\": \"" + eventAction + "\" }";
         // Send POST request
@@ -117,6 +121,56 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
         }
     }
 
+    public void subscribePlan(String priceId) {
+        // Construct the request body
+        String requestBody = "{\"number_of_users\": 7, \"priceId\": \"" + priceId + "\", \"cancel_url\": \"https://dev.cubeforall.com/products/forwarders-shippers/nallian\", \"coupon_code\": null}";
+
+        // Set up RestAssured
+        RestAssured.baseURI = Constants.PUBLIC_DEV_URL;
+
+        // Create a request specification
+        RequestSpecification request = RestAssured.given();
+
+        // Add headers
+        request.header("Content-Type", "application/json");
+        request.header("Authorization", BEARER_TOKEN);
+
+        // Add the body
+        request.body(requestBody);
+
+        // Perform the POST request
+        Response response = request.post(DEV_UNSUBSCRIBE_SERVICE_PATH);
+
+        // Log the response
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+
+    public void triggerUnsubsExistingPlan(String userPlanID) {
+        // Construct the request body
+        String requestBody = "{\"userPlanId\": \"" + userPlanID + "\"}";
+
+        // Set up RestAssured
+        RestAssured.baseURI = Constants.PUBLIC_DEV_URL;
+
+        // Create a request specification
+        RequestSpecification request = RestAssured.given();
+
+        // Add headers
+        request.header("Content-Type", "application/json");
+        request.header("Authorization", BEARER_TOKEN);
+
+        // Add the body
+        request.body(requestBody);
+
+        // Perform the POST request
+        Response response = request.post(DEV_UNSUBSCRIBE_SERVICE_PATH);
+
+        // Log the response
+        System.out.println("Status Code: " + response.getStatusCode());
+        System.out.println("Response Body: " + response.getBody().asString());
+    }
+
     public void verifyCurrentQueues(String contentType) {
         // Base URL
         RestAssured.baseURI = Constants.SUPPORT_DEV_URL;
@@ -173,5 +227,56 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
         if (response.statusCode() != 200) {
             throw new RuntimeException("Failed with HTTP code: " + response.statusCode());
         }
+    }
+    public void triggerAddSubscriber(String user_plan_id, String member1) {
+        // Base URL
+        RestAssured.baseURI = Constants.PUBLIC_DEV_URL;
+
+        // Request body
+        String requestBody = String.format(
+                "{\n" +
+                        "    \"user_plan_id\": \"%s\",\n" +
+                        "    \"members\": [\n" +
+                        "        \"%s\"\n" +
+                        "    ]\n" +
+                        "}", user_plan_id, member1);
+
+        // Send POST request
+        Response response = RestAssured
+                .given()
+                .header("Content-Type", "application/json")
+                .header("Authorization", BEARER_TOKEN)
+                .body(requestBody)
+                .post("/"+MAIL_CUBE_ID+"/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/GeneralSubscription/1/UpdateMemberships");
+
+        // Print response for debugging
+        System.out.println("Response Code: " + response.statusCode());
+        System.out.println("Response Body: " + response.asString());
+
+        // Validate the response status code (example)
+        if (response.statusCode() != 200) {
+            throw new RuntimeException("Failed with HTTP code: " + response.statusCode());
+        }
+    }
+
+    public void subscribeInfoUpdate(String displayName) {
+        // Base URL API
+        String baseUrl = ""+Constants.PUBLIC_DEV_URL+"/"+MAIL_CUBE_ID+"/service/72fd1d1f-a23f-4626-8bc5-9ca0ac8ba47f/UserProfile/1/UpdateUserProfile";
+
+        String requestBody = "{ \"email\": \"test_071123_unreg1@yopmail.com\", " +
+                "\"name\": \"" + displayName + "\", " +
+                "\"company\": \"Kochi\", " +
+                "\"displayName\": \"" + displayName + "\"}";
+
+        Response response = given()
+                .baseUri(baseUrl)
+                .header("Content-Type", "application/json")
+                .header("Authorization", BEARER_TOKEN)
+                .body(requestBody)
+                .when()
+                .post();
+        // Print response for debugging
+        System.out.println("Response Code: " + response.statusCode());
+        System.out.println("Response Body: " + response.asString());
     }
 }
