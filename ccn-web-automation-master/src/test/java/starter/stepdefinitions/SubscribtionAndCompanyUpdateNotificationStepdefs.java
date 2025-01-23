@@ -32,21 +32,19 @@ public class SubscribtionAndCompanyUpdateNotificationStepdefs {
     public void user_want_to_update_the_subscription(){
 
     }
-    @When("trigger new subscription")
-    public void trigger_new_subscription(){
+    @When("trigger new subscription with {string}")
+    public void trigger_new_subscription(String priceId){
+        subscribtionAndCompanyUpdateNotificationPage.subscribePlan(priceId);
 
     }
-    @When("trigger add new subscriber")
-    public void trigger_add_new_subscriber(){
+    @When("trigger subscriber info update on user profile {string}")
+    public void trigger_subscriber_info_update_on_user_profile_display_name(String displayName){
+        subscribtionAndCompanyUpdateNotificationPage.subscribeInfoUpdate(displayName);
 
     }
-    @When("trigger subscriber info update on user profile display name")
-    public void trigger_subscriber_info_update_on_user_profile_display_name(){
-
-    }
-    @When("trigger canceled subscriber")
-    public void trigger_canceled_subscribe(){
-
+    @When("trigger canceled subscriber with {string}")
+    public void trigger_canceled_subscribe(String userPlanID){
+        subscribtionAndCompanyUpdateNotificationPage.triggerUnsubsExistingPlan(userPlanID);
     }
     @And("trigger company update")
     public void trigger_company_update(){
@@ -61,7 +59,12 @@ public class SubscribtionAndCompanyUpdateNotificationStepdefs {
         subscribtionAndCompanyUpdateNotificationPage.triggerRemoveSubscriber(userPlanID, member1, member2);
 
     }
-    @And("a few minutes later check on history queue in support app with {string} input param")
+    @When("trigger add new subscriber with {string} and {string}")
+    public void trigger_add_new_subscriber(String userPlanID, String member1){
+        subscribtionAndCompanyUpdateNotificationPage.triggerAddSubscriber(userPlanID, member1);
+
+    }
+    @And("a few moment later check on history queue in support app with {string} input param")
     public void a_few_minutes_later_check_on_history_queue_in_support_app_with_input_param(String documentID) throws Exception {
         subscribtionAndCompanyUpdateNotificationPage.findTheNotificationByDocumentID(documentID);
     }
