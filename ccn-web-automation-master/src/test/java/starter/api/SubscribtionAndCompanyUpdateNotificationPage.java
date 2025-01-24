@@ -22,17 +22,19 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
 
 
     public static final String BEARER_TOKEN = "Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IlFqZmFl...";
-    public static final String COMPANY_CUBE_ID = "5b11bba54a43425580405245c92cc40b";
-    public static final String MAIL_CUBE_ID = "8123418ce0024e7eae76550216815494";
-    public static final String DEV_UNSUBSCRIBE_SERVICE_PATH = "/"+MAIL_CUBE_ID+"/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/UserPlan/1/UnsubscribeUserPlan";
-    private static final String UPDATE_PROFILE_PATH = "/"+MAIL_CUBE_ID+"/service/72fd1d1f-a23f-4626-8bc5-9ca0ac8ba47f/UserProfile/1/UpdateUserProfile";
+    public static final String DEV_COMPANY_CUBE_ID = "5b11bba54a43425580405245c92cc40b";
+    public static final String DEV_MAIL_CUBE_ID = "8123418ce0024e7eae76550216815494";
+    public static final String PPD_MAIL_CUBE_ID = "8123418ce0024e7eae76550216815494";
+    public static final String DEV_UNSUBSCRIBE_SERVICE_PATH = "/"+DEV_MAIL_CUBE_ID+"/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/UserPlan/1/UnsubscribeUserPlan";
+    private static final String DEV_UPDATE_PROFILE_PATH = "/"+DEV_MAIL_CUBE_ID+"/service/72fd1d1f-a23f-4626-8bc5-9ca0ac8ba47f/UserProfile/1/UpdateUserProfile";
+    private static final String PPD_COMPANY_UPDATE_PATH = "/"+PPD_MAIL_CUBE_ID+"/service/c11a01d2-610e-4d87-8290-2a2aa3a52c58/Company/1/UpdateCompanyIdentity";
 
 
     public void getNotification(String contentType) {
         // Base URI
-        RestAssured.baseURI = Constants.PUBLIC_PPD_URL;
+        RestAssured.baseURI = Constants.PUBLIC_DEV_URL;
         // Endpoint path
-        String endpoint = "/"+COMPANY_CUBE_ID+"/document/";
+        String endpoint = "/"+DEV_COMPANY_CUBE_ID+"/document/";
         // Request body
         String requestBody = "{ \"contentType\": \""+contentType+"\" }";
         // Send POST request
@@ -51,9 +53,9 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
 
     public void getEventNotification(String contentType, String eventAction) {
         // Base URI
-        RestAssured.baseURI = Constants.PUBLIC_PPD_URL;
+        RestAssured.baseURI = Constants.PUBLIC_DEV_URL;
         // Endpoint path
-        String endpoint = "/"+COMPANY_CUBE_ID+"/document/";
+        String endpoint = "/"+DEV_COMPANY_CUBE_ID+"/document/";
         // Request body
         String requestBody = "{ \"contentType\": \"" + contentType + "\", \"eventAction\": \"" + eventAction + "\" }";
         // Send POST request
@@ -94,7 +96,7 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
 
     public void findTheNotificationByDocumentID(String documentID) {
         // Base URI for the API
-        String baseUrl = ""+Constants.PUBLIC_PPD_URL+"/support/database/find-all";
+        String baseUrl = ""+Constants.SUPPORT_DEV_URL+"/support/database/find-all";
         // Request body
         String requestBody = "{\n" +
                 "    \"databaseName\":\"notification\",\n" +
@@ -247,7 +249,7 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
                 .header("Content-Type", "application/json")
                 .header("Authorization", BEARER_TOKEN)
                 .body(requestBody)
-                .post("/"+MAIL_CUBE_ID+"/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/GeneralSubscription/1/UpdateMemberships");
+                .post("/"+DEV_MAIL_CUBE_ID+"/service/7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba/GeneralSubscription/1/UpdateMemberships");
 
         // Print response for debugging
         System.out.println("Response Code: " + response.statusCode());
@@ -261,7 +263,7 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
 
     public void subscribeInfoUpdate(String displayName) {
         // Base URL API
-        String baseUrl = ""+Constants.PUBLIC_DEV_URL+"/"+MAIL_CUBE_ID+"/service/72fd1d1f-a23f-4626-8bc5-9ca0ac8ba47f/UserProfile/1/UpdateUserProfile";
+        String baseUrl = Constants.PUBLIC_DEV_URL+DEV_UPDATE_PROFILE_PATH;
 
         String requestBody = "{ \"email\": \"test_071123_unreg1@yopmail.com\", " +
                 "\"name\": \"" + displayName + "\", " +
@@ -278,5 +280,70 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
         // Print response for debugging
         System.out.println("Response Code: " + response.statusCode());
         System.out.println("Response Body: " + response.asString());
+    }
+
+    public void companyUpdate(String address) {
+        // Base URI for the API
+        RestAssured.baseURI = Constants.PUBLIC_PPD_URL;
+
+        // Endpoint and payload
+        String endpoint = PPD_COMPANY_UPDATE_PATH;
+
+        String payload_ppd = String.format(
+                "{\n" +
+                        "    \"companyName\": \"SRIPCNCOMP\",\n" +
+                        "    \"companyMobileCode\": \"+65\",\n" +
+                        "    \"companyMobileNo\": \"6363463465\",\n" +
+                        "    \"companyEmail\": \"sripcncomp@yopmail.com\",\n" +
+                        "    \"companyRegistrationNo\": \"SRI001\",\n" +
+                        "    \"country\": \"SG\",\n" +
+                        "    \"station\": \"SIN\",\n" +
+                        "    \"postcode\": \"5332\",\n" +
+                        "    \"address\": \"%s\",\n" +
+                        "    \"iataCode\": \"\",\n" +
+                        "    \"cassCode\": \"\",\n" +
+                        "    \"type\": \"GSA\",\n" +
+                        "    \"contactDetail\": {\n" +
+                        "        \"designation\": \"sri\",\n" +
+                        "        \"email\": \"sripcn@yopmail.com\",\n" +
+                        "        \"contactName\": \"\",\n" +
+                        "        \"name\": \"ya\",\n" +
+                        "        \"mobileNo\": \"2142112412\",\n" +
+                        "        \"mobileCode\": \"+94\"\n" +
+                        "    },\n" +
+                        "    \"accountCode\": [],\n" +
+                        "    \"agentCodes\": [],\n" +
+                        "    \"isAirlineAppointedAgent\": false,\n" +
+                        "    \"isAgentCodes\": false,\n" +
+                        "    \"isSameAddress\": true,\n" +
+                        "    \"mailingAddress\": \"climber\",\n" +
+                        "    \"mailingPostcode\": \"5332\",\n" +
+                        "    \"operatingPort\": \"\",\n" +
+                        "    \"isPcnSubscription\": false,\n" +
+                        "    \"groupId\": \"65d33fd06b674d8ed32ce6d4\",\n" +
+                        "    \"groupName\": \"COMPANY\",\n" +
+                        "    \"owner\": \"system.csgagt9165d33fcd_cmb21@ccnexchange.com\",\n" +
+                        "    \"state\": \"UPDATED\",\n" +
+                        "    \"groupType\": \"COMPANY\",\n" +
+                        "    \"groupReferenceId\": \"65d33fcf6b674d8ed32ce6bd\",\n" +
+                        "    \"groupReferenceVersionId\": \"66ff509990e0ab601a7fbae2\",\n" +
+                        "    \"syncGroupId\": \"65d33fcf6b674d8ed32ce6bd\"\n" +
+                        "}", address);
+
+        // Send POST request
+        Response response = given()
+                .header("Content-Type", "application/json")
+                .header("Authorization", BEARER_TOKEN)
+                .body(payload_ppd)
+                .when()
+                .post(endpoint)
+                .then()
+                .assertThat()
+                .body("address", equalTo(address)) // Validate address matches input
+                .extract()
+                .response();
+
+        // Print response for debugging
+        System.out.println("Response: " + response.asString());
     }
 }

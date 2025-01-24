@@ -46,9 +46,9 @@ public class SubscribtionAndCompanyUpdateNotificationStepdefs {
     public void trigger_canceled_subscribe(String userPlanID){
         subscribtionAndCompanyUpdateNotificationPage.triggerUnsubsExistingPlan(userPlanID);
     }
-    @And("trigger company update")
-    public void trigger_company_update(){
-
+    @And("trigger company update {string}")
+    public void trigger_company_update(String address){
+        subscribtionAndCompanyUpdateNotificationPage.companyUpdate(address);
     }
     @When("check in current queue in support app for {string}")
     public void check_in_current_queue_in_support_app(String contentType){
