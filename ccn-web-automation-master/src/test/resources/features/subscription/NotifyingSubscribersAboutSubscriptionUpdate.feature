@@ -69,15 +69,15 @@ Feature: notifying subscribers about Subscription update
   @SN6
   Scenario Outline : notifying subscribers about company update
     Given user want to update the company
-    When  trigger company update
+    When  trigger company update "<address>"
     And check in current queue in support app for "<contentType>"
     Then notifying subscribers about Subscription update with input content type "<contentType>" param
     And check the response payload is correct with input "<contentType>" and "<eventAction>"
     And a few moment later check on history queue in support app with "<documentID>" input param
 
     Examples:
-      | contentType    | documentID               | eventAction |
-      | CompanyUpdate  | 6786010a9c40e14b15507d6c | Update      |
+      | contentType    | documentID               | eventAction | address |
+      | CompanyUpdate  | 6786010a9c40e14b15507d6c | Update      | yondu   |
 #
 #  Scenario : notifying subscribers about delete the company (for future use)
 #    Given user want to update the company
