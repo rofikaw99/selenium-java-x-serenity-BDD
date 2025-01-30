@@ -100,7 +100,7 @@ Feature: Payment Overview
     When user checkout 1 of "WITHDRAW" delegated payments
     Then there is no checkout button
 
-  @PO-API-11 @done
+  @PO-API-11 @failed
   Scenario: Delegated payment successfully auto-deducted when SI has been setup in the company
     Given user login as card admin or card user from company 2
     And payment delegation request for service A from company X to company Y has Active status
@@ -109,7 +109,7 @@ Feature: Payment Overview
     Then payment for service A of company X will be auto-deducted in company Y
     And payment will automatically changes to "PAID"
 
-  @PO-API-11.1 @done
+  @PO-API-11.1 @failed
   Scenario: Delegated payment successfully auto-deducted in 2 minutes when SI has been setup in the company
     Given user login as card admin or card user from company 2
     And payment delegation request for service A from company X to company Y has Active status
@@ -202,14 +202,14 @@ Feature: Payment Overview
     Then payment will remain in "OUTSTANDING" status
     And the payment by will be "" and autoDeduct is "false"
 
-  @expired-date @exp-date @failed
+  @expired-date @exp-date.1 @failed
   Scenario: Success set expired date of payment for 2 minutes later
     When supplier create payment request with expired date in 2 minutes
     Then payment will automatically changes to "OUTSTANDING"
     And in 2 minutes later
     And payment will automatically changes to "EXPIRED"
 
-  @expired-date.4 @exp-date @failed
+  @expired-date.4 @exp-date
   Scenario: Success verify the expired date is in 21 days if the field is not set
     When supplier create payment request without expired date
     Then payment will changes to Expired in 21 days
@@ -277,7 +277,7 @@ Feature: Payment Overview
     When supplier update payment request to "CANCELED" status
     Then payment will automatically changes to "CANCELED"
 
-  @update-pay.5 @done
+  @update-pay.5 @failed
   Scenario Outline: Error message appears when updating "CANCELED" payment
     Given supplier create payment request for "Outstanding" status
     And supplier update payment request to "CANCELED" status
@@ -288,7 +288,7 @@ Feature: Payment Overview
     |READY |
     |CANCELED|
 
-  @update-pay.5 @done
+  @update-pay.6
   Scenario Outline: Error message appears when updating "PAID" payment
     Given supplier create payment request for "Upcoming" status and achieved amount SI
     And supplier update payment request to "READY" status
@@ -299,28 +299,42 @@ Feature: Payment Overview
       |READY |
       |CANCELED|
 
-  @process-payment @re-run
+  @void-payment @re-run @bc
+  Scenario: BC process the payment from CubeForAll with reattempt true
+    Given BC create payment request for processing payment with reattempt "true"
+    Then payment will be created
+    And payment will automatically changes to "OUTSTANDING"
+
+  @void-payment @re-run @bc
+  Scenario: BC process the payment from CubeForAll with reattempt false
+    Given BC create payment request for processing payment with reattempt "false"
+    Then payment will be created
+    And payment will automatically changes to "FAILED"
+
+
+  @process-payment @re-run @bc
   Scenario: BC process the payment from CubeForAll
-    Given BC create payment request for processing payment
+#    Given account is a success account
+    And BC create payment request for processing payment
     Then payment will be created
     And payment will automatically changes to "PAID"
 
-  @process-payment @re-run
+  @process-payment @re-run @bc
   Scenario: BC process the payment from CubeForAll with failed card account
     Given BC create payment request for processing payment with failed card account
     Then payment will be created
     And payment will automatically changes to "FAILED"
 
-  @refund-payment @re-run
-  Scenario: BC process refund of payment from CubeForAll
+  @refund-payment @re-run @bc.1
+  Scenario: BC process refund of payment from CubeForAll with success refund account
     Given BC create payment request for processing payment
     And payment will automatically changes to "PAID"
     When BC process refund of the payment
     Then payment will be refunded
     And payment will automatically changes to "REFUNDED"
 
-  @refund-payment @re-run
-  Scenario: BC process refund of payment from CubeForAll
+  @refund-payment @re-run @bc
+  Scenario: BC process refund of payment from CubeForAll with failed refund account
     Given BC create payment request for processing payment with failed refund account
     And payment will automatically changes to "PAID"
     When BC process refund of the payment
@@ -330,19 +344,21 @@ Feature: Payment Overview
   @payment-report
   Scenario: Creating payment request with report reference
     Given supplier create payment request with report reference
+    #TO DO
+    Then report reference will appears in the merchant report
 
-  @exp-date-process
+  @exp-date-process @bc
   Scenario: BC process will not have an expiredDate and it will not be changed to Expired
     Given BC create payment request for processing payment
     Then payment will have a null expiredDateTime
     And the payment will not changes to Expired status
 
-  @cant-process
+  @cant-process @bc
   Scenario: Cannot create payment request with wrong paymentMethodId
     Given BC create payment request for user with different paymentMethodId
     Then error message can't create payment request appears
 
-  @same-ex-id
+  @same-ex-id @bc
   Scenario: Cannot create payment request with same external reference id
     Given BC create payment request with "A" external reference id
     When BC create payment request with "A" external reference id again

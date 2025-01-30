@@ -112,5 +112,11 @@ public class Constants {
             "618-23163276"
     );
 
+    public static String PUBLIC_DEV_URL = "https://cubedev.ccnexchange.com";
+    public static String PUBLIC_PPD_URL = "https://cubesandbox.ccnexchange.com";
+
+    public static String SUPPORT_DEV_URL = "http://cubehelp.dev.ccn";
+    public static String SUPPORT_PPD_URL = "http://cubehelp.sandbox.ccn";
+
 }
 

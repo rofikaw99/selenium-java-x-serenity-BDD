@@ -83,7 +83,7 @@ public class PaymentOverviewPayload {
         meta.put("items", list);
 
         payload = new JSONObject();
-        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
+        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(10000));
 //        payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01, 0001");
         payload.put("reference", product.toUpperCase() + Common.idForPayment());
         payload.put("totalChargeAmount", 1000);
@@ -130,9 +130,10 @@ public class PaymentOverviewPayload {
         if (product.equals("tdsb")) currency = "SGD";
         else if (product.equals("svs")) currency = "USD";
         payload = new JSONObject();
-        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
-        payload.put("reference", product.toUpperCase() + Common.idForPayment() +",TDSB01");
-        payload.put("totalChargeAmount", amount);
+        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100000));
+        payload.put("reference", product.toUpperCase() + Common.idForPayment());
+//        payload.put("totalChargeAmount", amount);
+        payload.put("totalChargeAmount", 500);
         payload.put("currency", currency);
         payload.put("status", "UPCOMING");
         payload.put("chargeDateTime", chargeDateTime);
@@ -216,7 +217,7 @@ public class PaymentOverviewPayload {
         return payload;
     }
 
-    public static JSONObject createPaymentProcess(String paymentMethodId, String product, Object amount){
+    public static JSONObject createPaymentProcess(String paymentMethodId, String product, Object amount, Boolean reattempt){
         JSONObject meta = new JSONObject();
 
         List<JSONObject> list = new ArrayList<>();
@@ -232,6 +233,7 @@ public class PaymentOverviewPayload {
         payload.put("totalChargeAmount", amount);
         payload.put("currency", "USD");
         payload.put("isPaymentProcess", true);
+        payload.put("paymentReattempt", reattempt);
         payload.put("paymentMethodId", paymentMethodId);
         payload.put("meta", meta);
         return payload;

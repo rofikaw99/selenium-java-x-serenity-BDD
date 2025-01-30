@@ -49,6 +49,17 @@ public class GetLoAPI {
         return response;
     }
 
+    public String getLORequestFullResponseAsString(String id) throws IOException {
+        setupApi();
+
+        response = requestSpecification
+                .get(id)
+                .then()
+                .extract().response().asString();
+        then().statusCode(200);
+        return response;
+    }
+
     public void getLoReq(String payload) throws IOException {
         setupApi();
         String url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/GetLogisticObject";
@@ -74,6 +85,9 @@ public class GetLoAPI {
     public void verifyWaybillPrefixEqualRequest(String waybillPrefix){
         Assert.assertEquals(XFWBResponse.waybillPrefix(new JSONObject(response)), waybillPrefix);
     }
+    public void verifyWaybillType(String type){
+        Assert.assertEquals(XFWBResponse.waybillType(new JSONObject(response)), type);
+    }
 
     public void getLORequestLoId(String id) throws IOException {
         payload.put("LO_ID", id);
@@ -83,15 +97,15 @@ public class GetLoAPI {
     }
 
     public void getLORequestLoWaybillPrefix(String waybillPrefix, String waybillNumber) throws IOException {
-        payload.put("waybillPrefix", waybillPrefix);
-        payload.put("waybillNumber", waybillNumber);
+        payload.put("masterWaybillPrefix", waybillPrefix);
+        payload.put("masterWaybillNumber", waybillNumber);
         payload.put("EMBEDDED", "true");
 
         getLoReq(payload.toString());
     }
 
     public void getLORequestLoWaybillNumber(String waybillNumber) throws IOException {
-        payload.put("waybillNumber", waybillNumber);
+        payload.put("masterWaybillNumber", waybillNumber);
         payload.put("EMBEDDED", "true");
 
         getLoReq(payload.toString());

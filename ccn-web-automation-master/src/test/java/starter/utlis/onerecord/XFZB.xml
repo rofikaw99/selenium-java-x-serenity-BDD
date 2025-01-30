@@ -17,7 +17,7 @@
         </ram:RecipientParty>
     </rsm:MessageHeaderDocument>
     <rsm:BusinessHeaderDocument>
-        <ram:ID>SIN7071527</ram:ID>
+        <ram:ID>SIN7072557</ram:ID>
         <ram:SignatoryConsignorAuthentication>
             <ram:Signatory>XXX</ram:Signatory>
         </ram:SignatoryConsignorAuthentication>
@@ -33,7 +33,7 @@
         <ram:IncludedTareGrossWeightMeasure unitCode="KGM">3270.2</ram:IncludedTareGrossWeightMeasure>
         <ram:TotalPieceQuantity>2</ram:TotalPieceQuantity>
         <ram:TransportContractDocument>
-            <ram:ID>618-37879062</ram:ID>
+            <ram:ID>111-37618281</ram:ID>
         </ram:TransportContractDocument>
         <ram:OriginLocation>
             <ram:ID>SIN</ram:ID>

@@ -42,7 +42,7 @@ public class TransformXfwbAPI {
                 .body()
                 .asString();
 
-        FileWriter file = new FileWriter("src/test/java/starter/utlis/outputJson.json");
+        FileWriter file = new FileWriter("src/test/java/starter/utlis/onerecord/outputJson.json");
         file.write(response);
         file.close();
         if (typeUrl.equals("internal")) then().statusCode(200);

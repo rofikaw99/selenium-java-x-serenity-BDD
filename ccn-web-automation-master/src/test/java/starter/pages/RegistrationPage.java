@@ -1,11 +1,17 @@
 package starter.pages;
 
+import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import net.serenitybdd.screenplay.targets.SearchableTarget;
 import net.serenitybdd.screenplay.ui.Dropdown;
 import net.serenitybdd.screenplay.ui.Select;
 import net.thucydides.core.pages.PageObject;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+
+import static io.restassured.RestAssured.given;
+import static net.serenitybdd.rest.SerenityRest.then;
 
 public class RegistrationPage extends PageObject {
 
@@ -79,6 +85,16 @@ public class RegistrationPage extends PageObject {
         $(dropdownCityRegister).sendKeys(city);
         $(dropdownCityRegister).sendKeys(Keys.ENTER);
     }
+    public void getResponseCode(String responseCode){
+        try {
+            int code = Integer.parseInt(responseCode);
+            then().statusCode(code);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid response code: " + responseCode, e);
+        }
+    }
+
+
     public void selectCountryRegister(String country){
         $(dropdownCountryRegister).click();
         $(dropdownCountryRegister).sendKeys(country);
