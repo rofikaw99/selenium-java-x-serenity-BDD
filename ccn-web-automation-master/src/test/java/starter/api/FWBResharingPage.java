@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.Assert;
+import starter.utlis.Constants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -373,7 +374,7 @@ public class FWBResharingPage {
     public void createDocShipmentStatusForShareVia(String contentType, String contentName) {
 
         // API endpoint
-        String endpoint = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
+        String endpoint = ""+Constants.PUBLIC_PPD_URL+"/fa077c220ff1404f8f71f1c5a05f4c8c/document";
         String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
 
         // Request body
