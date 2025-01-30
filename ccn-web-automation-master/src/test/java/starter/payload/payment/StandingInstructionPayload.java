@@ -8,6 +8,7 @@ public class StandingInstructionPayload {
 
     public static JSONObject retrieveCardToken(){
         payload = new JSONObject();
+        payload.put("cardDetail", true);
         return payload;
     }
 
@@ -15,6 +16,13 @@ public class StandingInstructionPayload {
         payload = new JSONObject();
         payload.put("cardDetail", isDetail);
         payload.put("userList", false);
+        return payload;
+    }
+
+    public static JSONObject retrieveCardToken(String isDetail, String userList){
+        payload = new JSONObject();
+        if (!isDetail.isEmpty()) payload.put("cardDetail", Boolean.parseBoolean(isDetail));
+        if (!userList.isEmpty()) payload.put("userList", Boolean.parseBoolean(userList));
         return payload;
     }
 

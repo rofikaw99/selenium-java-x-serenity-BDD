@@ -105,7 +105,7 @@ public class PaymentOverviewPayload {
         meta.put("items", list);
 
         payload = new JSONObject();
-        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100));
+        payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(10000));
         payload.put("reference", product.toUpperCase() + Common.idForPayment());
         payload.put("totalChargeAmount", amount);
         payload.put("currency", "USD");

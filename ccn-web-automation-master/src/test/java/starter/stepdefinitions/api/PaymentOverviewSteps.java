@@ -721,7 +721,7 @@ public class PaymentOverviewSteps {
 
     @Given("BC create payment request for processing payment")
     public void bcCreatePaymentRequestForProcessingPayment() {
-        paymentOverview.setToken(3);
+        paymentOverview.setToken(2);
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
         paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, 200);
