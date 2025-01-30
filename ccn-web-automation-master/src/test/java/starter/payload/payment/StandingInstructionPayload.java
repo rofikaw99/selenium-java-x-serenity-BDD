@@ -8,6 +8,7 @@ public class StandingInstructionPayload {
 
     public static JSONObject retrieveCardToken(){
         payload = new JSONObject();
+        payload.put("cardDetail", true);
         return payload;
     }
 

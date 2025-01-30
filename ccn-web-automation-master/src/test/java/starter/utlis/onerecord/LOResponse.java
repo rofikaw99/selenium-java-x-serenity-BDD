@@ -10,6 +10,18 @@ public class LOResponse {
     public static String id(JSONObject jsonObject){
         return jsonObject.getString("@id");
     }
+
+    public static JSONObject masterWaybill(JSONObject jsonObject){
+        return jsonObject.getJSONObject("cargo:masterWaybill");
+    }
+
+    public static String masterWaybill_waybillPrefix(JSONObject jsonObject){
+        return masterWaybill(jsonObject).getString("cargo:waybillPrefix");
+    }
+    public static String masterWaybill_waybillNumber(JSONObject jsonObject){
+        return masterWaybill(jsonObject).getString("cargo:waybillNumber");
+    }
+
     public static JSONObject arrivalLocation(JSONObject jsonObject){
         return jsonObject.getJSONObject("cargo:arrivalLocation");
     }

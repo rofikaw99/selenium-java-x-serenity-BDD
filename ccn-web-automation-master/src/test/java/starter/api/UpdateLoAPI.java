@@ -294,6 +294,14 @@ public class UpdateLoAPI {
         return response.getHeader("Location");
     }
 
+    public String getMasterPrefix(JSONObject response){
+        return LOResponse.masterWaybill_waybillPrefix(response);
+    }
+
+    public String getMasterWaybillNumber(JSONObject response){
+        return LOResponse.masterWaybill_waybillNumber(response);
+    }
+
     public void verifyHeightUnitCodeUpdated(JSONObject response) {
         Object expected = UpdateLoPayload.getHasValueOfHasOperation(payload, 1);
         String actual = LOResponse.WLI_DFR_height_unit_code(response);

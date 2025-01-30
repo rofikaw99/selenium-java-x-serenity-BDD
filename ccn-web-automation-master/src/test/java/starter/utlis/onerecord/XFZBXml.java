@@ -10,7 +10,7 @@ public class XFZBXml {
 
     static {
         try {
-            xmlPayload = new String(Files.readAllBytes(new File("src/test/java/starter/utlis/XFZB.xml").toPath()));
+            xmlPayload = new String(Files.readAllBytes(new File("src/test/java/starter/utlis/onerecord/XFZB.xml").toPath()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

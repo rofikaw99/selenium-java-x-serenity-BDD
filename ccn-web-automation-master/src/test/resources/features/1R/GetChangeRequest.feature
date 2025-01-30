@@ -1,4 +1,4 @@
-@lo
+@lo @change-req
 Feature: Get Change Request
 
   Background: Login and transform

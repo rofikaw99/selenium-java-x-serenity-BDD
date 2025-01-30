@@ -17,11 +17,13 @@ import static org.hamcrest.Matchers.*;
 
 public class CreateLoAPI {
     Response response;
-    String payload, url;
+    String payload, url, token;
+    JSONObject customPayload;
     RequestSpecification requestSpecification;
 
     public void setupApi(String typeUrl) throws IOException {
         payload = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/outputJson.json"), StandardCharsets.UTF_8);
+        token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given().headers(
                 "Content-Type", "application/json",
                 "Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000");
@@ -32,6 +34,7 @@ public class CreateLoAPI {
         }
         else if (typeUrl.equals("external")){
             url = ApiProperties.baseUrl() + "/logistics-objects";
+            requestSpecification.header("Authorization", "Bearer " + token);
         }
     }
 
@@ -42,6 +45,35 @@ public class CreateLoAPI {
                 .post(url);
         if (typeUrl.equals("internal")) then().statusCode(200);
         else if (typeUrl.equals("external")) then().statusCode(201);
+        return response.body().path("@id");
+    }
+
+    public JSONObject payload(){
+        return new JSONObject(payload);
+    }
+
+    public String modifyPayload(String key, String master) throws IOException {
+        setupApi("internal");
+        customPayload = new JSONObject(payload);
+        String changes = "";
+        switch (key){
+            case "masterWaybillNumber":
+                changes = XFWBResponse.changeWaybillNumber(customPayload);
+                break;
+            case "houseWaybillNumber":
+                changes = XFWBResponse.changeHouseWaybillNumber(customPayload);
+                XFWBResponse.changeMasterWaybillNumber(customPayload, master);
+                break;
+        }
+        return changes;
+    }
+
+    public String createLoRequestCustom() throws IOException {
+        setupApi("internal");
+        response = requestSpecification
+                .body(customPayload.toString())
+                .post(url);
+        then().statusCode(200);
         return response.body().path("@id");
     }
 
@@ -77,6 +109,16 @@ public class CreateLoAPI {
                 break;
             case "waybillNumber":
                 XFWBResponse.changeWaybillNumber(customPayload);
+                break;
+            case "masterWaybillNumber":
+                XFWBResponse.changeMasterWaybillNumber(customPayload);
+                break;
+            case "houseWaybillNumber":
+                XFWBResponse.changeHouseWaybillNumber(customPayload);
+                break;
+            case "houseMasterWaybillNumber":
+                XFWBResponse.changeMasterWaybillNumber(customPayload);
+                XFWBResponse.changeHouseWaybillNumber(customPayload);
                 break;
         }
 

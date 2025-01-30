@@ -32,7 +32,7 @@ public class UpdateLOStep {
     @Steps
     GetChangeRequestAPI getChangeRequestAPI;
 
-    String id, idTarget, idChangeRequest = "";
+    String id, idTarget, houseId, idChangeRequest, masterWaybill = "";
     Response response;
     Integer revision, index;
     Map<String, String> actualData = new HashMap<>();
@@ -717,7 +717,8 @@ public class UpdateLOStep {
 
     @And("user success create LO with new waybill number")
     public void userSuccessCreateLOWithNewWaybillNumber() throws IOException {
-        id = createLoAPI.createLORequest("waybillNumber");
+        masterWaybill = createLoAPI.modifyPayload("masterWaybillNumber", "");
+        id = createLoAPI.createLoRequestCustom();
     }
 
     @When("user update Other Customs Information")
@@ -1014,5 +1015,37 @@ public class UpdateLOStep {
         JSONObject jsonResponse = new JSONObject(response.asString());
         updateLoAPI.verifyPartyNameAdded(jsonResponse, "CNE");
         updateLoAPI.verifyPartyAddressAdded(jsonResponse, "CNE");
+    }
+
+    @And("user success create LO with new master and house waybill number")
+    public void userSuccessCreateLOWithNewMasterAndHouseWaybillNumber() throws IOException {
+        createLoAPI.modifyPayload("houseWaybillNumber", masterWaybill);
+        houseId = createLoAPI.createLoRequestCustom();
+    }
+
+    @And("the waybill type is {string}")
+    public void theWaybillTypeIs(String waybillType) {
+        getLoAPI.verifyWaybillType(waybillType);
+    }
+
+    @When("get logistic objects using masterWaybillNumber")
+    public void getLogisticObjectsUsingMasterWaybillNumber() throws IOException {
+        JSONObject resp = new JSONObject(response);
+        String masterPrefix = updateLoAPI.getMasterPrefix(resp);
+        String masterNumber = updateLoAPI.getMasterWaybillNumber(resp);
+        getLoAPI.getLORequestLoWaybillPrefix(masterPrefix, masterNumber);
+    }
+
+    @And("user success get LO for verifying")
+    public void userSuccessGetLOForVerifying() throws IOException {
+        getLoAPI.getLORequestFullResponseAsString(houseId);
+    }
+
+    @When("get logistic objects using {string} LO_ID")
+    public void getLogisticObjectsUsingLO_ID(String type) throws IOException {
+        if (!type.equals("master")) id = houseId;
+        List<String> ids = List.of(id.split("/"));
+        String idBody = ids.get(ids.size() - 1);
+        getLoAPI.getLORequestLoId(idBody);
     }
 }
