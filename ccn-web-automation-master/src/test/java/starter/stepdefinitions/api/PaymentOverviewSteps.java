@@ -721,10 +721,10 @@ public class PaymentOverviewSteps {
 
     @Given("BC create payment request for processing payment")
     public void bcCreatePaymentRequestForProcessingPayment() {
-        paymentOverview.setToken(3);
+        paymentOverview.setToken(1);
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
-        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, 200);
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, false,200);
         payId = paymentOverview.payId();
     }
 
@@ -748,7 +748,7 @@ public class PaymentOverviewSteps {
         paymentOverview.setToken(4);
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
-        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, 200);
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, false, 200);
         payId = paymentOverview.payId();
     }
 
@@ -757,7 +757,7 @@ public class PaymentOverviewSteps {
         paymentOverview.setToken(5);
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
-        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, 200);
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, false, 200);
         payId = paymentOverview.payId();
     }
 
@@ -787,7 +787,7 @@ public class PaymentOverviewSteps {
         paymentOverview.retrieveCardDetail();
         paymentMethodId = paymentOverview.paymentMethodId();
         paymentOverview.setToken(1);
-        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 100, 400);
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 100,  false, 400);
     }
 
     @Then("error message can't create payment request appears")
@@ -816,5 +816,14 @@ public class PaymentOverviewSteps {
         paymentOverview.verifyMessageContains(externalRefId);
         paymentOverview.verifyMessageContains("found in system cube email");
         paymentOverview.verifyMessageContains(ApiProperties.emailCompany(1));
+    }
+
+    @Given("BC create payment request for processing payment with reattempt {string}")
+    public void bcCreatePaymentRequestForProcessingPaymentWithReattempt(String reattempt) {
+        paymentOverview.setToken(4);
+        paymentOverview.retrieveCardDetail();
+        String paymentMethodId = paymentOverview.paymentMethodId();
+        paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, Boolean.valueOf(reattempt), 200);
+        payId = paymentOverview.payId();
     }
 }

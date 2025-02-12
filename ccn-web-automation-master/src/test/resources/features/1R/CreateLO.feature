@@ -12,7 +12,7 @@ Feature: Create LO
     And Verify there is id of LO in body response
     And verify the type value is "cargo:Waybill"
 
-  @create-lo-2
+  @create-lo-2 @failed
   Scenario: Success create logistic objects using external url
     Given user transform xfwb
     When Create logistic objects using predefined json and "external" url

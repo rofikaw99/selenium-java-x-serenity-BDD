@@ -123,7 +123,7 @@ public class PaymentOverview {
 
     public void createPaymentRequest(int amount, String chargeDateTime, String deductionDate, String expiredDate, String notes, int statusCode){
         String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
-        String product = "svs";
+        String product = "tdsb";
 
         response = given()
                 .header("x-api-key", ApiProperties.xApiKey(product))
@@ -273,7 +273,7 @@ public class PaymentOverview {
     }
 
     public void verifyErrorMessageBody(String message){
-        Assert.assertEquals(message, lastResponse().jsonPath().getString("error.message"));
+        Assert.assertEquals(message, lastResponse().jsonPath().getString("message"));
     }
 
     public void verifyExpiredDate(String date){
@@ -282,7 +282,7 @@ public class PaymentOverview {
     }
 
     public void verifyErrorMessageContains(String message){
-        Assert.assertTrue(lastResponse().jsonPath().getString("error.message").contains(message));
+        Assert.assertTrue(lastResponse().jsonPath().getString("message").contains(message));
     }
 
     public void verifyPaymentReqIdInCreatePayRecord(String payId){
@@ -301,13 +301,13 @@ public class PaymentOverview {
         then().statusCode(200);
     }
 
-    public void createPaymentProcess(String paymentMethodId, String product, Object amount, int statusCode){
+    public void createPaymentProcess(String paymentMethodId, String product, Object amount, Boolean reattempt, int statusCode){
         String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
 
         response = given()
                 .header("x-api-key", ApiProperties.xApiKey("svs"))
                 .contentType("application/json")
-                .body(PaymentOverviewPayload.createPaymentProcess(paymentMethodId, product, amount).toString())
+                .body(PaymentOverviewPayload.createPaymentProcess(paymentMethodId, product, amount, reattempt).toString())
                 .post(url);
         then().statusCode(statusCode);
     }
@@ -347,7 +347,8 @@ public class PaymentOverview {
     }
 
     public String paymentMethodId(){
-        return lastResponse().jsonPath().getString("data.paymentMethodId");
+        return lastResponse().jsonPath().get("data.cards[0].paymentMethodId");
+//                .getJSONArray("data").getJSONObject(0).getString("paymentMethodId");
     }
 
     public void refundPaymentRequest(String paymentReqId){

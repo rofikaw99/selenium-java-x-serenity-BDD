@@ -12,7 +12,7 @@ public class Register {
     String cubeId, emailCompany, baseUrl, baseUrlIp, baseUrlPayReq;
 
     public void setBase(){
-        baseUrl = ApiProperties.baseUrlExternal();
+        baseUrl = ApiProperties.baseUrlPayment();
     }
 
     public String cubeId(String email){

@@ -30,7 +30,7 @@ public class LoginAPI {
         JSONObject jsonObject = new JSONObject(response.getBody().asString());
         String accessToken = jsonObject.get("access_token").toString();
 
-        FileWriter file = new FileWriter("src/test/java/starter/utlis/tokenOneRecord.json");
+        FileWriter file = new FileWriter("src/test/java/starter/utlis/onerecord/tokenOneRecord.json");
         file.write(accessToken);
         file.close();
     }

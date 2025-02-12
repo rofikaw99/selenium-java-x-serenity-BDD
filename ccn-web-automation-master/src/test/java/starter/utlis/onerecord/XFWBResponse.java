@@ -4,10 +4,7 @@ import net.serenitybdd.core.SkipStepException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class XFWBResponse {
 
@@ -22,11 +19,33 @@ public class XFWBResponse {
     public static String waybillNumber(JSONObject jsonObject){
         return jsonObject.getString("cargo:waybillNumber");
     }
-    public static void changeWaybillNumber(JSONObject jsonObject){
+    public static String changeWaybillNumber(JSONObject jsonObject){
         Long waybillNumber = Long.valueOf(jsonObject.getString("cargo:waybillNumber"));
-        waybillNumber = waybillNumber + 1;
+        waybillNumber = waybillNumber + new Random().nextLong(10000);
         jsonObject.put("cargo:waybillNumber", String.valueOf(waybillNumber));
+        return String.valueOf(waybillNumber);
     }
+
+    public static String changeHouseWaybillNumber(JSONObject jsonObject){
+        String waybillNumber = jsonObject.getString("cargo:waybillNumber");
+        String pref = waybillNumber.substring(0, 3);
+        Long waybillNmb = Long.valueOf(waybillNumber.substring(4, waybillNumber.length() - 1));
+        waybillNmb = waybillNmb + new Random().nextLong(10000);
+        jsonObject.put("cargo:waybillNumber", pref + waybillNmb);
+        return pref + waybillNmb;
+    }
+
+    public static String changeMasterWaybillNumber(JSONObject jsonObject){
+        Long waybillNumber = Long.valueOf(jsonObject.getJSONObject("cargo:masterWaybill").getString("cargo:waybillNumber"));
+        waybillNumber = waybillNumber + new Random().nextLong(10000);
+        jsonObject.getJSONObject("cargo:masterWaybill").put("cargo:waybillNumber", String.valueOf(waybillNumber));
+        return String.valueOf(waybillNumber);
+    }
+
+    public static void changeMasterWaybillNumber(JSONObject jsonObject, String master){
+        jsonObject.getJSONObject("cargo:masterWaybill").put("cargo:waybillNumber", master);
+    }
+
     public static Map<String, Object> declaredValueForCarriage(JSONObject jsonObject){
         String key = "cargo:declaredValueForCarriage";
         if (jsonObject.has(key)) {
