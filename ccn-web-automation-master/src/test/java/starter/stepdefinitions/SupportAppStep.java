@@ -177,6 +177,13 @@ public class SupportAppStep {
             case "Company Cube ID":
                 input = Constants.CUBE_ID;
                 break;
+            case "Company Name":
+            case "Company UEN":
+                input = Constants.COMPANY_NAME_SEARCH;
+                break;
+            case "Company Domain":
+                input = Constants.COMPANY_DOMAIN;
+                break;
             default:
                 input = Constants.EMAIL_WITHOUT_COMPANY;
         }

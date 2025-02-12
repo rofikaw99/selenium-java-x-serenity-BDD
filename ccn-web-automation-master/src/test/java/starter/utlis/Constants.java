@@ -83,6 +83,8 @@ public class Constants {
     public static String SYSTEM_COMPANY_ADDRESS = "system.csgagt99kiex637nu459et1po_aae@ccnexchange.com";
     public static String COMPANY_PIMA = "csgagt99KIEX637nU459et1Po/AAE";
     public static String CUBE_ID = "559cdc3d065b434baa0fd5f6e3ab8f76";
+    public static String COMPANY_NAME_SEARCH = "EDEN";
+    public static String COMPANY_DOMAIN = "ccnexchange.com";
 
     public static String HQ = "headquarter_sq@yopmail.com";
 
@@ -113,10 +115,12 @@ public class Constants {
     );
 
     public static String PUBLIC_DEV_URL = "https://cubedev.ccnexchange.com";
+    public static String SUBSCRIPTION_DEV_URL = "http://subscription.dev.ccn";
+    public static String LOKALDIMAS = "https://66bf-182-5-199-154.ngrok-free.app";
     public static String PUBLIC_PPD_URL = "https://cubesandbox.ccnexchange.com";
 
-    public static String SUPPORT_DEV_URL = "http://cubehelp.dev.ccn";
-    public static String SUPPORT_PPD_URL = "http://cubehelp.sandbox.ccn";
+    public static String SUPPORT_DEV_URL = "http://cubehelp.dev.ccn/support/database/find-all";
+    public static String SUPPORT_PPD_URL = "http://cubehelp.sandbox.ccn/support/database/find-all";
 
 }
 
