@@ -82,7 +82,7 @@ Feature: Update House LO
     When user get change request using LO_ID
     Then success get change request
 
-  @house-9.1 @done
+  @house-9 @done
   Scenario: 9.1 Delete Special handling code
     And user success create LO
     And user success get LO
@@ -93,7 +93,7 @@ Feature: Update House LO
     When user get change request using LO_ID
     Then success get change request
 
-  @house-9.2 @done
+  @house-9 @done
   Scenario: 9.2 Add Special handling code
     And user success create LO
     And user success get LO
@@ -115,7 +115,7 @@ Feature: Update House LO
     When user get change request using LO_ID
     Then success get change request
 
-  @house-10.1 @done @failed-h
+  @house-10.1 @done @runs-h
   Scenario: 10. Delete Shipper name, address
     And user success create LO
     And user success get LO

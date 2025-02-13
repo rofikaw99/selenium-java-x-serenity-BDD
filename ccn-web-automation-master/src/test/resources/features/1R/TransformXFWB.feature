@@ -1,6 +1,9 @@
 @xfwb @transform-xfwb
 Feature: Transform XFWB
 
+  Background: Login and transform
+    Given user login SSO for one record
+
   @xfwb-2 @done
   Scenario Outline: Verify BusinessHeaderDocument path for every key data
     Given user transform xfwb using "internal" url
@@ -19,7 +22,7 @@ Feature: Transform XFWB
 
   @xfwb-3 @done
   Scenario Outline: Verify MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data of "<value>" to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
@@ -70,7 +73,7 @@ Feature: Transform XFWB
 
   @xfwb-5 @done
   Scenario Outline: Verify ConsigneeParty of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" "<child>" of ConsigneeParty to data in response of Waybill "<mapping>"
     Examples:
       | value | child | mapping |
@@ -120,7 +123,7 @@ Feature: Transform XFWB
 
   @xfwb-100 @done
   Scenario Outline: Verify AssociatedParty of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" "<child>" of AssociatedParty to data in response of Waybill "<mapping>"
     Examples:
       | value | child | mapping |
@@ -157,7 +160,7 @@ Feature: Transform XFWB
 
   @xfwb-8 @done
   Scenario Outline: Verify FinalDestinationLocation of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" of FinalDestinationLocation to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
@@ -187,7 +190,7 @@ Feature: Transform XFWB
 
   @xfwb-101 @done
   Scenario Outline: Verify UtilizedLogisticsTransportEquipment of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" of UtilizedLogisticsTransportEquipment to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
@@ -207,7 +210,7 @@ Feature: Transform XFWB
 
   @xfwb-11 @done
   Scenario Outline: Verify HandlingSSRInstructions of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" of HandlingSSRInstructions to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
@@ -225,7 +228,7 @@ Feature: Transform XFWB
 
   @xfwb-12 @done
   Scenario Outline: Verify IncludedAccountingNote of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" of IncludedAccountingNote to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
@@ -245,7 +248,7 @@ Feature: Transform XFWB
 
   @xfwb-103 @done
   Scenario Outline: Verify AssociatedReferenceDocument of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" of AssociatedReferenceDocument to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
@@ -264,7 +267,7 @@ Feature: Transform XFWB
 
   @xfwb-14
   Scenario Outline: Verify ApplicableLogisticsAllowanceCharge of MasterConsignment path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" of ApplicableLogisticsAllowanceCharge to data in response of Waybill "<mapping>"
     Examples:
       | value | mapping |
@@ -283,7 +286,7 @@ Feature: Transform XFWB
 
   @xfwb-16
   Scenario Outline: Verify IncludedMasterConsignmentItem of ApplicableRating path for every key data
-    Given user transform xfwb using "external" url
+    Given user transform xfwb using "internal" url
     Then verify mapping data "<value>" "<child>" "<child_2>" of IncludedMasterConsignmentItem to data in response of Waybill "<mapping>"
     Examples:
       | value | child | child_2 | mapping |
@@ -299,7 +302,7 @@ Feature: Transform XFWB
       | ApplicableFreightRateServiceCharge  | CategoryCode |   | rateClassCode |
       | ApplicableFreightRateServiceCharge  | ChargeableWeightMeasure || chargeableWeightForRate |
       | ApplicableFreightRateServiceCharge  | AppliedRate |            | rateCharge |
-      | ApplicableFreightRateServiceCharge  | AppliedAmount |          | rateCharge |
+      | ApplicableFreightRateServiceCharge  | AppliedAmount |          |  |
 
   @xfwb-17 @todo
   Scenario Outline: Verify ApplicableTotalRating of MasterConsignment path for every key data

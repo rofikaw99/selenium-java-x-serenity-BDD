@@ -132,8 +132,7 @@ public class PaymentOverviewPayload {
         payload = new JSONObject();
         payload.put("externalReferenceId", "EXT-123" + new Random().nextInt(100000));
         payload.put("reference", product.toUpperCase() + Common.idForPayment());
-//        payload.put("totalChargeAmount", amount);
-        payload.put("totalChargeAmount", 500);
+        payload.put("totalChargeAmount", amount);
         payload.put("currency", currency);
         payload.put("status", "UPCOMING");
         payload.put("chargeDateTime", chargeDateTime);
@@ -264,6 +263,30 @@ public class PaymentOverviewPayload {
         payload = new JSONObject();
 
         payload.put("paymentRequestId", paymentRequestId);
+        return payload;
+    }
+
+    public static JSONObject createPaymentPopup(String paymentMethod, String product){
+        JSONObject meta = new JSONObject();
+
+        List<JSONObject> list = new ArrayList<>();
+        JSONObject items = new JSONObject();
+        items.put("description", "item 1 description");
+        items.put("amount", 100);
+        list.add(items);
+        meta.put("items", list);
+
+        payload = new JSONObject();
+        payload.put("externalReferenceId",  "EXT-123" + new Random().nextInt(10000));
+        payload.put("reference", product.toUpperCase() + Common.idForPayment());
+        payload.put("totalChargeAmount", 100);
+        payload.put("currency", "USD");
+        payload.put("isPaymentProcess", true);
+        payload.put("paymentReattempt", true);
+        payload.put("paymentMethod", paymentMethod);
+        payload.put("meta", meta);
+        if (product.equals("tdsb")) payload.put("currency", "SGD");
+        else payload.put("currency", "USD");
         return payload;
     }
 }

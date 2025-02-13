@@ -19,6 +19,13 @@ public class StandingInstructionPayload {
         return payload;
     }
 
+    public static JSONObject retrieveCardToken(String isDetail, String userList){
+        payload = new JSONObject();
+        if (!isDetail.isEmpty()) payload.put("cardDetail", Boolean.parseBoolean(isDetail));
+        if (!userList.isEmpty()) payload.put("userList", Boolean.parseBoolean(userList));
+        return payload;
+    }
+
     public static JSONObject retrieveSI(String type){
         JSONObject sortBy = new JSONObject();
         sortBy.put("column", "createdAt");
