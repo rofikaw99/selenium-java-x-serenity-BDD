@@ -1,9 +1,11 @@
 package starter.api;
 
+import io.restassured.http.Method;
 import io.restassured.response.Response;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.Assert;
+import starter.utlis.ApiProperties;
 import starter.utlis.onerecord.LOResponse;
 import starter.utlis.onerecord.UpdateLoPayload;
 
@@ -21,15 +23,28 @@ public class UpdateLoAPI {
 
     public void updateLOReq(JSONObject payload, String id) throws IOException {
         String accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/tokenOneRecord.json"), StandardCharsets.UTF_8);
+        String url = ApiProperties.internalUrl() + "/service/" +ApiProperties.serviceId()+ "/OneRecord/1/UpdateLogisticObject";
+        response = given()
+                .headers(
+                        "Authorization", "Bearer " + accessToken,
+                        "x-api-key", ApiProperties.apiKey(),
+                        "Content-Type", "application/json")
+                .body(payload.toString())
+                .post(url);
+//                .patch(id);
+    }
+
+    public void createVerificationReq(JSONObject payload) throws IOException {
+        String accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/tokenOneRecord.json"), StandardCharsets.UTF_8);
+        String url = ApiProperties.internalUrl() + "/service/" + ApiProperties.serviceId() + "/OneRecord/1/createVerificationRequest";
 
         response = given()
                 .headers(
                         "Authorization", "Bearer " + accessToken,
                         "Content-Type", "application/json",
-                        "x-api-key", "5dfcf3da-8863-407b-89f1-8f12b08d2b33",
-                        "Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000")
+                        "x-api-key", ApiProperties.apiKey())
                 .body(payload.toString())
-                .patch(id);
+                .post(url);
     }
 
     public Integer getRevision(Response response) {
@@ -87,7 +102,11 @@ public class UpdateLoAPI {
     }
 
     public void verifySuccessUpdateLO(){
-        then().statusCode(201);
+        then().statusCode(200);
+    }
+
+    public void verifySuccessCreateVerReq(){
+        then().statusCode(200);
     }
 
     public void verifyPieceOfCountUpdated(JSONObject response, int index) {
@@ -115,6 +134,9 @@ public class UpdateLoAPI {
         UpdateLoPayload.updateActualData(payload, actualData.get("unitCode"), 0);
         UpdateLoPayload.updateActualData(payload, numericalValue, 2);
         UpdateLoPayload.updateRevision(payload, revision);
+        if (actualData.containsKey("verificationId")){
+            UpdateLoPayload.updateVerificationRequest(payload, actualData.get("verificationId"));
+        }
 
         // Send the update request
         updateLOReq(payload, idObjectTarget);
@@ -1045,4 +1067,21 @@ public class UpdateLoAPI {
         Object actual = LOResponse.waybillLineItems_slacForRate(response);
         Assert.assertEquals(expected, String.valueOf(actual));
     }
+
+    public void createVerificationRequest(Integer revision, String idObjectTarget) throws IOException {
+        // Load the JSON payload from the file
+        payload = new JSONObject(FileUtils.readFileToString(
+                new File("src/test/java/starter/payload/createVerificationRequest.json"),
+                StandardCharsets.UTF_8)
+        );
+
+        // Update the payload with the extracted details
+        UpdateLoPayload.updateLogisticsObjectId(payload, idObjectTarget);
+        UpdateLoPayload.updateRevision(payload, revision);
+
+        // Send the update request
+        createVerificationReq(payload);
+    }
 }
+
+

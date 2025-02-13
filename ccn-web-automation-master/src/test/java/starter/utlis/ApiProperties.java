@@ -68,6 +68,13 @@ public class ApiProperties {
     public static String emailUser(int number){
         return load().getProperty("email-user-" + number);
     }
+    public static String emailUser(String role){
+        if (role.equals("Card Admin")) return load().getProperty("email-card-admin");
+        else if (role.equals("Card User")) return load().getProperty("email-card-user");
+        else if (role.equals("User Card")) return load().getProperty("email-user-card");
+        else if (role.equals("User")) return load().getProperty("email-user");
+        return role;
+    }
     public static String companyName1(){
         return load().getProperty("company-name-1");
     }

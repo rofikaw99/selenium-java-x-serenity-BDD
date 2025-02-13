@@ -71,7 +71,7 @@ Feature: Update LO
     When user get change request using LO_ID
     Then success get change request
 
-  @3 @done
+  @3 @done @chargeableWeight
   Scenario: 3. Chargeable weight
     And user success create LO
     And user success get LO
@@ -115,7 +115,7 @@ Feature: Update LO
     When user get change request using LO_ID
     Then success get change request
 
-  @5 @dims
+  @5 @dims @run-sandbox
   Scenario: 5. Dims
     And user success create LO with new waybill number
     And user success get LO
@@ -127,7 +127,7 @@ Feature: Update LO
     Then success get change request
     And verify change request same as update dimensions
 
-  @5.1 @done @dims
+  @5.1 @done @dims @run-1
   Scenario: 5.1 Delete Dims
     And user success create LO with new waybill number
     And user success get LO
@@ -171,7 +171,7 @@ Feature: Update LO
     When user get change request using LO_ID
     Then success get change request
 
-  @7.1 @done @shipmentDesc
+  @7.1 @done @shipmentDesc @run-sandbox
   Scenario: 7.1 Delete Shipment description
     And user success create LO with new waybill number
     And user success get LO
@@ -259,7 +259,7 @@ Feature: Update LO
     When user get change request using LO_ID
     Then success get change request
 
-  @10
+  @10 @run-sandbox
   Scenario: 10. Shipper name, address
     And user success create LO with new waybill number
     And user success get LO

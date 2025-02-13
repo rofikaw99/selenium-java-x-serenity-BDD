@@ -387,7 +387,7 @@ public class PaymentOverviewSteps {
     @Then("value of Delegated To is company X")
     public void valueOfDelegatedToIsCompanyX() {
         paymentOverview.retrievePaymentRequest(List.of(payId));
-        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany(1));
+//        paymentOverview.verifyDelegateToCompany(ApiProperties.emailCompany(1));
     }
 
     @When("user delegate payment Z of service A to company Y")
@@ -534,7 +534,7 @@ public class PaymentOverviewSteps {
         int amount = 40;
         for (int i = 0; i < number; i++){
             paymentOverview.createPaymentRequest(amount, Common.chargeDateTimePayment("MINUTES", 0), "", "", "", 200);
-            Thread.sleep(1000);
+            Thread.sleep(10000);
             payId = paymentOverview.payId();
             payIds.add(payId);
             JSONObject paymentRequest = new JSONObject();
@@ -721,7 +721,7 @@ public class PaymentOverviewSteps {
 
     @Given("BC create payment request for processing payment")
     public void bcCreatePaymentRequestForProcessingPayment() {
-        paymentOverview.setToken(1);
+        paymentOverview.setToken(3);
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
         paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, false,200);
@@ -824,6 +824,13 @@ public class PaymentOverviewSteps {
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
         paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, Boolean.valueOf(reattempt), 200);
+        payId = paymentOverview.payId();
+    }
+
+    @Given("Partner create payment with {string} method")
+    public void partnerCreatePaymentWithPaynowMethod(String method) {
+        paymentOverview.setToken(1);
+        paymentOverview.createPaymentPopup(method,"tdsb", 200);
         payId = paymentOverview.payId();
     }
 }

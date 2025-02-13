@@ -105,4 +105,12 @@ public class UpdateLoPayload {
             hasRevision.put("@value", String.valueOf(revision));
         }
     }
+
+    public static void updateVerificationRequest(JSONObject payload, String id) {
+        List<JSONObject> verificationId = new ArrayList<>();
+        JSONObject ids = new JSONObject();
+        ids.put("@id", id);
+        verificationId.add(ids);
+        payload.put("api:hasVerificationRequest", verificationId);
+    }
 }

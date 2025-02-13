@@ -5,10 +5,10 @@ Feature: Get Change Request
     Given user login SSO for one record
     And user transform xfwb using "internal" url
     And user success create LO with new waybill number
-    And user success get LO
+    And user success get LO with string response
     When user update dimensions
 
-  @change-req
+  @change-req-1
   Scenario: Get Change Request using LO_ID
     When user get change request using LO_ID
     Then success get change request

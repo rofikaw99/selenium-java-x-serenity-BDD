@@ -491,6 +491,9 @@ public class TransformXfwb {
                 if (childReq.equals("AppliedRate")) transformXfwbPage.verifyApplicableFreightRateServiceChargeAppliedRate(jsonRequest, jsonResponse);
                 else if (childReq.equals("AppliedAmount")) transformXfwbPage.verifyApplicableFreightRateServiceChargeAppliedAmount(jsonRequest, jsonResponse);
                 break;
+            case "lineItemNumber":
+                transformXfwbPage.verifyIncludedMasterConsignmentItemSequenceNumeric(jsonRequest, jsonResponse);
+                break;
             default:
                 throw new SkipStepException("there is no searched key");
         }
@@ -581,7 +584,7 @@ public class TransformXfwb {
     public void verifyMappingDataOfHandlingOSIInstructionsToDataInResponseOfWaybill(String value, String mapping) {
         switch (mapping) {
             case "textualHandlingInstructions":
-                transformXfwbPage.verifyOSITextualHandlingInstructionsDescription(jsonRequest, "SSR", jsonResponse);
+                transformXfwbPage.verifyOSITextualHandlingInstructionsDescription(jsonRequest, "OSI", jsonResponse);
                 break;
             default:
                 throw new SkipStepException("there is no searched key");

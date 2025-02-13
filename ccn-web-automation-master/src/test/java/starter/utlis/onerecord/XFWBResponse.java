@@ -1,5 +1,6 @@
 package starter.utlis.onerecord;
 
+import io.cucumber.messages.JSON;
 import net.serenitybdd.core.SkipStepException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,11 +20,21 @@ public class XFWBResponse {
     public static String waybillNumber(JSONObject jsonObject){
         return jsonObject.getString("cargo:waybillNumber");
     }
+    public static String id(JSONObject jsonObject){
+        return jsonObject.getString("@id");
+    }
     public static String changeWaybillNumber(JSONObject jsonObject){
         Long waybillNumber = Long.valueOf(jsonObject.getString("cargo:waybillNumber"));
         waybillNumber = waybillNumber + new Random().nextLong(10000);
         jsonObject.put("cargo:waybillNumber", String.valueOf(waybillNumber));
         return String.valueOf(waybillNumber);
+    }
+    public static void changeWaybillNumber(JSONObject jsonObject, String newValue){
+        jsonObject.put("cargo:waybillNumber", String.valueOf(newValue));
+    }
+
+    public static void changeWaybillType(JSONObject jsonObject, String waybillType){
+        waybillType(jsonObject).put("cargo:code", waybillType);
     }
 
     public static String changeHouseWaybillNumber(JSONObject jsonObject){
@@ -48,31 +59,44 @@ public class XFWBResponse {
 
     public static Map<String, Object> declaredValueForCarriage(JSONObject jsonObject){
         String key = "cargo:declaredValueForCarriage";
+        Map<String, Object> result = new HashMap<>();
         if (jsonObject.has(key)) {
             JSONObject declaredValueForCarriage = jsonObject.getJSONObject(key);
-            return Map.of("content", declaredValueForCarriage.getInt("cargo:numericalValue"),
-                    "currencyID", declaredValueForCarriage.getString("cargo:currencyUnit"));
+            result.put("content", declaredValueForCarriage.getInt("cargo:numericalValue"));
+            if (declaredValueForCarriage.has("cargo:currencyUnit")) result.put("currencyID", declaredValueForCarriage.getString("cargo:currencyUnit"));
+            return result;
         }
         else throw new SkipStepException("there is no " + key + " in body response");
     }
     public static Map<String, Object> declaredValueForCustoms(JSONObject jsonObject){
         String key = "cargo:declaredValueForCustoms";
+        Map<String, Object> result = new HashMap<>();
         if (jsonObject.has(key)) {
             JSONObject declaredValueForCustoms = jsonObject.getJSONObject(key);
-            return Map.of("content", declaredValueForCustoms.getInt("cargo:numericalValue"),
-                    "currencyID", declaredValueForCustoms.getString("cargo:currencyUnit"));
+            result.put("content", declaredValueForCustoms.getInt("cargo:numericalValue"));
+            if (declaredValueForCustoms.has("cargo:currencyUnit")) result.put("currencyID", declaredValueForCustoms.getString("cargo:currencyUnit"));
+            return result;
         }
         else throw new SkipStepException("there is no " + key + " in body response");
     }
-    public static String insuredAmount(JSONObject jsonObject){
+    public static Map<String, Object> insuredAmount(JSONObject jsonObject){
         String key = "cargo:insuredAmount";
-        if (jsonObject.has(key))
-            return jsonObject.getString("cargo:insuredAmount");
+        Map<String, Object> result = new HashMap<>();
+        if (jsonObject.has(key)) {
+            JSONObject declaredValueForCustoms = jsonObject.getJSONObject(key);
+            result.put("content", declaredValueForCustoms.getInt("cargo:numericalValue"));
+            if (declaredValueForCustoms.has("cargo:currencyUnit")) result.put("currencyID", declaredValueForCustoms.getString("cargo:currencyUnit"));
+            return result;
+        }
         else throw new SkipStepException("there is no " + key + " in body response");
     }
-    public static String waybillType(JSONObject jsonObject){
+    public static JSONObject waybillType(JSONObject jsonObject){
         return jsonObject
-                .getJSONObject("cargo:waybillType")
+                .getJSONObject("cargo:waybillType");
+    }
+
+    public static String waybillType_Code(JSONObject jsonObject){
+        return waybillType(jsonObject)
                 .getString("cargo:code");
     }
 
@@ -82,7 +106,7 @@ public class XFWBResponse {
 
     public static Integer slacForRate(JSONObject jsonObject){
         String key = "cargo:slacForRate";
-        if (jsonObject.has(key)) return jsonObject.getInt(key);
+        if (waybillLineItems(jsonObject).has(key)) return waybillLineItems(jsonObject).getInt(key);
         else throw new SkipStepException("there is no " + key + " in body response");
     }
     public static String productCode(JSONObject jsonObject){
@@ -165,7 +189,7 @@ public class XFWBResponse {
                 .remove("cargo:pieceCountForRate");
     }
     public static JSONObject involvedParties(JSONObject jsonObject, String partyType){
-        JSONArray involvedParties =  jsonObject
+        JSONArray involvedParties =  shipment(jsonObject)
                 .getJSONArray("cargo:involvedParties");
         Map<String, JSONObject> result = new HashMap<>();
         for (int i = 0; i < involvedParties.length(); i++) {
@@ -553,6 +577,9 @@ public class XFWBResponse {
     public static List<Object> WaybillLineItems_PieceCountForRate(JSONObject jsonObject){
         return List.of(waybillLineItems(jsonObject).getInt("cargo:pieceCountForRate"));
     }
+    public static Integer WaybillLineItems_LineItemNumber(JSONObject jsonObject){
+        return waybillLineItems(jsonObject).getInt("cargo:lineItemNumber");
+    }
     public static List<Object> WaybillLineItems_GoodsDescriptionForRate(JSONObject jsonObject){
         return List.of(waybillLineItems(jsonObject).getString("cargo:goodsDescriptionForRate"));
     }
@@ -619,7 +646,121 @@ public class XFWBResponse {
     }
     public static Map<String, List<Object>> WLI_RateCharge(JSONObject jsonObject){
         JSONObject dfr = waybillLineItems(jsonObject).getJSONObject("cargo:rateCharge");
-        return Map.of("content", List.of(dfr.getInt("cargo:numericalValue")),
+        return Map.of("content", List.of(dfr.getFloat("cargo:numericalValue")),
                 "unitCode", List.of(dfr.getJSONObject("cargo:currencyUnit").getString("cargo:code")));
     }
+
+    //FOR HOUSE LO
+    public static JSONObject MasterWaybill(JSONObject jsonObject){
+        return jsonObject.getJSONObject("cargo:masterWaybill");
+    }
+
+    public static JSONObject Master_ArrivalLocation(JSONObject jsonObject){
+        String key = "cargo:arrivalLocation";
+        return MasterWaybill(jsonObject).getJSONObject(key);
+    }
+
+    public static String Master_ArrivalLocation_Codes(JSONObject jsonObject){
+        return Master_ArrivalLocation(jsonObject).getJSONArray("cargo:locationCodes").getJSONObject(0).getString("cargo:code");
+    }
+
+    public static String Master_ArrivalLocation_Name(JSONObject jsonObject){
+        return Master_ArrivalLocation(jsonObject).getJSONArray("cargo:locationNames").getJSONObject(0).getString("cargo:code");
+    }
+
+    public static JSONObject Master_DepartureLocation(JSONObject jsonObject){
+        String key = "cargo:departureLocation";
+        return MasterWaybill(jsonObject).getJSONObject(key);
+    }
+    public static String Master_DepartureLocation_Code(JSONObject jsonObject){
+        return Master_DepartureLocation(jsonObject).getJSONArray("cargo:locationCodes").getJSONObject(0)
+                .getString("cargo:code");
+    }
+    public static String Master_DepartureLocation_Name(JSONObject jsonObject){
+        return Master_DepartureLocation(jsonObject).getJSONArray("cargo:locationName").getJSONObject(0)
+                .getString("cargo:code");
+    }
+
+    public static JSONObject Master_WaybillLineItems(JSONObject jsonObject){
+        String key = "cargo:waybillLineItems";
+        return MasterWaybill(jsonObject).getJSONArray(key).getJSONObject(0);
+    }
+
+    public static Integer Master_WLI_LineItemNumber(JSONObject jsonObject){
+        String key = "cargo:lineItemNumber";
+        return Master_WaybillLineItems(jsonObject).getInt(key);
+    }
+
+    public static Integer Master_WLI_PieceCountForRate(JSONObject jsonObject){
+        String key = "cargo:pieceCountForRate";
+        return Master_WaybillLineItems(jsonObject).getInt(key);
+    }
+
+    public static JSONObject Master_Shipment(JSONObject jsonObject){
+        String key = "cargo:shipment";
+        return MasterWaybill(jsonObject).getJSONObject(key);
+    }
+
+    public static Map<String, Object> Master_TotalGrossWeight(JSONObject jsonObject){
+        JSONObject dfr = Master_Shipment(jsonObject).getJSONObject("cargo:totalGrossWeight");
+        return Map.of("content", dfr.getFloat("cargo:numericalValue"),
+                "unitCode", dfr.getJSONObject("cargo:unit").getString("cargo:code"));
+    }
+
+    public static String Master_WaybillType(JSONObject jsonObject){
+        String key = "cargo:waybillType";
+        return MasterWaybill(jsonObject).getJSONObject(key).getString("cargo:code");
+    }
+
+    public static String Master_WaybillPrefix(JSONObject jsonObject){
+        return MasterWaybill(jsonObject).getString("cargo:waybillPrefix");
+    }
+    public static String Master_WaybillNumber(JSONObject jsonObject){
+        return MasterWaybill(jsonObject).getString("cargo:waybillNumber");
+    }
+
+    public static JSONArray Master_Shipment_Pieces(JSONObject jsonObject){
+        return Master_Shipment(jsonObject).getJSONArray("cargo:pieces");
+    }
+
+    public static String Master_S_Pieces_ID(JSONObject jsonObject, Integer index){
+        return Master_Shipment_Pieces(jsonObject).getJSONObject(index).getString("@id");
+    }
+
+    public static JSONObject Master_S_P_InvolvedInActions(JSONObject jsonObject, Integer index){
+        return Master_Shipment_Pieces(jsonObject).getJSONObject(index).getJSONObject("cargo:involvedInActions");
+    }
+
+    public static String Master_S_P_InvolvedInActions_ID(JSONObject jsonObject, Integer index){
+        return Master_S_P_InvolvedInActions(jsonObject, index).getString("@id");
+    }
+
+    public static JSONObject Master_S_P_IIA_LoadingType(JSONObject jsonObject, Integer index){
+        return Master_S_P_InvolvedInActions(jsonObject, index).getJSONObject("cargo:loadingType");
+    }
+
+    public static String Master_S_P_IIA_LoadingType_Code(JSONObject jsonObject, Integer index){
+        return Master_S_P_IIA_LoadingType(jsonObject, index).getString("cargo:code");
+    }
+
+    public static JSONArray Shipment_Pieces(JSONObject jsonObject){
+        return shipment(jsonObject).getJSONArray("cargo:pieces");
+    }
+
+    public static String S_Pieces_ID(JSONObject jsonObject, Integer index){
+        return Shipment_Pieces(jsonObject).getJSONObject(index).getString("@id");
+    }
+
+    public static JSONObject S_Pieces_InvolvedInActions(JSONObject jsonObject, Integer index){
+        return Shipment_Pieces(jsonObject).getJSONObject(index).getJSONObject("cargo:involvedInActions");
+    }
+
+    public static JSONObject S_P_InvolvedInActions_LoadingType(JSONObject jsonObject, Integer index){
+        return S_Pieces_InvolvedInActions(jsonObject, index).getJSONObject("cargo:loadingType");
+    }
+
+    public static String S_P_IIA_loadingType_Code(JSONObject jsonObject, Integer index){
+        return S_P_InvolvedInActions_LoadingType(jsonObject, index).getString("cargo:code");
+    }
+
 }

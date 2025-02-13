@@ -83,9 +83,7 @@ public class GetLoStep {
 
     @When("get logistic objects using LO_ID")
     public void getLogisticObjectsUsingLO_ID() throws IOException {
-        List<String> ids = List.of(id.split("/"));
-        String idBody = ids.get(ids.size() - 1);
-        getLoAPI.getLORequestLoId(idBody);
+        getLoAPI.getLORequestLoId(id);
     }
 
     @When("get logistic objects using waybillNumber")
@@ -121,68 +119,10 @@ public class GetLoStep {
         id = createLoAPI.createLoRequestUrl(url);
     }
 
-    @Then("verify mapping data {string} {string} {string}of BusinessHeaderDocument to data in response of HouseWaybill {string}")
-    public void verifyMappingDataOfBusinessHeaderDocumentToDataInResponseOfHouseWaybill(String key, String subkey1, String subkey2, String keyResponse) {
-        switch (keyResponse){
-            case "waybillNumber":
-                transformXfzbApi.verifyWaybillNumber(jsonXml, responseJson);
-                break;
-            case "consignorDeclarationSignature":
-                transformXfzbApi.verifyConsignorDeclarationSignature(jsonXml, responseJson);
-                break;
-            case "carrierDeclarationDate":
-                transformXfzbApi.verifyCarrierDeclarationDate(jsonXml, responseJson);
-                break;
-            case "carrierDeclarationSignature":
-                transformXfzbApi.verifyCarrierDeclarationSignature(jsonXml, responseJson);
-                break;
-            case "carrierDeclarationPlace":
-                transformXfzbApi.verifyCarrierDeclarationPlace(jsonXml, responseJson);
-                break;
-        }
-    }
-
     @Then("get logistic objects of FHL using ID of response")
     public void getLogisticObjectsOfFHLUsingIDOfResponse() throws IOException {
         jsonXml = XML.toJSONObject(XFZBXml.xmlPayload);
         responseJson = getLoAPI.getLORequest(id);
     }
 
-    @Then("verify mapping data {string} {string} {string}of MasterConsignment to data in response of HouseWaybill {string}")
-    public void verifyMappingDataOfMasterConsignmentToDataInResponseOfHouseWaybill(String arg0, String arg1, String arg2, String keyResponse) {
-        switch (keyResponse){
-            case "declaredValueForCarriage":
-                transformXfzbApi.verifyDeclaredValueForCarriage(jsonXml, responseJson);
-                break;
-            case "declaredValueForCustoms":
-                transformXfzbApi.verifyDeclaredValueForCustoms(jsonXml, responseJson);
-                break;
-            case "insuredAmount":
-                transformXfzbApi.verifyInsuredAmount(jsonXml, responseJson);
-                break;
-            case "weightValuationIndicator":
-                transformXfzbApi.verifyWeightValuationIndicator(jsonXml, responseJson);
-                break;
-            case "otherChargesIndicator":
-                transformXfzbApi.verifyOtherChargesIndicator(jsonXml, responseJson);
-                break;
-            case "totalGrossWeight":
-                transformXfzbApi.verifyTotalGrossWeight(jsonXml, responseJson);
-                break;
-            case "slacForRate":
-                transformXfzbApi.verifySlacForRate(jsonXml, responseJson);
-                break;
-            case "Goodsdescriptionforrate":
-                transformXfzbApi.verifyGoodsDescriptionForRate(jsonXml, responseJson);
-                break;
-            case "departureLocation":
-                transformXfzbApi.verifyDepartureLocation(jsonXml, responseJson);
-                break;
-            case "arrivalLocation":
-                transformXfzbApi.verifyArrivalLocation(jsonXml, responseJson);
-                break;
-            default:
-                throw new PendingException("there is no key response");
-        }
-    }
 }

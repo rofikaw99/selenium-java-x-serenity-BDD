@@ -123,7 +123,7 @@ public class PaymentOverview {
 
     public void createPaymentRequest(int amount, String chargeDateTime, String deductionDate, String expiredDate, String notes, int statusCode){
         String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
-        String product = "tdsb";
+        String product = "svs";
 
         response = given()
                 .header("x-api-key", ApiProperties.xApiKey(product))
@@ -332,6 +332,17 @@ public class PaymentOverview {
                 .body(PaymentOverviewPayload.createPaymentRequest(product, amount, reportReference).toString())
                 .post(url);
         then().statusCode(200);
+    }
+
+    public void createPaymentPopup(String paymentMethod, String product, int statusCode){
+        String url = baseUrlPayReq + "/Payment/1/CreatePaymentRequest";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey(product))
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.createPaymentPopup(paymentMethod, product).toString())
+                .post(url);
+        then().statusCode(statusCode);
     }
 
     public void retrieveCardDetail(){
