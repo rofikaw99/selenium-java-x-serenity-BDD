@@ -21,7 +21,7 @@ public class TransformXfwbAPI {
     RequestSpecification requestSpecification;
 
     public void setupApi(String typeUrl) throws IOException {
-//        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/tokenOneRecord.json"), StandardCharsets.UTF_8);
+        accessToken = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given()
                 .headers("Content-Type", "application/xml");
 
@@ -30,6 +30,7 @@ public class TransformXfwbAPI {
             requestSpecification.headers("x-api-key", ApiProperties.apiKey());
         } else if (typeUrl.equals("external")){
             url = ApiProperties.baseUrl() + "/transformXFWB3";
+            requestSpecification.header("Authorization", "Bearer " + accessToken);
         }
     }
     public String transformXfwb(String payload, String typeUrl) throws IOException {
@@ -452,6 +453,9 @@ public class TransformXfwbAPI {
     public void verifyIncludedMasterConsignmentItemGrossWeightForRate(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.AR_IMCI_GrossWeightMeasure(jsonXml), XFWBResponse.WaybillLineItems_GrossWeightForRate(jsonObject));
     }
+    public void verifyIncludedMasterConsignmentItemSequenceNumeric(JSONObject jsonXml, JSONObject jsonObject){
+        Assert.assertEquals((Integer) 1, XFWBResponse.WaybillLineItems_LineItemNumber(jsonObject));
+    }
     public void verifyIncludedMasterConsignmentItemGrossVolumeMeasure(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.AR_IMCI_GrossVolumeMeasure(jsonXml), XFWBResponse.WLI_DimensionsForRate_Volume(jsonObject));
     }
@@ -480,7 +484,7 @@ public class TransformXfwbAPI {
         Assert.assertEquals(XFWBRequest.AR_IMCI_AFRSC_ChargeableWeightMeasure(jsonXml), XFWBResponse.WLI_ChargeableWeightForRate(jsonObject));
     }
     public void verifyApplicableFreightRateServiceChargeAppliedRate(JSONObject jsonXml, JSONObject jsonObject){
-        Assert.assertEquals(XFWBRequest.AR_IMCI_AFRSC_AppliedRate(jsonXml), XFWBResponse.WLI_RateCharge(jsonObject));
+        Assert.assertEquals(XFWBRequest.AR_IMCI_AFRSC_AppliedRate(jsonXml), XFWBResponse.WLI_RateCharge(jsonObject).get("content"));
     }
     public void verifyApplicableFreightRateServiceChargeAppliedAmount(JSONObject jsonXml, JSONObject jsonObject){
         Assert.assertEquals(XFWBRequest.AR_IMCI_AFRSC_AppliedAmount(jsonXml), XFWBResponse.WLI_RateCharge(jsonObject));

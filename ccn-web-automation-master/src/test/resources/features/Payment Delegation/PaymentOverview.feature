@@ -20,8 +20,8 @@ Feature: Payment Overview
     Then payment status changes to "PAID" in My Payment tab menu
     Examples:
     |number|
-    | 1    |
-    | 2    |
+#    | 1    |
+    |   5  |
 
   @PO-API-3 @done
   Scenario Outline: User able to pay Outstanding payment that has been delegated
@@ -363,3 +363,15 @@ Feature: Payment Overview
     Given BC create payment request with "A" external reference id
     When BC create payment request with "A" external reference id again
     Then error message can't create payment request with same external ref id appears
+
+  @popup
+  Scenario: Partner create payment with giro method
+    Given Partner create payment with "giro" method
+    Then payment will be created
+    And payment will automatically changes to "NOT_AVAILABLE"
+
+  @popup
+  Scenario: Partner create payment with paynow method
+    Given Partner create payment with "paynow" method
+    Then payment will be created
+    And payment will automatically changes to "OUTSTANDING"

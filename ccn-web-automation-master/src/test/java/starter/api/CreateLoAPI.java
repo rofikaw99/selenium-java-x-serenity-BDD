@@ -22,7 +22,6 @@ public class CreateLoAPI {
     RequestSpecification requestSpecification;
 
     public void setupApi(String typeUrl) throws IOException {
-        payload = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/outputJson.json"), StandardCharsets.UTF_8);
         token = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/tokenOneRecord.json"), StandardCharsets.UTF_8);
         requestSpecification = given().headers(
                 "Content-Type", "application/json",
@@ -40,6 +39,7 @@ public class CreateLoAPI {
 
     public String createLoRequestUrl(String typeUrl) throws IOException {
         setupApi(typeUrl);
+        payload();
         response = requestSpecification
                 .body(payload)
                 .post(url);
@@ -48,28 +48,33 @@ public class CreateLoAPI {
         return response.body().path("@id");
     }
 
-    public JSONObject payload(){
+    public JSONObject payload() throws IOException {
+        payload = FileUtils.readFileToString(new File("src/test/java/starter/utlis/onerecord/outputJson.json"), StandardCharsets.UTF_8);
         return new JSONObject(payload);
     }
 
-    public String modifyPayload(String key, String master) throws IOException {
+    public JSONObject modifyPayload(JSONObject customPayload, String key, String newValue) throws IOException {
         setupApi("internal");
-        customPayload = new JSONObject(payload);
-        String changes = "";
         switch (key){
             case "masterWaybillNumber":
-                changes = XFWBResponse.changeWaybillNumber(customPayload);
+                if (newValue.isEmpty()) XFWBResponse.changeMasterWaybillNumber(customPayload);
+                else XFWBResponse.changeMasterWaybillNumber(customPayload, newValue);
                 break;
             case "houseWaybillNumber":
-                changes = XFWBResponse.changeHouseWaybillNumber(customPayload);
-                XFWBResponse.changeMasterWaybillNumber(customPayload, master);
+                if (newValue.isEmpty()) XFWBResponse.changeHouseWaybillNumber(customPayload);
+                else XFWBResponse.changeWaybillNumber(customPayload, newValue);
+                break;
+            case "waybillNumber":
+                if (newValue.isEmpty()) XFWBResponse.changeWaybillNumber(customPayload);
+                else XFWBResponse.changeWaybillNumber(customPayload, newValue);
+            case "waybillType":
+                XFWBResponse.changeWaybillType(customPayload, newValue);
                 break;
         }
-        return changes;
+        return customPayload;
     }
 
-    public String createLoRequestCustom() throws IOException {
-        setupApi("internal");
+    public String createLoRequestCustom(JSONObject customPayload) throws IOException {
         response = requestSpecification
                 .body(customPayload.toString())
                 .post(url);
@@ -79,7 +84,7 @@ public class CreateLoAPI {
 
     public String createLORequest(String key) throws IOException {
         setupApi("internal");
-        JSONObject customPayload = new JSONObject(payload);
+        JSONObject customPayload = payload();
         switch (key){
             case "pieceCountForRate" :
                 XFWBResponse.removePieceCountForRate(customPayload);

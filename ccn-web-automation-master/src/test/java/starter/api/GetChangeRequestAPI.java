@@ -28,12 +28,24 @@ public class GetChangeRequestAPI {
                 "Content-Type", "application/json",
                 "Cookie", "BIGipServerPPD_Cube_80=4006088876.20480.0000");
 
-        url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/getChangeRequest";
+        url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/";
         requestSpecification.headers("x-api-key", ApiProperties.apiKey());
     }
 
     public Response getChangeRequest(String payload) throws IOException {
         setupApi();
+
+        url = url + "getChangeRequest";
+        response = requestSpecification
+                .body(payload)
+                .post(url);
+
+        return response;
+    }
+
+    public Response getVerificationRequest(String payload) throws IOException {
+        setupApi();
+        url = url + "getVerificationRequest";
 
         response = requestSpecification
                 .body(payload)
@@ -52,6 +64,11 @@ public class GetChangeRequestAPI {
         return getChangeRequest(payload.toString());
     }
 
+    public Response getVerUsingVerificationReqId(String id) throws IOException {
+        payload.put("verificationRequestId", id);
+        return getVerificationRequest(payload.toString());
+    }
+
     public void successGetChangeRequest(){
         then().statusCode(200);
     }
@@ -60,8 +77,19 @@ public class GetChangeRequestAPI {
         Assert.assertEquals(lastResp.getJSONObject("changeObject").getJSONObject("api:hasRevision").getString("@value"), String.valueOf(revision));
     }
 
+    public void verifyRevisionInVerification(JSONObject lastResp, int revision){
+        Assert.assertEquals(lastResp.getJSONObject("verificationObject").getJSONObject("api:hasRevision").getString("@value"), String.valueOf(revision));
+    }
+
     public void verifyIdObjectTarget(JSONObject lastResp, String id){
         Assert.assertTrue(lastResp.getJSONObject("changeObject").getJSONObject("api:hasLogisticsObject").getString("@id").contains(id));
+    }
+    public void verifyIdLoOfVerification(JSONObject lastResp, String id){
+        Assert.assertTrue(lastResp.getJSONObject("verificationObject").getJSONObject("api:hasLogisticsObject").getString("@id").contains(id));
+    }
+
+    public void verifyStatus(JSONObject lastResp, String status){
+        Assert.assertEquals(lastResp.getString("requestStatus"), status);
     }
 
     public void verifyIdHeightUnitCode(JSONObject lastResp, String id){

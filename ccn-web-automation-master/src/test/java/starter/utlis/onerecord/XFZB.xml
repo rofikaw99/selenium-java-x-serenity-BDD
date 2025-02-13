@@ -17,7 +17,7 @@
         </ram:RecipientParty>
     </rsm:MessageHeaderDocument>
     <rsm:BusinessHeaderDocument>
-        <ram:ID>SIN7072557</ram:ID>
+        <ram:ID>SIN7082957</ram:ID>
         <ram:SignatoryConsignorAuthentication>
             <ram:Signatory>XXX</ram:Signatory>
         </ram:SignatoryConsignorAuthentication>
@@ -33,7 +33,7 @@
         <ram:IncludedTareGrossWeightMeasure unitCode="KGM">3270.2</ram:IncludedTareGrossWeightMeasure>
         <ram:TotalPieceQuantity>2</ram:TotalPieceQuantity>
         <ram:TransportContractDocument>
-            <ram:ID>111-37618281</ram:ID>
+            <ram:ID>123-39608281</ram:ID>
         </ram:TransportContractDocument>
         <ram:OriginLocation>
             <ram:ID>SIN</ram:ID>
@@ -48,6 +48,7 @@
             <ram:TotalChargePrepaidIndicator>true</ram:TotalChargePrepaidIndicator>
             <ram:TotalDisbursementPrepaidIndicator>true</ram:TotalDisbursementPrepaidIndicator>
             <ram:IncludedTareGrossWeightMeasure unitCode="KGM">11.2</ram:IncludedTareGrossWeightMeasure>
+            <ram:GrossVolumeMeasure unitCode="MTQ">210</ram:GrossVolumeMeasure>
             <ram:PackageQuantity>1</ram:PackageQuantity>
             <ram:TotalPieceQuantity>1</ram:TotalPieceQuantity>
             <ram:SummaryDescription>ELECTRONICS COM</ram:SummaryDescription>
@@ -70,6 +71,26 @@
                     <ram:CountrySubDivisionName>CHACHOENG</ram:CountrySubDivisionName>
                 </ram:PostalStructuredAddress>
             </ram:ConsigneeParty>
+            <ram:FreightForwarderParty>
+                <ram:Name>DELTA ELECTRONICS THAILAND PUBLIC</ram:Name>
+                <ram:PostalStructuredAddress>
+                    <ram:PostcodeCode>24180</ram:PostcodeCode>
+                    <ram:StreetName>COMPANY LIMITED 111 MOO 9 WELLGROW</ram:StreetName>
+                    <ram:CityName>BANGPAKONG</ram:CityName>
+                    <ram:CountryID>TH</ram:CountryID>
+                    <ram:CountrySubDivisionName>CHACHOENG</ram:CountrySubDivisionName>
+                </ram:PostalStructuredAddress>
+            </ram:FreightForwarderParty>
+            <ram:AssociatedParty>
+                <ram:Name>DELTA ELECTRONICS THAILAND PUBLIC</ram:Name>
+                <ram:PostalStructuredAddress>
+                    <ram:PostcodeCode>24180</ram:PostcodeCode>
+                    <ram:StreetName>COMPANY LIMITED 111 MOO 9 WELLGROW</ram:StreetName>
+                    <ram:CityName>BANGPAKONG</ram:CityName>
+                    <ram:CountryID>TH</ram:CountryID>
+                    <ram:CountrySubDivisionName>CHACHOENG</ram:CountrySubDivisionName>
+                </ram:PostalStructuredAddress>
+            </ram:AssociatedParty>
             <ram:OriginLocation>
                 <ram:ID>SIN</ram:ID>
             </ram:OriginLocation>

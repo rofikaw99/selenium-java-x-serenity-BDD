@@ -727,17 +727,26 @@ public class XFWBRequest {
     }
     public static List<String> HandlingSPHInstructions(JSONObject jsonObject){
         String key = "ram:HandlingSPHInstructions";
+        List<String> result = new ArrayList<>();
         if (MasterConsignment(jsonObject).has(key)){
-            JSONArray arr = MasterConsignment(jsonObject)
-                    .getJSONArray(key);
-            List<String> result = new ArrayList<>();
-            for (int i = 0; i < arr.length(); i++){
-                JSONObject js = arr.getJSONObject(i);
-                result.add(js.getString("ram:DescriptionCode"));
+            if (MasterConsignment(jsonObject).optJSONObject(key) != null) {
+                JSONObject obj = MasterConsignment(jsonObject).optJSONObject(key);
+                result.add(obj.getString("ram:DescriptionCode"));
+                return result;
+            } else if (MasterConsignment(jsonObject).optJSONArray(key) != null){
+                JSONArray arr = MasterConsignment(jsonObject)
+                        .getJSONArray(key);
+
+                for (int i = 0; i < arr.length(); i++){
+                    JSONObject js = arr.getJSONObject(i);
+                    result.add(js.getString("ram:DescriptionCode"));
+                }
+                return result;
             }
-            return result;
         } else throw new SkipStepException("there is no  "+ key +" in request");
+        return result;
     }
+
     public static List<JSONObject> HandlingSSRInstructions(JSONObject jsonObject){
         String key = "ram:HandlingSSRInstructions";
         if (MasterConsignment(jsonObject).has(key)){
@@ -811,7 +820,7 @@ public class XFWBRequest {
         List<String> result = new ArrayList<>();
         JSONArray arr = IncludedCustomsNote(jsonObject);
         for (int i = 0; i < arr.length(); i++){
-            result.add(arr.getJSONObject(i).getString("ram:Content"));
+            result.add(String.valueOf( arr.getJSONObject(i).get("ram:Content")));
         }
         return result;
     }
@@ -1075,7 +1084,7 @@ public class XFWBRequest {
         List<JSONObject> arr = AR_IMCI_ApplicableFreightRateServiceCharge(jsonObject);
         List<Object> result = new ArrayList<>();
         for (int i = 0; i < arr.size(); i++){
-            result.add(arr.get(i).getInt("ram:AppliedRate"));
+            result.add(arr.get(i).getFloat("ram:AppliedRate"));
         }
         return result;
     }

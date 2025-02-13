@@ -2,7 +2,7 @@
 Feature: notifying subscribers about Subscription update
 
   @SN5
-  Scenario Outline : notifying subscribers about canceled Subscriber
+  Scenario Outline: notifying subscribers about canceled Subscriber
     Given user want to update the subscription
     When  trigger canceled subscriber with "<userPlanID>"
     And check in current queue in support app for "<contentType>"
@@ -15,7 +15,7 @@ Feature: notifying subscribers about Subscription update
       | SubscriptionUpdate| 6786010a9c40e14b15507d6c | SubscriptionCancel | 679064e47d3a9798e63379cf |
 
   @SN1
-  Scenario Outline : notifying subscribers about new Subscription update
+  Scenario Outline: notifying subscribers about new Subscription update
     Given user want to update the subscription
     When  trigger new subscription with "<priceId>"
     And check in current queue in support app for "<contentType>"
@@ -41,7 +41,7 @@ Feature: notifying subscribers about Subscription update
       | SubscriptionUpdate| 6786010a9c40e14b15507d6c | NewSubscriber   | 679064e47d3a9798e63379cf | test_071123_unreg1@yopmail.com |
 
   @SN3
-  Scenario Outline : notifying subscribers about Subscriber Info Update on user profile display name
+  Scenario Outline: notifying subscribers about Subscriber Info Update on user profile display name
     Given user want to update the subscription
     When  trigger subscriber info update on user profile "<displayName>"
     And check in current queue in support app for "<contentType>"
@@ -54,7 +54,7 @@ Feature: notifying subscribers about Subscription update
       | SubscriptionUpdate| 6786010a9c40e14b15507d6c | SubscriberInfoUpdate   | Kochinq1    |
 
   @SN4
-  Scenario Outline : notifying subscribers about removed Subscriber
+  Scenario Outline: notifying subscribers about removed Subscriber
     Given user want to update the subscription
     When trigger remove subscriber with "<userPlanID>" and "<member1>" and "<member2>"
     And check in current queue in support app for "<contentType>"
@@ -67,7 +67,7 @@ Feature: notifying subscribers about Subscription update
       | SubscriptionUpdate| 6786010a9c40e14b15507d6c | RemoveSubscriber   | 679064e47d3a9798e63379cf | test_071123_unreg1@yopmail.com | newsubscribercubetest@yopmail.com |
 
   @SN6
-  Scenario Outline : notifying subscribers about company update
+  Scenario Outline: notifying subscribers about company update
     Given user want to update the company
     When  trigger company update "<address>"
     And check in current queue in support app for "<contentType>"

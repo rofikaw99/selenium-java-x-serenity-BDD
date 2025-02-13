@@ -27,7 +27,7 @@ Feature: Get Logistics Objects
       | waybillPrefix |
       | waybillNumber |
 
-  @get-lo-1.1
+  @get-lo-1.1 @run
   Scenario Outline: Success get logistics objects with predefined key and using external url
     Given user login SSO for one record
     And user transform xfwb

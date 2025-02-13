@@ -16,10 +16,9 @@
         </ram:RecipientParty>
     </rsm:MessageHeaderDocument>
     <rsm:BusinessHeaderDocument>
-        <ram:ID>111-31712999</ram:ID>
+        <ram:ID>123-31621999</ram:ID>
         <ram:IncludedHeaderNote>
-            <ram:ContentCode>C
-            </ram:ContentCode>
+            <ram:ContentCode>C</ram:ContentCode>
         </ram:IncludedHeaderNote>
         <ram:SignatoryConsignorAuthentication>
             <ram:Signatory>SINGANATHANMAYYAPPAN</ram:Signatory>
@@ -157,6 +156,7 @@
                         <ram:LengthMeasure unitCode="CMT">50</ram:LengthMeasure>
                         <ram:HeightMeasure unitCode="CMT">10</ram:HeightMeasure>
                     </ram:LinearSpatialDimension>
+                    <ram:ItemQuantity>4</ram:ItemQuantity>
                 </ram:TransportLogisticsPackage>
             </ram:IncludedMasterConsignmentItem>
             <ram:IncludedMasterConsignmentItem>
