@@ -221,7 +221,6 @@ public class SubscribtionAndCompanyUpdateNotificationPage {
                 companyCubeIdFound = true;
             }
         }
-
         // Assert values
 //        Assertions.assertTrue(contentTypeFound, "Response does not contain expected contentType: " + contentType);
 //        Assertions.assertTrue(companyCubeIdFound, "Response does not contain expected companyCubeId: " + companyCubeId);
