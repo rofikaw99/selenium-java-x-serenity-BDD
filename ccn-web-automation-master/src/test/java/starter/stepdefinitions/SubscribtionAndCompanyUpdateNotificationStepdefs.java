@@ -50,16 +50,16 @@ public class SubscribtionAndCompanyUpdateNotificationStepdefs {
     public void trigger_company_update(String address){
         subscribtionAndCompanyUpdateNotificationPage.companyUpdate(address);
     }
-    @When("check in current queue in support app for {string}")
-    public void check_in_current_queue_in_support_app(String contentType){
-        subscribtionAndCompanyUpdateNotificationPage.verifyCurrentQueues(contentType);
+    @When("check in current queue notification in support app for {string} {string} and verify the notification payload data")
+    public void check_in_current_queue_in_support_app(String contentType, String companyCubeId){
+        subscribtionAndCompanyUpdateNotificationPage.verifyCurrentQueues(contentType, companyCubeId);
     }
-    @When("trigger remove subscriber with {string} and {string} and {string}")
+    @When("trigger add new subscriber with {string} and {string} and {string}")
     public void trigger_remove_subscriber(String userPlanID, String member1, String member2){
         subscribtionAndCompanyUpdateNotificationPage.triggerRemoveSubscriber(userPlanID, member1, member2);
 
     }
-    @When("trigger add new subscriber with {string} and {string}")
+    @When("trigger remove subscriber with {string} and {string}")
     public void trigger_add_new_subscriber(String userPlanID, String member1){
         subscribtionAndCompanyUpdateNotificationPage.triggerAddSubscriber(userPlanID, member1);
 
