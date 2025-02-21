@@ -116,6 +116,7 @@ public class Constants {
 
     public static String PUBLIC_DEV_URL = "https://cubedev.ccnexchange.com";
     public static String SUBSCRIPTION_DEV_URL = "http://subscription.dev.ccn";
+    public static String SUBSCRIPTION_PPD_URL = "http://subscription.sandbox.ccn";
     public static String LOKALDIMAS = "https://66bf-182-5-199-154.ngrok-free.app";
     public static String PUBLIC_PPD_URL = "https://cubesandbox.ccnexchange.com";
 
