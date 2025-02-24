@@ -8,6 +8,8 @@ trigger:
 
 pool:
   name: 'LinuxAgentPool'
+  demands:
+  - Agent.Name -equals delno
 
 steps:
 - task: Maven@3
