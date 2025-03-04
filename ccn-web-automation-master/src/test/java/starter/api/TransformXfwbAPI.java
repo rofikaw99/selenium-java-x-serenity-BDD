@@ -1,9 +1,11 @@
 package starter.api;
 
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.junit.Assert;
+import org.mockito.internal.matchers.LessThan;
 import starter.utlis.ApiProperties;
 import starter.utlis.onerecord.XFWBRequest;
 import starter.utlis.onerecord.XFWBResponse;
@@ -35,13 +37,16 @@ public class TransformXfwbAPI {
     }
     public String transformXfwb(String payload, String typeUrl) throws IOException {
         setupApi(typeUrl);
-        response = requestSpecification
+        Response responses = requestSpecification
                 .body(payload)
-                .post(url)
-                .then()
-                .extract()
-                .body()
-                .asString();
+                .post(url);
+//                .then()
+//                .extract()
+//                .body()
+//                .asString();
+        response = responses.body().asString();
+        long responseTime = responses.time();
+        assert responseTime < 550 : "Response time too high!";
 
         FileWriter file = new FileWriter("src/test/java/starter/utlis/onerecord/outputJson.json");
         file.write(response);

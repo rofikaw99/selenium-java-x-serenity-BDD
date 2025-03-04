@@ -342,8 +342,10 @@ public class PaymentOverviewSteps {
     public void errorMessageCanTUpdatePaymentAppears(String status) {
         if (status.equals("PAID")){
             paymentOverview.verifyErrorMessageContains("Payment Request with ID "+ payId +" Status Already Updated to ");
-        } else {
+        } else if (status.equals("CANCELED")){
             paymentOverview.verifyErrorMessageBody("Payment Request with ID "+ payId +" Status Already Updated to " + status);
+        } else {
+            paymentOverview.verifyErrorMessageBody("Can not update payment request as already expired.");
         }
     }
 
@@ -721,7 +723,7 @@ public class PaymentOverviewSteps {
 
     @Given("BC create payment request for processing payment")
     public void bcCreatePaymentRequestForProcessingPayment() {
-        paymentOverview.setToken(3);
+        paymentOverview.setToken(1);
         paymentOverview.retrieveCardDetail();
         String paymentMethodId = paymentOverview.paymentMethodId();
         paymentOverview.createPaymentProcess(paymentMethodId, "svs", 400, false,200);
@@ -832,5 +834,46 @@ public class PaymentOverviewSteps {
         paymentOverview.setToken(1);
         paymentOverview.createPaymentPopup(method,"tdsb", 200);
         payId = paymentOverview.payId();
+    }
+
+    @When("sort payment from {string} in {string} tab")
+    public void sortPaymentFromInTab(String column, String tab) {
+
+    }
+
+    @When("sort payment from {string} in {string} order and in {string} tab")
+    public void sortPaymentFromInOrderAndInTab(String column, String order, String tab) {
+        switch (column){
+            case "reference":
+                column = "paymentRequest.reference";
+                break;
+            case "productName":
+                column = "paymentRequest.supplier.productName";
+                break;
+            case "delegateTo":
+                column = "delegateTo.companyName";
+                break;
+            case "chargeDateTime":
+                column = "paymentRequest.chargeDateTime";
+                break;
+            case "dueDate":
+                column = "paymentRequest.dueDate";
+                break;
+            case "paymentMethod":
+                column = "paymentRequest.paymentMethod";
+                break;
+            case "total":
+                column = "paymentRequest.totalChargeAmount";
+                break;
+            case "status":
+                column = "status";
+                break;
+        }
+        paymentOverview.retrievePaymentOverview(tab, column, order);
+    }
+
+    @Then("payment will be sorted based on selected {string}")
+    public void paymentWillBeSortedBasedOnSelected(String column) {
+
     }
 }

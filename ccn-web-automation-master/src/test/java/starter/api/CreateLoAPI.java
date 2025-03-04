@@ -130,6 +130,8 @@ public class CreateLoAPI {
         response = requestSpecification
                 .body(customPayload.toString())
                 .post(url);
+        long responseTime = response.time();
+        assert responseTime < 550 : "Response time too high!";
         then().statusCode(200);
         return response.body().path("@id");
     }

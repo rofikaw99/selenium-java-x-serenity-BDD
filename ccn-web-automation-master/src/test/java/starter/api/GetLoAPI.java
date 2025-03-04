@@ -35,12 +35,14 @@ public class GetLoAPI {
     public JSONObject getLORequest(String id) throws IOException {
         setupApi();
 
-        response = requestSpecification
-                .get(id)
-                .then()
-                .extract().response().asString();
+        Response response = requestSpecification
+                .get(id);
+//                .then()
+//                .extract().response().asString();
         then().statusCode(200);
-        return new JSONObject(response);
+        long responseTime = response.time();
+        assert responseTime < 550 : "Response time too high!";
+        return new JSONObject(response.body().asString());
     }
 
     public Response getLORequestFullResponse(String id) throws IOException {
@@ -67,23 +69,30 @@ public class GetLoAPI {
         setupApi();
         String url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/GetLogisticObject";
 
-        response = requestSpecification.headers(
+        Response response = requestSpecification.headers(
                         "x-api-key", ApiProperties.apiKey())
                 .body(payload)
-                .post(url)
-                .then()
-                .extract().response().asString();
-        return response;
+                .post(url);
+//                .then()
+//                .extract().response().asString();
+        long responseTime = response.time();
+        assert responseTime < 550 : "Response time too high!";
+        return response.body().asString();
     }
 
     public Response getLoReqResponse(String payload) throws IOException {
         setupApi();
         String url = ApiProperties.internalUrl() +"/service/" + ApiProperties.serviceId() + "/OneRecord/1/GetLogisticObject";
 
-        return requestSpecification.headers(
+
+        Response response = requestSpecification.headers(
                         "x-api-key", ApiProperties.apiKey())
                 .body(payload)
                 .post(url);
+
+        long responseTime = response.time();
+        assert responseTime < 550 : "Response time too high!";
+        return response;
     }
 
     public void verifySuccessGetLO(){
