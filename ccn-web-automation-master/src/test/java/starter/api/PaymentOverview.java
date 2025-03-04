@@ -65,6 +65,18 @@ public class PaymentOverview {
         then().statusCode(200);
     }
 
+    public void retrievePaymentOverview(String type, String column, String order) {
+        String url = baseUrlPayReq + "/Payment/1/PaymentRequestOverview";
+
+        response = given()
+                .header("x-api-key", ApiProperties.xApiKey("token"))
+                .header("source-service-id", ApiProperties.sourceServiceId())
+                .contentType("application/json")
+                .body(PaymentOverviewPayload.retrievePaymentOverview(type, column, order).toString())
+                .post(url);
+        then().statusCode(200);
+    }
+
     public int payIdNumber(){
         return lastResponse().jsonPath().getList("data.paymentRequestId").size();
     }

@@ -39,6 +39,8 @@ public class GetChangeRequestAPI {
         response = requestSpecification
                 .body(payload)
                 .post(url);
+        long responseTime = response.time();
+        assert responseTime < 550;
 
         return response;
     }
@@ -50,6 +52,7 @@ public class GetChangeRequestAPI {
         response = requestSpecification
                 .body(payload)
                 .post(url);
+        assert response.time() < 550;
 
         return response;
     }
