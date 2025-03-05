@@ -1,51 +1,64 @@
 Feature: Payment Popup
 
-  Scenario: User want to pay with popup payment component
-    Given user login as card admin or card user or user
+  @PP-001
+  Scenario Outline: User want to pay with popup payment component
+    Given "<user_type>" login to the web
     When user pay from the popup
     Then detail of payment items will appears
-    And saved card with enabled icon will appears if card admin or card user login
-    And saved card with disabled icon will appears if user with saved card company login
+    And saved card with enabled icon will appears if "<user_type>" login
     And option to input new card will appears for all of users
     And paynow option will appears for all users type
     And giro option will appears for user with giro saved in company
     And there is Pay button
+    Examples:
+    | user_type |
+    | Card Admin |
+    | Card User  |
+
+  Scenario: User want to pay with popup payment component
+    Given "User Card" login to the web
+    When user pay from the popup
+    Then detail of payment items will appears
+    And saved card with disabled icon will appears if user with saved card company login
+    And option to input new card will appears for all of users
+    And paynow option will appears for all users type
+    And there is Pay button
 
   Scenario: Card admin and card user able to pay with saved card
-    Given user login as card admin and card user
-    And go to payment popup
+    Given "Card Admin" login to the web
+    And user pay from the popup
     And saved company card will auto-selected and appears
-    When pay payment with saved card selected
+    When pay payment with "saved card selected"
     Then processing payment successfully
     And payment will appears in the list of payment
-    And payment will have ""PAID"" status
+    And payment will have "PAID" status
 
 
   Scenario: Card admin and card user able to pay with new card
-    Given user login as card admin and card user
-    And go to payment popup
+    Given "Card User" login to the web
+    And user pay from the popup
     And select non-saved card option
     And setup card form appears without save payment method checkbox
-    When pay payment with the setup card
+    When pay payment with "the valid setup card"
     Then processing payment successfully
     And payment will appears in the list of payment
     And payment will have ""PAID"" status
     And card will not saved to the company
 
   Scenario: Card admin, card user, user able to pay with paynow
-    Given user login as card admin or card user
-    And go to payment popup
-    When pay payment with paynow
+    Given "User Card" login to the web
+    And user pay from the popup
+    When pay payment with "paynow"
     Then processing payment successfully
     And payment will appears in the list of payment
     And payment will have ""PAID"" status
 
   Scenario: User who company have card able to pay with new card
-    Given user login as user who company have card
-    And go to payment popup
+    Given "User Card" login to the web
+    And user pay from the popup
     And non-saved card option is auto-selected
     And setup card form appears without save payment method checkbox
-    When pay payment with the valid setup card
+    When pay payment with "the valid setup card"
     Then processing payment successfully
     And payment will appears in the list of payment
     And payment will have ""PAID"" status
@@ -56,7 +69,7 @@ Feature: Payment Popup
     And go to payment popup
     And non-saved card option is auto-selected
     And setup card form appears with save payment method checkbox
-    When pay payment with the valid setup card
+    When pay payment with "the valid setup card"
     Then processing payment successfully
     And payment will appears in the list of payment
     And payment will have ""PAID"" status
@@ -67,7 +80,7 @@ Feature: Payment Popup
     And go to payment popup
     And non-saved card option is auto-selected
     And setup card form appears with save payment method checkbox
-    When pay payment with the valid setup card
+    When pay payment with "the valid setup card"
     And check save payment method checkbox
     Then processing payment successfully
     And payment will appears in the list of payment
@@ -78,7 +91,7 @@ Feature: Payment Popup
   Scenario: Card admin, card user, user able to pay with giro
     Given user login as card admin or card user
     And go to payment popup
-    When pay payment with giro
+    When pay payment with "giro"
     Then processing payment successfully
     And payment will appears in the list of payment
     And payment will have ""N/A"" status
@@ -96,7 +109,7 @@ Feature: Payment Popup
     And go to payment popup
     And non-saved card option is selected
     And setup card form appears
-    When pay payment with non-visa card
+    When pay payment with "non-visa card"
     Then processing payment failed
     And error message appears
 
@@ -105,7 +118,7 @@ Feature: Payment Popup
     And go to payment popup
     And non-saved card option is selected
     And setup card form appears
-    When pay payment with non-singapore card
+    When pay payment with "non-singapore card"
     Then processing payment failed
     And error message appears
 

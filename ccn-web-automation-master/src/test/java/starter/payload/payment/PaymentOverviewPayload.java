@@ -66,6 +66,23 @@ public class PaymentOverviewPayload {
         return payload;
     }
 
+    public static JSONObject retrievePaymentOverview(String type, String column, String order){
+        JSONObject sortBy = new JSONObject();
+        sortBy.put("column", column);
+        sortBy.put("order", order);
+
+        List<String> filterSearch = new ArrayList<>();
+
+        payload = new JSONObject();
+        payload.put("pagination", 50);
+        payload.put("page", 1);
+        payload.put("search", "");
+        payload.put("sortBy", sortBy);
+        payload.put("type", type);
+        payload.put("filterSearch", filterSearch);
+        return payload;
+    }
+
     public static JSONObject retrievePaymentRequest(List<String> payIds){
         payload = new JSONObject();
         payload.put("paymentRequestIds", payIds);

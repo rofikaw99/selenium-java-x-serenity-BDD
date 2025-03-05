@@ -31,6 +31,8 @@ public class UpdateLoAPI {
                         "Content-Type", "application/json")
                 .body(payload.toString())
                 .post(url);
+        long responseTime = response.time();
+        assert responseTime < 550 : "Response time too high!";
 //                .patch(id);
     }
 
@@ -45,6 +47,8 @@ public class UpdateLoAPI {
                         "x-api-key", ApiProperties.apiKey())
                 .body(payload.toString())
                 .post(url);
+        long responseTime = response.time();
+        assert responseTime < 550 : "Response too high!";
     }
 
     public Integer getRevision(Response response) {

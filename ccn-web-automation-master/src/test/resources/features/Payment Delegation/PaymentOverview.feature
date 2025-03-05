@@ -162,6 +162,22 @@ Feature: Payment Overview
       | total |
       | status |
 
+  @PO-API-15.1
+  Scenario Outline: User able to sort "MY PAYMENT" based on selected column
+    Given user login as card admin or card user or user
+    When sort payment from "<column>" in "asc" order and in "MY_PAYMENT" tab
+    Then payment will be sorted based on selected "<column>"
+    Examples:
+      | column |
+      | reference |
+      | productName |
+      | delegateTo |
+      | chargeDateTime |
+      | dueDate |
+      | paymentMethod |
+      | total |
+      | status |
+
   @pay-record.1 @done
   Scenario: Success add payment record to specific payment
     Given supplier create payment request to a user
@@ -271,13 +287,13 @@ Feature: Payment Overview
     When supplier update payment request with notes
     Then payment will have notes
 
-  @update-pay.4 @done
+  @update-pay.4 @update-pay @done
   Scenario: Success update payment to canceled from outstanding status
     Given supplier create payment request for "Outstanding" status
     When supplier update payment request to "CANCELED" status
     Then payment will automatically changes to "CANCELED"
 
-  @update-pay.5 @failed
+  @update-pay.5 @update-pay @failed
   Scenario Outline: Error message appears when updating "CANCELED" payment
     Given supplier create payment request for "Outstanding" status
     And supplier update payment request to "CANCELED" status
@@ -288,12 +304,25 @@ Feature: Payment Overview
     |READY |
     |CANCELED|
 
-  @update-pay.6
+  @update-pay.6 @update-pay
   Scenario Outline: Error message appears when updating "PAID" payment
     Given supplier create payment request for "Upcoming" status and achieved amount SI
     And supplier update payment request to "READY" status
     When supplier failed update payment request to "<status>" status
     Then error message can't update "PAID" payment appears
+    Examples:
+      |status|
+      |READY |
+      |CANCELED|
+
+  @update-pay.7.1 @update-pay
+  Scenario Outline: Error message appears when updating "Expired" payment
+    When supplier create payment request with expired date in 2 minutes
+    Then payment will automatically changes to "OUTSTANDING"
+    And in 2 minutes later
+    And payment will automatically changes to "EXPIRED"
+    When supplier failed update payment request to "<status>" status
+    Then error message can't update "EXPIRED" payment appears
     Examples:
       |status|
       |READY |
@@ -312,7 +341,7 @@ Feature: Payment Overview
     And payment will automatically changes to "FAILED"
 
 
-  @process-payment @re-run @bc
+  @process-payment.1 @re-run @bc
   Scenario: BC process the payment from CubeForAll
 #    Given account is a success account
     And BC create payment request for processing payment

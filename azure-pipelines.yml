@@ -7,7 +7,9 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'LinuxAgentPool'
+  demands:
+  - Agent.Name -equals delno
 
 steps:
 - task: Maven@3
