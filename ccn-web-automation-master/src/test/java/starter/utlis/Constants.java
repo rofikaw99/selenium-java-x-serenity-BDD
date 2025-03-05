@@ -81,10 +81,10 @@ public class Constants {
     public static String PRIVATE_SERVICE_GATEWAY = "http://cube.sandbox.ccn";
     public static String DELEGATED_COMPANY = "SG Auto QA";
     public static String SYSTEM_COMPANY_ADDRESS = "system.csgagt99kiex637nu459et1po_aae@ccnexchange.com";
+    public static String COMPANY_NAME_DOMAIN = "yopmail";
     public static String COMPANY_PIMA = "csgagt99KIEX637nU459et1Po/AAE";
     public static String CUBE_ID = "559cdc3d065b434baa0fd5f6e3ab8f76";
     public static String COMPANY_NAME_SEARCH = "EDEN";
-    public static String COMPANY_DOMAIN = "ccnexchange.com";
 
     public static String HQ = "headquarter_sq@yopmail.com";
 

@@ -1593,6 +1593,22 @@ Feature: My Company
       | email                             |password | iconaccountmenu |
       | headquarter_sq@yopmail.com        |P@55w0rd | My Company      |
 
+  @UpdatePMBeforLeaveFromCompany @UpdatePMBeforeLeaveorRemoveorChangeRole
+  Scenario Outline: Last admin not as a PM unable to leave from a company
+    Given go to main web
+    Given press sign in button
+    And input email "<email>" and password "<password>" and press sign in to continue login
+    And back to the main tab browser
+    And go to my icon account menu "<iconaccountmenu>"
+    And click leave company
+    And click sure want to leave
+    Then verify update plan manager pop up available
+    And verify the pop up message when leave from the company
+
+    Examples:
+      | email                           |password      | iconaccountmenu |
+      | senyorita@mailinator.com        |CCNPegasus123 | My Company      |
+
   @UpdatePMWhenChangeRole @UpdatePMBeforeLeaveorRemoveorChangeRole
   Scenario Outline: Update Plan Manager first before change role
     Given go to main web
