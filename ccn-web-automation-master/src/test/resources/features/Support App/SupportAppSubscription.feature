@@ -66,7 +66,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     When user go to Subscription > User Bundle Termination
     And upload onboard file
     And select the country
-    And select != future effective date
+    And select not future effective date
     Then error validation cannot pick the date will display
 
     Examples:
