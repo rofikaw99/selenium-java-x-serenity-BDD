@@ -182,7 +182,7 @@ public class SupportAppStep {
                 input = Constants.COMPANY_NAME_SEARCH;
                 break;
             case "Company Domain":
-                input = Constants.COMPANY_DOMAIN;
+                input = Constants.COMPANY_NAME_DOMAIN;
                 break;
             default:
                 input = Constants.EMAIL_WITHOUT_COMPANY;

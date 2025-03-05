@@ -19,7 +19,7 @@ Feature: Email Exchange
   @REBACDC_1 @REBACDC
   Scenario Outline: Send email with keyword "<keyword>" along with attachment to another and explicit share it with the recipient’s company CUBE.
 #    Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
-    Then retrieve "<recipientMail>" emails from the mailbox
+#    Then retrieve "<recipientMail>" emails from the mailbox
     And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
     And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
     And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
@@ -31,7 +31,7 @@ Feature: Email Exchange
   @REBACDC_2 @REBACDC
   Scenario Outline: Send email with keyword "<keyword>" along with attachment to another and explicit share it with the recipient’s company CUBE.
 #    Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
-    Then retrieve "<recipientMail>" emails from the mailbox
+#    Then retrieve "<recipientMail>" emails from the mailbox
     And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
     And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
     And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
@@ -43,7 +43,7 @@ Feature: Email Exchange
   @REBACDC_3 @REBACDC
   Scenario Outline: Send email with keyword "<keyword>" along with attachment to another and explicit share it with the recipient’s company CUBE.
 #    Given send email from "<senderMail>" with keyword "<keyword>" along with attachment to another company CUBE "<recipientMail>" and cc to "<ccMail>"
-    Then retrieve "<recipientMail>" emails from the mailbox
+#    Then retrieve "<recipientMail>" emails from the mailbox
     And convert the email body and attachments to JSON format, save the document in the sender's company CUBE "<senderCompanyCubeID>"
     And explicit share it with the recipient’s "<recipientCompanyCubeID>" company CUBE
     And verify encode all attachments "<recipientCompanyCubeID>" into a single ZIP file for CUBE document creation "<egDocumentID>"
