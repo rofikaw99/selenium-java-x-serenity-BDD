@@ -246,6 +246,7 @@ public class FWBResharingPage {
         System.out.println("documentRefID: " + documentRefID);
     }
 
+
     public void awb1000times() {
 
 //        // Base URL and headers setup
@@ -529,7 +530,7 @@ public class FWBResharingPage {
         System.out.println("Response status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
         // Assertions
-        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertEquals(response.getStatusCode(), 201);
     }
 
     public void testGetDocumentShareForm() {

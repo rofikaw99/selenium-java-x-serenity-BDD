@@ -50,6 +50,10 @@ public class SubscribtionAndCompanyUpdateNotificationStepdefs {
     public void trigger_company_update(String address){
         subscribtionAndCompanyUpdateNotificationPage.companyUpdate(address);
     }
+    @And("trigger company update multiple {string}")
+    public void trigger_company_update_multiple(String address){
+        subscribtionAndCompanyUpdateNotificationPage.updateCompanyMultipleTimes(address);
+    }
     @When("check in current queue notification in support app for {string} {string} and verify the notification payload data")
     public void check_in_current_queue_in_support_app(String contentType, String companyCubeId){
         subscribtionAndCompanyUpdateNotificationPage.verifyCurrentQueues(contentType, companyCubeId);

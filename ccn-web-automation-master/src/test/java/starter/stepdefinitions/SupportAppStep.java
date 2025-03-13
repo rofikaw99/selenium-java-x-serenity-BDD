@@ -74,6 +74,10 @@ public class SupportAppStep {
     public void userSelectAnExcelFileToUploadFileOnboardInTheSupportApp() throws InterruptedException {
         supportAppPage.uploadOnboardFileSubMenu();
     }
+    @And("user select an excel file to upload file onboard in the support app")
+    public void userSelectAnExcelFileToUploadFileOnboardInTheSupportAppOnlySelect() throws InterruptedException {
+        supportAppPage.uploadOnboardFileOnly();
+    }
     @When("user go to group menu")
     public void userGoToGroupMenu() throws InterruptedException {
         supportAppPage.pressGroupMenu();
@@ -114,6 +118,34 @@ public class SupportAppStep {
     @When("user go to action log")
     public void userGoToActionLog() throws InterruptedException {
         supportAppPage.actionLog();
+    }
+    @When("user click Access Control")
+    public void userClickAccessControl() throws InterruptedException {
+        supportAppPage.accessControl();
+    }
+    @When("verify that the tittle change from “Access Control” to “Portal Access Management.”  on Access Control Sub Menu")
+    public void verifyTitleChangeToPortalAccessManagement() throws InterruptedException {
+        supportAppPage.verifyTitleChangeToPortalAccessManagement();
+    }
+    @When("verify that the tittle change from “Group Access” to “Access Group.”  on Access Control Sub Menu")
+    public void verifyTitleChangeToAccessGroup() throws InterruptedException {
+        supportAppPage.verifyTitleChangeToAccessGroup();
+    }
+    @When("verify that the tittle change from “User” to “User Management.”  on Access Control Sub Menu")
+    public void verifyTitleChangeToUserManagement() throws InterruptedException {
+        supportAppPage.verifyTitleChangeToUserManagement();
+    }
+    @When("Add a new feature titled “Admin Change Log.”")
+    public void newFeatureTitledAminChangeLog() throws InterruptedException {
+        supportAppPage.newAdminChangeLog();
+    }
+    @When("user go to a new feature titled “Admin Change Log.”")
+    public void userGoToFeatureTitledAminChangeLog() throws InterruptedException {
+        supportAppPage.goTonewAdminChangeLog();
+    }
+    @When("user go to subscription support app")
+    public void userGoToSubscriptionSupportApp() throws InterruptedException {
+        supportAppPage.subscription();
     }
     @When("user click action log dropDown")
     public void userClickActionLogDropDown() throws InterruptedException {
