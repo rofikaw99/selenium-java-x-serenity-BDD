@@ -10,7 +10,7 @@ Feature: Company Info in Support App
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @SA @SA-2
   Scenario Outline: Input company cube id to display more info
@@ -22,7 +22,7 @@ Feature: Company Info in Support App
 
     Examples:
       | userID   | password | condition       |
-      | helpdesk | password | Company Cube ID |
+      | RAwaludin | password | Company Cube ID |
 
   @SA @SA-3
   Scenario Outline: Input company pima address to display more info
@@ -34,7 +34,7 @@ Feature: Company Info in Support App
 
     Examples:
       | userID   | password | condition            |
-      | helpdesk | password | Company Pima Address |
+      | RAwaludin | password | Company Pima Address |
 
   @SA @SA-4
   Scenario Outline: Input member email to display more info
@@ -46,7 +46,7 @@ Feature: Company Info in Support App
 
     Examples:
       | userID   | password | condition    |
-      | helpdesk | password | Member Email |
+      | RAwaludin | password | Member Email |
 
   @notificationMonitoring
   Scenario Outline: display notification monitoring
@@ -57,7 +57,7 @@ Feature: Company Info in Support App
 
     Examples:
       | userID   | password |
-      | helpdesk | password |
+      | RAwaludin | password |
 
   @updatePlanManagerSupportApp
   Scenario Outline: update plan manager
@@ -69,7 +69,7 @@ Feature: Company Info in Support App
 
     Examples:
       | userID   | password | planManagerMail |
-      | helpdesk | password | HQ              |
+      | RAwaludin | password | HQ              |
 
   @actionLog
   Scenario Outline: action log

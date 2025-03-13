@@ -2,7 +2,8 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
   @EAL_1
   Scenario Outline: Access Control Tittle Changes
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     Then verify that the tittle change from “Access Control” to “Portal Access Management.”  on Access Control Sub Menu
     And verify that the tittle change from “Group Access” to “Access Group.”  on Access Control Sub Menu
@@ -11,11 +12,12 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_2
   Scenario Outline: Search Perimeter for admin change log
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When user verify completeness of the perimeter search
@@ -24,11 +26,12 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_3
   Scenario Outline: Search Perimeter for admin change log If no value is selected for “User” or “Function
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When no value is selected for “User” or “Function
@@ -36,11 +39,12 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_3
   Scenario Outline: Search Perimeter for admin change log If no value is selected for “User” or “Function
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When no value is selected for “User” or “Function
@@ -48,11 +52,12 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_4
   Scenario Outline: Search Perimeter for admin change log If only select a specific “User” and no value is selected for “Function.
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When only select a specific “User” and no value is selected for “Function
@@ -60,11 +65,12 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_5
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (User Management)” and no value is selected for “User,
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When only select a specific “Function (User Management)” and no value is selected for “User,
@@ -73,11 +79,12 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_6
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (Access Group)” and no value is selected for “User
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When only select a specific “Function (Access Group)” and no value is selected for “User,
@@ -86,11 +93,12 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_7
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (User Management)” and  “User
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When only select a specific “Function (User Management)” and  “User
@@ -99,12 +107,13 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
 
   @EAL_8
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (Access Group)” and  “User
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When only select a specific “Function (Access Group)” and  “User
@@ -113,21 +122,23 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_9
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (Access Group)” and  “User
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     Then verify display information for Support App admin actions
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_10
   Scenario Outline: verify action log report filter functionality & portal admin function availability
-    Given user already on http://cubehelp.sandbox.ccn/supportforall/
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Action Log Report
     Then The data range filter is compulsory
     When no value is selected for “User” or “Function,”
@@ -137,7 +148,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | helpdesk | password | Company System Address |
+      | RAwaludin | password | Company System Address |
 
   @EAL_11
   Scenario Outline: Input Company Name to display more info
@@ -149,7 +160,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition    |
-      | helpdesk | password | Company Name |
+      | RAwaludin | password | Company Name |
 
   @EAL_12
   Scenario Outline: Input Company Name to display more info
@@ -161,7 +172,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition    |
-      | helpdesk | password | Company Name |
+      | RAwaludin | password | Company Name |
 
   @EAL_13
   Scenario Outline: Input Company Domain to display more info
@@ -173,7 +184,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition      |
-      | helpdesk | password | Company Domain |
+      | RAwaludin | password | Company Domain |
 
   @EAL_14
   Scenario Outline: Input Company UEN to display more info
@@ -185,4 +196,4 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition      |
-      | helpdesk | password | Company UEN |
+      | RAwaludin | password | Company UEN |

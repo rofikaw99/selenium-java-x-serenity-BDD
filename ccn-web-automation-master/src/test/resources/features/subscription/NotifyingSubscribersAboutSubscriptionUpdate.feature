@@ -79,3 +79,13 @@ Feature: Notifying subscribers about Subscription update
     Examples:
       | contentType    | documentID               | eventAction | address | companyCubeId                           |
       | CompanyUpdate  | 6786010a9c40e14b15507d6c | Update      | yonduy   | 7bd4b51645ac494e924c142d55b154bb        |
+
+  @MULTIPLESN8
+  Scenario Outline: Notifying subscribers about company update
+    Given user want to update the company
+    When trigger company update multiple "<address>"
+    And check in current queue notification in support app for "<contentType>" "<companyCubeId>" and verify the notification payload data
+
+    Examples:
+      | contentType    | documentID               | eventAction | address | companyCubeId                           |
+      | CompanyUpdate  | 6786010a9c40e14b15507d6c | Update      | yonduy   | 7bd4b51645ac494e924c142d55b154bb        |

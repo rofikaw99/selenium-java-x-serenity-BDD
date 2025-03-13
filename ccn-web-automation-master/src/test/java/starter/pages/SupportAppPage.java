@@ -36,6 +36,11 @@ public class SupportAppPage extends PageObject {
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
     private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
+    private By accessControl = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Portal Access Management')]");
+    private By accessGroup = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Access Group')]");
+    private By adminChangeLog = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Admin Change Log')]");
+    private By userManagement = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'User Management')]");
+    private By subscription = By.xpath("//a[contains(@class, 'ps-menu-button') and span[contains(text(), 'Subscription')]])[2]");
     private By actionLogDropDown = By.xpath("//button[@id='dropdown-basic-button']");
     private By selectUserToExportActionLog = By.xpath("(//a[@class='dropdown-item'])[1]");
     private By startDateActionLog = By.xpath("//input[@placeholder='Start Date']");
@@ -231,6 +236,11 @@ public class SupportAppPage extends PageObject {
         $(submitToOnboard).click();
         Thread.sleep(1000);
     }
+    public void uploadOnboardFileOnly() throws InterruptedException {
+        String filePath = "C:/Users/rofik/IdeaProjects/CCNRepoTest/cubeforall.test/ccn-web-automation-master/src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
+        $(uploadExcelOnboardFile).sendKeys(filePath);
+        Thread.sleep(1000);
+    }
     public void pressGroupMenu() throws InterruptedException {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(groupMenu).isDisplayed()+" also enabled: "+$(groupMenu).isEnabled());
@@ -317,6 +327,37 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(actionLog).isDisplayed()+" also enabled: "+$(actionLog).isEnabled());
         evaluateJavascript("arguments[0].click();", $(actionLog));
+    }
+    public void accessControl() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(accessControl).isDisplayed()+" also enabled: "+$(accessControl).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(accessControl));
+    }
+    public void newAdminChangeLog() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(adminChangeLog).isDisplayed()+" also enabled: "+$(adminChangeLog).isEnabled());
+    }
+    public void goTonewAdminChangeLog() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(adminChangeLog).isDisplayed()+" also enabled: "+$(adminChangeLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(adminChangeLog));
+    }
+    public void verifyTitleChangeToPortalAccessManagement() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(accessControl).isDisplayed()+" also enabled: "+$(accessControl).isEnabled());
+    }
+    public void verifyTitleChangeToAccessGroup() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(accessGroup).isDisplayed()+" also enabled: "+$(accessGroup).isEnabled());
+    }
+    public void verifyTitleChangeToUserManagement() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(userManagement).isDisplayed()+" also enabled: "+$(userManagement).isEnabled());
+    }
+    public void subscription() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(subscription).isDisplayed()+" also enabled: "+$(subscription).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(subscription));
     }
 
     public void clickActionLogDropDown() throws InterruptedException {
