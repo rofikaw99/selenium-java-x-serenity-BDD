@@ -143,6 +143,65 @@ public class SupportAppStep {
     public void userGoToFeatureTitledAminChangeLog() throws InterruptedException {
         supportAppPage.goTonewAdminChangeLog();
     }
+    @When("only select a specific Function User Management and no value is selected for User")
+    public void userOnlySelectSpecificFunction() throws InterruptedException {
+        supportAppPage.selectAdminChangeLogFunction();
+        supportAppPage.select_option_user_management();
+        supportAppPage.searchAdminChangeLogButton();
+    }
+    @And("only select a specific Function User Management and User")
+    public void only_select_a_specific_Function_User_Management_and_User() throws InterruptedException {
+        supportAppPage.selectAdminChangeLogFunction();
+        supportAppPage.select_option_user_management();
+        supportAppPage.searchAdminChangeLogButton();
+        supportAppPage.selectOneOfUserOfAdminChangeLogButton();
+    }
+    @When("only select a specific Function Access Group and no value is selected for User")
+    public void only_select_a_specific_Function_Access_Group_and_no_value_is_selected_for_User() throws InterruptedException {
+        supportAppPage.selectAdminChangeLogFunction();
+        supportAppPage.select_option_access_group();
+        supportAppPage.searchAdminChangeLogButton();
+    }
+    @When("input start date {string} and {string} on support app admin change log")
+    public void input_start_date_startDate_and_endDate_on_support_app_admin_change_log(String startDate, String endDate) throws Exception {
+        Thread.sleep(waitResponse);
+        supportAppPage.inputStartDateACL(startDate);
+        supportAppPage.inputEndDateACL(endDate);
+    }
+    @When("the search will include only specific function User Management and all users")
+    public void the_search_will_include_only_specific_function_User_Management_and_all_users() throws InterruptedException {
+        supportAppPage.adminChangeLogTableHover();
+    }
+    @And("the search will include only specific function Access Group and all users")
+    public void the_search_will_include_only_specific_function_Access_Group_and_all_users() throws InterruptedException {
+        supportAppPage.adminChangeLogTableHover();
+    }
+    @And("the actions tracked should include creating a new access group, detailing the functions included in that group or recording changes made to existing access group")
+    public void the_actions_tracked_should_include_creating_a_new_access_group() throws InterruptedException {
+        supportAppPage.adminChangeLogTableHover();
+    }
+    @When("user verify completeness of the perimeter search")
+    public void user_verify_completeness_of_the_perimeter_search() throws InterruptedException{
+        supportAppPage.completeness_of_the_perimeter_search();
+    }
+    @When("verify the data range filter is mandatory.")
+    public void verify_the_data_range_filter_is_mandatory() throws InterruptedException{
+        supportAppPage.searchAdminChangeLogButton();
+        Thread.sleep(waitResponse);
+    }
+    @When("verify the functions available are “ User Management” & “ Access Group”")
+    public void verify_the_functions_available_are_User_Management_Access_Group() throws InterruptedException{
+        supportAppPage.selectOptionFunctionInAdminChangeLog();
+
+    }
+    @When("the actions tracked should include any changes made by the admin")
+    public void the_search_will_include_only_specific_function_User_Management_and_all_users_2() throws InterruptedException {
+        supportAppPage.adminChangeLogTableHover();
+    }
+    @And("the search will include only specific function User Management and specific user")
+    public void the_search_will_include_only_specific_function_User_Management_and_all_users_3() throws InterruptedException {
+        supportAppPage.adminChangeLogTableHover();
+    }
     @When("user go to subscription support app")
     public void userGoToSubscriptionSupportApp() throws InterruptedException {
         supportAppPage.subscription();
@@ -222,7 +281,7 @@ public class SupportAppStep {
         Thread.sleep(2500);
         supportAppPage.inputCompany(input);
         supportAppPage.pressSCheckButton();
-        Thread.sleep(7000);
+        Thread.sleep(3000);
         Assert.assertTrue(supportAppPage.CompanyName());
         Assert.assertTrue(supportAppPage.CompanyCubeID());
         Assert.assertTrue(supportAppPage.CompanySystemCube());
@@ -232,6 +291,7 @@ public class SupportAppStep {
         Assert.assertTrue(supportAppPage.UEN());
         Assert.assertTrue(supportAppPage.CompanyCountry());
         Assert.assertTrue(supportAppPage.CompanyMembers());
+        Thread.sleep(4000);
     }
 
     @And("input {string} to display update plan manager function")

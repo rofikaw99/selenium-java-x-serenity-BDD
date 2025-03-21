@@ -28,44 +28,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_3
-  Scenario Outline: Search Perimeter for admin change log If no value is selected for “User” or “Function
-    Given go to support app web
-    When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user click Access Control
-    And user go to a new feature titled “Admin Change Log.”
-    When no value is selected for “User” or “Function
-    And the search will include all users and all functions.
 
-    Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
-
-  @EAL_3
-  Scenario Outline: Search Perimeter for admin change log If no value is selected for “User” or “Function
-    Given go to support app web
-    When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user click Access Control
-    And user go to a new feature titled “Admin Change Log.”
-    When no value is selected for “User” or “Function
-    And the search will include all users and all functions.
-
-    Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
-
-  @EAL_4
-  Scenario Outline: Search Perimeter for admin change log If only select a specific “User” and no value is selected for “Function.
-    Given go to support app web
-    When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user click Access Control
-    And user go to a new feature titled “Admin Change Log.”
-    When only select a specific “User” and no value is selected for “Function
-    And the search will include only specific users and all functions.
-
-    Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
 
   @EAL_5
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (User Management)” and no value is selected for “User,
@@ -73,13 +36,14 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
-    When only select a specific “Function (User Management)” and no value is selected for “User,
-    And the search will include only specific function (User Management) and all users.
+    And input start date "<startDate>" and "<endDate>" on support app admin change log
+    When only select a specific Function User Management and no value is selected for User
+    And the search will include only specific function User Management and all users
     And the actions tracked should include any changes made by the admin
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID    | password  | startDate | endDate  |
+      | RAwaludin | password  | 01022025  | 31032025 |
 
   @EAL_6
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (Access Group)” and no value is selected for “User
@@ -87,13 +51,14 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
-    When only select a specific “Function (Access Group)” and no value is selected for “User,
-    And the search will include only specific function (Access Group) and all users.
-    And the actions tracked should include creating a new access group, detailing the functions included in that group or recording changes made to existing access group.
+    And input start date "<startDate>" and "<endDate>" on support app admin change log
+    When only select a specific Function Access Group and no value is selected for User
+    And the search will include only specific function Access Group and all users
+    And the actions tracked should include creating a new access group, detailing the functions included in that group or recording changes made to existing access group
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID   | password | startDate | endDate  |
+      | RAwaludin | password | 01022025  | 31032025 |
 
   @EAL_7
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (User Management)” and  “User
@@ -101,13 +66,14 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
-    When only select a specific “Function (User Management)” and  “User
-    And the search will include only specific function (User Management) and specific user.
+    And input start date "<startDate>" and "<endDate>" on support app admin change log
+    When only select a specific Function User Management and User
+    And the search will include only specific function User Management and specific user
     And the actions tracked should include any changes made by the admin
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID   | password | startDate | endDate  |
+      | RAwaludin | password | 01022025  | 31032025 |
 
 
   @EAL_8
@@ -117,19 +83,8 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
     When only select a specific “Function (Access Group)” and  “User
-    And the search will include only specific function (Access Group) and specific user.
-    And the actions tracked should include creating a new access group, detailing the functions included in that group or recording changes made to existing access group.
-
-    Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
-
-  @EAL_9
-  Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (Access Group)” and  “User
-    Given go to support app web
-    When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user click Access Control
-    Then verify display information for Support App admin actions
+    And the search will include only specific function (Access Group) and specific user
+    And the actions tracked should include creating a new access group, detailing the functions included in that group or recording changes made to existing access group
 
     Examples:
       | userID   | password | condition              |
@@ -142,7 +97,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
     When user click Action Log Report
     Then The data range filter is compulsory
     When no value is selected for “User” or “Function,”
-    Then the search will include all users and all functions.
+    Then the search will include all users and all functions
     When check function field
     Then all portal admin functions are available except for “Portal Access Management.”
 
