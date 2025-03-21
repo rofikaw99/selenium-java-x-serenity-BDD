@@ -19,7 +19,7 @@ public class SupportAppPage extends PageObject {
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
     private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
-    private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[19]");
+    private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[20]");
     private By createNewAirline = By.xpath("//button[text()='Create New Airline']");
     private By airlineSubmitButton = By.xpath("//button[@type='submit' and contains(@class, 'btn btn-primary') and text()='Submit']");
     private By editAirline = By.xpath("(//button[@type='button' and contains(@class, 'btn btn-link')])[2]");
@@ -32,13 +32,26 @@ public class SupportAppPage extends PageObject {
     private By uploadExcelOnboardFile = By.id("formFile");
     private By populateOnboardFile = By.xpath("//button[@class='btn btn-primary']");
     private By submitToOnboard = By.xpath("//button[@class='mt-3 btn btn-primary']");
-    private By groupMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[16]");
+    private By groupMenu = By.xpath("(//a[@data-testid='ps-menu-button-test-id'])[17]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
     private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
     private By accessControl = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Portal Access Management')]");
     private By accessGroup = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Access Group')]");
     private By adminChangeLog = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Admin Change Log')]");
+    private By searchAdminChangeLogButton = By.xpath("//button[contains(@class, 'btn-primary') and text()='Search']");
+    private By select_option_dropdown_toggle_btn_btn_outline_secondary = By.xpath("//button[contains(@class, 'dropdown-toggle') and text()='Select Function']");
+    private By option_userManagement = By.xpath("//a[contains(@class, 'dropdown-item') and text()='User Management']");
+    private By option_access_group = By.xpath("//a[contains(@class, 'dropdown-item') and text()='Access Group']");
+    private By startDateAdminChangeLog = By.xpath("//input[@id='startDate']");
+    private By endDateAdminChangeLog = By.xpath("//input[@id='endDate']");
+    private By selectAdminChangeLogFunction = By.xpath("//button[@type='button' and @id='dropdown-function' and contains(@class, 'dropdown-toggle')]");
+    private By selectUserAdminChangeLog = By.xpath("(//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-outline-secondary')])[1]");
+    private By selectOneOfUserAdminChangeLog = By.xpath("//a[@href='#' and text()='RAwaludin']");
+    private By adminChangeLogTableHover = By.xpath("//table[@class='table table-striped table-bordered table-hover']");
+    private By selectUserTitleAdminChangeLog = By.xpath("//label[@for='userSelect']");
+    private By selectFunctionTitleAdminChangeLog = By.xpath("//label[@for='functionSelect']");
+    private By selectDateRangeTitleAdminChangeLog = By.xpath("//label[text()[normalize-space()='Select Date Range']]");
     private By userManagement = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'User Management')]");
     private By subscription = By.xpath("//a[contains(@class, 'ps-menu-button') and span[contains(text(), 'Subscription')]])[2]");
     private By actionLogDropDown = By.xpath("//button[@id='dropdown-basic-button']");
@@ -341,6 +354,57 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(adminChangeLog).isDisplayed()+" also enabled: "+$(adminChangeLog).isEnabled());
         evaluateJavascript("arguments[0].click();", $(adminChangeLog));
+    }
+    public void searchAdminChangeLogButton() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(searchAdminChangeLogButton).isDisplayed()+" also enabled: "+$(searchAdminChangeLogButton).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(searchAdminChangeLogButton));
+    }
+    public void selectOneOfUserOfAdminChangeLogButton() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(selectUserAdminChangeLog).isDisplayed()+" also enabled: "+$(selectUserAdminChangeLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(selectUserAdminChangeLog));
+        Thread.sleep(500);
+        System.out.println("btnSubmit company is displaying: "+$(selectOneOfUserAdminChangeLog).isDisplayed()+" also enabled: "+$(selectOneOfUserAdminChangeLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(selectOneOfUserAdminChangeLog));
+    }
+    public void select_option_user_management() throws InterruptedException{
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(option_userManagement).isDisplayed()+" also enabled: "+$(option_userManagement).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(option_userManagement));
+    }
+    public void select_option_access_group() throws InterruptedException{
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(option_access_group).isDisplayed()+" also enabled: "+$(option_access_group).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(option_access_group));
+    }
+    public void inputStartDateACL(String startDate){
+        $(startDateAdminChangeLog).sendKeys(startDate);
+    }
+    public void inputEndDateACL(String endDate) throws InterruptedException {
+        Thread.sleep(2000);
+        $(endDateAdminChangeLog).sendKeys(endDate);
+    }
+    public void selectAdminChangeLogFunction() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(selectAdminChangeLogFunction).isDisplayed()+" also enabled: "+$(selectAdminChangeLogFunction).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(selectAdminChangeLogFunction));
+    }
+    public void selectOptionFunctionInAdminChangeLog() throws InterruptedException {
+        Thread.sleep(1500);
+        System.out.println("btnSubmit company is displaying: "+$(select_option_dropdown_toggle_btn_btn_outline_secondary).isDisplayed()+" also enabled: "+$(select_option_dropdown_toggle_btn_btn_outline_secondary).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(select_option_dropdown_toggle_btn_btn_outline_secondary));
+        Thread.sleep(2500);
+    }
+    public void adminChangeLogTableHover() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(adminChangeLogTableHover).isDisplayed());
+    }
+    public void completeness_of_the_perimeter_search() throws  InterruptedException{
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(selectUserTitleAdminChangeLog).isDisplayed());
+        System.out.println("btnSubmit company is displaying: "+$(selectFunctionTitleAdminChangeLog).isDisplayed());
+        System.out.println("btnSubmit company is displaying: "+$(selectDateRangeTitleAdminChangeLog).isDisplayed());
     }
     public void verifyTitleChangeToPortalAccessManagement() throws InterruptedException {
         Thread.sleep(3000);
