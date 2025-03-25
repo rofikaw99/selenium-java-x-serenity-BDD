@@ -156,6 +156,13 @@ public class SupportAppStep {
         supportAppPage.searchAdminChangeLogButton();
         supportAppPage.selectOneOfUserOfAdminChangeLogButton();
     }
+    @And("only select a specific Function Access Group and User")
+    public void only_select_a_specific_Function_Access_Group_and_User() throws InterruptedException {
+        supportAppPage.selectAdminChangeLogFunction();
+        supportAppPage.select_option_user_management();
+        supportAppPage.searchAdminChangeLogButton();
+        supportAppPage.selectOneOfUserOfAdminChangeLogButton();
+    }
     @When("only select a specific Function Access Group and no value is selected for User")
     public void only_select_a_specific_Function_Access_Group_and_no_value_is_selected_for_User() throws InterruptedException {
         supportAppPage.selectAdminChangeLogFunction();

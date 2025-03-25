@@ -1645,6 +1645,38 @@ Feature: My Company
       | email                         |password | iconaccountmenu | otheruseremail            |
       | headquarter_sq02@yopmail.com  |P@55w0rd | My Company      | test_300323_a@yopmail.com |
 
+  @ESCLLCLFS
+  Scenario Outline: Enhance subscription logic for company level subscription when Plan Manager choose to leave from a company (e.g.LFS)
+    Given plan manager as company admin
+    When plan manager leave company
+    Then verify that Plan manager has been removed from the company.
+
+    Examples:
+      | email                         |
+      | headquarter_sq02@yopmail.com  |
+
+  @ESCLLCLFS
+  Scenario Outline: Enhance subscription logic for company level subscription when remove another company admin (e.g.LFS)
+    Given plan manager as company admin
+    When remove another company admin
+    Then transfer to another plan manager
+    And verify that another company admin has been removed from the company.
+
+    Examples:
+      | email                         |
+      | headquarter_sq02@yopmail.com  |
+
+  @ESCLLCLFS
+  Scenario Outline: Enhance subscription logic for company level subscription when change role another company admin (e.g.LFS)
+    Given plan manager as company admin
+    When change role another company admin
+    Then transfer to another plan manager
+    And verify that another company admin has been downgrade became member
+
+    Examples:
+      | email                         |
+      | headquarter_sq02@yopmail.com  |
+
   @ValidatePimaToSyncWithChexs
   Scenario Outline:  Validate the pima to sync with chexs
     Given validate the pima "<pima>" to sync with chexs

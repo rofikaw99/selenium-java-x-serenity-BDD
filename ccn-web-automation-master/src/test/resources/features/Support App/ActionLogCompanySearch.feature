@@ -12,7 +12,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | RAwaludin | spdoRed230C$ | Company System Address |
 
   @EAL_2
   Scenario Outline: Search Perimeter for admin change log
@@ -26,7 +26,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | RAwaludin | spdoRed230C$ | Company System Address |
 
 
 
@@ -43,7 +43,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID    | password  | startDate | endDate  |
-      | RAwaludin | password  | 01022025  | 31032025 |
+      | RAwaludin | spdoRed230C$ | 01022025  | 31032025 |
 
   @EAL_6
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (Access Group)” and no value is selected for “User
@@ -58,7 +58,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | startDate | endDate  |
-      | RAwaludin | password | 01022025  | 31032025 |
+      | RAwaludin | spdoRed230C$ | 01022025  | 31032025 |
 
   @EAL_7
   Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (User Management)” and  “User
@@ -73,7 +73,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | startDate | endDate  |
-      | RAwaludin | password | 01022025  | 31032025 |
+      | RAwaludin | spdoRed230C$ | 01022025  | 31032025 |
 
 
   @EAL_8
@@ -88,7 +88,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | RAwaludin | spdoRed230C$ | Company System Address |
 
   @EAL_10
   Scenario Outline: verify action log report filter functionality & portal admin function availability
@@ -103,7 +103,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | RAwaludin | spdoRed230C$ | Company System Address |
 
   @EAL_11
   Scenario Outline: Input Company Name to display more info
@@ -115,7 +115,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition    |
-      | RAwaludin | password | Company Name |
+      | RAwaludin | spdoRed230C$ | Company Name |
 
   @EAL_12
   Scenario Outline: Input Company Name to display more info
@@ -127,7 +127,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition    |
-      | RAwaludin | password | Company Name |
+      | RAwaludin | spdoRed230C$ | Company Name |
 
   @EAL_13
   Scenario Outline: Input Company Domain to display more info
@@ -139,7 +139,7 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition      |
-      | RAwaludin | password | Company Domain |
+      | RAwaludin | spdoRed230C$ | Company Domain |
 
   @EAL_14
   Scenario Outline: Input Company UEN to display more info
@@ -151,4 +151,4 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
 
     Examples:
       | userID   | password | condition      |
-      | RAwaludin | password | Company UEN |
+      | RAwaludin | spdoRed230C$ | Company UEN |
