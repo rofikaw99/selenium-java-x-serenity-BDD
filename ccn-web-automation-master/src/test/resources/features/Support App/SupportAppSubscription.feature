@@ -130,20 +130,6 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_8
-  Scenario Outline: Search Perimeter for admin change log If only select a specific “Function (User Management)” and  “User
-    Given go to support app web
-    When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user click Access Control
-    And user go to a new feature titled “Admin Change Log.”
-    When only select a specific “Function (User Management)” and  “User
-    And the search will include only specific function (User Management) and specific user.
-    And the actions tracked should include any changes made by the admin
-
-    Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
-
 
   @EAL_O_8
   Scenario Outline: Cubeforall User Bundle Amendment without input compulsory field
@@ -206,6 +192,27 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     And Input Start Date and End Date & Input specific user
     And click search
     Then get the correct report onboard information for specific user
+
+    Examples:
+      | userID   | password | condition    |
+      | RAwaludin | password | Company Name |
+
+  @EAPDCBI
+  Scenario Outline: Display the user count info for company level subscription on support app
+    Given user have company level subscribtion
+    When user want to see the CUBEforall Bundle information in the support app
+    Then display: Plan Name, Product name(s), user counts, chargeable counts, Plan Mangers, Plan members
+    And Display the user count info for company level subscription
+
+    Examples:
+      | userID   | password | condition    |
+      | RAwaludin | password | Company Name |
+
+  @EAPDCBI
+  Scenario Outline: not Display the user count info in Support App for non company level subscription
+    Given user doesn't have company level subscription
+    When user want to see the CUBEforall Bundle information in the support app
+    Then not display
 
     Examples:
       | userID   | password | condition    |
