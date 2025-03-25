@@ -1646,7 +1646,7 @@ Feature: My Company
       | headquarter_sq02@yopmail.com  |P@55w0rd | My Company      | test_300323_a@yopmail.com |
 
   @ESCLLCLFS
-  Scenario Outline: Enhance subscription logic for company level subscription when Plan Manager choose to leave company (e.g.LFS)
+  Scenario Outline: Enhance subscription logic for company level subscription when Plan Manager choose to leave from a company (e.g.LFS)
     Given plan manager as company admin
     When plan manager leave company
     Then verify that Plan manager has been removed from the company.
