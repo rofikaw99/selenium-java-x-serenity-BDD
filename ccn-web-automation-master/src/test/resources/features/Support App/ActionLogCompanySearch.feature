@@ -1,3 +1,4 @@
+@EAL
 Feature: To enhance Action log, company search, Onboarding file upload features in CUBEforall Portal Admin
 
   @EAL_1
@@ -106,18 +107,6 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
       | RAwaludin | spdoRed230C$ | Company System Address |
 
   @EAL_11
-  Scenario Outline: Input Company Name to display more info
-    Given go to support app web
-    When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user go to group menu
-    And user go to company info sub menu
-    And Input "<condition>" the display more info
-
-    Examples:
-      | userID   | password | condition    |
-      | RAwaludin | spdoRed230C$ | Company Name |
-
-  @EAL_12
   Scenario Outline: Input Company Name to display more info
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
