@@ -1,6 +1,6 @@
 Feature: To Onboarding file upload features in CUBEforall Portal Admin
 
-  @EAL_O_1
+  @EAL @EAL_O_1
   Scenario Outline: Onboard using Support App select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -19,7 +19,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_2
+  @EAL @EAL_O_2
   Scenario Outline:  Onboard using Support App if not select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -34,7 +34,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_0_3
+  @EAL @EAL_0_3
   Scenario Outline: Onboard using Support App without input compulsory field
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -49,7 +49,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_4
+  @EAL @EAL_O_4
   Scenario Outline: User Bundle Termination using Support App with select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -68,7 +68,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_5
+  @EAL @EAL_O_5
   Scenario Outline: User Bundle Termination using Support App without input select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -82,7 +82,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_6
+  @EAL @EAL_O_6
   Scenario Outline: User Bundle Termination using Support App without input compulsory field
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -96,7 +96,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_7
+  @EAL @EAL_O_7
   Scenario Outline: Cubeforall User Bundle Amendment with select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -131,7 +131,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | RAwaludin | password | Company System Address |
 
 
-  @EAL_O_8
+  @EAL @EAL_O_8
   Scenario Outline: Cubeforall User Bundle Amendment without input compulsory field
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -145,7 +145,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_9
+  @EAL @EAL_O_9
   Scenario Outline: Report Onboard Input Start Date and End Date
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -158,7 +158,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_10
+  @EAL @EAL_O_10
   Scenario Outline: Report Onboard input end date earlier than end date
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -171,7 +171,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition              |
       | RAwaludin | password | Company System Address |
 
-  @EAL_O_11
+  @EAL @EAL_O_11
   Scenario Outline: Report Onboard Only input either start date or end date
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
@@ -184,7 +184,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
       | userID   | password | condition    |
       | RAwaludin | password | Company Name |
 
-  @EAL_O_12
+  @EAL @EAL_O_12
   Scenario Outline: Report Onboard Input Start Date and End Date & Input specific user
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
