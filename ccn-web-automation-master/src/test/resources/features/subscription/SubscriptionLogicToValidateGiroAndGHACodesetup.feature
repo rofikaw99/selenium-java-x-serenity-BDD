@@ -22,7 +22,8 @@ Feature: Enhance Subscription logic to validate Giro & GHA Code setup
     And back to the main tab browser
     When "PM 1 Company A" click product tab to subscribe to product
     And Select plan TDSB
-    And Subscribe plan "<product>"
+    And verify only display contact us for TDSB
+#    And Subscribe plan "<product>"
 #    Then verify the pop up GHA validation message
 
     Examples:

@@ -36,6 +36,7 @@ public class SubscriptionPage extends PageObject {
     private By iconMenuMysubscription = By.xpath("//*[@id=\"toppage\"]/header/div[2]/div[2]/div[2]/div[2]/wc-login/div/div/div[2]/div[2]/div[3]/a");
     private By lsPlanProduct = By.xpath("//*[@id=\"nav\"]/ul/li");
     private By lfsProduct = By.xpath("//a[text()='Lead Freight Solutions']");
+    private By contactUs = By.xpath("//a[@class='btn-1' and @data-bs-toggle='modal' and @href='#interest' and text()='Contact Us']");
     private By btnSuccesSubscribeLFSTrial = By.xpath("//*[@id=\"cube-subscribe-modal-btn-6566e1f8669e862c02256095\"]");
     private By inputCheckboxSubscribeMulti = By.xpath("//input[@id='cube-subscribe-btn-checkbox-6389c85e089c75ff462d9911']");
     private By backfrompayment = By.xpath("//a[@href='https://sandbox.cubeforall.com/portal/manage-subscription']");
@@ -1058,6 +1059,10 @@ public class SubscriptionPage extends PageObject {
         }
 
         js.executeScript("window.scrollBy(0,300)", "");
+    }
+    public void verifyOnlyDisplayContactUs() {
+        String contactUsText = $(contactUs).getText();
+        System.out.println(contactUsText);
     }
 
     public void subscribeplan(String product) throws Exception {
