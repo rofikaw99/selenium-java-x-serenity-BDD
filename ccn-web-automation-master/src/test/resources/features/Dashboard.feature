@@ -26,13 +26,13 @@ Feature: Dashboard
 #    When adding awb number to be tracked
 #    Then success add awb number to watchlist
 
-  @generate-epouch
+  @generate-epouch @epouch
   Scenario: Generate e pouch document
     Given "Epouch Bundle User" login to the web
     When press dot on the left side user in the portal dashboard page
     Then press to generate epouch
 
-  @open-electronic-airwaybill
+  @open-electronic-airwaybill @epouch
   Scenario: Open with Electronic Airwaybill Print
     Given "Epouch Bundle User" login to the web
     When press dot on the left side user in the portal dashboard page
