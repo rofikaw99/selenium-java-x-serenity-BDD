@@ -33,7 +33,7 @@ public class SupportAppPage extends PageObject {
     private By populateOnboardFile = By.xpath("//button[@class='btn btn-primary']");
     private By submitToOnboard = By.xpath("//button[@class='mt-3 btn btn-primary']");
     private By groupMenu = By.xpath("(//a[@data-testid='ps-menu-button-test-id'])[17]");
-    private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[9]");
+    private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[14]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
     private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
     private By accessControl = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Portal Access Management')]");

@@ -34,6 +34,12 @@ public class SubscribeStep {
         subscriptionPage.subscribeplan(product);
     }
 
+    @And("verify only display contact us for TDSB")
+    public void verify_only_display_contact_us_for_TDSB() throws Exception {
+        subscriptionPage.verifyOnlyDisplayContactUs();
+    }
+
+
     @Then("verify the pop up GHA validation message")
     public void verify_the_pop_up_message_GHA_validation(){
         companyPage.verifyGHAValidationMessage();
