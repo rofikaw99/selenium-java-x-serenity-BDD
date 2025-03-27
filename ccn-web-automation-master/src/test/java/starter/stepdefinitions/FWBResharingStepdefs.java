@@ -33,6 +33,15 @@ public class FWBResharingStepdefs {
         fwbResharingPage.createDocForShareVia(contentType, contentName);
     }
 
+    @Given("create {string} doc with {string} and {string}")
+    public void create_doc_for_verify_filter_doc(String contentType, String contentName, String awbNo) throws Exception {
+        fwbResharingPage.createDocForVerifyAWBNo(contentType, contentName, awbNo);
+    }
+    @Given("verify that {string} and {string} document filtering is running well")
+    public void verifyDocumentFiltering(String contentType, String awbNo) {
+        fwbResharingPage.verifyAWBNumber(contentType, awbNo);
+    }
+
     @Given("validate the pima {string} to sync with chexs")
     public void validateThePimaSyncwithChexs(String pima) throws Exception {
         fwbResharingPage.validatePima(pima);

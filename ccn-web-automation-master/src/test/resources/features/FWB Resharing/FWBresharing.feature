@@ -85,6 +85,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
+#    Then verify no encoded content missing
 
     Examples:
       | contentType      | contentName                  | via                                    | contact                                   |
@@ -105,6 +106,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document failed share to airline
+    #    Then verify no encoded content missing
 
     Examples:
       | contentType      | contentName         | via                                        | contact                            |
@@ -115,6 +117,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
+    #    Then verify no encoded content missing
 
     Examples:
       | contentType  | contentName                  | via                                    | contact                                   |
@@ -125,6 +128,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
+    #    Then verify no encoded content missing
 
     Examples:
       | contentType  | contentName              | via                                    | contact                                   |
@@ -135,6 +139,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
+    #    Then verify no encoded content missing
 
     Examples:
       | contentType  | contentName                  | via                                    | contact                                   |
@@ -145,6 +150,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" doc with "<contentName>"
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
+    #    Then verify no encoded content missing
 
     Examples:
       | contentType  | contentName                  | via                                    | contact                                   |
@@ -155,6 +161,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
+    #    Then verify no encoded content missing
 
     Examples:
       | contentType        | contentName                  | via                                    | contact                                 |
@@ -165,6 +172,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" SS doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
+    #    Then verify no encoded content missing
 
     Examples:
       | contentType     | contentName       | via                                    | contact                                 |
@@ -178,7 +186,67 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType  | contentName                  | via                                        | contact                            |
-      | MAWBRequest  | test-monday-16-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
+      | BookingReply  | test-monday-16-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
+
+  @SR6168
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+
+
+    Examples:
+      | contentType  | contentName     | awbNo                |
+      | BookingRequest  | test-26032025   | awbNo:618-64461983   |
+
+  @SR6168
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+
+
+    Examples:
+      | contentType  | contentName     | awbNo                |
+      | BookingReply  | test-26032025   | awbNo:618-64461983   |
+
+  @SR6168
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+
+
+    Examples:
+      | contentType  | contentName     | awbNo                |
+      | MAWBRequest  | test-26032025   | awbNo:618-64461983   |
+
+  @SR6168
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+
+
+    Examples:
+      | contentType  | contentName     | awbNo                |
+      | MAWBReply  | test-26032025   | awbNo:618-64461983   |
+
+  @SR6168
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+
+
+    Examples:
+      | contentType  | contentName     | awbNo                |
+      | DockShipment  | test-26032025   | awbNo:618-64461983   |
+
+  @SR6168
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+
+
+    Examples:
+      | contentType  | contentName     | awbNo                |
+      | DockBookingUpdate  | test-26032025   | awbNo:618-64461983   |
 
   @awb1000times
   Scenario Outline:  awb 1000 times

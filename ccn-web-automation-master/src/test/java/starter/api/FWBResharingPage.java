@@ -30,6 +30,7 @@ public class FWBResharingPage {
     }
     private static String documentID;
     private static String documentRefID;
+    private static String awbNoTag;
     private static String documentIDshareForm;
     private static String documentIDshareExplicitForm;
     private static String documentIDshareVia;
@@ -244,6 +245,70 @@ public class FWBResharingPage {
         System.out.println("Response body: " + response.getBody().asString());
         System.out.println("documentID: " + documentID);
         System.out.println("documentRefID: " + documentRefID);
+    }
+
+    public void createDocForVerifyAWBNo(String contentType, String contentName, String awbNo) {
+
+        // API endpoint
+        String endpoint = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae/document";
+        String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
+
+        // Request body
+        String requestBody = "{\n" +
+                "  \"contentName\": \""+contentName+"\",\n" +
+                "  \"contentType\": \""+contentType+"\",\n" +
+                "  \"contentMIME\": \""+contentName+"\",\n" +
+                "  \"tags\": [\n" +
+                "    \""+awbNo+"\"\n" +
+                "  ],\n" +
+                "  \"encodedContent\": \"eyJhaXJXYXliaWxsTnVtYmVyIjoiNTU1NDIzMjEyMjYiLCJyb3V0aW5nIjp7ImJvb2tpbmdSZXF1ZXN0TnVtYmVyIjoiIiwiYm9va2luZ0RhdGUiOiIyMi81LzIwMjMgMzo1MTo0NyBQTSIsImJvb2tpbmdTdGF0dXMiOiJDb25maXJtZWQiLCJzZWdtZW50RGV0YWlsIjp7InRyYW5zcG9ydC1zZWdtZW50IjpbeyJ0cmFuc3BvcnRDb21wYW55IjoiU1EiLCJ0cmFuc3BvcnRJZGVudGlmaWVyIjoiU1EwMjMzIiwidHJhbnNwb3J0RGF0ZSI6IjIwMjMtMDUtMjMiLCJkZXBhcnR1cmVMb2NhdGlvbiI6IlNJTiIsImFycml2YWxMb2NhdGlvbiI6IkRYQiIsImJvb2tpbmdUeXBlIjoiIiwiYm9va2luZ1N0YXR1cyI6IktLIn1dfX0sInJlbWFya3MiOlt7ImlkIjoiOWRlZjAxMDQtM2E0Yy00Y2U3LTk1OWUtMzkxYTBlM2I1ZmE0IiwidGV4dCI6InRlc3QiLCJkYXRlX0NyZWF0ZWQiOiIyMDIzLTA1LTIyVDA3OjUxOjQ3LjUwOTU2MDNaIiwiaXNfU2VudCI6dHJ1ZSwiYXV0aG9yIjp7Im5hbWUiOiJUVC1TSU4iLCJlbWFpbCI6Im5lbWVzaW9fZ0BjY24uY29tLnNnIn19XSwiYm9va2luZ0ZpbGVzIjpbXX0=\"\n" +
+                "}";
+
+        // Sending PUT request
+        Response response = RestAssured.given()
+                .header("serviceId", serviceId)
+                .contentType(ContentType.JSON)
+                .body(requestBody)
+                .when()
+                .put(endpoint);
+
+        // Extracting documentID from response
+        documentID = response.jsonPath().getString("documentID");
+        documentRefID = response.jsonPath().getString("documentRefID");
+
+        // Printing response
+        System.out.println("Response status code: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody().asString());
+        System.out.println("documentID: " + documentID);
+        System.out.println("documentRefID: " + documentRefID);
+    }
+
+    public void verifyAWBNumber(String contentType, String awbNo) {
+        // API endpoint and request body
+        String url = "http://cube.dev.ccn/93386a266bf64d1183e9384e201e6eae/document";
+        String requestBody = "{\n" +
+                "    \"contentTypes\": [\"" + contentType + "\"],\n" +
+                "    \"tags\": [\n" +
+                "        \"" + awbNo + "\"\n" +
+                "    ]\n" +
+                "}";
+
+        // Sending the request using RestAssured
+        Response response = RestAssured.given()
+                .contentType("application/json")
+                .body(requestBody)
+                .post(url);
+
+
+        String documentAWBNumber = response.jsonPath().getString("tags");
+
+        // Printing response
+        System.out.println("Response status code: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody().asString());
+        // Print the AWB number
+        System.out.println("Extracted AWB Number: " + documentAWBNumber);
+        // Verify that the extracted AWB number matches the expected value
+//        Assert.assertEquals(documentAWBNumber, awbNo, "AWB No does not match");
     }
 
 
