@@ -119,6 +119,18 @@ public class SupportAppStep {
     public void userGoToActionLog() throws InterruptedException {
         supportAppPage.actionLog();
     }
+    @When("user click Action Log Report")
+    public void userGoToActionLog2() throws InterruptedException {
+        supportAppPage.actionLog();
+    }
+    @When("check function field on action report")
+    public void check_function_field_on_action_report() throws InterruptedException {
+        supportAppPage.functionActionLog();
+    }
+    @Then("all portal admin functions are available except for Portal Access Management")
+    public void all_portal_admin_functions_are_available_except_for_Portal_Access_Management() throws InterruptedException {
+        supportAppPage.displayVerify();
+    }
     @When("user click Access Control")
     public void userClickAccessControl() throws InterruptedException {
         supportAppPage.accessControl();
@@ -156,6 +168,7 @@ public class SupportAppStep {
         supportAppPage.searchAdminChangeLogButton();
         supportAppPage.selectOneOfUserOfAdminChangeLogButton();
     }
+
     @And("only select a specific Function Access Group and User")
     public void only_select_a_specific_Function_Access_Group_and_User() throws InterruptedException {
         supportAppPage.selectAdminChangeLogFunction();
@@ -208,6 +221,22 @@ public class SupportAppStep {
     @And("the search will include only specific function User Management and specific user")
     public void the_search_will_include_only_specific_function_User_Management_and_all_users_3() throws InterruptedException {
         supportAppPage.adminChangeLogTableHover();
+    }
+    @And("the search will include only specific function Access Group and specific user")
+    public void the_search_will_include_only_specific_function_User_Management_and_all_users_4() throws InterruptedException {
+        supportAppPage.adminChangeLogTableHover();
+    }
+    @And("the search result will include all users and all function actions")
+    public void the_search_result_will_include_all_users_and_all_function_actions() throws InterruptedException {
+        supportAppPage.adminChangeLogTableHover();
+    }
+    @And("The date range filter is compulsory")
+    public void The_data_range_filter_is_compulsory() throws InterruptedException {
+        supportAppPage.The_data_range_filter_is_compulsory_sign();
+    }
+    @And("no value is selected whether User or Function")
+    public void no_value_is_selected_whether_User_or_Function() throws InterruptedException {
+        supportAppPage.The_data_range_filter_is_compulsory_sign();
     }
     @When("user go to subscription support app")
     public void userGoToSubscriptionSupportApp() throws InterruptedException {

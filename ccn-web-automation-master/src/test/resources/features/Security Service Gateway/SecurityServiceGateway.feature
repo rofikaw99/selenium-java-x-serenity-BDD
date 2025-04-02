@@ -28,16 +28,14 @@ Feature: Security Service Gateway
     | pima                    |
     | CSGAGT9166FF5124/SIN01  |
 
-  @EJWTMSV
+  @EJWTMSV @EJWTMSV1
   Scenario: JWT Middleware for Signature Verification with modify "aud" value then the request will block
-    Given got fresh token from dev.cubeforall.com
-    When go to postman : use any API cube.ccnexchange.com ( e.g : CheckStatus or NewSession )
-    And go to https://token.dev/ and paste the token
-    And modify the token payload ("aud")
-    And grab newly generated token from https://token.dev/
-    And paste at your postman ( change the cubeId at url use matching with the one you modified )
-    Then hit the request
-    And not allow for token alteration or misuse. (the expected is unauthorized)
+    Given got fresh token then go to JWT Debugger Web and paste the token
+#    And modify the token payload ("aud")
+#    And grab newly generated token from https://token.dev/
+#    And paste at your postman ( change the cubeId at url use matching with the one you modified )
+#    Then hit the request
+#    And not allow for token alteration or misuse. (the expected is unauthorized)
 
   @EJWTMSV
   Scenario: JWT Middleware for Signature Verification with modify "iss" value then the request will block

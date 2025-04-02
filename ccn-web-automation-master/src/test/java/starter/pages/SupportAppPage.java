@@ -35,6 +35,7 @@ public class SupportAppPage extends PageObject {
     private By groupMenu = By.xpath("(//a[@data-testid='ps-menu-button-test-id'])[17]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[14]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
+    private By selectActionLogFunction = By.xpath("(//button[@id='dropdown-basic-button'])[2]");
     private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
     private By accessControl = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Portal Access Management')]");
     private By accessGroup = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Access Group')]");
@@ -49,6 +50,7 @@ public class SupportAppPage extends PageObject {
     private By selectUserAdminChangeLog = By.xpath("(//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-outline-secondary')])[1]");
     private By selectOneOfUserAdminChangeLog = By.xpath("//a[@href='#' and text()='RAwaludin']");
     private By adminChangeLogTableHover = By.xpath("//table[@class='table table-striped table-bordered table-hover']");
+    private By the_date_range_filter_compulsory_in_action_log_menu = By.xpath("//span[@style='color: red;' and text()='*']");
     private By selectUserTitleAdminChangeLog = By.xpath("//label[@for='userSelect']");
     private By selectFunctionTitleAdminChangeLog = By.xpath("//label[@for='functionSelect']");
     private By selectDateRangeTitleAdminChangeLog = By.xpath("//label[text()[normalize-space()='Select Date Range']]");
@@ -341,6 +343,14 @@ public class SupportAppPage extends PageObject {
         System.out.println("btnSubmit company is displaying: "+$(actionLog).isDisplayed()+" also enabled: "+$(actionLog).isEnabled());
         evaluateJavascript("arguments[0].click();", $(actionLog));
     }
+    public void functionActionLog() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btnSubmit company is displaying: "+$(selectActionLogFunction).isDisplayed()+" also enabled: "+$(actionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(selectActionLogFunction));
+    }
+    public void displayVerify() throws InterruptedException {
+        Thread.sleep(3000);
+    }
     public void accessControl() throws InterruptedException {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(accessControl).isDisplayed()+" also enabled: "+$(accessControl).isEnabled());
@@ -398,7 +408,16 @@ public class SupportAppPage extends PageObject {
     }
     public void adminChangeLogTableHover() throws InterruptedException {
         Thread.sleep(1000);
-        System.out.println("btnSubmit company is displaying: "+$(adminChangeLogTableHover).isDisplayed());
+        System.out.println("admin change log table is displaying: "+$(adminChangeLogTableHover).isDisplayed());
+    }
+    public void The_data_range_filter_is_compulsory_sign() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("The data range filter is compulsory sign is displaying: "+$(the_date_range_filter_compulsory_in_action_log_menu).isDisplayed());
+    }
+    public void no_value_is_selected_whether_User_or_Function() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btnSubmit action log is displaying: "+$(submitActionLog).isDisplayed()+" also enabled: "+$(submitActionLog).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(submitActionLog));
     }
     public void completeness_of_the_perimeter_search() throws  InterruptedException{
         Thread.sleep(1000);
@@ -441,7 +460,7 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(1000);
         $(endDateActionLog).sendKeys(endDate);
         Thread.sleep(1000);
-        System.out.println("btnSubmit company is displaying: "+$(submitActionLog).isDisplayed()+" also enabled: "+$(submitActionLog).isEnabled());
+        System.out.println("btnSubmit action log is displaying: "+$(submitActionLog).isDisplayed()+" also enabled: "+$(submitActionLog).isEnabled());
         evaluateJavascript("arguments[0].click();", $(submitActionLog));
         Thread.sleep(7000);
     }

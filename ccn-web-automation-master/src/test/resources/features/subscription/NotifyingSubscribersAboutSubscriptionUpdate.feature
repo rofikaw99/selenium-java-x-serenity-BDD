@@ -1,3 +1,4 @@
+@SN
 Feature: Notifying subscribers about Subscription update
 
   @SN @SN1

@@ -83,8 +83,8 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Access Control
     And user go to a new feature titled “Admin Change Log.”
-    When only select a specific “Function (Access Group)” and  “User
-    And the search will include only specific function (Access Group) and specific user
+    When only select a specific Function Access Group and User
+    And the search will include only specific function Access Group and specific user
     And the actions tracked should include creating a new access group, detailing the functions included in that group or recording changes made to existing access group
 
     Examples:
@@ -92,15 +92,15 @@ Feature: To enhance Action log, company search, Onboarding file upload features 
       | RAwaludin | spdoRed230C$ | Company System Address |
 
   @EAL_10
-  Scenario Outline: verify action log report filter functionality & portal admin function availability
+  Scenario Outline: verify action log report filter functionality
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user click Action Log Report
-    Then The data range filter is compulsory
-    When no value is selected for “User” or “Function,”
-    Then the search will include all users and all functions
-    When check function field
-    Then all portal admin functions are available except for “Portal Access Management.”
+    Then The date range filter is compulsory
+    When no value is selected whether User or Function
+    Then the search result will include all users and all function actions
+    When check function field on action report
+    Then all portal admin functions are available except for Portal Access Management
 
     Examples:
       | userID   | password | condition              |

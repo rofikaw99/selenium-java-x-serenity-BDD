@@ -56,6 +56,10 @@ public class SecurityServiceGatewayStepdefs {
     public void validate_pima_chexs(String pima) throws Exception {
         securityServiceGatewayStepdefsPage.validatePimaChexs(pima);
     }
+    @Given("got fresh token then go to JWT Debugger Web and paste the token")
+    public void got_fresh_token_and_paste_the_token() throws Exception {
+        securityServiceGatewayStepdefsPage.goToJWTDebugger();
+    }
     @Given("retrieve airline company identity information with input {string} and or {string} and verify the data is correct")
     public void retrieveAirlineCompanyIdentityAPI(String awbPrefix, String carrierCode) throws Exception {
         securityServiceGatewayStepdefsPage.retrieveAirlineCompanyIdentity(awbPrefix, carrierCode);
