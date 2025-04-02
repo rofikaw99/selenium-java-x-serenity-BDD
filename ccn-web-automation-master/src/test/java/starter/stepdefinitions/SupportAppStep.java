@@ -329,6 +329,30 @@ public class SupportAppStep {
         Assert.assertTrue(supportAppPage.CompanyMembers());
         Thread.sleep(4000);
     }
+    @And("select the country")
+    public void select_the_country(String country) throws Exception {
+        Thread.sleep(2000);
+        supportAppPage.pressSelectCountry(country);
+        switch (country) {
+            case "Singapore":
+                input = Constants.SG;
+                break;
+            case "Philippines":
+                input = Constants.PH;
+                break;
+            case "Vietnam":
+                input = Constants.VN;
+                break;
+            case "Indonesia":
+                input = Constants.ID;
+                break;
+            default:
+                input = Constants.EMAIL_WITHOUT_COMPANY;
+        }
+        Thread.sleep(1500);
+    }
+
+
 
     @And("input {string} to display update plan manager function")
     public void InputPlanManagerMail(String planManagerMail) throws Exception {
