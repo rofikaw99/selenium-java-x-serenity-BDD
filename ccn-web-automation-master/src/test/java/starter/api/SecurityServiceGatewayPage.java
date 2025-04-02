@@ -3,6 +3,7 @@ package starter.api;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import net.thucydides.core.annotations.Steps;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -10,12 +11,22 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
+import starter.pages.GoToUrl;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.then;
 import static org.hamcrest.Matchers.equalTo;
 
+import starter.pages.SecurityServiceGatewayPageOrdinary;
+import starter.pages.SupportAppPage;
+import starter.utlis.Constants;
+
 public class SecurityServiceGatewayPage {
+    @Steps
+    GoToUrl goToUrl;
+
+    @Steps
+    SecurityServiceGatewayPageOrdinary securityServiceGatewayPageOrdinary;
 
     private static String documentID;
     private static String documentRefID;
@@ -102,6 +113,12 @@ public class SecurityServiceGatewayPage {
         // Print response for debugging
         System.out.println("Response Code: " + statusCode);
         System.out.println("Response Body: " + responseBody);
+    }
+    public void goToJWTDebugger() throws InterruptedException {
+        goToUrl.goToAbsUrl("https://token.dev/");
+        Thread.sleep(1500);
+        securityServiceGatewayPageOrdinary.inputTokenPayload();
+
     }
 
     public void validatePimaChexs(String pima) {
