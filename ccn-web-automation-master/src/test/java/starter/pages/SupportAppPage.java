@@ -121,7 +121,7 @@ public class SupportAppPage extends PageObject {
     private By checkButton = By.xpath("//button[contains(@class, 'btn btn-primary') and text()='Check']");
     private By createDiscountSuccessMessage = By.xpath("//p[@class='cube-tracking cube-message']");
     private By typeOfSearch = By.xpath("//button[@id='dropdown-basic-button' and text()='Choose Type of Search']");
-    //supportAppPlan
+    private By selectCountry = By.id("selectCountry");
     private By subscribtionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']/span[@class='ps-menu-label css-12w9als'])[27]");
     private By productSubMenu = By.xpath("//span[text()='Product']");
     private By createPlan = By.xpath("//button[text()='Create Plan']");
@@ -162,6 +162,11 @@ public class SupportAppPage extends PageObject {
         $(typeOfSearch).isDisplayed();
         evaluateJavascript("arguments[0].click();", $(typeOfSearch));
         evaluateJavascript("arguments[0].click();", $(By.xpath("//*[contains(text(), '" + condition +  "')]")));
+    }
+    public void pressSelectCountry(String country){
+        $(selectCountry).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(selectCountry));
+        evaluateJavascript("arguments[0].click();", $(By.xpath("//option[@value='" + country + "')]")));
     }
 
     public void companySystemAddressOption(){
@@ -242,6 +247,7 @@ public class SupportAppPage extends PageObject {
         $(uploadOnboardFileSubMenu).click();
         Thread.sleep(2000);
     }
+
     public void uploadOnboardFileSubMenu() throws InterruptedException {
         String filePath = "C:/Users/rofik/IdeaProjects/CCNRepoTest/cubeforall.test/ccn-web-automation-master/src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
         $(uploadExcelOnboardFile).sendKeys(filePath);
