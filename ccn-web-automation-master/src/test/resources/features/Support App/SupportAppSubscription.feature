@@ -8,16 +8,16 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     When user go to upload file onboard submenu
     And user select an excel file to upload file onboard in the support app
     And select the country
-    And select future effective date
-    And input OCR number
+    And select future effective date "<effectiveDate>" in this case just select the month option
+    And input OCR number "<ocr>"
     And click populate
     Then the onboard data display in support app with correct information
-    And click submit
+    And click submit to onboard
     Then success submit onboard data
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID   | password | effectiveDate | ocr |
+      | RAwaludin | password | 2025-07       | 1126 |
 
   @EAL @EAL_O_2
   Scenario Outline:  Onboard using Support App if not select future effective month
@@ -54,14 +54,14 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user go to Subscription > User Bundle Termination
-    And upload onboard file
+    And user go to upload file onboard submenu
     And select the country
     And select future effective date
     And verify The billing effective date always falls on the first day of the month
     And input OCR number
     And click populate
     Then the onboard data display in support app with correct information
-    And click submit
+    And click submit to onboard
     Then success terminate user bundle
 
     Examples:
@@ -73,7 +73,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user go to Subscription > User Bundle Termination
-    And upload onboard file
+    And user go to upload file onboard submenu
     And select the country
     And select not future effective date
     Then error validation cannot pick the date will display
@@ -87,7 +87,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user go to Subscription > User Bundle Termination
-    And upload onboard file
+    And user go to upload file onboard submenu
     And not select the country
     And not select effective date
     Then error validation display
@@ -104,7 +104,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     And not input pima
     And select the country
     Then verify The billing effective date always falls on the first day of the month
-    And input OCR number
+    And input OCR number "<ocr>"
     And click populate
     Then the onboard data display in support app with correct information
     When user want to edit total number of account
@@ -127,8 +127,8 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     Then success terminate user bundle
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID   | password | ocr  |
+      | RAwaludin | password | 7263 |
 
 
   @EAL @EAL_O_8
