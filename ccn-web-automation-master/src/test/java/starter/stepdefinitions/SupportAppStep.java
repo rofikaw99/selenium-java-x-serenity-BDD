@@ -70,6 +70,24 @@ public class SupportAppStep {
     public void userGoToUploadFileOnboardSubMenu() throws InterruptedException {
         supportAppPage.pressOnboardFileSubMenu();
     }
+    @And("click populate")
+    public void click_populate() throws InterruptedException {
+        supportAppPage.pressPopulate();
+    }
+    @And("click submit to onboard")
+    public void click_submit_to_onboard() throws InterruptedException {
+        supportAppPage.pressSubmitToOnboard();
+    }
+    @And("select future effective date {string} in this case just select the month option")
+    public void select_future_effective_date_in_this_case_just_select_the_month_option(String effectiveDate) throws InterruptedException {
+        supportAppPage.selectMonth(effectiveDate);
+    }
+    @And("input OCR number {string}")
+    public void input_OCR_number(String ocr) throws InterruptedException {
+        supportAppPage.inputOCR(ocr);
+    }
+
+
     @And("user select an excel file to upload file onboard in the support app then populate and submit")
     public void userSelectAnExcelFileToUploadFileOnboardInTheSupportApp() throws InterruptedException {
         supportAppPage.uploadOnboardFileSubMenu();
@@ -229,6 +247,14 @@ public class SupportAppStep {
     @And("the search result will include all users and all function actions")
     public void the_search_result_will_include_all_users_and_all_function_actions() throws InterruptedException {
         supportAppPage.adminChangeLogTableHover();
+    }
+    @And("the onboard data display in support app with correct information")
+    public void the_onboard_data_display_in_support_app_with_correct_information() throws InterruptedException {
+        supportAppPage.afterPopulateTableHover();
+    }
+    @And("success submit onboard data")
+    public void success_submit_onboard_data() throws InterruptedException {
+        supportAppPage.successUploadOnboardMSG();
     }
     @And("The date range filter is compulsory")
     public void The_data_range_filter_is_compulsory() throws InterruptedException {

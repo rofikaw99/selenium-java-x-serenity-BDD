@@ -20,6 +20,10 @@ public class SupportAppPage extends PageObject {
     private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
     private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
     private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[20]");
+    private By populate = By.xpath("//button[@type='button' and contains(text(), 'Populate') ]");
+    private By submitToOnboard = By.xpath("//button[@type='button' and contains(text(), 'Submit to Onboard')]");
+    private By ocrElement = By.id("ocrNumber");
+    private By selectMonth = By.id("startDate");
     private By createNewAirline = By.xpath("//button[text()='Create New Airline']");
     private By airlineSubmitButton = By.xpath("//button[@type='submit' and contains(@class, 'btn btn-primary') and text()='Submit']");
     private By editAirline = By.xpath("(//button[@type='button' and contains(@class, 'btn btn-link')])[2]");
@@ -31,7 +35,6 @@ public class SupportAppPage extends PageObject {
     private By optionCarrierCode = By.xpath("//option[@value='carrierCode']");
     private By uploadExcelOnboardFile = By.id("formFile");
     private By populateOnboardFile = By.xpath("//button[@class='btn btn-primary']");
-    private By submitToOnboard = By.xpath("//button[@class='mt-3 btn btn-primary']");
     private By groupMenu = By.xpath("(//a[@data-testid='ps-menu-button-test-id'])[17]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[14]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
@@ -50,6 +53,8 @@ public class SupportAppPage extends PageObject {
     private By selectUserAdminChangeLog = By.xpath("(//button[contains(@class, 'dropdown-toggle') and contains(@class, 'btn-outline-secondary')])[1]");
     private By selectOneOfUserAdminChangeLog = By.xpath("//a[@href='#' and text()='RAwaludin']");
     private By adminChangeLogTableHover = By.xpath("//table[@class='table table-striped table-bordered table-hover']");
+    private By tableHoverDisplayAfterPopulate = By.xpath("//table[contains(@class, 'table-striped') and contains(@class, 'table-bordered') and contains(@class, 'table-hover')]");
+    private By successUploadOnboardMessage = By.xpath("//div[contains(@class, 'fade') and contains(@class, 'mt-3') and contains(@class, 'alert') and contains(@class, 'alert-success') and contains(@class, 'show')]");
     private By the_date_range_filter_compulsory_in_action_log_menu = By.xpath("//span[@style='color: red;' and text()='*']");
     private By selectUserTitleAdminChangeLog = By.xpath("//label[@for='userSelect']");
     private By selectFunctionTitleAdminChangeLog = By.xpath("//label[@for='functionSelect']");
@@ -242,10 +247,33 @@ public class SupportAppPage extends PageObject {
         $(subscriptionMenu).isDisplayed();
         $(subscriptionMenu).click();
     }
+    public void pressPopulate() throws InterruptedException{
+        $(populate).isDisplayed();
+        $(populate).click();
+        Thread.sleep(1000);
+    }
+    public void pressSubmitToOnboard() throws InterruptedException{
+        $(submitToOnboard).isDisplayed();
+        $(submitToOnboard).click();
+        Thread.sleep(5000);
+    }
     public void pressOnboardFileSubMenu() throws InterruptedException {
         $(uploadOnboardFileSubMenu).isDisplayed();
         $(uploadOnboardFileSubMenu).click();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
+    }
+    public void selectMonth(String effectiveDate) throws InterruptedException {
+        $(selectMonth).isDisplayed();
+        $(selectMonth).click();
+        $(selectMonth).sendKeys(effectiveDate);
+        Thread.sleep(1000);
+    }
+
+    public void inputOCR(String ocr) throws InterruptedException {
+        $(ocrElement).isDisplayed();
+        $(ocrElement).click();
+        $(ocrElement).sendKeys(ocr);
+        Thread.sleep(1000);
     }
 
     public void uploadOnboardFileSubMenu() throws InterruptedException {
@@ -415,6 +443,15 @@ public class SupportAppPage extends PageObject {
     public void adminChangeLogTableHover() throws InterruptedException {
         Thread.sleep(1000);
         System.out.println("admin change log table is displaying: "+$(adminChangeLogTableHover).isDisplayed());
+    }
+    public void afterPopulateTableHover() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("admin change log table is displaying: "+$(tableHoverDisplayAfterPopulate).isDisplayed());
+    }
+    public void successUploadOnboardMSG() throws InterruptedException {
+        Thread.sleep(500);
+        String successOnboardText = $(successUploadOnboardMessage).getText();
+        System.out.println(successOnboardText);
     }
     public void The_data_range_filter_is_compulsory_sign() throws InterruptedException {
         Thread.sleep(1000);
