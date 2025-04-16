@@ -70,9 +70,29 @@ public class SupportAppStep {
     public void userGoToUploadFileOnboardSubMenu() throws InterruptedException {
         supportAppPage.pressOnboardFileSubMenu();
     }
+    @And("user go to User Bundle Termination submenu")
+    public void user_go_to_User_Bundle_Termination_submenu() throws InterruptedException {
+        supportAppPage.pressTerminationFileSubMenu();
+    }
     @And("click populate")
     public void click_populate() throws InterruptedException {
         supportAppPage.pressPopulate();
+    }
+    @Then("error validation cannot pick the date will display")
+    public void error_validation_cannot_pick_the_date_will_display() throws InterruptedException {
+        Thread.sleep(3000);
+    }
+    @And("not select the country")
+    public void not_select_the_country() throws InterruptedException {
+        Thread.sleep(1000);
+    }
+    @And("not select effective date")
+    public void not_select_effective_date() throws InterruptedException {
+        Thread.sleep(1000);
+    }
+    @Then("error validation display")
+    public void error_validation_l_display() throws InterruptedException {
+        Thread.sleep(3000);
     }
     @And("click submit to onboard")
     public void click_submit_to_onboard() throws InterruptedException {
@@ -80,6 +100,10 @@ public class SupportAppStep {
     }
     @And("select future effective date {string} in this case just select the month option")
     public void select_future_effective_date_in_this_case_just_select_the_month_option(String effectiveDate) throws InterruptedException {
+        supportAppPage.selectMonth(effectiveDate);
+    }
+    @And("select past future effective date {string}")
+    public void select_past_future_effective_date(String effectiveDate) throws InterruptedException {
         supportAppPage.selectMonth(effectiveDate);
     }
     @And("input OCR number {string}")

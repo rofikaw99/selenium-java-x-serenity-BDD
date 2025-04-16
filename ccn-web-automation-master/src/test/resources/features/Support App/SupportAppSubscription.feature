@@ -27,12 +27,13 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     When user go to upload file onboard submenu
     And user select an excel file to upload file onboard in the support app
     And select the country
-    And select != future effective date
+    And select past future effective date "<effectiveDate>"
+    And click populate
     Then error validation cannot pick the date will display
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID    | password | effectiveDate |
+      | RAwaludin | password | 2025-04       |
 
   @EAL @EAL_0_3
   Scenario Outline: Onboard using Support App without input compulsory field
@@ -43,51 +44,52 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     And user select an excel file to upload file onboard in the support app
     And not select the country
     And not select effective date
+    And click populate
     Then error validation display
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID    | password |
+      | RAwaludin | password |
 
   @EAL @EAL_O_4
   Scenario Outline: User Bundle Termination using Support App with select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user go to Subscription > User Bundle Termination
-    And user go to upload file onboard submenu
+    When user go to subscription support app
+    When user go to User Bundle Termination submenu
+    And user select an excel file to upload file onboard in the support app
     And select the country
-    And select future effective date
-    And verify The billing effective date always falls on the first day of the month
-    And input OCR number
+    And select future effective date "<effectiveDate>" in this case just select the month option
+    And input OCR number "<ocr>"
     And click populate
     Then the onboard data display in support app with correct information
     And click submit to onboard
     Then success terminate user bundle
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID    | password | effectiveDate | ocr |
+      | RAwaludin | password | 2025-08       |1126 |
 
   @EAL @EAL_O_5
   Scenario Outline: User Bundle Termination using Support App without input select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user go to Subscription > User Bundle Termination
-    And user go to upload file onboard submenu
+    When user go to subscription support app
+    When user go to User Bundle Termination submenu
     And select the country
-    And select not future effective date
+    And select past future effective date "<effectiveDate>"
     Then error validation cannot pick the date will display
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID    | password | effectiveDate |
+      | RAwaludin | password | 2025-04       |
 
   @EAL @EAL_O_6
   Scenario Outline: User Bundle Termination using Support App without input compulsory field
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user go to Subscription > User Bundle Termination
-    And user go to upload file onboard submenu
+    When user go to subscription support app
+    When user go to User Bundle Termination submenu
     And not select the country
     And not select effective date
     Then error validation display
@@ -100,10 +102,11 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
   Scenario Outline: Cubeforall User Bundle Amendment with select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user go to Subscription > User Bundle Termination
+    When user go to subscription support app
+    When user go to User Bundle Amendment submenu
     And not input pima
     And select the country
-    Then verify The billing effective date always falls on the first day of the month
+    And select future effective date "<effectiveDate>" in this case just select the month option
     And input OCR number "<ocr>"
     And click populate
     Then the onboard data display in support app with correct information
@@ -127,28 +130,30 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     Then success terminate user bundle
 
     Examples:
-      | userID   | password | ocr  |
-      | RAwaludin | password | 7263 |
+      | userID   | password | ocr  | effectiveDate |
+      | RAwaludin | password | 7263 | 2025-08       |
 
 
   @EAL @EAL_O_8
   Scenario Outline: Cubeforall User Bundle Amendment without input compulsory field
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
-    When user go to Subscription > User Bundle Termination
+    When user go to subscription support app
+    When user go to User Bundle Amendment
     And not input pima
     And not select the country
-    Then verify The billing effective date always falls on the first day of the month
+    And select future effective date "<effectiveDate>" in this case just select the month option
     Then error validation display
 
     Examples:
-      | userID   | password | condition              |
-      | RAwaludin | password | Company System Address |
+      | userID    | password | effectiveDate |
+      | RAwaludin | password | 2025-08       |
 
   @EAL @EAL_O_9
   Scenario Outline: Report Onboard Input Start Date and End Date
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
+    When user go to subscription support app
     When user go to Subscription > Report Onboard
     And input start date and end date
     And click search
@@ -162,6 +167,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
   Scenario Outline: Report Onboard input end date earlier than end date
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
+    When user go to subscription support app
     When user go to Subscription > Report Onboard
     And input end date earlier than end date
     And click search
@@ -175,6 +181,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
   Scenario Outline: Report Onboard Only input either start date or end date
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
+    When user go to subscription support app
     When user go to Subscription > Report Onboard
     And Only input either start date or end date
     And click search
@@ -188,6 +195,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
   Scenario Outline: Report Onboard Input Start Date and End Date & Input specific user
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
+    When user go to subscription support app
     When user go to Subscription > Report Onboard
     And Input Start Date and End Date & Input specific user
     And click search
