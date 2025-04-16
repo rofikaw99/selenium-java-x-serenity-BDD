@@ -19,6 +19,7 @@ public class SupportAppPage extends PageObject {
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
     private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
+    private By uploadTerminationSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[40]");
     private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[20]");
     private By populate = By.xpath("//button[@type='button' and contains(text(), 'Populate') ]");
     private By submitToOnboard = By.xpath("//button[@type='button' and contains(text(), 'Submit to Onboard')]");
@@ -260,6 +261,11 @@ public class SupportAppPage extends PageObject {
     public void pressOnboardFileSubMenu() throws InterruptedException {
         $(uploadOnboardFileSubMenu).isDisplayed();
         $(uploadOnboardFileSubMenu).click();
+        Thread.sleep(1000);
+    }
+    public void pressTerminationFileSubMenu() throws InterruptedException {
+        $(uploadTerminationSubMenu).isDisplayed();
+        $(uploadTerminationSubMenu).click();
         Thread.sleep(1000);
     }
     public void selectMonth(String effectiveDate) throws InterruptedException {
