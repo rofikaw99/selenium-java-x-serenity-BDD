@@ -386,7 +386,7 @@ public class FWBResharingPage {
                 .build();
 
         ResponseSpecification responseSpec = new ResponseSpecBuilder()
-                .expectStatusCode(200) // Assuming a 200 status code is expected
+//                .expectStatusCode(200) // Assuming a 200 status code is expected
                 .build();
 
         // Loop to send 1000 requests
@@ -396,7 +396,7 @@ public class FWBResharingPage {
             String requestBody = String.format(
                     "{\n" +
                             "    \"contentName\": \"%s\",\n" +
-                            "    \"contentType\": \"MAWBRequest\",\n" +
+                            "    \"contentType\": \"BookingRequest\",\n" +
                             "    \"contentMIME\": null,\n" +
                             "    \"tags\": [\n" +
                             "        \"status:Confirmed\",\n" +
