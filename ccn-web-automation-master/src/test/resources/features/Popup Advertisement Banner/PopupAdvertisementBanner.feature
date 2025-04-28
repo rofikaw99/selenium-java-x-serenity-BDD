@@ -158,7 +158,7 @@ Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Co
     Then the popup should not appear in future logins
 
   @CRP0068_19
-  Scenario: Hyperlink for more detail
+  Scenario: User click Hyperlink for more detail
     Given the advertisement popup banner is visible
     When the user checks the "Click here to find out more" checkbox
     And the user closes the banner
