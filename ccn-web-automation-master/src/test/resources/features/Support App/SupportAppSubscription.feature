@@ -139,7 +139,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user go to subscription support app
-    When user go to User Bundle Amendment
+    When user go to User Bundle Amendment submenu
     And not input pima
     And not select the country
     And select future effective date "<effectiveDate>" in this case just select the month option

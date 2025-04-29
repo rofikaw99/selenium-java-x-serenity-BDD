@@ -74,6 +74,10 @@ public class SupportAppStep {
     public void user_go_to_User_Bundle_Termination_submenu() throws InterruptedException {
         supportAppPage.pressTerminationFileSubMenu();
     }
+    @And("user go to User Bundle Amendment submenu")
+    public void user_go_to_User_Bundle_Amendment_submenu() throws InterruptedException {
+        supportAppPage.pressUserAmendmentFileSubMenu();
+    }
     @And("click populate")
     public void click_populate() throws InterruptedException {
         supportAppPage.pressPopulate();
@@ -84,6 +88,10 @@ public class SupportAppStep {
     }
     @And("not select the country")
     public void not_select_the_country() throws InterruptedException {
+        Thread.sleep(1000);
+    }
+    @And("not input pima")
+    public void not_select_pima() throws InterruptedException {
         Thread.sleep(1000);
     }
     @And("not select effective date")
