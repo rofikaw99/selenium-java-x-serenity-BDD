@@ -161,6 +161,33 @@ Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Co
   Scenario: User click Hyperlink for more detail
     Given the advertisement popup banner is visible
     When the user checks the "Click here to find out more" checkbox
-    And the user closes the banner
-    Then the popup should not appear in future logins
+    Then the user will be direct to new link to see more detail
+
+  @CRP0068_20
+  Scenario: view job list advertisement configuration log
+    Given already on the advertisement configuration page
+    When click view job log
+    Then direct to job list page
+    When click view detail job list base on ID
+    Then the information related with job list ID that has been click will be provide
+    When click close from job list detail
+    Then direct to job list page
+    When click back to configuration
+    Then direct back to configuration page
+
+  @CRP0068_21
+  Scenario: edit job list advertisement configuration log
+    Given already on the advertisement configuration page
+    When click view job log
+    Then direct to job list page
+    When click edit job list base on ID
+    Then The edited job list configuration id will be implemented with the latest update results
+
+  @CRP0068_22
+  Scenario: remove job list advertisement configuration log
+    Given already on the advertisement configuration page
+    When click view job log
+    Then direct to job list page
+    When click edit job list base on ID
+    Then If the job list configuration ID has been removed, the configuration is no longer valid
 
