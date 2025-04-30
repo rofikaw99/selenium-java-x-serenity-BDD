@@ -188,61 +188,78 @@ Feature: FWB Re sharing
       | contentType  | contentName                  | via                                        | contact                            |
       | BookingReply  | test-monday-16-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
 
-  @SR6168
-  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+  @SR6168 @SR6168DEV
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
+    And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
 
+    Examples:
+      | contentType| contentName     | awbNo                |
+      | Booking    | test-26032025   | awbNo:618-64461984   |
+
+  @SR6168 @SR6168DEV
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
+    And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+
+    Examples:
+      | contentType     | contentName     | awbNo                |
+      | BookingRequest  | test-26032025   | awbNo:618-64461984   |
+
+  @SR6168 @SR6168DEV
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
+    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
+    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
+    And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
 
     Examples:
       | contentType  | contentName     | awbNo                |
-      | BookingRequest  | test-26032025   | awbNo:618-64461983   |
+      | BookingReply  | test-26032025   | awbNo:618-64461985   |
 
-  @SR6168
-  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+  @SR6168 @SR6168DEV
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify that "<contentType>" and "<awbNo>" document filtering is running well
-
+    And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
+    And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
 
     Examples:
       | contentType  | contentName     | awbNo                |
-      | BookingReply  | test-26032025   | awbNo:618-64461983   |
+      | MAWBRequest  | test-26032025   | awbNo:618-64461986   |
 
-  @SR6168
-  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+  @SR6168 @SR6168DEV
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify that "<contentType>" and "<awbNo>" document filtering is running well
-
+    And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
+    And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
 
     Examples:
       | contentType  | contentName     | awbNo                |
-      | MAWBRequest  | test-26032025   | awbNo:618-64461983   |
+      | MAWBReply  | test-26032025   | awbNo:618-64461987   |
 
   @SR6168
-  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify that "<contentType>" and "<awbNo>" document filtering is running well
-
-
-    Examples:
-      | contentType  | contentName     | awbNo                |
-      | MAWBReply  | test-26032025   | awbNo:618-64461983   |
-
-  @SR6168
-  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
-    Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
-
+    And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
+    And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
 
     Examples:
       | contentType  | contentName     | awbNo                |
       | DockShipment  | test-26032025   | awbNo:618-64461983   |
 
   @SR6168
-  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag
+  Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify that "<contentType>" and "<awbNo>" document filtering is running well
-
+    And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
+    And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
 
     Examples:
       | contentType  | contentName     | awbNo                |
