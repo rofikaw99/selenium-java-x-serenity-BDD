@@ -310,8 +310,55 @@ public class FWBResharingPage {
         // Verify that the extracted AWB number matches the expected value
 //        Assert.assertEquals(documentAWBNumber, awbNo, "AWB No does not match");
     }
+    public void verify_the_document_should_appear_in_the_company_system(String contentType, String awbNo) {
+        // API endpoint and request body
+        String url = "http://cube.dev.ccn/b5631389e2244eb1ac5243195c250d68/document";
+        String requestBody = "{\n" +
+                "    \"contentTypes\": [\"" + contentType + "\"],\n" +
+                "    \"tags\": [\n" +
+                "        \"" + awbNo + "\"\n" +
+                "    ]\n" +
+                "}";
 
+        // Sending the request using RestAssured
+        Response response = RestAssured.given()
+                .contentType("application/json")
+                .body(requestBody)
+                .post(url);
 
+        String documentAWBNumber = response.jsonPath().getString("tags");
+
+        // Printing response
+        System.out.println("Response status code: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody().asString());
+        // Print the AWB number
+        System.out.println("Extracted AWB Number: " + documentAWBNumber);
+    }
+    public void verify_another_user_in_the_same_company_should_also_be_able_to_view_the_document_created(String contentType, String awbNo) {
+        // API endpoint and request body
+        String url = "http://cube.dev.ccn/6cb86189a54b462491065d6f94eb680e/document";
+        String requestBody = "{\n" +
+                "    \"contentTypes\": [\"" + contentType + "\"],\n" +
+                "    \"tags\": [\n" +
+                "        \"" + awbNo + "\"\n" +
+                "    ]\n" +
+                "}";
+
+        // Sending the request using RestAssured
+        Response response = RestAssured.given()
+                .contentType("application/json")
+                .body(requestBody)
+                .post(url);
+
+        String documentAWBNumber = response.jsonPath().getString("tags");
+
+        // Printing response
+        System.out.println("Response status code: " + response.getStatusCode());
+        System.out.println("Response body: " + response.getBody().asString());
+        // Print the AWB number
+        System.out.println("Extracted AWB Number: " + documentAWBNumber);
+
+    }
     public void awb1000times() {
 
 //        // Base URL and headers setup

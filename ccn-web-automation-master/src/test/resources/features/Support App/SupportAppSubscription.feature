@@ -64,7 +64,7 @@ Feature: To Onboarding file upload features in CUBEforall Portal Admin
     And click populate
     Then the onboard data display in support app with correct information
     And click submit to onboard
-    Then success terminate user bundle
+    Then success upload terminate user bundle
 
     Examples:
       | userID    | password | effectiveDate | ocr |

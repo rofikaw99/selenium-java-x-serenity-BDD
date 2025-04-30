@@ -41,7 +41,14 @@ public class FWBResharingStepdefs {
     public void verifyDocumentFiltering(String contentType, String awbNo) {
         fwbResharingPage.verifyAWBNumber(contentType, awbNo);
     }
-
+    @And("verify that {string} and {string} the document should appear in the company system")
+    public void verifyThe_document_should_appear_in_the_company_system(String contentType, String awbNo) {
+        fwbResharingPage.verify_the_document_should_appear_in_the_company_system(contentType, awbNo);
+    }
+    @And("verify that {string} and {string} another user in the same company should also be able to view the document created")
+    public void verifyUser_B_should_also_be_able_to_view_the_document_created(String contentType, String awbNo) {
+        fwbResharingPage.verify_another_user_in_the_same_company_should_also_be_able_to_view_the_document_created(contentType, awbNo);
+    }
     @Given("validate the pima {string} to sync with chexs")
     public void validateThePimaSyncwithChexs(String pima) throws Exception {
         fwbResharingPage.validatePima(pima);

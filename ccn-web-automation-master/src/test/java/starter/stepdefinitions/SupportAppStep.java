@@ -288,6 +288,10 @@ public class SupportAppStep {
     public void success_submit_onboard_data() throws InterruptedException {
         supportAppPage.successUploadOnboardMSG();
     }
+    @And("success upload terminate user bundle")
+    public void success_upload_terminate_user_bundle() throws InterruptedException {
+        supportAppPage.successUploadTerminateOnboardMSG();
+    }
     @And("The date range filter is compulsory")
     public void The_data_range_filter_is_compulsory() throws InterruptedException {
         supportAppPage.The_data_range_filter_is_compulsory_sign();

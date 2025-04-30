@@ -57,6 +57,7 @@ public class SupportAppPage extends PageObject {
     private By adminChangeLogTableHover = By.xpath("//table[@class='table table-striped table-bordered table-hover']");
     private By tableHoverDisplayAfterPopulate = By.xpath("//table[contains(@class, 'table-striped') and contains(@class, 'table-bordered') and contains(@class, 'table-hover')]");
     private By successUploadOnboardMessage = By.xpath("//div[contains(@class, 'fade') and contains(@class, 'mt-3') and contains(@class, 'alert') and contains(@class, 'alert-success') and contains(@class, 'show')]");
+    private By successUploadTerminateOnboard = By.xpath("//div[contains(@class, \"alert-success\")]");
     private By the_date_range_filter_compulsory_in_action_log_menu = By.xpath("//span[@style='color: red;' and text()='*']");
     private By selectUserTitleAdminChangeLog = By.xpath("//label[@for='userSelect']");
     private By selectFunctionTitleAdminChangeLog = By.xpath("//label[@for='functionSelect']");
@@ -464,6 +465,11 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(500);
         String successOnboardText = $(successUploadOnboardMessage).getText();
         System.out.println(successOnboardText);
+    }
+    public void successUploadTerminateOnboardMSG() throws InterruptedException {
+        Thread.sleep(500);
+        String successTerminateOnboardText = $(successUploadTerminateOnboard).getText();
+        System.out.println(successTerminateOnboardText);
     }
     public void The_data_range_filter_is_compulsory_sign() throws InterruptedException {
         Thread.sleep(1000);
