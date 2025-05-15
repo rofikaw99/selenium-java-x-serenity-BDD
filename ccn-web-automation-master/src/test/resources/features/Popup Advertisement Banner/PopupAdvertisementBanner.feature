@@ -116,7 +116,7 @@ Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Co
     Then the popup should not appear
 
   @CRP0068_12
-  Scenario: Popup should not show if frequency condition (once a week / once a month) is not met
+  Scenario: Popup should not show if frequency condition (once a week / once a month) is not met or already show before
     Given the user saw the popup less than a week ago / a month ago depend on frequency condition
     And the frequency is set to "once a week" / "once a month"
     When the user logs in

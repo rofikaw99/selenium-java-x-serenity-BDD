@@ -391,7 +391,7 @@ public class SupportAppStep {
         Assert.assertTrue(supportAppPage.CompanyMembers());
         Thread.sleep(4000);
     }
-    @And("select the country")
+    @And("select the country {string}")
     public void select_the_country(String country) throws Exception {
         Thread.sleep(2000);
         supportAppPage.pressSelectCountry(country);
