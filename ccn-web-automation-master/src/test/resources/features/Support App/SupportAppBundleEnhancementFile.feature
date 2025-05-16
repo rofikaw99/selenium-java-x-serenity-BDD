@@ -16,10 +16,9 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
     And verify output onboard file
     And verify the transaction record on the log
 
-
     Examples:
-      | userID    | password | effectiveDate | ocr  |
-      | RAwaludin | password | 2025-07       | 1126 | Singapore|
+      | userID    | password | effectiveDate | ocr  | country   |
+      | RAwaludin | password | 2025-07       | 1126 | Singapore |
 
   @CRP0071
   Scenario Outline: verify the output new onboard file when using country (PH)
@@ -37,10 +36,9 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
     And verify output onboard file
     And verify the transaction record on the log
 
-
     Examples:
-      | userID    | password | effectiveDate | ocr  |
-      | RAwaludin | password | 2025-07       | 1126 |
+      | userID    | password | effectiveDate | ocr  | country |
+      | RAwaludin | password | 2025-07       | 1126 | PH      |
 
   @CRP0071
   Scenario Outline: verify the output new onboard file when using country (VN)
@@ -58,10 +56,9 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
     And verify output onboard file
     And verify the transaction record on the log
 
-
     Examples:
-      | userID    | password | effectiveDate | ocr  |
-      | RAwaludin | password | 2025-07       | 1126 |
+      | userID    | password | effectiveDate | ocr  | country |
+      | RAwaludin | password | 2025-07       | 1126 | VN      |
 
   @CRP0071
   Scenario Outline: verify the output new onboard file when using country (ID)
@@ -79,10 +76,9 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
     And verify output onboard file
     And verify the transaction record on the log
 
-
     Examples:
-      | userID    | password | effectiveDate | ocr  |
-      | RAwaludin | password | 2025-07       | 1126 |
+      | userID    | password | effectiveDate | ocr  | country |
+      | RAwaludin | password | 2025-07       | 1126 | ID      |
 
   @CRP0071
   Scenario Outline: verify the output new onboard file when using country (UAE) non Onboard Country
@@ -100,10 +96,9 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
     And verify output onboard file
     And verify the transaction record on the log
 
-
     Examples:
-      | userID    | password | effectiveDate | ocr  |
-      | RAwaludin | password | 2025-07       | 1126 |
+      | userID    | password | effectiveDate | ocr  | country |
+      | RAwaludin | password | 2025-07       | 1126 | UAE     |
 
   @CRP0071
   Scenario Outline: Cubeforall User Bundle Amendment with select future effective month
@@ -142,7 +137,6 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
       | userID    | password | ocr  | effectiveDate |
       | RAwaludin | password | 7263 | 2025-08       |
 
-
   @CRP0071
   Scenario Outline: User Bundle Termination using Support App with select future effective month
     Given go to support app web
@@ -161,5 +155,5 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
     And verify the transaction record on the log
 
     Examples:
-      | userID    | password | effectiveDate | ocr |
-      | RAwaludin | password | 2025-08       |1126 |
+      | userID    | password | effectiveDate | ocr  |
+      | RAwaludin | password | 2025-08       | 1126 |
