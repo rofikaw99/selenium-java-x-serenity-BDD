@@ -7,10 +7,14 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import io.restassured.common.mapper.TypeRef;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import starter.utlis.Constants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static net.serenitybdd.rest.SerenityRest.given;
@@ -358,6 +362,70 @@ public class FWBResharingPage {
         // Print the AWB number
         System.out.println("Extracted AWB Number: " + documentAWBNumber);
 
+    }
+    private String baseUrl = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae";
+    private String patchUrl = "http://cube.sandbox.ccn/93386a266bf64d1183e9384e201e6eae/document";
+
+    public void automateDocumentUpdate(String contentType, String awbNo, String newDepartureDate) throws Exception {
+                String cookieValue = "1b1003=G4aRLbIkDmUjtxiVb524fF1HXvKALhE0ByXqQ6Ec5EdLmn9jIv6gQ03JEkbvobFHwEW13ILmhn++YonZJyI6T06I1U7Q+kCtLiEG9Xjr5c4z4oANA4j5w1kbbs4hP6NEYU+V7Ht9Ycv02FX9rNn9o0duZmXR2+Ho/ozSL8bIC+SFZNuH";
+                // Request body as string
+                String requestBody = "{\n" +
+                        "    \"contentTypes\": [\"" + contentType + "\"],\n" +
+                        "    \"tags\": [\n" +
+                        "        \"" + awbNo + "\"\n" +
+                        "    ]\n" +
+                        "}";
+
+                // POST request
+                Response response = RestAssured
+                        .given()
+                        .header("Content-Type", "application/json")
+                        .header("Cookie", cookieValue)
+                        .body(requestBody)
+                        .when()
+                        .post(baseUrl + "/document")
+                        .then()
+                        .statusCode(200)
+                        .extract().response();
+
+                // Type-safe list mapping
+                List<Map<String, Object>> documents = response.jsonPath().getObject("", new TypeRef<List<Map<String, Object>>>() {});
+                if (documents.isEmpty()) {
+                    throw new RuntimeException("No document found for AWB: " + awbNo);
+                }
+
+                Map<String, Object> document = documents.get(0);
+
+                // Update departureDate in tags
+                Object tagObj = document.get("tags");
+                if (tagObj instanceof List<?>) {
+                    List<String> tags = new ArrayList<>();
+                    for (Object tag : (List<?>) tagObj) {
+                        String tagStr = String.valueOf(tag);
+                        if (tagStr.startsWith("departureDate:")) {
+                            tags.add("departureDate:" + newDepartureDate);
+                        } else {
+                            tags.add(tagStr);
+                        }
+                    }
+                    document.put("tags", tags);
+                }
+
+                // PATCH request
+                ObjectMapper mapper = new ObjectMapper();
+                String patchBody = mapper.writeValueAsString(document);
+
+                Response patchResponse = RestAssured
+                        .given()
+                        .header("Content-Type", "application/json")
+                        .body(patchBody)
+                        .when()
+                        .patch(patchUrl)
+                        .then()
+                        .statusCode(200)
+                        .extract().response();
+
+                System.out.println("PATCH success: " + patchResponse.asString());
     }
     public void awb1000times() {
 

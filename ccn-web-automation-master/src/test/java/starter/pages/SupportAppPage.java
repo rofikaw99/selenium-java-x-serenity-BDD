@@ -285,7 +285,7 @@ public class SupportAppPage extends PageObject {
     public void inputOCR(String ocr) throws InterruptedException {
         $(ocrElement).isDisplayed();
         $(ocrElement).click();
-        $(ocrElement).sendKeys(ocr);
+        $(ocrElement).sendKeys(ocr + Constants.FOUR_DIGIT);
         Thread.sleep(1000);
     }
 
@@ -299,7 +299,7 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(1000);
     }
     public void uploadOnboardFileOnly() throws InterruptedException {
-        String filePath = "C:/Users/rofik/IdeaProjects/CCNRepoTest/cubeforall.test/ccn-web-automation-master/src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
+        String filePath = "src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
         $(uploadExcelOnboardFile).sendKeys(filePath);
         Thread.sleep(1000);
     }

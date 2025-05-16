@@ -1,7 +1,7 @@
 @SN
 Feature: Notifying subscribers about Subscription update
 
-  @SN @SN1
+  @SN @SN1 @SNR
   Scenario Outline: Notifying subscribers about new Subscriber
     Given user want to update the subscription
     When trigger add new subscriber with "<userPlanID>" and "<member1>" and "<member2>"
@@ -9,9 +9,9 @@ Feature: Notifying subscribers about Subscription update
 
     Examples:
       | contentType       | documentID               | eventAction        | userPlanID               | member1                        | member2                           | companyCubeId                           |
-      | SubscriptionUpdate| 6786010a9c40e14b15507d6c | RemoveSubscriber   | 67ac56b25eca292caaf03c34 | test_071123_unreg1@yopmail.com | newsubscribercubetest@yopmail.com | 5b11bba54a43425580405245c92cc40b        |
+      | SubscriptionUpdate| 6786010a9c40e14b15507d6c | RemoveSubscriber   | 67ac56b25eca292caaf03c34 | au-autoqa-ccn-001@yopmail.com | au2-autoqa-ccn-001@yopmail.com | 5b11bba54a43425580405245c92cc40b        |
 
-  @SN @SN2
+  @SN @SN2 @SNR
   Scenario Outline: Notifying subscribers about removed Subscriber
     Given user want to update the subscription
     When trigger remove subscriber with "<userPlanID>" and "<member1>"
@@ -19,9 +19,9 @@ Feature: Notifying subscribers about Subscription update
 
     Examples:
       | contentType       | documentID               | eventAction     | userPlanID               | member1                        | companyCubeId                           |
-      | SubscriptionUpdate| 6786010a9c40e14b15507d6c | NewSubscriber   | 67ac56b25eca292caaf03c34 | test_071123_unreg1@yopmail.com | 5b11bba54a43425580405245c92cc40b        |
+      | SubscriptionUpdate| 6786010a9c40e14b15507d6c | NewSubscriber   | 67ac56b25eca292caaf03c34 | au-autoqa-ccn-001@yopmail.com | 5b11bba54a43425580405245c92cc40b        |
 
-  @SN @SN3
+  @SN @SN3 @SNR
   Scenario Outline: Notifying subscribers about Subscriber Info Update on user profile display name
     Given user want to update the subscription
     When trigger subscriber info update on user profile "<displayName>"
@@ -71,7 +71,7 @@ Feature: Notifying subscribers about Subscription update
       | contentType       | documentID               | eventAction     | priceId                  | companyCubeId                           |
       | SubscriptionUpdate| 6786010a9c40e14b15507d6c | NewSubscription | 6542b80735e603a44d404aa3 | 5b11bba54a43425580405245c92cc40b        |
 
-  @SN @SN8
+  @SN @SN8 @SNR
   Scenario Outline: Notifying subscribers about company update
     Given user want to update the company
     When trigger company update "<address>"
