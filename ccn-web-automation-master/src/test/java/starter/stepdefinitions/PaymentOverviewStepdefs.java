@@ -26,9 +26,6 @@ public class PaymentOverviewStepdefs {
     @Steps
     PaymentOverviewPage paymentOverviewPage;
 
-    @Steps
-    SubscriptionPage subscriptionPage;
-
     private int waitResponse = 5000;
     private int waitLongResponse = 10000;
 

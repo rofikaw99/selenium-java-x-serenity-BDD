@@ -172,7 +172,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" SS doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
-    #    Then verify no encoded content missing
+        Then verify no encoded content missing
 
     Examples:
       | contentType     | contentName       | via                                    | contact                                 |
@@ -188,7 +188,7 @@ Feature: FWB Re sharing
       | contentType  | contentName                  | via                                        | contact                            |
       | BookingReply  | test-monday-16-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
 
-  @SR6168 @SR6168DEV
+  @SR6168 @SR6168DEV @SR61681
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify that "<contentType>" and "<awbNo>" document filtering is running well
@@ -197,7 +197,7 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType| contentName     | awbNo                |
-      | Booking    | test-26032025   | awbNo:618-64461984   |
+      | Booking    | test-20052025   | awbNo:618-64461985   |
 
   @SR6168 @SR6168DEV
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
@@ -208,7 +208,7 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType     | contentName     | awbNo                |
-      | BookingRequest  | test-26032025   | awbNo:618-64461984   |
+      | BookingRequest  | test-20052025   | awbNo:618-64461984   |
 
   @SR6168 @SR6168DEV
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
