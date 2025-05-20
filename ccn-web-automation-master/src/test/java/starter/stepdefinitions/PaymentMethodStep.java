@@ -135,6 +135,10 @@ public class PaymentMethodStep {
                 break;
             case "Epouch Bundle User" : email = Constants.EPOUCH_BUNDLE_USER;
                 break;
+            case "Able to View Banner" : email = Constants.BANNER_SG;
+                break;
+            case "Non Visible Banner" : email = Constants.Banner_INDIA;
+                break;
             default: email = Constants.EMAIL_WITHOUT_COMPANY;
         }
 

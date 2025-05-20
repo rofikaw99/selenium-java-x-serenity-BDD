@@ -254,7 +254,9 @@ public class FWBResharingPage {
     public void createDocForVerifyAWBNo(String contentType, String contentName, String awbNo) {
 
         // API endpoint
-        String endpoint = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae/document";
+//        String endpoint = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae/document";
+        //local
+        String endpoint = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
         String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
 
         // Request body
@@ -289,7 +291,9 @@ public class FWBResharingPage {
 
     public void verifyAWBNumber(String contentType, String awbNo) {
         // API endpoint and request body
-        String url = "http://cube.dev.ccn/93386a266bf64d1183e9384e201e6eae/document";
+//        String url = "http://cube.dev.ccn/93386a266bf64d1183e9384e201e6eae/document";
+        //local
+        String url = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
         String requestBody = "{\n" +
                 "    \"contentTypes\": [\"" + contentType + "\"],\n" +
                 "    \"tags\": [\n" +
@@ -316,7 +320,9 @@ public class FWBResharingPage {
     }
     public void verify_the_document_should_appear_in_the_company_system(String contentType, String awbNo) {
         // API endpoint and request body
-        String url = "http://cube.dev.ccn/b5631389e2244eb1ac5243195c250d68/document";
+//        String url = "http://cube.dev.ccn/b5631389e2244eb1ac5243195c250d68/document";
+        //local
+        String url = "https://db27-182-1-114-1.ngrok-free.app/b5631389e2244eb1ac5243195c250d68/document";
         String requestBody = "{\n" +
                 "    \"contentTypes\": [\"" + contentType + "\"],\n" +
                 "    \"tags\": [\n" +
@@ -340,7 +346,9 @@ public class FWBResharingPage {
     }
     public void verify_another_user_in_the_same_company_should_also_be_able_to_view_the_document_created(String contentType, String awbNo) {
         // API endpoint and request body
-        String url = "http://cube.dev.ccn/6cb86189a54b462491065d6f94eb680e/document";
+//        String url = "http://cube.dev.ccn/6cb86189a54b462491065d6f94eb680e/document";
+        //local
+        String url = "https://db27-182-1-114-1.ngrok-free.app/6cb86189a54b462491065d6f94eb680e/document";
         String requestBody = "{\n" +
                 "    \"contentTypes\": [\"" + contentType + "\"],\n" +
                 "    \"tags\": [\n" +

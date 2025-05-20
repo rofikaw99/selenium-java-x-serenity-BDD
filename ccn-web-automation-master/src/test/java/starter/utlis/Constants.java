@@ -77,6 +77,8 @@ public class Constants {
 //    public static String EMAIL_CARD_OWNER_DELETED = "co-my-001@yopmail.com";
     public static String EMAIL_AU_DELETED = "co-sg-004@yopmail.com";
     public static String EPOUCH_BUNDLE_USER = "koreacity@yopmail.com";
+    public static String BANNER_SG = "companynotif@yopmail.com";
+    public static String Banner_INDIA ="sripcn@yopmail.com";
     public static String PUBLIC_SERVICE_GATEWAY = "https://cubesandbox.ccnexchange.com";
     public static String PRIVATE_SERVICE_GATEWAY = "http://cube.sandbox.ccn";
     public static String DELEGATED_COMPANY = "SG Auto QA";
