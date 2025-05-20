@@ -85,7 +85,7 @@ public class PopUpAdvertisementBannerStepdefs {
     }
 
     @And("the frequency is set to once a week or once a month depend on frequency condition")
-    public void theFrequencyIsSetTo(String arg0, String arg1) {
+    public void theFrequencyIsSetTo() {
     }
 
     @Given("login with account if frequency condition once a week or once a month or schedule or specific country is not met")
