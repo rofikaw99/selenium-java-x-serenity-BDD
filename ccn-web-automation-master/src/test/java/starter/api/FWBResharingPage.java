@@ -19,8 +19,7 @@ import java.util.Map;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.then;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 
 public class FWBResharingPage {
     private String url;
@@ -254,9 +253,9 @@ public class FWBResharingPage {
     public void createDocForVerifyAWBNo(String contentType, String contentName, String awbNo) {
 
         // API endpoint
-//        String endpoint = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae/document";
+        String endpoint = ""+Constants.PUBLIC_PPD_URL+"/93386a266bf64d1183e9384e201e6eae/document";
         //local
-        String endpoint = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
+//        String endpoint = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
         String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
 
         // Request body
@@ -291,9 +290,9 @@ public class FWBResharingPage {
 
     public void verifyAWBNumber(String contentType, String awbNo) {
         // API endpoint and request body
-//        String url = "http://cube.dev.ccn/93386a266bf64d1183e9384e201e6eae/document";
+        String url = ""+Constants.PUBLIC_PPD_URL+"/93386a266bf64d1183e9384e201e6eae/document";
         //local
-        String url = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
+//        String url = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
         String requestBody = "{\n" +
                 "    \"contentTypes\": [\"" + contentType + "\"],\n" +
                 "    \"tags\": [\n" +
@@ -320,9 +319,9 @@ public class FWBResharingPage {
     }
     public void verify_the_document_should_appear_in_the_company_system(String contentType, String awbNo) {
         // API endpoint and request body
-//        String url = "http://cube.dev.ccn/b5631389e2244eb1ac5243195c250d68/document";
+        String url = ""+Constants.PUBLIC_PPD_URL+"/b5631389e2244eb1ac5243195c250d68/document";
         //local
-        String url = "https://db27-182-1-114-1.ngrok-free.app/b5631389e2244eb1ac5243195c250d68/document";
+//        String url = "https://db27-182-1-114-1.ngrok-free.app/b5631389e2244eb1ac5243195c250d68/document";
         String requestBody = "{\n" +
                 "    \"contentTypes\": [\"" + contentType + "\"],\n" +
                 "    \"tags\": [\n" +
@@ -346,9 +345,9 @@ public class FWBResharingPage {
     }
     public void verify_another_user_in_the_same_company_should_also_be_able_to_view_the_document_created(String contentType, String awbNo) {
         // API endpoint and request body
-//        String url = "http://cube.dev.ccn/6cb86189a54b462491065d6f94eb680e/document";
+        String url = ""+Constants.PUBLIC_PPD_URL+"/6cb86189a54b462491065d6f94eb680e/document";
         //local
-        String url = "https://db27-182-1-114-1.ngrok-free.app/6cb86189a54b462491065d6f94eb680e/document";
+//        String url = "https://db27-182-1-114-1.ngrok-free.app/6cb86189a54b462491065d6f94eb680e/document";
         String requestBody = "{\n" +
                 "    \"contentTypes\": [\"" + contentType + "\"],\n" +
                 "    \"tags\": [\n" +
@@ -370,6 +369,36 @@ public class FWBResharingPage {
         // Print the AWB number
         System.out.println("Extracted AWB Number: " + documentAWBNumber);
 
+    }
+    public void testGetDocumentContent() {
+        // Base URI
+        RestAssured.baseURI = Constants.PUBLIC_PPD_URL;
+
+        // Request payload
+        String requestBody = "{\n" +
+                "  \"documentID\": \"" + documentID + "\"\n" +
+                "}";
+
+        // Perform POST request and extract response
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .header("Cookie", "1b1003=pgyFsHEcyjtjlQgpOcVZ2rS2H9dcTI2d0B9hs/JDeGrBKyAEaVSlFbBvaXHASuJtXI2xyD6h9N7wMVn7POG/P+0RiE8r1Qe/BidtxSvVQiWaPTMM2xZOkyFEnnT1erSB+vvEnYbUebl6sdTgaz9e5sJOT7J+L4jJcHBPlNjT8PMhWcqY")
+                .body(requestBody)
+                .when()
+                .post("/93386a266bf64d1183e9384e201e6eae/document/content")
+                .then()
+                .statusCode(200)
+                .body("documentID", notNullValue())
+                .body("encodedContent", notNullValue())
+                .extract().response();
+
+        // Extract values
+        String documentID = response.jsonPath().getString("documentID");
+        String encodedContent = response.jsonPath().getString("encodedContent");
+
+        // Print values
+        System.out.println("Document ID: " + documentID);
+        System.out.println("Encoded Content: " + encodedContent);
     }
     private String baseUrl = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae";
     private String patchUrl = "http://cube.sandbox.ccn/93386a266bf64d1183e9384e201e6eae/document";
@@ -628,10 +657,11 @@ public class FWBResharingPage {
 
         // Request payload
         String requestBody = "{\n" +
-                "  \"documentRefID\": \"" + documentRefID + "\",\n" +
+                "  \"documentID\": \"6833348a936b10e1a471c5b4\",\n" +
                 "  \"contacts\": [\n" +
                 "    \"" + contact + "\"\n" +
-                "  ]\n" +
+                "  ],\n" +
+                "  \"via\": \"system.csgagt916639d233_cgk01@ccnexchange.com\"\n" +
                 "}";
 
         // Sending PUT request
@@ -651,16 +681,17 @@ public class FWBResharingPage {
     }
 
     public void testShareExplicitDocument(String contact) {
-        String endpointUrl = "https://cubesandbox.ccnexchange.com/dcfa5ff0a3a94d288cdcaca2e36def94/document/share";
+        String endpointUrl = ""+Constants.PUBLIC_PPD_URL+"/93386a266bf64d1183e9384e201e6eae/document/share";
         String serviceId = "7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba";
         String groupId = "6294f9a1ac6979001216e74d";
 
         // Request payload
         String requestBody = "{\n" +
-                "  \"documentRefID\": \"" + documentRefID + "\",\n" +
+                "  \"documentID\": \"" + documentID + "\",\n" +
                 "  \"contacts\": [\n" +
                 "    \"" + contact + "\"\n" +
-                "  ]\n" +
+                "  ],\n" +
+                "  \"via\": \"system.csgagt916639d233_cgk01@ccnexchange.com\"\n" +
                 "}";
 
         // Sending PUT request
@@ -678,7 +709,7 @@ public class FWBResharingPage {
         System.out.println("Response status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
         // Assertions
-         Assert.assertEquals(response.getStatusCode(), 200);
+         Assert.assertEquals(response.getStatusCode(), 201);
     }
 
     public void testShareVia(String via, String contact) {
