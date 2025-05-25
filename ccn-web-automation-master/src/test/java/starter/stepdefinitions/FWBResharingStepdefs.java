@@ -121,4 +121,8 @@ public class FWBResharingStepdefs {
         fwbResharingPage.testGetDocumentShareViaNonColoader();
     }
 
+    @Then("verify no encoded content missing")
+    public void verifyNoEncodedContentMissing() {
+        fwbResharingPage.testGetDocumentContent();
+    }
 }

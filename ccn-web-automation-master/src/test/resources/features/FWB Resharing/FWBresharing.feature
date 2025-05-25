@@ -172,7 +172,7 @@ Feature: FWB Re sharing
     Given create "<contentType>" SS doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document succeed share to airline
-        Then verify no encoded content missing
+    Then verify no encoded content missing
 
     Examples:
       | contentType     | contentName       | via                                    | contact                                 |
@@ -191,79 +191,93 @@ Feature: FWB Re sharing
   @SR6168 @SR6168DEV @SR61681
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    Then verify no encoded content missing
+    And verify that "<contentType>" and "<awbNo>" document filtering is running well
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+    And do explicit sharing "<contact>"
 
     Examples:
-      | contentType| contentName     | awbNo                |
-      | Booking    | test-20052025   | awbNo:618-64461985   |
+      | contentType| contentName     | awbNo                | contact                                       |
+      | Booking    | test-20052025   | awbNo:618-64461986   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
   @SR6168 @SR6168DEV
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    Then verify no encoded content missing
+    And verify that "<contentType>" and "<awbNo>" document filtering is running well
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+    And do explicit sharing "<contact>"
 
     Examples:
-      | contentType     | contentName     | awbNo                |
-      | BookingRequest  | test-20052025   | awbNo:618-64461984   |
+      | contentType     | contentName     | awbNo                | contact                                       |
+      | BookingRequest  | test-20052025   | awbNo:618-64461984   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
   @SR6168 @SR6168DEV
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    Then verify no encoded content missing
+    And verify that "<contentType>" and "<awbNo>" document filtering is running well
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+    And do explicit sharing "<contact>"
 
     Examples:
-      | contentType  | contentName     | awbNo                |
-      | BookingReply  | test-26032025   | awbNo:618-64461985   |
+      | contentType  | contentName     | awbNo                | contact                                       |
+      | BookingReply | test-26032025   | awbNo:618-64461985   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
   @SR6168 @SR6168DEV
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    Then verify no encoded content missing
+    And verify that "<contentType>" and "<awbNo>" document filtering is running well
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+    And do explicit sharing "<contact>"
 
     Examples:
-      | contentType  | contentName     | awbNo                |
-      | MAWBRequest  | test-26032025   | awbNo:618-64461986   |
+      | contentType  | contentName     | awbNo                | contact                                       |
+      | MAWBRequest  | test-26032025   | awbNo:618-64461986   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
   @SR6168 @SR6168DEV
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    Then verify no encoded content missing
+    And verify that "<contentType>" and "<awbNo>" document filtering is running well
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+    And do explicit sharing "<contact>"
 
     Examples:
-      | contentType  | contentName     | awbNo                |
-      | MAWBReply  | test-26032025   | awbNo:618-64461987   |
+      | contentType | contentName     | awbNo                | contact                                       |
+      | MAWBReply   | test-26032025   | awbNo:618-64461987   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
   @SR6168
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    Then verify no encoded content missing
+    And verify that "<contentType>" and "<awbNo>" document filtering is running well
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+    And do explicit sharing "<contact>"
 
     Examples:
-      | contentType  | contentName     | awbNo                |
-      | DockShipment  | test-26032025   | awbNo:618-64461983   |
+      | contentType   | contentName     | awbNo                | contact                                       |
+      | DockShipment  | test-26032025   | awbNo:618-64461983   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
   @SR6168
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
-    Then verify that "<contentType>" and "<awbNo>" document filtering is running well
+    Then verify no encoded content missing
+    And verify that "<contentType>" and "<awbNo>" document filtering is running well
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
+    And do explicit sharing "<contact>"
 
     Examples:
-      | contentType  | contentName     | awbNo                |
-      | DockBookingUpdate  | test-26032025   | awbNo:618-64461983   |
+      | contentType        | contentName     | awbNo                | contact                                       |
+      | DockBookingUpdate  | test-26032025   | awbNo:618-64461983   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
   @awb1000times
   Scenario Outline:  awb 1000 times
