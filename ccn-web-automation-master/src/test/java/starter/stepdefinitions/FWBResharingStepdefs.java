@@ -125,4 +125,9 @@ public class FWBResharingStepdefs {
     public void verifyNoEncodedContentMissing() {
         fwbResharingPage.testGetDocumentContent();
     }
+
+    @And("update the data after retrieve")
+    public void updateTheDataAfterRetrieve() {
+        fwbResharingPage.patchDocumentWithLatestData();
+    }
 }

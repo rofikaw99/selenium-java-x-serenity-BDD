@@ -4,6 +4,7 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
@@ -12,10 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import starter.utlis.Constants;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.then;
@@ -399,6 +397,63 @@ public class FWBResharingPage {
         // Print values
         System.out.println("Document ID: " + documentID);
         System.out.println("Encoded Content: " + encodedContent);
+    }
+    public void patchDocumentWithLatestData() {
+        String cookieHeader = "1b1003=3elDKU5MMi6xAMbtKnQhJQc65QjwIy8nQVDFR3CwbZipZxC3SqvUhH5R/ugt6zkOmE6oJDZ4d/4hYkk7vH9XNlQmFuiAE78lu891aOKxfUqQAhqeuCbxZowzNyiSotSE5ARVac6ol2VDy1Ja6sLfXazf9tirEM+L7QVJqnKVidVBw2ey";
+
+        // 1. Get latest documents
+        Response getResponse = RestAssured.given()
+                .baseUri(Constants.PUBLIC_PPD_URL)
+                .header("Cookie", cookieHeader)
+                .contentType(ContentType.JSON)
+                .post("/93386a266bf64d1183e9384e201e6eae/document/");
+
+        // Parse JSON response
+        JsonPath jsonPath = getResponse.jsonPath();
+        List<Map<String, Object>> documentList = jsonPath.getList("$");
+
+        if (documentList == null || documentList.isEmpty()) {
+            System.out.println("No documents returned from the GET call.");
+            return;
+        }
+
+        // 2. Get top document and prepare PATCH data
+        Map<String, Object> topDocument = documentList.get(0);
+
+        Map<String, Object> patchBody = new LinkedHashMap<>();
+        patchBody.put("documentID", topDocument.get("documentID"));
+        patchBody.put("documentReferenceVersionID", topDocument.get("documentReferenceVersionID"));
+        patchBody.put("documentVersionID", topDocument.get("documentVersionID"));
+        patchBody.put("contentName", topDocument.get("contentName"));
+        patchBody.put("contentType", topDocument.get("contentType"));
+        patchBody.put("contentMIME", topDocument.get("documentVersionID")); // dynamic
+        patchBody.put("tags", topDocument.get("tags"));
+        patchBody.put("owner", topDocument.get("owner"));
+        patchBody.put("createdByServiceID", topDocument.get("createdByServiceID"));
+        patchBody.put("state", topDocument.get("state"));
+        patchBody.put("readTimeStamp", topDocument.get("readTimeStamp"));
+        patchBody.put("from", topDocument.get("from"));
+        patchBody.put("to", topDocument.get("to"));
+        patchBody.put("lastUpdateBy", topDocument.get("lastUpdateBy"));
+        patchBody.put("lastReceivedTimeStamp", topDocument.get("lastReceivedTimeStamp"));
+        patchBody.put("timeStamp", topDocument.get("timeStamp"));
+        patchBody.put("lastSharedTimeStamp", topDocument.get("lastSharedTimeStamp"));
+        patchBody.put("from", topDocument.get("owner"));
+        patchBody.put("to", topDocument.get("to"));
+
+        // Tambahan field yang tidak ada di POST response
+        patchBody.put("state", "UPDATED");
+
+        // 3. Send PATCH request
+        Response patchResponse = RestAssured.given()
+                .baseUri("https://cubesandbox.ccnexchange.com")
+                .header("Cookie", cookieHeader)
+                .contentType(ContentType.JSON)
+                .body(patchBody)
+                .patch("/93386a266bf64d1183e9384e201e6eae/document");
+
+        System.out.println("PATCH status: " + patchResponse.statusCode());
+        System.out.println("PATCH response: " + patchResponse.getBody().asString());
     }
     private String baseUrl = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae";
     private String patchUrl = "http://cube.sandbox.ccn/93386a266bf64d1183e9384e201e6eae/document";

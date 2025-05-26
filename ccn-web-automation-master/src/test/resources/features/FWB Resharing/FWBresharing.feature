@@ -196,6 +196,7 @@ Feature: FWB Re sharing
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
     And do explicit sharing "<contact>"
+    And update the data after retrieve
 
     Examples:
       | contentType| contentName     | awbNo                | contact                                       |
@@ -209,6 +210,7 @@ Feature: FWB Re sharing
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
     And do explicit sharing "<contact>"
+    And update the data after retrieve
 
     Examples:
       | contentType     | contentName     | awbNo                | contact                                       |
@@ -222,6 +224,7 @@ Feature: FWB Re sharing
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
     And do explicit sharing "<contact>"
+    And update the data after retrieve
 
     Examples:
       | contentType  | contentName     | awbNo                | contact                                       |
@@ -235,6 +238,7 @@ Feature: FWB Re sharing
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
     And do explicit sharing "<contact>"
+    And update the data after retrieve
 
     Examples:
       | contentType  | contentName     | awbNo                | contact                                       |
@@ -248,6 +252,7 @@ Feature: FWB Re sharing
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
     And do explicit sharing "<contact>"
+    And update the data after retrieve
 
     Examples:
       | contentType | contentName     | awbNo                | contact                                       |
@@ -261,6 +266,7 @@ Feature: FWB Re sharing
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
     And do explicit sharing "<contact>"
+    And update the data after retrieve
 
     Examples:
       | contentType   | contentName     | awbNo                | contact                                       |
@@ -274,6 +280,7 @@ Feature: FWB Re sharing
     And verify that "<contentType>" and "<awbNo>" the document should appear in the company system
     And verify that "<contentType>" and "<awbNo>" another user in the same company should also be able to view the document created
     And do explicit sharing "<contact>"
+    And update the data after retrieve
 
     Examples:
       | contentType        | contentName     | awbNo                | contact                                       |
