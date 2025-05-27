@@ -286,6 +286,14 @@ Feature: FWB Re sharing
       | contentType        | contentName     | awbNo                | contact                                       |
       | DockBookingUpdate  | test-26032025   | awbNo:618-64461983   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
+  @RAUI
+  Scenario Outline:  Register user PPD after UI
+    Given register "<email>" sandbox after register in UI
+    Examples:
+      | email                             |
+      | sgqa-ccn-69902452@mailinator.com  |
+      | sgqa-ccn-94960871@mailinator.com  |
+
   @awb1000times
   Scenario Outline:  awb 1000 times
     Given create awbNo 1000 times

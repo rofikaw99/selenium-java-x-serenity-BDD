@@ -12,6 +12,8 @@ import io.restassured.common.mapper.TypeRef;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import starter.utlis.Constants;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.util.*;
 
@@ -251,7 +253,7 @@ public class FWBResharingPage {
     public void createDocForVerifyAWBNo(String contentType, String contentName, String awbNo) {
 
         // API endpoint
-        String endpoint = ""+Constants.PUBLIC_PPD_URL+"/93386a266bf64d1183e9384e201e6eae/document";
+        String endpoint = ""+Constants.PUBLIC_DEV_URL+"/93386a266bf64d1183e9384e201e6eae/document";
         //local
 //        String endpoint = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
         String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
@@ -288,7 +290,7 @@ public class FWBResharingPage {
 
     public void verifyAWBNumber(String contentType, String awbNo) {
         // API endpoint and request body
-        String url = ""+Constants.PUBLIC_PPD_URL+"/93386a266bf64d1183e9384e201e6eae/document";
+        String url = ""+Constants.PUBLIC_DEV_URL+"/93386a266bf64d1183e9384e201e6eae/document";
         //local
 //        String url = "https://db27-182-1-114-1.ngrok-free.app/93386a266bf64d1183e9384e201e6eae/document";
         String requestBody = "{\n" +
@@ -317,7 +319,7 @@ public class FWBResharingPage {
     }
     public void verify_the_document_should_appear_in_the_company_system(String contentType, String awbNo) {
         // API endpoint and request body
-        String url = ""+Constants.PUBLIC_PPD_URL+"/b5631389e2244eb1ac5243195c250d68/document";
+        String url = ""+Constants.PUBLIC_DEV_URL+"/b5631389e2244eb1ac5243195c250d68/document";
         //local
 //        String url = "https://db27-182-1-114-1.ngrok-free.app/b5631389e2244eb1ac5243195c250d68/document";
         String requestBody = "{\n" +
@@ -343,7 +345,7 @@ public class FWBResharingPage {
     }
     public void verify_another_user_in_the_same_company_should_also_be_able_to_view_the_document_created(String contentType, String awbNo) {
         // API endpoint and request body
-        String url = ""+Constants.PUBLIC_PPD_URL+"/6cb86189a54b462491065d6f94eb680e/document";
+        String url = ""+Constants.PUBLIC_DEV_URL+"/6cb86189a54b462491065d6f94eb680e/document";
         //local
 //        String url = "https://db27-182-1-114-1.ngrok-free.app/6cb86189a54b462491065d6f94eb680e/document";
         String requestBody = "{\n" +
@@ -370,7 +372,7 @@ public class FWBResharingPage {
     }
     public void testGetDocumentContent() {
         // Base URI
-        RestAssured.baseURI = Constants.PUBLIC_PPD_URL;
+        RestAssured.baseURI = Constants.PUBLIC_DEV_URL;
 
         // Request payload
         String requestBody = "{\n" +
@@ -403,7 +405,7 @@ public class FWBResharingPage {
 
         // 1. Get latest documents
         Response getResponse = RestAssured.given()
-                .baseUri(Constants.PUBLIC_PPD_URL)
+                .baseUri(Constants.PUBLIC_DEV_URL)
                 .header("Cookie", cookieHeader)
                 .contentType(ContentType.JSON)
                 .post("/93386a266bf64d1183e9384e201e6eae/document/");
@@ -454,6 +456,103 @@ public class FWBResharingPage {
 
         System.out.println("PATCH status: " + patchResponse.statusCode());
         System.out.println("PATCH response: " + patchResponse.getBody().asString());
+    }
+    public void retrieveDBPlatform(String email) {
+        String apiKeyDBPlatform = "7f4b3d9c-2a1e-41c5-b8f7-a9d6e3f9c1a2";
+        String apiKeyDB = "b0dcda17075048e2a3c5f996cd704c60";
+
+        // 1. GET from /databasePlatform/find-all
+        Response findAllResponse = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .header("x-api-key", apiKeyDBPlatform)
+                .body(Map.of(
+                        "databaseName", "cubePlatform",
+                        "collectionName", "cubes",
+                        "filterQuery", Map.of("email", email)
+                ))
+                .when()
+                .get("http://cubehelp.sandbox.ccn/support/databasePlatform/find-all");
+
+        System.out.println("Response 1 - find-all:\n" + findAllResponse.getBody().asPrettyString());
+
+        @SuppressWarnings("unchecked")
+        Map<Object, Object> rawData = findAllResponse.jsonPath().getMap("data[0]");
+        Map<String, Object> retrievedData = convertToStringKeyMap(rawData);
+
+        // 2. POST to /database/create-one
+        Response insertCubesResponse = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .header("x-api-key", apiKeyDB)
+                .header("email", "headquarter_sq@yopmail.com")
+                .header("Cookie", "connect.sid=abc123")
+                .body(Map.of(
+                        "databaseName", "cubePlatform",
+                        "collectionName", "cubes",
+                        "insertedData", retrievedData
+                ))
+                .when()
+                .post("http://cubehelp.sandbox.ccn/support/database/create-one");
+
+        System.out.println("Response 2 - insert cubes:\n" + insertCubesResponse.getBody().asPrettyString());
+
+        // 3. GET profile
+        Response profileResponse = RestAssured
+                .given()
+                .get("http://cube.sandbox.ccn/profile/get-profile/" + email);
+
+        System.out.println("Response 3 - get profile:\n" + profileResponse.getBody().asPrettyString());
+
+        @SuppressWarnings("unchecked")
+        Map<Object, Object> rawProfileData = profileResponse.as(Map.class);
+        Map<String, Object> profileData = convertToStringKeyMap(rawProfileData);
+        profileData.put("displayName", profileData.get("name"));
+
+        // 4. POST to /databasePlatform/create-one
+        Response insertUserProfileDBPlatform = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .header("x-api-key", apiKeyDBPlatform)
+                .header("email", "headquarter_sq@yopmail.com")
+                .header("Cookie", "connect.sid=abc123")
+                .body(Map.of(
+                        "databaseName", "cubePlatform",
+                        "collectionName", "userprofiles",
+                        "insertedData", profileData
+                ))
+                .when()
+                .post("http://cubehelp.sandbox.ccn/support/databasePlatform/create-one");
+
+        System.out.println("Response 4 - insert userprofiles (Platform):\n" + insertUserProfileDBPlatform.getBody().asPrettyString());
+
+        // 5. POST to /database/create-one
+        Response insertUserProfileStandard = RestAssured
+                .given()
+                .contentType(ContentType.JSON)
+                .header("x-api-key", apiKeyDB)
+                .header("email", "headquarter_sq@yopmail.com")
+                .header("Cookie", "connect.sid=abc123")
+                .body(Map.of(
+                        "databaseName", "cubePlatform",
+                        "collectionName", "userprofiles",
+                        "insertedData", profileData
+                ))
+                .when()
+                .post("http://cubehelp.sandbox.ccn/support/database/create-one");
+
+        System.out.println("Response 5 - insert userprofiles (Standard):\n" + insertUserProfileStandard.getBody().asPrettyString());
+    }
+
+    // Helper: Convert Map<Object, Object> to Map<String, Object>
+    private Map<String, Object> convertToStringKeyMap(Map<?, ?> input) {
+        Map<String, Object> result = new HashMap<>();
+        for (Map.Entry<?, ?> entry : input.entrySet()) {
+            if (entry.getKey() instanceof String) {
+                result.put((String) entry.getKey(), entry.getValue());
+            }
+        }
+        return result;
     }
     private String baseUrl = "https://cubedev.ccnexchange.com/93386a266bf64d1183e9384e201e6eae";
     private String patchUrl = "http://cube.sandbox.ccn/93386a266bf64d1183e9384e201e6eae/document";
@@ -714,9 +813,9 @@ public class FWBResharingPage {
         String requestBody = "{\n" +
                 "  \"documentID\": \"6833348a936b10e1a471c5b4\",\n" +
                 "  \"contacts\": [\n" +
-                "    \"" + contact + "\"\n" +
-                "  ],\n" +
-                "  \"via\": \"system.csgagt916639d233_cgk01@ccnexchange.com\"\n" +
+                "    \"" + contact + "\",\n" +
+                "    \"system.csgair01sinfmsq@ccnexchange.com\"\n" +
+                "  ]\n" +
                 "}";
 
         // Sending PUT request
@@ -736,7 +835,7 @@ public class FWBResharingPage {
     }
 
     public void testShareExplicitDocument(String contact) {
-        String endpointUrl = ""+Constants.PUBLIC_PPD_URL+"/93386a266bf64d1183e9384e201e6eae/document/share";
+        String endpointUrl = ""+Constants.PUBLIC_DEV_URL+"/93386a266bf64d1183e9384e201e6eae/document/share";
         String serviceId = "7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba";
         String groupId = "6294f9a1ac6979001216e74d";
 

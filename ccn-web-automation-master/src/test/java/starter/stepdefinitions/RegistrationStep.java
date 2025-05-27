@@ -90,6 +90,8 @@ public class RegistrationStep {
         Thread.sleep(7000);
         registrationPage.pressCreateAccountRegister();
         subscriptionPage.switchToWindow(originalWindow);
+        System.out.println(Constants.FULL_EMAIL);
+
     }
     @Given("send email from {string} with keyword {string} along with attachment to another company CUBE {string} and cc to {string}")
     public void send_email_from_with_keyword_along_with_attachment_to_another_company_CUBE(String senderMail, String keyword, String recipientMail, String ccMail) throws Exception {

@@ -130,4 +130,9 @@ public class FWBResharingStepdefs {
     public void updateTheDataAfterRetrieve() {
         fwbResharingPage.patchDocumentWithLatestData();
     }
+
+    @Given("register {string} sandbox after register in UI")
+    public void registerSandboxAfterRegisterInUI(String email) {
+        fwbResharingPage.retrieveDBPlatform(email);
+    }
 }
