@@ -455,4 +455,70 @@ public class SupportAppStep {
     public void addNewPriceInSupportWebAppWithAndAnd(String nickName, String unitAmount, String memberLimit) {
         supportAppPage.addNewPriceInput(nickName, unitAmount, memberLimit);
     }
+
+    @When("user go to manage banner support app")
+    public void userGoToManageBannerSupportApp() throws InterruptedException {
+        supportAppPage.manageBanner();
+    }
+
+    @When("upload an advertisement image")
+    public void uploadAnAdvertisementImage() throws InterruptedException {
+        supportAppPage.uploadBannerAdvertisement();
+    }
+
+    @When("set a {string} and {string} for the advertisement")
+    public void setAAndForTheAdvertisement(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.bannerDate(startDate, endDate);
+    }
+
+    @And("input the advertisement URL {string} to learn more")
+    public void inputTheAdvertisementURLToLearnMore(String adsUrl) throws InterruptedException {
+        supportAppPage.AdvertisementURL(adsUrl);
+    }
+
+    @Then("the image should be displayed in a preview section")
+    public void theImageShouldBeDisplayedInAPreviewSection() throws InterruptedException {
+        supportAppPage.adsPreviewImage();
+        
+    }
+
+    @And("click the manage banner save button")
+    public void clickTheManageBannerSaveButton() {
+        supportAppPage.manageBannerSave();
+    }
+
+    @And("input targeted advertisement {string}")
+    public void inputTargetedAdvertisement(String country) throws InterruptedException {
+        supportAppPage.adsTargetedCountry(country);
+    }
+
+    @And("select frequency on {string} value")
+    public void selectFrequencyOnValue(String frequencyValue) {
+        supportAppPage.selectFrequency(frequencyValue);
+    }
+
+    @And("input targeted advertisement with multiple country {string} {string}")
+    public void inputTargetedAdvertisementWithMultipleCountry(String country, String country2) throws InterruptedException {
+        supportAppPage.adsTargetedMultipleCountry(country, country2);
+    }
+
+    @And("click the manage banner save button then return error because any overlapping data")
+    public void clickTheManageBannerSaveButtonThenReturnErrorBecauseAnyOverlappingData() throws InterruptedException {
+        supportAppPage.manageBannerSaveReallyClick();
+    }
+
+    @Then("view image in job list advertisement configuration log")
+    public void viewImageInJobListAdvertisementConfigurationLog() throws InterruptedException {
+        supportAppPage.viewImageInTheJobList();
+    }
+
+    @Then("edit job list advertisement configuration log")
+    public void editJobListAdvertisementConfigurationLog() throws InterruptedException {
+        supportAppPage.editTheAdsJobList();
+    }
+
+    @Then("delete job list advertisement configuration log")
+    public void deleteJobListAdvertisementConfigurationLog() throws InterruptedException {
+        supportAppPage.deleteTheAdsJobList();
+    }
 }

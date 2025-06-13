@@ -3,19 +3,19 @@ package starter.pages;
 import io.cucumber.java.en.Given;
 import net.thucydides.core.pages.PageObject;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
 import starter.utlis.Constants;
 
+import java.io.File;
 import java.util.List;
 
 public class SupportAppPage extends PageObject {
     private int waitResponse =15000;
 
     //supportAppDiscount
+    private By selectFrequencyDropdown = By.xpath("//select[@class='form-select']");
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
     private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
@@ -26,6 +26,10 @@ public class SupportAppPage extends PageObject {
     private By submitToOnboard = By.xpath("//button[@type='button' and contains(text(), 'Submit to Onboard')]");
     private By ocrElement = By.id("ocrNumber");
     private By selectMonth = By.id("startDate");
+    private By startDateBanner = By.xpath("(//input[@type='date' and @class='form-control'])[1]");
+    private By endDateBanner = By.xpath("(//input[@type='date' and @class='form-control'])[2]");
+    private By adsUrlAddress = By.xpath("(//input[@class='form-control' and @value=''])[1]");
+    private By inputAdsTargetedCountry = By.xpath("//div[contains(@class, 'css-19bb58m')]//input[@type='text']");
     private By createNewAirline = By.xpath("//button[text()='Create New Airline']");
     private By airlineSubmitButton = By.xpath("//button[@type='submit' and contains(@class, 'btn btn-primary') and text()='Submit']");
     private By editAirline = By.xpath("(//button[@type='button' and contains(@class, 'btn btn-link')])[2]");
@@ -36,6 +40,7 @@ public class SupportAppPage extends PageObject {
     private By airlineSearchBy = By.id("searchType");
     private By optionCarrierCode = By.xpath("//option[@value='carrierCode']");
     private By uploadExcelOnboardFile = By.id("formFile");
+    private By uploadBannerAdvertisement = By.xpath("//input[@type='file' and @class='form-control']");
     private By populateOnboardFile = By.xpath("//button[@class='btn btn-primary']");
     private By groupMenu = By.xpath("(//a[@data-testid='ps-menu-button-test-id'])[17]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[14]");
@@ -64,6 +69,12 @@ public class SupportAppPage extends PageObject {
     private By selectDateRangeTitleAdminChangeLog = By.xpath("//label[text()[normalize-space()='Select Date Range']]");
     private By userManagement = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'User Management')]");
     private By subscription = By.xpath("//a[contains(@class, 'ps-menu-button') and span[contains(text(), 'Subscription')]])[2]");
+    private By manageBanner = By.xpath("//span[text()='Manage Banners' and contains(@class, 'ps-menu-label')]");
+    private By saveManageBannerConfigButton = By.xpath("//button[@type='button' and contains(@class, 'btn-success') and text()='Save Changes']");
+    private By viewImageInJobList = By.xpath("(//button[text()='View'])[1]");
+    private By editAdsJoblistBtn = By.xpath("(//button[text()='Edit'])[1]");
+    private By deleteAdsList = By.xpath("(//button[text()='Delete'])[1]");
+    private By adsPreviewImage = By.xpath("//button[text()='Preview Image']");
     private By actionLogDropDown = By.xpath("//button[@id='dropdown-basic-button']");
     private By selectUserToExportActionLog = By.xpath("(//a[@class='dropdown-item'])[1]");
     private By startDateActionLog = By.xpath("//input[@placeholder='Start Date']");
@@ -281,7 +292,53 @@ public class SupportAppPage extends PageObject {
         $(selectMonth).sendKeys(effectiveDate);
         Thread.sleep(1000);
     }
-
+    public void AdvertisementURL(String adsUrl) throws InterruptedException {
+        $(adsUrlAddress).isDisplayed();
+        $(adsUrlAddress).click();
+        $(adsUrlAddress).sendKeys(adsUrl);
+        Thread.sleep(1000);
+    }
+    public void adsTargetedCountry(String country) throws InterruptedException {
+        $(inputAdsTargetedCountry).isDisplayed();
+        $(inputAdsTargetedCountry).click();
+        $(inputAdsTargetedCountry).sendKeys(country + Keys.ENTER);
+        Thread.sleep(1000);
+    }
+    public void adsTargetedMultipleCountry(String country, String country2) throws InterruptedException {
+        $(inputAdsTargetedCountry).isDisplayed();
+        $(inputAdsTargetedCountry).click();
+        $(inputAdsTargetedCountry).sendKeys(country + Keys.ENTER);
+        Thread.sleep(1000);
+        $(inputAdsTargetedCountry).isDisplayed();
+        $(inputAdsTargetedCountry).click();
+        $(inputAdsTargetedCountry).sendKeys(country2 + Keys.ENTER);
+        Thread.sleep(1000);
+    }
+    public void selectFrequency(String frequencyValue) {
+        WebElement dropdownElement = getDriver().findElement(selectFrequencyDropdown);
+        Select dropdown = new Select(dropdownElement);
+        dropdown.selectByValue(frequencyValue); // or selectByVisibleText("Weekly");
+    }
+    public void adsPreviewImage() throws InterruptedException {
+        $(adsPreviewImage).isDisplayed();
+        $(adsPreviewImage).click();
+        Thread.sleep(3000);
+    }
+    public void manageBannerSave() {
+        $(saveManageBannerConfigButton).isClickable();
+    }
+    public void manageBannerSaveReallyClick() throws InterruptedException {
+        $(saveManageBannerConfigButton).isClickable();
+        $(saveManageBannerConfigButton).click();
+        Thread.sleep(3000);
+    }
+    public void bannerDate(String startDate, String endDate) throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].value = arguments[1]", $(startDateBanner), startDate);
+        Thread.sleep(500);
+        js.executeScript("arguments[0].value = arguments[1]", $(endDateBanner), endDate);
+        Thread.sleep(500);
+    }
     public void inputOCR(String ocr) throws InterruptedException {
         $(ocrElement).isDisplayed();
         $(ocrElement).click();
@@ -301,6 +358,14 @@ public class SupportAppPage extends PageObject {
     public void uploadOnboardFileOnly() throws InterruptedException {
         String filePath = "src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
         $(uploadExcelOnboardFile).sendKeys(filePath);
+        Thread.sleep(1000);
+    }
+    public void uploadBannerAdvertisement() throws InterruptedException {
+        String filePath = "src/test/java/starter/utlis/bannerAdvertisement/201-[Converted].jpg";
+        File file = new File(filePath);
+        String absolutePath = file.getAbsolutePath();
+
+        $(uploadBannerAdvertisement).sendKeys(absolutePath);
         Thread.sleep(1000);
     }
     public void pressGroupMenu() throws InterruptedException {
@@ -503,7 +568,26 @@ public class SupportAppPage extends PageObject {
         System.out.println("btnSubmit company is displaying: "+$(subscription).isDisplayed()+" also enabled: "+$(subscription).isEnabled());
         evaluateJavascript("arguments[0].click();", $(subscription));
     }
-
+    public void manageBanner() throws InterruptedException {
+        Thread.sleep(3000);
+        System.out.println("btnSubmit company is displaying: "+$(manageBanner).isDisplayed()+" also enabled: "+$(manageBanner).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(manageBanner));
+    }
+    public void viewImageInTheJobList() throws InterruptedException {
+        System.out.println("btn is displaying: "+$(viewImageInJobList).isDisplayed()+" also enabled: "+$(viewImageInJobList).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(viewImageInJobList));
+        Thread.sleep(3000);
+    }
+    public void editTheAdsJobList() throws InterruptedException {
+        System.out.println("btn is displaying: "+$(editAdsJoblistBtn).isDisplayed()+" also enabled: "+$(editAdsJoblistBtn).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(editAdsJoblistBtn));
+        Thread.sleep(3000);
+    }
+    public void deleteTheAdsJobList() throws InterruptedException {
+        System.out.println("btn is displaying: "+$(deleteAdsList).isDisplayed()+" also enabled: "+$(deleteAdsList).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(deleteAdsList));
+        Thread.sleep(3000);
+    }
     public void clickActionLogDropDown() throws InterruptedException {
         Thread.sleep(3000);
         System.out.println("btnSubmit company is displaying: "+$(actionLogDropDown).isDisplayed()+" also enabled: "+$(actionLogDropDown).isEnabled());

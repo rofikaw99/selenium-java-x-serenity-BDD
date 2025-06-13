@@ -1,109 +1,124 @@
 @CRP0068
 Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Country Targeting
 
-  @CRP0068_1
-  Scenario: Upload and configure schedule period for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
+  @CRP0068_1 @CRP0068_P2
+  Scenario Outline: Upload and configure schedule period for advertisement content every login
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    And upload an advertisement image
+    And input the advertisement URL "<adsUrl>" to learn more
+    And set a "<startDate>" and "<endDate>" for the advertisement
+    And input targeted advertisement "<country>"
+    And select frequency on "<frequencyValue>" value
+    And click the manage banner save button
     Then the image should be displayed in a preview section
-    When set a start and end date for the advertisement
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And the advertisement should only be active between those dates
 
-  @CRP0068_2
-  Scenario: Upload and configure target specific countries for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
-    Then the image should be displayed in a preview section
-    When select specific countries for the advertisement
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And only users whose company is registered in those countries should see the popup
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | every_login    |
 
-  @CRP0068_3
-  Scenario: Upload and configure advertisement frequency (e.g., every login) for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
+  @CRP0068_2 @CRP0068_P2
+  Scenario Outline: Upload and configure schedule period for advertisement content weekly
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    And upload an advertisement image
+    And input the advertisement URL "<adsUrl>" to learn more
+    And set a "<startDate>" and "<endDate>" for the advertisement
+    And input targeted advertisement "<country>"
+    And select frequency on "<frequencyValue>" value
+    And click the manage banner save button
     Then the image should be displayed in a preview section
-    When set the frequency to "every login"
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And users should only see the popup every login
 
-  @CRP0068_4
-  Scenario: Upload and configure advertisement frequency (e.g., once a week) for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
-    Then the image should be displayed in a preview section
-    When set the frequency to "once a week"
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And users should only see the popup once a week
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl           | country | frequencyValue |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | weekly         |
 
-  @CRP0068_5
-  Scenario: Upload and configure advertisement frequency (e.g., once a month) for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
+  @CRP0068_3 @CRP0068_P2
+  Scenario Outline: Upload and configure schedule period for advertisement content monthly
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    And upload an advertisement image
+    And input the advertisement URL "<adsUrl>" to learn more
+    And set a "<startDate>" and "<endDate>" for the advertisement
+    And input targeted advertisement "<country>"
+    And select frequency on "<frequencyValue>" value
+    And click the manage banner save button
     Then the image should be displayed in a preview section
-    When set the frequency to "once a month"
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And users should only see the popup once a month
 
-  @CRP0068_6
-  Scenario: Upload and configure combination between schedule period and specific countries for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
-    Then the image should be displayed in a preview section
-    When set a start and end date for the advertisement
-    And select specific countries for the advertisement
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And the advertisement should only be active between those dates and only applied for specific country
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl           | country | frequencyValue |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | monthly         |
 
-  @CRP0068_7
-  Scenario: Upload and configure combination between target specific countries and frequency for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
+  @CRP0068_4 @CRP0068_P2
+  Scenario Outline: Upload and configure schedule period for advertisement content multiple country
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    And upload an advertisement image
+    And input the advertisement URL "<adsUrl>" to learn more
+    And set a "<startDate>" and "<endDate>" for the advertisement
+    And input targeted advertisement with multiple country "<country>" "<country2>"
+    And select frequency on "<frequencyValue>" value
+    And click the manage banner save button
     Then the image should be displayed in a preview section
-    When select specific countries for the advertisement
-    And set the frequency to "every login" / "once a week" / "once a month"
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And only users whose company is registered in those countries and certain frequency condition should see the popup
 
-  @CRP0068_8
-  Scenario: Upload and configure combination between schedule period and specific frequency for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
-    Then the image should be displayed in a preview section
-    When set a start and end date for the advertisement
-    And set the frequency to "every login" / "once a week" / "once a month"
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And the advertisement should only be active between those dates and frequency
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue  | country2 |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | monthly         | belize   |
 
-  @CRP0068_18
-  Scenario: Upload advertisement configuration with the same country setup and/or period as the previous configuration setup ID will result in an error response.
-    Given already on the advertisement configuration page
-    When upload an advertisement image
+  @CRP0068_5 @CRP0068_P2
+  Scenario Outline: Upload and configure combination between country, schedule period and specific frequency for advertisement content
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    And upload an advertisement image
+    And input the advertisement URL "<adsUrl>" to learn more
+    And set a "<startDate>" and "<endDate>" for the advertisement
+    And input targeted advertisement "<country>"
+    And select frequency on "<frequencyValue>" value
+    And click the manage banner save button
     Then the image should be displayed in a preview section
-    When set the same country setup and/or period as the previous configuration setup ID
-    And click the save button
-    Then an error message display
 
-  @CRP0068_9
-  Scenario: Upload and configure combination between schedule period, target specific countries, and frequency for advertisement content
-    Given already on the advertisement configuration page
-    When upload an advertisement image
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | monthly         |
+
+  @CRP0068_6 @CRP0068_P2
+  Scenario Outline: Upload and configure combination between country, schedule period and specific frequency for advertisement content
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    And upload an advertisement image
+    And input the advertisement URL "<adsUrl>" to learn more
+    And set a "<startDate>" and "<endDate>" for the advertisement
+    And input targeted advertisement "<country>"
+    And select frequency on "<frequencyValue>" value
+    And click the manage banner save button
     Then the image should be displayed in a preview section
-    When set a start and end date for the advertisement
-    And select specific countries for the advertisement
-    And set the frequency to "every login" / "once a week" / "once a month"
-    And click the save button
-    Then the configuration should be saved and applied to user logins
-    And only users whose company is registered in those countries, certain frequency condition, and certain date should see the popup
+
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | monthly         |
+
+  @CRP0068_7 @CRP0068_P2
+  Scenario Outline: Upload and configure with overlapping between schedule period, target specific countries, and frequency for advertisement content will return
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    And upload an advertisement image
+    And input the advertisement URL "<adsUrl>" to learn more
+    And set a "<startDate>" and "<endDate>" for the advertisement
+    And input targeted advertisement "<country>"
+    And select frequency on "<frequencyValue>" value
+    And click the manage banner save button then return error because any overlapping data
+
+
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl                   | country    | frequencyValue  |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | singapore  | monthly         |
 
   @CRP0068_10 @CRP0068_P1
   Scenario Outline: Advertisement pop-up should not show outside scheduled period
@@ -200,31 +215,39 @@ Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Co
       | condition           |
       | Able to View Banner |
 
-  @CRP0068_20
-  Scenario: view job list advertisement configuration log
-    Given already on the advertisement configuration page
-    When click view job log
-    Then direct to job list page
-    When click view detail job list base on ID
-    Then the information related with job list ID that has been click will be provide
-    When click close from job list detail
-    Then direct to job list page
-    When click back to configuration
-    Then direct back to configuration page
+  @CRP0068_20 @CRP0068_P2
+  Scenario Outline: view image in job list advertisement configuration log
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    Then view image in job list advertisement configuration log
 
-  @CRP0068_21
-  Scenario: edit job list advertisement configuration log
-    Given already on the advertisement configuration page
-    When click view job log
-    Then direct to job list page
-    When click edit job list base on ID
-    Then The edited job list configuration id will be implemented with the latest update results
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | every_login    |
 
-  @CRP0068_22
-  Scenario: remove job list advertisement configuration log
-    Given already on the advertisement configuration page
-    When click view job log
-    Then direct to job list page
-    When click edit job list base on ID
-    Then If the job list configuration ID has been removed, the configuration is no longer valid
+  @CRP0068_21 @CRP0068_P2
+  Scenario Outline: edit job list advertisement configuration log
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    Then edit job list advertisement configuration log
+    And upload an advertisement image
+    And click the manage banner save button
+    Then the image should be displayed in a preview section
+
+    Examples:
+      | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue |
+      | RAwaludin | spdoRed230C$ | 2025-06-12 | 2025-06-28 | https://www.siacargo.com | jordan  | every_login    |
+
+  @CRP0068_22 @CRP0068_P2
+  Scenario Outline: remove job list advertisement configuration log
+    Given go to support app web
+    When input user ID "<userID>" and password "<password>" and submit button to continue login
+    And user go to manage banner support app
+    Then delete job list advertisement configuration log
+
+    Example
+      | userID    | password     |
+      | RAwaludin | spdoRed230C$ |
 

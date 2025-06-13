@@ -291,8 +291,8 @@ Feature: FWB Re sharing
     Given register "<email>" sandbox after register in UI
     Examples:
       | email                             |
-      | sgqa-ccn-69902452@mailinator.com  |
-      | sgqa-ccn-94960871@mailinator.com  |
+      | partner.trucker.ccn@proton.me  |
+#      | sgqa-ccn-94960871@mailinator.com  |
 
   @awb1000times
   Scenario Outline:  awb 1000 times
