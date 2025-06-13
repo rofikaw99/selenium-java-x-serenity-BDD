@@ -247,7 +247,7 @@ Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Co
     And user go to manage banner support app
     Then delete job list advertisement configuration log
 
-    Example
+    Examples:
       | userID    | password     |
       | RAwaludin | spdoRed230C$ |
 
