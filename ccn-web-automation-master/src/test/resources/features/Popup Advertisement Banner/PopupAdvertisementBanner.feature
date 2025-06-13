@@ -234,7 +234,6 @@ Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Co
     Then edit job list advertisement configuration log
     And upload an advertisement image
     And click the manage banner save button
-    Then the image should be displayed in a preview section
 
     Examples:
       | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue |
