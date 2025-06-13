@@ -233,7 +233,6 @@ Feature: Implementing Pop-Up Advertisement Banner with Configuration Page and Co
     And user go to manage banner support app
     Then edit job list advertisement configuration log
     And upload an advertisement image
-    And click the manage banner save button
 
     Examples:
       | userID    | password     | startDate  | endDate    | adsUrl                   | country | frequencyValue |
