@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import starter.utlis.Constants;
 
 import java.io.File;
@@ -18,7 +19,7 @@ public class SupportAppPage extends PageObject {
     private By selectFrequencyDropdown = By.xpath("//select[@class='form-select']");
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
-    private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[37]");
+    private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[40]");
     private By uploadAmendmentSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[40]");
     private By uploadTerminationSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[41]");
     private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[20]");
@@ -26,6 +27,8 @@ public class SupportAppPage extends PageObject {
     private By submitToOnboard = By.xpath("//button[@type='button' and contains(text(), 'Submit to Onboard')]");
     private By ocrElement = By.id("ocrNumber");
     private By selectMonth = By.id("startDate");
+    private By actionLogStartDate = By.xpath("//input[@placeholder='Start Date']");
+    private By actionLogEndDate = By.xpath("//input[@placeholder='End Date']");
     private By startDateBanner = By.xpath("(//input[@type='date' and @class='form-control'])[1]");
     private By endDateBanner = By.xpath("(//input[@type='date' and @class='form-control'])[2]");
     private By adsUrlAddress = By.xpath("(//input[@class='form-control' and @value=''])[1]");
@@ -45,7 +48,8 @@ public class SupportAppPage extends PageObject {
     private By groupMenu = By.xpath("(//a[@data-testid='ps-menu-button-test-id'])[17]");
     private By notificationMonitoringMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[14]");
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
-    private By selectActionLogFunction = By.xpath("(//button[@id='dropdown-basic-button'])[2]");
+    private By selectActionLogFunction = By.xpath("//button[text()='Select Function']");
+    private By uploadFileOnboardLogOption = By.xpath("//a[text()='Upload File Onboarding']");
     private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
     private By accessControl = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Portal Access Management')]");
     private By accessGroup = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Access Group')]");
@@ -68,7 +72,7 @@ public class SupportAppPage extends PageObject {
     private By selectFunctionTitleAdminChangeLog = By.xpath("//label[@for='functionSelect']");
     private By selectDateRangeTitleAdminChangeLog = By.xpath("//label[text()[normalize-space()='Select Date Range']]");
     private By userManagement = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'User Management')]");
-    private By subscription = By.xpath("//a[contains(@class, 'ps-menu-button') and span[contains(text(), 'Subscription')]])[2]");
+    private By subscription = By.xpath("(//a[@data-testid='ps-menu-button-test-id'])[35]");
     private By manageBanner = By.xpath("//span[text()='Manage Banners' and contains(@class, 'ps-menu-label')]");
     private By saveManageBannerConfigButton = By.xpath("//button[@type='button' and contains(@class, 'btn-success') and text()='Save Changes']");
     private By viewImageInJobList = By.xpath("(//button[text()='View'])[1]");
@@ -79,6 +83,7 @@ public class SupportAppPage extends PageObject {
     private By selectUserToExportActionLog = By.xpath("(//a[@class='dropdown-item'])[1]");
     private By startDateActionLog = By.xpath("//input[@placeholder='Start Date']");
     private By endDateActionLog = By.xpath("//input[@placeholder='End Date']");
+    private By actionLogSearchBtn = By.xpath("//button[text()='Search']");
     private By submitActionLog = By.xpath("//button[@type='submit']");
     private By currentTotalCount = By.xpath("(//p[text()])[2]");
     private By previousTotalCount = By.xpath("(//p[text()])[3]");
@@ -263,13 +268,31 @@ public class SupportAppPage extends PageObject {
     }
     public void pressPopulate() throws InterruptedException{
         $(populate).isDisplayed();
-        $(populate).click();
-        Thread.sleep(1000);
+        evaluateJavascript("arguments[0].click();", $(populate));
+        Thread.sleep(7000);
     }
     public void pressSubmitToOnboard() throws InterruptedException{
         $(submitToOnboard).isDisplayed();
-        $(submitToOnboard).click();
+        evaluateJavascript("arguments[0].click();", $(submitToOnboard));
         Thread.sleep(5000);
+    }
+    public void printFilesInSandboxDirectory() {
+        // UNC path ke direktori network
+        String path = "\\\\172.21.120.111\\CubeForAll Config\\SANDBOX";
+        File folder = new File(path);
+        if (folder.exists() && folder.isDirectory()) {
+            File[] listOfFiles = folder.listFiles();
+            if (listOfFiles != null) {
+                System.out.println("Daftar file di direktori SANDBOX:");
+                for (File file : listOfFiles) {
+                    System.out.println("- " + file.getName());
+                }
+            } else {
+                System.out.println("Tidak ada file ditemukan di direktori tersebut.");
+            }
+        } else {
+            System.out.println("Direktori tidak ditemukan atau tidak dapat diakses.");
+        }
     }
     public void pressOnboardFileSubMenu() throws InterruptedException {
         $(uploadOnboardFileSubMenu).isDisplayed();
@@ -288,9 +311,23 @@ public class SupportAppPage extends PageObject {
     }
     public void selectMonth(String effectiveDate) throws InterruptedException {
         $(selectMonth).isDisplayed();
-        $(selectMonth).click();
-        $(selectMonth).sendKeys(effectiveDate);
-        Thread.sleep(1000);
+        WebDriver driver = getDriver(); // Dapatkan driver dari Serenity context
+        WebElement input = driver.findElement(By.id("startDate"));
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        String script = """
+        let input = arguments[0];
+        let nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+        nativeInputValueSetter.call(input, arguments[1]);
+
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+    """;
+
+        js.executeScript(script, input, effectiveDate); // isi '2025-07' lewat argumen kedua
+
+        WebElement populateBtn = driver.findElement(By.cssSelector("button.btn.btn-primary"));
+        populateBtn.click();
     }
     public void AdvertisementURL(String adsUrl) throws InterruptedException {
         $(adsUrlAddress).isDisplayed();
@@ -334,10 +371,28 @@ public class SupportAppPage extends PageObject {
     }
     public void bannerDate(String startDate, String endDate) throws InterruptedException {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
-        js.executeScript("arguments[0].value = arguments[1]", $(startDateBanner), startDate);
+        WebElement start = $(startDateBanner);
+        WebElement end = $(endDateBanner);
+        js.executeScript("arguments[0].value = arguments[1]", start, startDate);
         Thread.sleep(500);
-        js.executeScript("arguments[0].value = arguments[1]", $(endDateBanner), endDate);
+        start.sendKeys(Keys.ENTER);
+        js.executeScript("arguments[0].value = arguments[1]", end, endDate);
         Thread.sleep(500);
+        end.sendKeys(Keys.ENTER);
+    }
+    public void actionLogReportDate(String startDate, String endDate) throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        WebElement start = $(startDateActionLog);
+        WebElement end = $(endDateActionLog);
+        js.executeScript("arguments[0].value = arguments[1]", start, startDate);
+        Thread.sleep(500);
+        start.sendKeys(Keys.ENTER);
+        js.executeScript("arguments[0].value = arguments[1]", end, endDate);
+        Thread.sleep(500);
+        end.sendKeys(Keys.ENTER);
+        Thread.sleep(500);
+        evaluateJavascript("arguments[0].click();", $(actionLogSearchBtn));
+        Thread.sleep(3500);
     }
     public void inputOCR(String ocr) throws InterruptedException {
         $(ocrElement).isDisplayed();
@@ -356,8 +411,11 @@ public class SupportAppPage extends PageObject {
         Thread.sleep(1000);
     }
     public void uploadOnboardFileOnly() throws InterruptedException {
-        String filePath = "src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
-        $(uploadExcelOnboardFile).sendKeys(filePath);
+        String filePath = "src/test/java/starter/utlis/testing4.xlsx";
+        File file = new File(filePath);
+        String absolutePath = file.getAbsolutePath();
+
+        $(uploadExcelOnboardFile).sendKeys(absolutePath);
         Thread.sleep(1000);
     }
     public void uploadBannerAdvertisement() throws InterruptedException {
@@ -457,8 +515,13 @@ public class SupportAppPage extends PageObject {
     }
     public void functionActionLog() throws InterruptedException {
         Thread.sleep(1000);
-        System.out.println("btnSubmit company is displaying: "+$(selectActionLogFunction).isDisplayed()+" also enabled: "+$(actionLog).isEnabled());
+        System.out.println("btn is displaying: "+$(selectActionLogFunction).isDisplayed()+" also enabled: "+$(actionLog).isEnabled());
         evaluateJavascript("arguments[0].click();", $(selectActionLogFunction));
+    }
+    public void functionActionLogOptionUploadFileOnboard() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btn is displaying: "+$(uploadFileOnboardLogOption).isDisplayed()+" also enabled: "+$(uploadFileOnboardLogOption).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(uploadFileOnboardLogOption));
     }
     public void displayVerify() throws InterruptedException {
         Thread.sleep(3000);

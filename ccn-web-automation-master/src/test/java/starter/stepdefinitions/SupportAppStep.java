@@ -521,4 +521,17 @@ public class SupportAppStep {
     public void deleteJobListAdvertisementConfigurationLog() throws InterruptedException {
         supportAppPage.deleteTheAdsJobList();
     }
+
+    @And("verify the transaction record on the log on certain {string} {string}")
+    public void verifyTheTransactionRecordOnTheLog(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.actionLog();
+        supportAppPage.functionActionLog();
+        supportAppPage.functionActionLogOptionUploadFileOnboard();
+        supportAppPage.actionLogReportDate(startDate, endDate);
+    }
+
+    @And("verify output onboard file")
+    public void verifyOutputOnboardFile() {
+        supportAppPage.printFilesInSandboxDirectory();
+    }
 }

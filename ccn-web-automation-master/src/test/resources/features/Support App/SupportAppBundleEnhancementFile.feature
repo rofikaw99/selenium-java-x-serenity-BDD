@@ -1,24 +1,24 @@
 Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
 
-  @CRP0071
+  @CRP0071 @CRP0071_1
   Scenario Outline: verify the output new onboard file when using country (SG)
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login
     When user go to subscription support app
     When user go to upload file onboard submenu
     And user select an excel file to upload file onboard in the support app
-    And select future effective date "<effectiveDate>" in this case just select the month option
     And input OCR number "<ocr>"
-    And click populate
+    And select future effective date "<effectiveDate>" in this case just select the month option
     Then the onboard data display in support app with correct information
     And click submit to onboard
     Then success submit onboard data
+    And verify the transaction record on the log on certain "<startDate>" "<endDate>"
     And verify output onboard file
-    And verify the transaction record on the log
+
 
     Examples:
-      | userID    | password | effectiveDate | ocr  | country   |
-      | RAwaludin | password | 2025-07       | 1126 | Singapore |
+      | userID    | password     | effectiveDate | ocr  | country   | startDate  | endDate    |
+      | RAwaludin | spdoRed230C$ | 2025-07       | 1    | Singapore | 06/01/2025 | 06/28/2025 |
 
   @CRP0071
   Scenario Outline: verify the output new onboard file when using country (PH)
@@ -38,7 +38,7 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
 
     Examples:
       | userID    | password | effectiveDate | ocr  | country |
-      | RAwaludin | password | 2025-07       | 1126 | PH      |
+      | RAwaludin | password | 2025-07        | 1126 | PH      |
 
   @CRP0071
   Scenario Outline: verify the output new onboard file when using country (VN)
