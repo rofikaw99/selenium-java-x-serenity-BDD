@@ -25,7 +25,12 @@ public class SupportAppPage extends PageObject {
     private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[20]");
     private By populate = By.xpath("//button[@type='button' and contains(text(), 'Populate') ]");
     private By submitToOnboard = By.xpath("//button[@type='button' and contains(text(), 'Submit to Onboard')]");
+    private By submitAmendment = By.xpath("//button[text()='Submit']");
+    private By editAmendmentBtn = By.xpath("//button[text()='Edit']");
+    private By saveAmendmentChanges = By.xpath("//button[text()='Save']");
     private By ocrElement = By.id("ocrNumber");
+    private By inputPima = By.id("pimaAddress");
+    private By totalNumberAccountField = By.xpath("(//input[contains(@class, 'form-control')])[4]");
     private By selectMonth = By.id("startDate");
     private By actionLogStartDate = By.xpath("//input[@placeholder='Start Date']");
     private By actionLogEndDate = By.xpath("//input[@placeholder='End Date']");
@@ -50,6 +55,8 @@ public class SupportAppPage extends PageObject {
     private By updatePlanManager = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[34]");
     private By selectActionLogFunction = By.xpath("//button[text()='Select Function']");
     private By uploadFileOnboardLogOption = By.xpath("//a[text()='Upload File Onboarding']");
+    private By amendmentLogOption = By.xpath("//a[text()='Cubeforall Bundle Amendment']");
+    private By terminationLogOption = By.xpath("//a[text()='Cubeforall Bundle Termination']");
     private By actionLog = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[2]");
     private By accessControl = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Portal Access Management')]");
     private By accessGroup = By.xpath("//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id']//span[contains(text(), 'Access Group')]");
@@ -66,6 +73,7 @@ public class SupportAppPage extends PageObject {
     private By adminChangeLogTableHover = By.xpath("//table[@class='table table-striped table-bordered table-hover']");
     private By tableHoverDisplayAfterPopulate = By.xpath("//table[contains(@class, 'table-striped') and contains(@class, 'table-bordered') and contains(@class, 'table-hover')]");
     private By successUploadOnboardMessage = By.xpath("//div[contains(@class, 'fade') and contains(@class, 'mt-3') and contains(@class, 'alert') and contains(@class, 'alert-success') and contains(@class, 'show')]");
+    private By successSubmitAmendmentMsg = By.xpath("//div[@role='alert' and contains(@class, 'alert-success')]");
     private By successUploadTerminateOnboard = By.xpath("//div[contains(@class, \"alert-success\")]");
     private By the_date_range_filter_compulsory_in_action_log_menu = By.xpath("//span[@style='color: red;' and text()='*']");
     private By selectUserTitleAdminChangeLog = By.xpath("//label[@for='userSelect']");
@@ -276,6 +284,21 @@ public class SupportAppPage extends PageObject {
         evaluateJavascript("arguments[0].click();", $(submitToOnboard));
         Thread.sleep(5000);
     }
+    public void pressSubmitAmendment() throws InterruptedException{
+        $(submitAmendment).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(submitAmendment));
+        Thread.sleep(5000);
+    }
+    public void pressEditAmendment() throws InterruptedException{
+        $(editAmendmentBtn).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(editAmendmentBtn));
+        Thread.sleep(5000);
+    }
+    public void pressSaveAmendmentChanges() throws InterruptedException{
+        $(saveAmendmentChanges).isDisplayed();
+        evaluateJavascript("arguments[0].click();", $(saveAmendmentChanges));
+        Thread.sleep(5000);
+    }
     public void printFilesInSandboxDirectory() {
         // UNC path ke direktori network
         String path = "\\\\172.21.120.111\\CubeForAll Config\\SANDBOX";
@@ -400,7 +423,19 @@ public class SupportAppPage extends PageObject {
         $(ocrElement).sendKeys(ocr + Constants.FOUR_DIGIT);
         Thread.sleep(1000);
     }
-
+    public void inputPima(String pima) throws InterruptedException {
+        $(inputPima).isDisplayed();
+        $(inputPima).click();
+        $(inputPima).sendKeys(pima);
+        Thread.sleep(1000);
+    }
+    public void editTotalNumberOfAccount(String totalNumberAccount) throws InterruptedException {
+        $(totalNumberAccountField).isDisplayed();
+        $(totalNumberAccountField).click();
+        $(totalNumberAccountField).clear();
+        $(totalNumberAccountField).sendKeys(totalNumberAccount);
+        Thread.sleep(1000);
+    }
     public void uploadOnboardFileSubMenu() throws InterruptedException {
         String filePath = "C:/Users/rofik/IdeaProjects/CCNRepoTest/cubeforall.test/ccn-web-automation-master/src/test/java/starter/utlis/onboard-ppd-20112024_1.xlsx";
         $(uploadExcelOnboardFile).sendKeys(filePath);
@@ -523,6 +558,16 @@ public class SupportAppPage extends PageObject {
         System.out.println("btn is displaying: "+$(uploadFileOnboardLogOption).isDisplayed()+" also enabled: "+$(uploadFileOnboardLogOption).isEnabled());
         evaluateJavascript("arguments[0].click();", $(uploadFileOnboardLogOption));
     }
+    public void functionActionLogOptionAmend() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btn is displaying: "+$(amendmentLogOption).isDisplayed()+" also enabled: "+$(amendmentLogOption).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(amendmentLogOption));
+    }
+    public void functionActionLogOptionTerminate() throws InterruptedException {
+        Thread.sleep(1000);
+        System.out.println("btn is displaying: "+$(terminationLogOption).isDisplayed()+" also enabled: "+$(terminationLogOption).isEnabled());
+        evaluateJavascript("arguments[0].click();", $(terminationLogOption));
+    }
     public void displayVerify() throws InterruptedException {
         Thread.sleep(3000);
     }
@@ -592,6 +637,11 @@ public class SupportAppPage extends PageObject {
     public void successUploadOnboardMSG() throws InterruptedException {
         Thread.sleep(500);
         String successOnboardText = $(successUploadOnboardMessage).getText();
+        System.out.println(successOnboardText);
+    }
+    public void successUploadAmendmentMSG() throws InterruptedException {
+        Thread.sleep(500);
+        String successOnboardText = $(successSubmitAmendmentMsg).getText();
         System.out.println(successOnboardText);
     }
     public void successUploadTerminateOnboardMSG() throws InterruptedException {

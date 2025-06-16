@@ -106,6 +106,10 @@ public class SupportAppStep {
     public void click_submit_to_onboard() throws InterruptedException {
         supportAppPage.pressSubmitToOnboard();
     }
+    @And("click submit to amendment")
+    public void click_submit_to_amendment() throws InterruptedException {
+        supportAppPage.pressSubmitAmendment();
+    }
     @And("select future effective date {string} in this case just select the month option")
     public void select_future_effective_date_in_this_case_just_select_the_month_option(String effectiveDate) throws InterruptedException {
         supportAppPage.selectMonth(effectiveDate);
@@ -522,7 +526,7 @@ public class SupportAppStep {
         supportAppPage.deleteTheAdsJobList();
     }
 
-    @And("verify the transaction record on the log on certain {string} {string}")
+    @And("verify the onboard transaction record on the log on certain {string} {string}")
     public void verifyTheTransactionRecordOnTheLog(String startDate, String endDate) throws InterruptedException {
         supportAppPage.actionLog();
         supportAppPage.functionActionLog();
@@ -533,5 +537,67 @@ public class SupportAppStep {
     @And("verify output onboard file")
     public void verifyOutputOnboardFile() {
         supportAppPage.printFilesInSandboxDirectory();
+    }
+    @And("verify output amendment file")
+    public void verifyOutputAmendmentFile() {
+        supportAppPage.printFilesInSandboxDirectory();
+    }
+    @And("verify output termination file")
+    public void verifyOutputTerminationFile() {
+        supportAppPage.printFilesInSandboxDirectory();
+    }
+    @Then("validation please select future date when onboard appear")
+    public void validationPleaseSelectFutureDateWhenOnboardAppear() {
+        try {
+            Thread.sleep(3000); // 3 detik
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @And("input pima {string}")
+    public void inputPima(String pima) throws InterruptedException {
+        supportAppPage.inputPima(pima);
+    }
+
+    @And("press edit amendment")
+    public void pressEditAmendment() throws InterruptedException {
+        supportAppPage.pressEditAmendment();
+    }
+
+    @When("user want to edit total number of account to {string}")
+    public void userWantToEditTotalNumberOfAccountTo(String totalNumberAccount) throws InterruptedException {
+        supportAppPage.editTotalNumberOfAccount(totalNumberAccount);
+    }
+
+    @And("save the amendment change")
+    public void saveTheAmendmentChange() throws InterruptedException {
+        supportAppPage.pressSaveAmendmentChanges();
+    }
+
+    @Then("success amendment user bundle")
+    public void successAmendmentUserBundle() throws InterruptedException {
+        supportAppPage.successUploadAmendmentMSG();
+    }
+
+    @And("verify the amendment record on the log on the certain {string} {string}")
+    public void verifyTheAmendmentRecordOnTheLogOnTheCertain(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.actionLog();
+        supportAppPage.functionActionLog();
+        supportAppPage.functionActionLogOptionAmend();
+        supportAppPage.actionLogReportDate(startDate, endDate);
+    }
+
+    @And("click submit to termination")
+    public void clickSubmitToTermination() throws InterruptedException {
+        supportAppPage.pressSubmitAmendment();
+    }
+
+    @And("verify the termination record on the log on the certain {string} {string}")
+    public void verifyTheTerminationRecordOnTheLogOnTheCertain(String startDate, String endDate) throws InterruptedException {
+        supportAppPage.actionLog();
+        supportAppPage.functionActionLog();
+        supportAppPage.functionActionLogOptionTerminate();
+        supportAppPage.actionLogReportDate(startDate, endDate);
     }
 }
