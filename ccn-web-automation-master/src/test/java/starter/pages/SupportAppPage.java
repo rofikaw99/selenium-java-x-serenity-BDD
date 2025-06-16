@@ -20,8 +20,8 @@ public class SupportAppPage extends PageObject {
     private By discountMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[30]");
     private By subscriptionMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[32]");
     private By uploadOnboardFileSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[40]");
-    private By uploadAmendmentSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[40]");
-    private By uploadTerminationSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[41]");
+    private By uploadAmendmentSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[41]");
+    private By uploadTerminationSubMenu = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[42]");
     private By airlines = By.xpath("(//a[@class='ps-menu-button' and @data-testid='ps-menu-button-test-id'])[20]");
     private By populate = By.xpath("//button[@type='button' and contains(text(), 'Populate') ]");
     private By submitToOnboard = By.xpath("//button[@type='button' and contains(text(), 'Submit to Onboard')]");
@@ -318,16 +318,24 @@ public class SupportAppPage extends PageObject {
         }
     }
     public void pressOnboardFileSubMenu() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", $(uploadOnboardFileSubMenu));
         $(uploadOnboardFileSubMenu).isDisplayed();
         $(uploadOnboardFileSubMenu).click();
         Thread.sleep(1000);
     }
     public void pressTerminationFileSubMenu() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", $(uploadTerminationSubMenu));
         $(uploadTerminationSubMenu).isDisplayed();
         $(uploadTerminationSubMenu).click();
-        Thread.sleep(1000);
+        Thread.sleep(1500);
+        // scroll ke atas setelah klik dan sleep
+        js.executeScript("window.scrollTo(0, 0);");
     }
     public void pressUserAmendmentFileSubMenu() throws InterruptedException {
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", $(uploadAmendmentSubMenu));
         $(uploadAmendmentSubMenu).isDisplayed();
         $(uploadAmendmentSubMenu).click();
         Thread.sleep(1000);
@@ -678,6 +686,8 @@ public class SupportAppPage extends PageObject {
     }
     public void subscription() throws InterruptedException {
         Thread.sleep(3000);
+        JavascriptExecutor js = (JavascriptExecutor) getDriver();
+        js.executeScript("arguments[0].scrollIntoView(true);", $(subscription));
         System.out.println("btnSubmit company is displaying: "+$(subscription).isDisplayed()+" also enabled: "+$(subscription).isEnabled());
         evaluateJavascript("arguments[0].click();", $(subscription));
     }
