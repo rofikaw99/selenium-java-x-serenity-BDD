@@ -152,7 +152,7 @@ Feature: CRP0071 - Enhance CUBEforall Bundle Billing file
 #    When user want to edit members
 #    Then user able to add, and remove members
 
-  @CRP0071
+  @CRP0071 @CRP0071T
   Scenario Outline: User Bundle Termination using Support App with select future effective month
     Given go to support app web
     When input user ID "<userID>" and password "<password>" and submit button to continue login

@@ -1,6 +1,27 @@
 @SN
 Feature: Notifying subscribers about Subscription update
 
+  Scenario: Retrieve notification when user has BC 3.0 subscription
+    Given the user has an active BC 3.0 subscription
+    When the system checks for subscription and company notification
+    Then the system should retrieve the Subscription and Company Notification
+
+  Scenario: Do not retrieve notification when user no longer has BC 3.0 subscription
+    Given the user does not have an active BC 3.0 subscription
+    When the system checks for subscription and company notification
+    Then the system should not retrieve any Subscription and Company Notification
+
+  Scenario: Do not retrieve BC 3.0 beta notification when user only has stock app subscription
+    Given the user has an active Stock App subscription
+    And the user has BC 3.0 beta subscription
+    When the system checks for subscription and company notification
+    Then the system should not retrieve BC 3.0 beta Subscription and Company Notification
+
+  Scenario: Do not retrieve any notification for subscriptions other than stock app or BC 3.0 beta
+    Given the user has a subscription other than stock app or BC 3.0 beta
+    When the system checks for subscription and company notification
+    Then the system should not retrieve any Subscription and Company Notification
+
   @SN @SN1 @SNR
   Scenario Outline: Notifying subscribers about new Subscriber
     Given user want to update the subscription
@@ -90,3 +111,5 @@ Feature: Notifying subscribers about Subscription update
     Examples:
       | contentType    | documentID               | eventAction | address | companyCubeId                           |
       | CompanyUpdate  | 6786010a9c40e14b15507d6c | Update      | yonduy   | 7bd4b51645ac494e924c142d55b154bb        |
+
+

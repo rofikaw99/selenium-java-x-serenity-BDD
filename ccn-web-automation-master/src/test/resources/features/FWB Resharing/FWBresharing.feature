@@ -290,7 +290,7 @@ Feature: FWB Re sharing
   Scenario Outline:  Register user PPD after UI
     Given register "<email>" sandbox after register in UI
     Examples:
-      | email                             |
+      | email                          |
       | partner.trucker.ccn@proton.me  |
 #      | sgqa-ccn-94960871@mailinator.com  |
 
