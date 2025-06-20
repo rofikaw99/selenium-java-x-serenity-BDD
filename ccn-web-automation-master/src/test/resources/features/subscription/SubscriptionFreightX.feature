@@ -1,4 +1,4 @@
-Feature: Freight X Plan
+Feature: Freight-X Plan
 
   Scenario Outline: User subscribes to "<Plan>" with optional add-on
     Given the user selects "<Plan>" as the subscription plan
