@@ -111,9 +111,9 @@ public class FWBResharingStepdefs {
         fwbResharingPage.testGetExplicitDocument();
     }
 
-    @Then("verify document succeed share to airline")
-    public void verify_document_succeed_share() throws Exception {
-        fwbResharingPage.testGetDocumentShareViaColoader();
+    @Then("verify document succeed share to airline {string} {string} {string}")
+    public void verify_document_succeed_share(String via, String contentType, String contentName) throws Exception {
+        fwbResharingPage.testGetDocumentShareViaColoader(via, contentType, contentName);
     }
 
     @Then("verify document failed share to airline")

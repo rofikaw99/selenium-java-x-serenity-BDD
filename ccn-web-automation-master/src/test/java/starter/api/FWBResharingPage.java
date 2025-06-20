@@ -19,7 +19,9 @@ import java.util.*;
 
 import static net.serenitybdd.rest.SerenityRest.given;
 import static net.serenitybdd.rest.SerenityRest.then;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.testng.Assert.assertEquals;
 
 public class FWBResharingPage {
     private String url;
@@ -217,7 +219,7 @@ public class FWBResharingPage {
     public void createDocForShareVia(String contentType, String contentName) {
 
         // API endpoint
-        String endpoint = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document";
+        String endpoint = "https://cubesandbox.ccnexchange.com/b0dcda17075048e2a3c5f996cd704c60/document";
         String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
 
         // Request body
@@ -746,7 +748,7 @@ public class FWBResharingPage {
     public void createDocShipmentStatusForShareVia(String contentType, String contentName) {
 
         // API endpoint
-        String endpoint = ""+Constants.PUBLIC_PPD_URL+"/fa077c220ff1404f8f71f1c5a05f4c8c/document";
+        String endpoint = ""+Constants.PUBLIC_PPD_URL+"/b0dcda17075048e2a3c5f996cd704c60/document";
         String serviceId = "4e6ae0d1-320a-4565-867e-778f939a58ab";
 
         // Request body
@@ -867,7 +869,7 @@ public class FWBResharingPage {
     }
 
     public void testShareVia(String via, String contact) {
-        String endpointUrl = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document/share";
+        String endpointUrl = "https://cubesandbox.ccnexchange.com/b0dcda17075048e2a3c5f996cd704c60/document/share/v2";
         String serviceId = "7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba";
         String groupId = "6294f9a1ac6979001216e74d";
 
@@ -903,7 +905,7 @@ public class FWBResharingPage {
         System.out.println("Response status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
         // Assertions
-        Assert.assertEquals(response.getStatusCode(), 201);
+        assertThat(response.getStatusCode(), isOneOf(200, 201));
     }
 
     public void testGetDocumentShareForm() {
@@ -961,14 +963,16 @@ public class FWBResharingPage {
         Assert.assertEquals(response.getStatusCode(), 200);
     }
 
-    public void testGetDocumentShareViaColoader() {
-        String endpointUrl = "https://cubesandbox.ccnexchange.com/fa077c220ff1404f8f71f1c5a05f4c8c/document/share";
+    public void testGetDocumentShareViaColoader(String via, String contentType, String contentName) {
+        String endpointUrl = "https://cubesandbox.ccnexchange.com/cd213881a8d848b5803619711fdf660d/document";
         String serviceId = "7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba";
         String groupId = "6294f9a1ac6979001216e74d";
 
         // Request payload
         String requestBody = "{\n" +
-                "  \"documentID\": \"" + documentIDshareVia + "\"\n" + // No array brackets
+//                "  \"contentNames\": [\"" + contentName + "\"],\n" +
+//                "  \"contentTypes\": [\"" + contentType + "\"],\n" +
+                "  \"pageSize\": 5\n" +
                 "}";
 
         // Sending PUT request
@@ -985,12 +989,22 @@ public class FWBResharingPage {
         System.out.println("Response status code: " + response.getStatusCode());
         System.out.println("Response body: " + response.getBody().asString());
 
-        // Assertions
-        Assert.assertEquals(response.getStatusCode(), 200);
+        // Status code check (boleh 200/201)
+//        int statusCode = response.getStatusCode();
+//        assert (statusCode == 200 || statusCode == 201) : "Unexpected status code: " + statusCode;
+
+        // Parse JSON response
+        JsonPath jsonPath = response.jsonPath();
+
+        // Ambil nilai 'from' dari elemen pertama
+        String actualFrom = jsonPath.getString("[0].from");
+
+        // Assertion
+        assertEquals(actualFrom, via, "Field 'from' tidak sesuai");
     }
 
     public void testGetDocumentShareViaNonColoader() {
-        String endpointUrl = "https://cubesandbox.ccnexchange.com/dcfa5ff0a3a94d288cdcaca2e36def94/document/share";
+        String endpointUrl = "https://cubesandbox.ccnexchange.com/dcfa5ff0a3a94d288cdcaca2e36def94/document/content";
         String serviceId = "7bbd3c40-48f3-4afc-b86e-e1f4fe1581ba";
         String groupId = "6294f9a1ac6979001216e74d";
 

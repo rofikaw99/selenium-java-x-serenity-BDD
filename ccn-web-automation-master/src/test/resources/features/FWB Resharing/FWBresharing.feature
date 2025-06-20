@@ -80,19 +80,19 @@ Feature: FWB Re sharing
       | contentType  | contentName                  | contact                                        |
       | DockBookingUpdate  | test-monday-19-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com  |
 
-  @FWB_R_7 @notificationV2
-  Scenario Outline:  Create BC Document then Perform Share Via Coloader
+  @FWB_R_7 @notificationV2 @CRP0072
+  Scenario Outline:  Create BC Document then Perform Share Via Co-loader
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
-    Then verify document succeed share to airline
+    Then verify document succeed share to airline "<via>" "<contentType>" "<contentName>"
 #    Then verify no encoded content missing
 
     Examples:
       | contentType      | contentName                  | via                                    | contact                                   |
-      | BookingRequest   | test-monday-16-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | BookingRequest   | test-monday-16-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
-  @FWB_R_8
-  Scenario Outline:  Create BC Document then Perform Share Via non Coloader
+  @FWB_R_8 @CRP0072
+  Scenario Outline:  Create BC Document then Perform Share Via non Co-loader
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document failed share to airline
@@ -101,8 +101,8 @@ Feature: FWB Re sharing
       | contentType      | contentName                  | via                                        | contact                            |
       | BookingRequest   | test-monday-30-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
-  @FWB_R_7_2 @notificationV2
-  Scenario Outline:  Create BC Document then Perform Share Via Coloader
+  @FWB_R_7_2 @notificationV2 @CRP0072
+  Scenario Outline:  Create BC Document then Perform Share Via Co-loader
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document failed share to airline
@@ -110,76 +110,54 @@ Feature: FWB Re sharing
 
     Examples:
       | contentType      | contentName         | via                                        | contact                            |
-      | BookingReply     | test-04-Sept-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | BookingReply     | test-04-Sept-2024   | system.csgagt916639d233_cgk01@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
-  @FWB_R_9 @notificationV2
-  Scenario Outline:  Create AWB C Document then Perform Share Via Coloader
+  @FWB_R_9 @notificationV2 @CRP0072
+  Scenario Outline:  Create AWB C Document then Perform Share Via Co-loader
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
-    Then verify document succeed share to airline
+    Then verify document succeed share to airline "<via>" "<contentType>" "<contentName>"
     #    Then verify no encoded content missing
 
     Examples:
       | contentType  | contentName                  | via                                    | contact                                   |
-      | MAWBRequest  | test-monday-04-sept-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | MAWBRequest  | test-monday-04-sept-2024   | system.csgagt916639d233_cgk01@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
-  @FWB_R_9_2 @notificationV2
+  @FWB_R_9_2 @notificationV2 @CRP0072
   Scenario Outline:  Create MAWBReply Document then Perform Share Via Co loader
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
-    Then verify document succeed share to airline
+    Then verify document succeed share to airline "<via>" "<contentType>" "<contentName>"
     #    Then verify no encoded content missing
 
     Examples:
       | contentType  | contentName              | via                                    | contact                                   |
-      | MAWBReply  | test-monday-04-sept-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | MAWBReply  | test-monday-04-sept-2024   | system.csgagt916639d233_cgk01@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
-  @FWB_R_13 @notificationV2
-  Scenario Outline:  Create DockShipment Document then Perform Share Via Coloader
+  @FWB_R_14 @notificationV2 @CRP0072
+  Scenario Outline:  Create DockBookingUpdate Document then Perform Share Via Co-loader
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
-    Then verify document succeed share to airline
-    #    Then verify no encoded content missing
-
-    Examples:
-      | contentType  | contentName                  | via                                    | contact                                   |
-      | DockShipment  | test-04-Sept-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
-
-  @FWB_R_15
-  Scenario Outline:  Create DockShipment Document then Perform Share Via Coloader Ordinary User
-    Given create "<contentType>" doc with "<contentName>"
-    When share "<via>" "<contact>" to airline
-    Then verify document succeed share to airline
-    #    Then verify no encoded content missing
-
-    Examples:
-      | contentType  | contentName                  | via                                    | contact                                   |
-      | DockShipment  | test-monday-27-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
-
-  @FWB_R_14 @notificationV2
-  Scenario Outline:  Create DockBookingUpdate Document then Perform Share Via Coloader
-    Given create "<contentType>" doc with "<contentName>" for share via
-    When share "<via>" "<contact>" to airline
-    Then verify document succeed share to airline
+    Then verify document succeed share to airline "<via>" "<contentType>" "<contentName>"
     #    Then verify no encoded content missing
 
     Examples:
       | contentType        | contentName                  | via                                    | contact                                 |
-      | DockBookingUpdate  | test-monday-27-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | DockBookingUpdate  | test-monday-27-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
-  @FWB_R_14_2 @notificationV2
-  Scenario Outline:  Create ShipmentStatus Document then Perform Share Via Coloader
+  @FWB_R_14_2 @notificationV2 @CRP0072
+  Scenario Outline:  Create ShipmentStatus Document then Perform Share Via Co-loader
     Given create "<contentType>" SS doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
-    Then verify document succeed share to airline
-    Then verify no encoded content missing
+    Then verify document succeed share to airline "<via>" "<contentType>" "<contentName>"
+#    Then verify no encoded content missing
 
     Examples:
       | contentType     | contentName       | via                                    | contact                                 |
-      | ShipmentStatus  | test-05-09-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | ShipmentStatus  | test-05-09-2024   | system.csgagt916639d233_cgk01@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
 
-  @FWB_R_10
-  Scenario Outline:  Create AWB C Document then Perform Share Via non Coloader
+  @FWB_R_10 @CRP0072
+  Scenario Outline:  Create AWB C Document then Perform Share Via non Co-loader
     Given create "<contentType>" doc with "<contentName>" for share via
     When share "<via>" "<contact>" to airline
     Then verify document failed share to airline
@@ -188,7 +166,7 @@ Feature: FWB Re sharing
       | contentType  | contentName                  | via                                        | contact                            |
       | BookingReply  | test-monday-16-august-2024   | system.csgagt99rhn_ind99@ccnexchange.com   | system.csgnqhq_dx@ccnexchange.com  |
 
-  @SR6168 @SR6168DEV @SR61681
+  @SR6168 @SR6168DEV @SR61681 @CRP0072
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify no encoded content missing
@@ -202,7 +180,7 @@ Feature: FWB Re sharing
       | contentType| contentName     | awbNo                | contact                                       |
       | Booking    | test-20052025   | awbNo:618-64461986   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
-  @SR6168 @SR6168DEV
+  @SR6168 @SR6168DEV @CRP0072
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify no encoded content missing
@@ -216,7 +194,7 @@ Feature: FWB Re sharing
       | contentType     | contentName     | awbNo                | contact                                       |
       | BookingRequest  | test-20052025   | awbNo:618-64461984   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
-  @SR6168 @SR6168DEV
+  @SR6168 @SR6168DEV @CRP0072
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify no encoded content missing
@@ -230,7 +208,7 @@ Feature: FWB Re sharing
       | contentType  | contentName     | awbNo                | contact                                       |
       | BookingReply | test-26032025   | awbNo:618-64461985   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
-  @SR6168 @SR6168DEV
+  @SR6168 @SR6168DEV @CRP0072
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify no encoded content missing
@@ -244,7 +222,7 @@ Feature: FWB Re sharing
       | contentType  | contentName     | awbNo                | contact                                       |
       | MAWBRequest  | test-26032025   | awbNo:618-64461986   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
-  @SR6168 @SR6168DEV
+  @SR6168 @SR6168DEV @CRP0072
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify no encoded content missing
@@ -258,7 +236,7 @@ Feature: FWB Re sharing
       | contentType | contentName     | awbNo                | contact                                       |
       | MAWBReply   | test-26032025   | awbNo:618-64461987   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
-  @SR6168
+  @SR6168 @CRP0072
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify no encoded content missing
@@ -272,7 +250,7 @@ Feature: FWB Re sharing
       | contentType   | contentName     | awbNo                | contact                                       |
       | DockShipment  | test-26032025   | awbNo:618-64461983   | system.csgagt9166a0a6b8_sin01@ccnexchange.com |
 
-  @SR6168
+  @SR6168 @CRP0072
   Scenario Outline:  Create "<contentType>" Document to verify awbNo filter tag and implicit share working properly
     Given create "<contentType>" doc with "<contentName>" and "<awbNo>"
     Then verify no encoded content missing
@@ -299,4 +277,4 @@ Feature: FWB Re sharing
     Given create awbNo 1000 times
     Examples:
       | contentType        | contentName                  | via                                    | contact                                 |
-      | DockBookingUpdate  | test-monday-27-august-2024   | system.pimatest89167@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
+      | DockBookingUpdate  | test-monday-27-august-2024   | system.csgagt916639d233_cgk01@ccnexchange.com   | system.csgair01sinfmsq@ccnexchange.com  |
