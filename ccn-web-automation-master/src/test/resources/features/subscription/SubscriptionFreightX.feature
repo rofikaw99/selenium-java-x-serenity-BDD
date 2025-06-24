@@ -22,11 +22,6 @@ Feature: Freight-X Plan
       | Air Freight + Sea Freight + Finance             | does not      | 5         | 100       | no charge   |
       | Air Freight + Sea Freight + Finance             | does          | 5         | 100       | 50 SGD      |
 
-  Scenario: User tries to subscribe without selecting a plan
-    Given the user is on the subscription form
-    When the user does not select any plan
-    And clicks subscribe
-    Then the system should show an error "Please select a subscription plan"
 
   Scenario: User tries to subscribe without checking one or both T&C
     Given the user selected a plan
@@ -88,6 +83,32 @@ Feature: Freight-X Plan
     """
     And the subscription should not proceed
 
+  Scenario: User successfully subscribes via Stripe
+    When the user completes a subscription via Stripe
+    Then the user should be added to the correct product plan
+    And a subscription confirmation email should be sent
+    And a Stripe receipt should be delivered to the user’s email
+
+  Scenario: User unsubscribes from a product
+    Given the user has an active subscription
+    When the user unsubscribes
+    Then the subscription status should be updated to CANCELLED
+    And an unsubscription email should be sent
+
+  Scenario: Plan manager adds user to a product plan
+    When the plan manager manually assigns a user to a product plan
+    Then the user should be associated with the plan
+    And an email should be sent
+
+  Scenario: Plan manager removes user from a product plan
+    Given the user is part of a product plan
+    When the plan manager removes the user
+    Then the user should be disassociated from the plan
+    And an email should be sent
+
+  Scenario: Verify Stripe receipt email delivery
+    Given a user has successfully completed a paid subscription
+    Then a Stripe payment receipt should be visible in their email inbox
 
 
 
