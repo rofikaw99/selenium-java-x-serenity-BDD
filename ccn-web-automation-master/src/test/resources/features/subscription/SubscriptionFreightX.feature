@@ -106,9 +106,16 @@ Feature: Freight-X Plan
     Then the user should be disassociated from the plan
     And an email should be sent
 
-  Scenario: Verify Stripe receipt email delivery
-    Given a user has successfully completed a paid subscription
-    Then a Stripe payment receipt should be visible in their email inbox
+  Scenario: Verify Stripe receipt email is triggered only to plan manager
+    Given a recurring subscription for plan "Freight X" has been charged by Stripe
+    And the user is assigned as the plan manager of plan "Freight X"
+    Then a Stripe payment receipt email should be sent to the plan manager
+
+  Scenario: Verify Stripe receipt email is not sent to regular plan members
+    Given a recurring subscription for plan "Freight X" has been charged by Stripe
+    And the user is a regular member of plan "Freight X"
+    Then the user should not receive a Stripe payment receipt email
+
 
 
 

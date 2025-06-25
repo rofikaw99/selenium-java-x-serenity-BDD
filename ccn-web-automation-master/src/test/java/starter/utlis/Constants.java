@@ -31,7 +31,7 @@ public class Constants {
     //    public static String COMPANY_PATH_URL = "https://dev.cubeforall.com/portal/manage-company/";
 //    public static String COMPANY_PATH_URL = "https://sandbox.cubeforall.com/portal/manage-company/";
     public static String COMPANY_PATH_URL = "https://cubeforall.com/portal/manage-company/";
-    public static String SQPP_PATH_URL = "https://coolman:iamcool@ppd-siacargo.ccnexchange.com";
+    public static String SQPP_PATH_URL = "https://coolman:hellocoolman@ppd-siacargo.ccnexchange.com";
 //  public static String SQPP_PATH_URL = "https://ppd-siacargo.ccnexchange.com/";
 
 
