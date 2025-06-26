@@ -1,16 +1,19 @@
 package starter.pages;
 
+import net.lightbody.bmp.BrowserMobProxy;
+import net.lightbody.bmp.BrowserMobProxyServer;
+import net.lightbody.bmp.client.ClientUtil;
+import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.pages.PageObject;
 import net.thucydides.core.webdriver.shadow.ByShadow;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import starter.utlis.Constants;
 
+import java.util.Base64;
+import java.util.List;
 import java.util.Set;
 
 
@@ -40,7 +43,54 @@ public class LoginPage extends PageObject {
     private String initWindow = "";
 
     public void goToMainWeb(){
-        open();
+//        open();
+//        System.out.println("Current URL: " + getDriver().getCurrentUrl());
+//        System.out.println("Title Page: " + getDriver().getTitle());
+//        System.out.println($("input").getAttribute("outerHTML"));
+//        List<WebElementFacade> inputs = findAll("input");
+//        for (WebElementFacade input : inputs) {
+//            System.out.println("HTML: " + input.getAttribute("outerHTML"));
+//        }
+        // Start proxy
+        BrowserMobProxy proxy = new BrowserMobProxyServer();
+        proxy.start(0);
+
+        // Inject Basic Auth header
+        String credentials = "admin:admin@ccnhub";
+        String encodedAuth = Base64.getEncoder().encodeToString(credentials.getBytes());
+        proxy.addHeader("Authorization", "Basic " + encodedAuth);
+
+        // Set proxy for Chrome
+        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+        ChromeOptions options = new ChromeOptions();
+        options.setProxy(seleniumProxy);
+
+        // Launch Chrome with proxy
+        WebDriver driver = new ChromeDriver(options);
+
+        try {
+            // Open protected URL
+            driver.get("https://sandbox.cubeforall.com/products/forwarders-shippers/freight-x/");
+
+            // Debug: print URL and title
+            System.out.println("Current URL: " + driver.getCurrentUrl());
+            System.out.println("Title Page: " + driver.getTitle());
+
+            // Debug: print all input elements if present
+            List<WebElementFacade> inputs = findAll("input");
+            if (inputs.isEmpty()) {
+                System.out.println("Tidak ada input ditemukan.");
+            } else {
+                for (WebElementFacade input : inputs) {
+                    System.out.println("INPUT: " + input.getAttribute("outerHTML"));
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Terjadi error saat proses: " + e.getMessage());
+        } finally {
+            proxy.stop();
+        }
+
     }
     public void clickCookies(){
         if ($$(cookies).size() == 1) evaluateJavascript("arguments[0].click();", $(cookies));

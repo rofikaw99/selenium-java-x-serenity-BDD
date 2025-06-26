@@ -96,6 +96,7 @@ public class SQPPStep {
 //		sqpp.iconmenusqpp();
         Thread.sleep(waitResponse);
         goToUrl.goToAbsUrl("https://ppd-siacargo.ccnexchange.com/portal_management/agent-management");
+        Thread.sleep(waitResponse);
     }
 
     @Given("click sign up sqpp")

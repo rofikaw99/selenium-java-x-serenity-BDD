@@ -1,6 +1,12 @@
 @loginall
 Feature: Login Cubeforall
 
+  @loginAUTH
+  Scenario: User successfully logs in using Playwright and continues with Selenium
+    Given I have authenticated to sandbox using Playwright "autoqa-ccn-001@yopmail.com"
+
+
+
   @logincube @logins1
   Scenario: Login with happy flow 1
     Given accept cookie
