@@ -15,7 +15,6 @@ Automated web testing suite using **Selenium**, **Java**, and **Serenity BDD**â€
 - **Java 11+**
 - **Serenity BDD** (with JUnit)
 - **Maven** for dependency management and build
-- **Azure DevOps** for CI/CD
 
 ## ðŸ§ª Current Focus
 
