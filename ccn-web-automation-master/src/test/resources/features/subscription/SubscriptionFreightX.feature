@@ -116,6 +116,58 @@ Feature: Freight-X Plan
     And the user is a regular member of plan "Freight X"
     Then the user should not receive a Stripe payment receipt email
 
+Feature: Freight X Subscription Access Control
+
+  Background:
+    Given the user navigates to the Freight X product subscription section
+
+  Rule: New website behavior
+
+    Scenario: Unauthenticated user sees sign up button
+      Given the user is not logged in
+      When they visit the Freight X product page
+      Then the subscription field shows a "Sign up" button
+
+    Scenario: Authenticated Malaysian company user accesses subscription page fully
+      Given the user logs in with a Malaysian company account
+      When they access the Freight X subscription field
+      Then they are redirected to the full subscription page
+      And the page has no top, bottom, or side spacing
+
+    Scenario: Authenticated non-Malaysian company user sees contact-only page
+      Given the user logs in with a non-Malaysian company account
+      When they access the Freight X subscription field
+      Then they are redirected to the subscription page
+      And the page only displays "Contact Us"
+
+  Rule: Current website behavior
+
+    Scenario: Unauthenticated user from non-Malaysian IP sees Contact Us
+      Given the user is not logged in
+      And their IP is not from Malaysia
+      When they visit the Freight X product page
+      Then the subscription field displays "Contact Us"
+
+    Scenario: Unauthenticated user from Malaysian IP sees subscribe option
+      Given the user is not logged in
+      And their IP is from Malaysia
+      When they visit the Freight X product page
+      Then the subscription field displays a "Subscribe" button
+
+    Scenario: Malaysian IP user clicks Subscribe and signs in with Malaysian company
+      Given the user is on a Malaysian IP
+      And they click "Subscribe"
+      When they log in with a Malaysian company account
+      Then they are redirected to the full subscription page
+      And the page has no top, bottom, or side spacing
+
+    Scenario: Malaysian IP user clicks Subscribe and signs in with non-Malaysian company
+      Given the user is on a Malaysian IP
+      And they click "Subscribe"
+      When they log in with a non-Malaysian company account
+      Then they are redirected to the subscription page
+      And the page only displays "Contact Us"
+
 
 
 
