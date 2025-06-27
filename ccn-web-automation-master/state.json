@@ -2,7 +2,7 @@
   "cookies": [
     {
       "name": "e3ac03",
-      "value": "clGZURYOvLgJyrOhw8FtvikOcDMZ7Mwzi4Pq/JgZbZaHvdefjxPH0CGG+g9G34W8UXxJvsKxs1IBjnRcfqGutbZYtCHUzX5GQSsHR8d1stAw10/OgbHqHRhvna9k6x2LMFaMytQcDVlr7ThbcxzQV5EWISTYFObc43siTt3gDbRt5N3q",
+      "value": "m6GzYNrxuFCETvjrQ8CQYO5fqC8crOTRSM5SRBYcjukTeteuS4viryVGWZh/hfXuh4pjYP25l+IZxhj3o1+kfTc8P+XyBWh9HRMc34hN235SvfE/YGV1crESAvCEj666E9oBxRJCgOX2PtZOdaK/HHH7oaFBYFPaG0lEDSw2kN0clDJH",
       "domain": "sandbox.cubeforall.com",
       "path": "/",
       "expires": -1,
@@ -12,10 +12,10 @@
     },
     {
       "name": "cookieyes-consent",
-      "value": "consentid:UjFpUVZLRUlZc3BPckY4NmtMTVA1ODViVVo1U1pCU3E,consent:,action:,necessary:,functional:,analytics:,performance:,advertisement:,other:",
+      "value": "consentid:dTZWek9jZXgxZktTWmVsRGNIeWdhNHhyWk9DTnRjZ2I,consent:,action:,necessary:,functional:,analytics:,performance:,advertisement:,other:",
       "domain": "sandbox.cubeforall.com",
       "path": "/",
-      "expires": 1782519700,
+      "expires": 1782543313,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Strict"
@@ -27,7 +27,7 @@
       "localStorage": [
         {
           "name": "ipPublicUser",
-          "value": "null"
+          "value": "{\"ip\":\"103.131.18.57\",\"country\":\"ID\"}"
         },
         {
           "name": "user_ip_country",

@@ -116,12 +116,12 @@ Feature: Freight-X Plan
     And the user is a regular member of plan "Freight X"
     Then the user should not receive a Stripe payment receipt email
 
-Feature: Freight X Subscription Access Control
-
-  Background:
-    Given the user navigates to the Freight X product subscription section
-
-  Rule: New website behavior
+#Feature: Freight X Subscription Access Control
+#
+#  Background:
+#    Given the user navigates to the Freight X product subscription section
+#
+#  Rule: New website behavior
 
     Scenario: Unauthenticated user sees sign up button
       Given the user is not logged in
@@ -140,7 +140,7 @@ Feature: Freight X Subscription Access Control
       Then they are redirected to the subscription page
       And the page only displays "Contact Us"
 
-  Rule: Current website behavior
+#  Rule: Current website behavior
 
     Scenario: Unauthenticated user from non-Malaysian IP sees Contact Us
       Given the user is not logged in

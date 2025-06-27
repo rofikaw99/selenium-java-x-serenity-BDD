@@ -22,6 +22,9 @@ public class Constants {
     public static String GENERATED_NUM = RandomStringUtils.randomNumeric(8);
     public static String GENERATED_CHAR = RandomStringUtils.randomAlphanumeric(8);
     public static String FOUR_DIGIT = RandomStringUtils.randomNumeric(4);
+    public static String GENERATED_CUSTOM_TIMESTAMP = String.valueOf(System.currentTimeMillis()).substring(0, 10)
+            + RandomStringUtils.randomAlphanumeric(3);
+
     public static String EMAIL = "";
     public static String MAIL_SERVICE = "";
     public static String MAIL_SERVICE_URL = "https://www.mailinator.com/";
@@ -36,7 +39,7 @@ public class Constants {
 
 
     public static String FULL_MAIL = "qa-ccn-"+ GENERATED_CHAR +"@yopmail.com"; //todo
-    public static String FULL_EMAIL = "sgqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; //todo
+    public static String FULL_EMAIL = "qa-ccn-"+ FOUR_DIGIT + GENERATED_CUSTOM_TIMESTAMP +"@mailinator.com"; //todo
     public static String FULL_EMAIL_SG = "sgqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; //todo
     public static String FULL_EMAIL_CH = "chqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; //todo
     public static String FULL_EMAIL_MY = "myqa-ccn-"+ GENERATED_NUM +"@yopmail.com"; //todo
