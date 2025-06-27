@@ -58,41 +58,42 @@ public class RegistrationStep {
     public void registrationWithNewAccountAndLogin() throws Exception {
         registrationPage.pressSignUpNow();
         registrationPage.inputEmailRegister(Constants.FULL_EMAIL);
+        System.out.println(Constants.FULL_EMAIL);
         registrationPage.pressSendVerificationCodeRegister();
         registrationPage.inputNewPasswordRegister(Constants.PASSWORD);
         registrationPage.inputConfirmNewPasswordRegister(Constants.PASSWORD);
         registrationPage.inputDisplayNameRegister(Constants.DISPLAY_NAME);
-        registrationPage.inputContactNumberRegister("12345678"); //todo: fix the hardcoded
-        registrationPage.selectCityRegister("SINGAPORE"); //todo: fix the hardcoded
-        registrationPage.selectCountryRegister("Singapore"); //todo: fix the hardcoded
+        registrationPage.inputContactNumberRegister("12345678"); 
+        registrationPage.selectCityRegister("SINGAPORE"); 
+        registrationPage.selectCountryRegister("Singapore"); 
 
-        //		inputContactNumberOnRegisterPage("12345678"); //todo: fix the hardcoded
-        //		selectCityOnRegisterPage("KUALA LUMPUR"); //todo: fix the hardcoded
-        //		selectCountryOnRegisterPage("Malaysia"); //todo: fix the hardcoded
+        //		inputContactNumberOnRegisterPage("12345678"); 
+        //		selectCityOnRegisterPage("KUALA LUMPUR"); 
+        //		selectCountryOnRegisterPage("Malaysia"); 
 
-        //		inputContactNumberOnRegisterPage("12345678"); //todo: fix the hardcoded
-        //		selectCityOnRegisterPage("ABU DHABI"); //todo: fix the hardcoded
-        //		selectCountryOnRegisterPage("United Arab Emirates"); //todo: fix the hardcoded
+        //		inputContactNumberOnRegisterPage("12345678"); 
+        //		selectCityOnRegisterPage("ABU DHABI"); 
+        //		selectCountryOnRegisterPage("United Arab Emirates"); 
 
-        //		inputContactNumberOnRegisterPage("12345678"); //todo: fix the hardcoded
-        //		selectCityOnRegisterPage("COLOMBO"); //todo: fix the hardcoded
-        //		selectCountryOnRegisterPage("Sri Lanka"); //todo: fix the hardcoded
+        //		inputContactNumberOnRegisterPage("12345678"); 
+        //		selectCityOnRegisterPage("COLOMBO"); 
+        //		selectCountryOnRegisterPage("Sri Lanka"); 
 
-        //		inputContactNumberOnRegisterPage("12345678"); //todo: fix the hardcoded
-        //		selectCityOnRegisterPage("MIAMI"); //todo: fix the hardcoded
-        //		selectCountryOnRegisterPage("United States"); //todo: fix the hardcoded
+        //		inputContactNumberOnRegisterPage("12345678"); 
+        //		selectCityOnRegisterPage("MIAMI"); 
+        //		selectCountryOnRegisterPage("United States"); 
 
-        //		inputContactNumberOnRegisterPage("12345678"); //todo: fix the hardcoded
-        //		selectCityOnRegisterPage("JAKARTA"); //todo: fix the hardcoded
-        //		selectCountryOnRegisterPage("Indonesia"); //todo: fix the hardcoded
+        //		inputContactNumberOnRegisterPage("12345678"); 
+        //		selectCityOnRegisterPage("JAKARTA"); 
+        //		selectCountryOnRegisterPage("Indonesia"); 
 
         String registerWindow = subscriptionPage.getWindow();
         subscriptionPage.switchWindowTab();
         Thread.sleep(2000);
         goToUrl.goToAbsUrl(Constants.MAIL_SERVICE_URL);
         Thread.sleep(7000);
-        mailServiceMailinatorPage.getVerificationCodesg();
-        Thread.sleep(7000);
+        mailServiceMailinatorPage.getVerificationCodeGlobalCustoms();
+        Thread.sleep(3000);
         subscriptionPage.closeWindow();
         subscriptionPage.switchToWindow(registerWindow);
         registrationPage.inputVerificationCodeRegister(Constants.VERIFICATION_CODE);
@@ -102,7 +103,6 @@ public class RegistrationStep {
         Thread.sleep(7000);
         registrationPage.pressCreateAccountRegister();
         subscriptionPage.switchToWindow(originalWindow);
-        System.out.println(Constants.FULL_EMAIL);
 
     }
     @Given("send email from {string} with keyword {string} along with attachment to another company CUBE {string} and cc to {string}")
@@ -126,9 +126,9 @@ public class RegistrationStep {
         registrationPage.inputNewPasswordRegister(Constants.PASSWORD);
         registrationPage.inputConfirmNewPasswordRegister(Constants.PASSWORD);
         registrationPage.inputDisplayNameRegister(Constants.DISPLAY_NAME);
-        registrationPage.inputContactNumberRegister("12345678"); //todo: fix the hardcoded
-        registrationPage.selectCityRegister("SINGAPORE"); //todo: fix the hardcoded
-        registrationPage.selectCountryRegister("Singapore"); //todo: fix the hardcoded
+        registrationPage.inputContactNumberRegister("12345678"); 
+        registrationPage.selectCityRegister("SINGAPORE"); 
+        registrationPage.selectCountryRegister("Singapore"); 
         String registerWindow = subscriptionPage.getWindow();
         subscriptionPage.switchWindowTab();
         Thread.sleep(2000);
@@ -155,9 +155,9 @@ public class RegistrationStep {
         registrationPage.inputNewPasswordRegister(Constants.PASSWORD);
         registrationPage.inputConfirmNewPasswordRegister(Constants.PASSWORD);
         registrationPage.inputDisplayNameRegister(Constants.DISPLAY_NAME);
-        registrationPage.inputContactNumberRegister("12345678"); //todo: fix the hardcoded
-        registrationPage.selectCityRegister("BEIJING"); //todo: fix the hardcoded
-        registrationPage.selectCountryRegister("China"); //todo: fix the hardcoded
+        registrationPage.inputContactNumberRegister("12345678"); 
+        registrationPage.selectCityRegister("BEIJING"); 
+        registrationPage.selectCountryRegister("China"); 
         String registerWindow = subscriptionPage.getWindow();
         subscriptionPage.switchWindowTab();
         Thread.sleep(2000);

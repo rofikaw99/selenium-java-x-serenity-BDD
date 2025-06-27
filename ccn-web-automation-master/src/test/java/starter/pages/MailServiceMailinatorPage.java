@@ -37,6 +37,19 @@ public class MailServiceMailinatorPage extends PageObject {
         Constants.VERIFICATION_CODE = StringUtils.getDigits(getEmailText);
     }
 
+    public void getVerificationCodeGlobalCustoms(){
+        // search mail on mailinator
+        $(txtSearch).clear();
+        $(txtSearch).sendKeys(Constants.FULL_EMAIL, Keys.ENTER);
+        // press or expand the email
+        $(emailOnLists).isDisplayed();
+        $(emailOnLists).click();
+        // get text email verification and extract the verification code
+        getDriver().switchTo().frame("html_msg_body");
+        String getEmailText = $(emailVerification).getText();
+        Constants.VERIFICATION_CODE = StringUtils.getDigits(getEmailText);
+    }
+
     public void getVerificationCodesg(){
         // search mail on mailinator
         $(txtSearch).clear();
