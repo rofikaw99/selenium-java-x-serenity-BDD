@@ -33,6 +33,12 @@ Feature: Registration CUBEforall
     Given press sign in button
     When registration with new account and login
 
+  @Registration2withPR
+  Scenario: Registration with happy flow PR
+    Given go to main web with PlayWright session token
+    Given press sign in button
+    When registration with new account and login
+
   @Registration3
   Scenario: Registration with happy flow 3
     Given go to main web

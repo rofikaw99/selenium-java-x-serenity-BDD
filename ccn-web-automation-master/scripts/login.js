@@ -1,9 +1,9 @@
-console.log("📢 Starting login script...");
+console.log(" Starting login script...");
 
 const { chromium } = require('playwright');
 
 (async () => {
-  console.log("🚀 Launching browser...");
+  console.log(" Launching browser...");
   const browser = await chromium.launch({ headless: false });
 
   const context = await browser.newContext({
@@ -14,18 +14,18 @@ const { chromium } = require('playwright');
   });
 
   const page = await context.newPage();
-  console.log("🌐 Navigating to login-protected page...");
+  console.log(" Navigating to login-protected page...");
   await page.goto('https://sandbox.cubeforall.com/');
 
-  console.log("🔎 Waiting for sign in page appear to appear...");
+  console.log(" Waiting for sign in page appear to appear...");
   try {
     await page.waitForSelector('button.login-btn', { timeout: 7000 });
-    console.log("✅ Login success — saving session state...");
+    console.log(" Login success — saving session state...");
     await context.storageState({ path: 'state.json' });
   } catch (error) {
-    console.error("❌ Login failed or selector not found:", error.message);
+    console.error(" Login failed or selector not found:", error.message);
   }
 
   await browser.close();
-  console.log("🏁 Success pass the auth");
+  console.log(" Success pass the auth");
 })();
