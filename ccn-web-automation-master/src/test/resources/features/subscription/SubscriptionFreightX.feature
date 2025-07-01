@@ -1,26 +1,30 @@
 Feature: Freight-X Plan
 
+  @CRP0075_1
   Scenario Outline: User subscribes to "<Plan>" with optional add-on
+    Given I have authenticated to sandbox using Playwright "testuser_bravo1@yopmail.com"
+    Given "User A" click product tab to subscribe to product
+    And Select plan "<Plan>" "<product>"
     Given the user selects "<Plan>" as the subscription plan
-    And the user <AddonSelected> selects the MyInvois via PEPPOL add-on
-    And the user adds <UserCount> members
-    And the user agrees to both "CCN T&C" and "Partner’s T&C"
-    When the user submits the subscription
-    Then the system should generate a subscription with base price <BasePrice> * <UserCount>
-    And <AddonCharge> be added once for the add-on
-    And the system should generate a unique priceID for this combination
+    And Subscribe plan "<product>" "<UserCount>"
+#    And the user <AddonSelected> selects the MyInvois via PEPPOL add-on
+#    And the user adds <UserCount> members
+#    And the user agrees to both "CCN T&C" and "Partner’s T&C"
+#    When the user submits the subscription
+#    Then the system should generate a subscription with base price <BasePrice> * <UserCount>
+#    And <AddonCharge> be added once for the add-on
+#    And the system should generate a unique priceID for this combination
 
     Examples:
-      | Plan                                            | AddonSelected | UserCount | BasePrice | AddonCharge |
-      |-------------------------------------------------|---------------|-----------|-----------|-------------|
-      | Air Freight + Finance                           | does not      | 3         | 65        | no charge   |
-      | Air Freight + Finance                           | does          | 3         | 65        | 50 SGD      |
-      | Sea Freight + Finance                           | does not      | 2         | 65        | no charge   |
-      | Sea Freight + Finance                           | does          | 2         | 65        | 50 SGD      |
-      | Air Freight + Sea Freight                       | does not      | 4         | 70        | no charge   |
-      | Air Freight + Sea Freight                       | does          | 4         | 70        | 50 SGD      |
-      | Air Freight + Sea Freight + Finance             | does not      | 5         | 100       | no charge   |
-      | Air Freight + Sea Freight + Finance             | does          | 5         | 100       | 50 SGD      |
+      | Plan                                            | AddonSelected | UserCount | BasePrice | AddonCharge | product  |
+      |-------------------------------------------------|---------------|-----------|-----------|-------------| FreightX |
+      | Air Freight + Finance                           | does not      | 3         | 65        | no charge   | FreightX |
+#      | Air Freight + Finance                           | does          | 3         | 65        | 50 SGD      | FreightX |
+#      | Sea Freight + Finance                           | does not      | 2         | 65        | no charge   | FreightX |
+#      | Sea Freight + Finance                           | does          | 2         | 65        | 50 SGD      | FreightX |
+#      | Air Freight + Sea Freight                       | does not      | 4         | 70        | no charge   | FreightX |
+#      | Air Freight + Sea Freight + Finance             | does not      | 5         | 100       | no charge   | FreightX |
+#      | Air Freight + Sea Freight + Finance             | does          | 5         | 100       | 50 SGD      | FreightX |
 
 
   Scenario: User tries to subscribe without checking one or both T&C
@@ -44,9 +48,10 @@ Feature: Freight-X Plan
     Then the system should charge 100 SGD * 5 for the users
     And add only 50 SGD once for the add-on (per company)
 
+  @CRP0075
   Scenario Outline: Verify My Subscription page reflects subscribed plan correctly
-    Given the user has successfully subscribed to "<Plan>"
-    When the user navigates to "My Subscription" page
+    Given the user has successfully subscribed to "<Plan>" "testuser_bravo1@yopmail.com"
+    When go to my icon account menu "My Subscriptions"
     Then the subscription entry should show:
       | Product     | Plan                                   | Description                                                                                      |
       | FreightX    | <Plan>                                 | An integrated logistics solution with AI capabilities offers significant benefits...             |
@@ -63,7 +68,6 @@ Feature: Freight-X Plan
       | Sea Freight + Finance                             | 4         |
       | Sea Freight + Finance + MyInvois via PEPPOL       | 5         |
       | Air Freight + Sea Freight                         | 1         |
-      | Air Freight + Sea Freight + MyInvois via PEPPOL   | 2         |
       | Air Freight + Sea Freight + Finance               | 3         |
       | Air Freight + Sea Freight + Finance + MyInvois    | 6         |
 

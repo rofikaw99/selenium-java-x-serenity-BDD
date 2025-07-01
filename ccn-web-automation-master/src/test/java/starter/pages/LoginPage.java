@@ -43,53 +43,53 @@ public class LoginPage extends PageObject {
     private String initWindow = "";
 
     public void goToMainWeb(){
-//        open();
-//        System.out.println("Current URL: " + getDriver().getCurrentUrl());
-//        System.out.println("Title Page: " + getDriver().getTitle());
-//        System.out.println($("input").getAttribute("outerHTML"));
-//        List<WebElementFacade> inputs = findAll("input");
-//        for (WebElementFacade input : inputs) {
-//            System.out.println("HTML: " + input.getAttribute("outerHTML"));
-//        }
-        // Start proxy
-        BrowserMobProxy proxy = new BrowserMobProxyServer();
-        proxy.start(0);
-
-        // Inject Basic Auth header
-        String credentials = "admin:admin@ccnhub";
-        String encodedAuth = Base64.getEncoder().encodeToString(credentials.getBytes());
-        proxy.addHeader("Authorization", "Basic " + encodedAuth);
-
-        // Set proxy for Chrome
-        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
-        ChromeOptions options = new ChromeOptions();
-        options.setProxy(seleniumProxy);
-
-        // Launch Chrome with proxy
-        WebDriver driver = new ChromeDriver(options);
-
-        try {
-            // Open protected URL
-            driver.get("https://sandbox.cubeforall.com/products/forwarders-shippers/freight-x/");
-
-            // Debug: print URL and title
-            System.out.println("Current URL: " + driver.getCurrentUrl());
-            System.out.println("Title Page: " + driver.getTitle());
-
-            // Debug: print all input elements if present
-            List<WebElementFacade> inputs = findAll("input");
-            if (inputs.isEmpty()) {
-                System.out.println("Tidak ada input ditemukan.");
-            } else {
-                for (WebElementFacade input : inputs) {
-                    System.out.println("INPUT: " + input.getAttribute("outerHTML"));
-                }
-            }
-        } catch (Exception e) {
-            System.out.println("Terjadi error saat proses: " + e.getMessage());
-        } finally {
-            proxy.stop();
+        open();
+        System.out.println("Current URL: " + getDriver().getCurrentUrl());
+        System.out.println("Title Page: " + getDriver().getTitle());
+        System.out.println($("input").getAttribute("outerHTML"));
+        List<WebElementFacade> inputs = findAll("input");
+        for (WebElementFacade input : inputs) {
+            System.out.println("HTML: " + input.getAttribute("outerHTML"));
         }
+//        // Start proxy
+//        BrowserMobProxy proxy = new BrowserMobProxyServer();
+//        proxy.start(0);
+//
+//        // Inject Basic Auth header
+//        String credentials = "admin:admin@ccnhub";
+//        String encodedAuth = Base64.getEncoder().encodeToString(credentials.getBytes());
+//        proxy.addHeader("Authorization", "Basic " + encodedAuth);
+//
+//        // Set proxy for Chrome
+//        Proxy seleniumProxy = ClientUtil.createSeleniumProxy(proxy);
+//        ChromeOptions options = new ChromeOptions();
+//        options.setProxy(seleniumProxy);
+//
+//        // Launch Chrome with proxy
+//        WebDriver driver = new ChromeDriver(options);
+//
+//        try {
+//            // Open protected URL
+//            driver.get("https://sandbox.cubeforall.com/products/forwarders-shippers/freight-x/");
+//
+//            // Debug: print URL and title
+//            System.out.println("Current URL: " + driver.getCurrentUrl());
+//            System.out.println("Title Page: " + driver.getTitle());
+//
+//            // Debug: print all input elements if present
+//            List<WebElementFacade> inputs = findAll("input");
+//            if (inputs.isEmpty()) {
+//                System.out.println("Tidak ada input ditemukan.");
+//            } else {
+//                for (WebElementFacade input : inputs) {
+//                    System.out.println("INPUT: " + input.getAttribute("outerHTML"));
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println("Terjadi error saat proses: " + e.getMessage());
+//        } finally {
+//            proxy.stop();
+//        }
 
     }
     public void clickCookies(){

@@ -34,6 +34,11 @@ public class SubscribeStep {
         subscriptionPage.subscribeplan(product);
     }
 
+    @And("Subscribe plan {string} {string}")
+    public void subscribePlanWithUserCount(String product, String UserCount) throws Exception {
+        subscriptionPage.subscribePlanWithUserCount(product, UserCount);
+    }
+
     @And("verify only display contact us for TDSB")
     public void verify_only_display_contact_us_for_TDSB() throws Exception {
         subscriptionPage.verifyOnlyDisplayContactUs();

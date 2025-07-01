@@ -15,7 +15,7 @@ const { chromium } = require('playwright');
 
   const page = await context.newPage();
   console.log(" Navigating to login-protected page...");
-  await page.goto('https://sandbox.cubeforall.com/');
+  await page.goto('https://dev.cubeforall.com/');
 
   console.log(" Waiting for sign in page appear to appear...");
   try {

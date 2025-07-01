@@ -38,20 +38,20 @@ public class Constants {
 //  public static String SQPP_PATH_URL = "https://ppd-siacargo.ccnexchange.com/";
 
 
-    public static String FULL_MAIL = "qa-ccn-"+ GENERATED_CHAR +"@yopmail.com"; //todo
-    public static String FULL_EMAIL = "qa-ccn-"+ FOUR_DIGIT + GENERATED_CUSTOM_TIMESTAMP +"@mailinator.com"; //todo
-    public static String FULL_EMAIL_SG = "sgqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; //todo
-    public static String FULL_EMAIL_CH = "chqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; //todo
-    public static String FULL_EMAIL_MY = "myqa-ccn-"+ GENERATED_NUM +"@yopmail.com"; //todo
-    public static String FULL_EMAIL_UAE = "uaeqa-ccn-"+ GENERATED_NUM +"@yopmail.com"; //todo
+    public static String FULL_MAIL = "qa-ccn-"+ GENERATED_CHAR +"@yopmail.com"; 
+    public static String FULL_EMAIL = "qa-ccn-"+ FOUR_DIGIT + GENERATED_CUSTOM_TIMESTAMP +"@yopmail.com"; 
+    public static String FULL_EMAIL_SG = "sgqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; 
+    public static String FULL_EMAIL_CH = "chqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; 
+    public static String FULL_EMAIL_MY = "myqa-ccn-"+ GENERATED_NUM +"@yopmail.com"; 
+    public static String FULL_EMAIL_UAE = "uaeqa-ccn-"+ GENERATED_NUM +"@yopmail.com"; 
     public static String FULL_EMAIL_INDO = "indoqa-ccn-"+ GENERATED_NUM +"@yopmail.com";
     public static String FULL_EMAIL_NZ = "nz-ccn-"+ GENERATED_NUM +"@yopmail.com";
 
-    public static String FULL_EMAIL_SQPP = "sqppqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; //todo
+    public static String FULL_EMAIL_SQPP = "sqppqa-ccn-"+ GENERATED_NUM +"@mailinator.com"; 
     public static String PASSWORD = "CCNPegasus123";
     public static String VERIFICATION_CODE = "";
     public static String VERIFICATION_CODE_SQPP = "";
-    public static String FULL_EMAIL_AFTER_LOGIN = ""; //todo
+    public static String FULL_EMAIL_AFTER_LOGIN = ""; 
 
     //URL Product
     public static String URL_PRODUCTS = "/freight-forwarder/forwarders-shipper";
@@ -62,6 +62,7 @@ public class Constants {
     public static String URL_AWB_BC = "/products/freight-operations-management/bundle-awb-bc/";
     public static String URL_AWB_CONCIERGE_PREMIUM = "/products/freight-operations-management/test-awbconcierge-premium-multicurrencysandbox/";
     public static String URL_PATH_COMPANY = "/portal/manage-company/";
+    public static String URL_FreightX_CURRENT = "https://sandbox.cubeforall.com/products/forwarders-shippers/freightx//";
 
     //EMAIL ACCOUNT
     public static String NEW_EMAIL_MY = "";

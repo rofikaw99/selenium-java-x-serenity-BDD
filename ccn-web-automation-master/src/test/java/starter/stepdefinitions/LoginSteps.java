@@ -162,7 +162,7 @@ public class LoginSteps {
         JSONArray cookies = new JSONArray(json);
 
         // Open the target domain so Selenium can associate cookies
-        getDriver().get("https://sandbox.cubeforall.com");
+        getDriver().get(Constants.URL_MAIN_WEB);
 
         // Inject cookies that match the current domain
         String currentDomain = URI.create(getDriver().getCurrentUrl()).getHost();
@@ -183,7 +183,7 @@ public class LoginSteps {
         }
 
         // Navigate to a protected page to validate authentication
-        getDriver().navigate().to("https://sandbox.cubeforall.com/");
+        getDriver().navigate().to(Constants.URL_MAIN_WEB);
 
         // Optional: Print current URL for debugging
         System.out.println("Current URL after authentication: " + getDriver().getCurrentUrl());

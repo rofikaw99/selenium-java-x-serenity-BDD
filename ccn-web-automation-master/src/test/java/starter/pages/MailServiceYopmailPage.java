@@ -90,6 +90,18 @@ public class MailServiceYopmailPage extends PageObject {
         String getEmailText = $(emailVerification).getText();
         Constants.VERIFICATION_CODE = StringUtils.getDigits(getEmailText);
     }
+    public void getVerificationCodeGlobal(){
+        // search mail on mailinator
+        $(txtSearch).clear();
+        $(txtSearch).sendKeys(Constants.FULL_EMAIL, Keys.ENTER);
+        // press or expand the email
+        $(emailOnLists).isDisplayed();
+        $(emailOnLists).click();
+        // get text email verification and extract the verification code
+        getDriver().switchTo().frame("ifmail");
+        String getEmailText = $(emailVerification).getText();
+        Constants.VERIFICATION_CODE = StringUtils.getDigits(getEmailText);
+    }
 
     public void getVerificationCodemy(){
         // search mail on mailinator

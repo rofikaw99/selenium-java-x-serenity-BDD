@@ -621,6 +621,13 @@ public class SubscriptionPage extends PageObject {
         Thread.sleep(3000);
     }
 
+    private void subscribeFreightX(String UserCount) throws Exception {
+        clickOptionalMyInvoisPEPPOL();
+//        inputlfsmultiplan();
+//        clickBtnSubscribelfsmultiplan();
+//        Thread.sleep(3000);
+    }
+
     private void subscribelfsmultiplandowngrade() throws Exception {
         JavascriptExecutor js = (JavascriptExecutor) getDriver();
         js.executeScript("window.scrollBy(0,900)", "");
@@ -640,6 +647,15 @@ public class SubscriptionPage extends PageObject {
         System.out.println("clickComplimentaryBtnSubsribe is display: " + chckBoxComplimentarySubscribee.isDisplayed());
         chckBoxComplimentarySubscribee.isDisplayed();
         chckBoxComplimentarySubscribee.click();
+    }
+
+    public void clickOptionalMyInvoisPEPPOL() throws Exception {
+        Thread.sleep(waitResponse);
+        WebElement chckBoxComplimentarySubscribe = shadowDomcpsubscribesecond()
+                .findElement(By.cssSelector("input#cube-subscribe-btn-checkbox3-685ea5ccdd0b1d1db492690e"));
+        System.out.println("display: " + chckBoxComplimentarySubscribe.isDisplayed());
+        chckBoxComplimentarySubscribe.isDisplayed();
+        chckBoxComplimentarySubscribe.click();
     }
 
     public void clickBtnSubscribelfsmultiplan() throws Exception {
@@ -1142,6 +1158,19 @@ public class SubscriptionPage extends PageObject {
                 subscribetestbcpremiummulticurrencysandbox();
                 break;
 
+            default:
+                break;
+        }
+    }
+
+    public void subscribePlanWithUserCount(String product, String UserCount) throws Exception {
+        switch (product) {
+            case "Freight Management System - LFS Multi Upgrade":
+                subscribelfsmultiplanupgrade();
+                break;
+            case "FreightX":
+                subscribeFreightX(UserCount);
+                break;
             default:
                 break;
         }

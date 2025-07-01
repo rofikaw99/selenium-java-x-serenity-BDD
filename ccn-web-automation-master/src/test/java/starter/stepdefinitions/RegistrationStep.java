@@ -90,9 +90,9 @@ public class RegistrationStep {
         String registerWindow = subscriptionPage.getWindow();
         subscriptionPage.switchWindowTab();
         Thread.sleep(2000);
-        goToUrl.goToAbsUrl(Constants.MAIL_SERVICE_URL);
+        goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);
         Thread.sleep(7000);
-        mailServiceMailinatorPage.getVerificationCodeGlobalCustoms();
+        mailServiceYopmailPage.getVerificationCodeGlobal();
         Thread.sleep(3000);
         subscriptionPage.closeWindow();
         subscriptionPage.switchToWindow(registerWindow);
@@ -132,9 +132,9 @@ public class RegistrationStep {
         String registerWindow = subscriptionPage.getWindow();
         subscriptionPage.switchWindowTab();
         Thread.sleep(2000);
-        goToUrl.goToAbsUrl(Constants.MAIL_SERVICE_URL);
+        goToUrl.goToAbsUrl(Constants.YOPMAIL_SERVICE_URL);
         Thread.sleep(7000);
-        mailServiceMailinatorPage.getVerificationCode();
+        mailServiceYopmailPage.getVerificationCodeGlobal();
         Thread.sleep(7000);
         subscriptionPage.closeWindow();
         subscriptionPage.switchToWindow(registerWindow);
@@ -348,7 +348,8 @@ public class RegistrationStep {
         JSONArray cookies = new JSONArray(json);
 
         // Open the target domain so Selenium can associate cookies
-        getDriver().get("https://sandbox.cubeforall.com");
+        getDriver().get(Constants.URL_MAIN_WEB);
+
 
         // Inject cookies that match the current domain
         String currentDomain = URI.create(getDriver().getCurrentUrl()).getHost();
@@ -369,7 +370,7 @@ public class RegistrationStep {
         }
 
         // Navigate to a protected page to validate authentication
-        getDriver().navigate().to("https://sandbox.cubeforall.com/");
+        getDriver().navigate().to(Constants.URL_MAIN_WEB);
 
         // Optional: Print current URL for debugging
         System.out.println("Current URL after authentication: " + getDriver().getCurrentUrl());
